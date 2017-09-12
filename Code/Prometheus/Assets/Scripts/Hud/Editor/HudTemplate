@@ -1,0 +1,26 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+
+public class #name# : HudBase {
+	
+#Property#
+
+	public override void OnShow ()
+	{
+		base.OnShow ();
+		InitEvent();
+	}
+
+	public void InitEvent()
+	{
+
+#InitEvent#
+
+	}
+
+#Function#
+
+
+}
