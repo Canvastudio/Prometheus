@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GridMaster;
 
 //for more on A* visit
 //https://en.wikipedia.org/wiki/A*_search_algorithm
 namespace Pathfinding
 {
+
+	public interface IGetNode
+	{
+		Node GetNode (int x, int y, int z);
+	}
+
     public class Pathfinder
     {
-        GridBase gridBase;
+        IGetNode _nodeManager;
         public Node startPosition;
         public Node endPosition;
 
@@ -18,12 +23,12 @@ namespace Pathfinding
         List<Node> foundPath;
 
         //Constructor
-        public Pathfinder(Node start, Node target, PathfindMaster.PathfindingJobComplete callback)
+        public Pathfinder(Node start, Node target, PathfindMaster.PathfindingJobComplete callback, IGetNode nodeManager)
         {
             startPosition = start;
             endPosition = target;
             completeCallback = callback;
-            gridBase = GridBase.GetInstance();
+            _nodeManager = nodeManager;
         }
 
         public void FindPath()
@@ -92,7 +97,8 @@ namespace Pathfinding
                     if (!closedSet.Contains(neighbour))
                     {
                         //we create a new movement cost for our neighbours
-                        float newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                        //float newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+						float newMovementCostToNeighbour = currentNode.gCost + neighbour.nCost;
 
                         //and if it's lower than the neighbour's cost
                         if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
@@ -260,9 +266,9 @@ namespace Pathfinding
         {
             Node n = null;
 
-            lock(gridBase)
+			lock(_nodeManager)
             {
-                n = gridBase.GetNode(x, y, z);
+				n = _nodeManager.GetNode(x, y, z);
             }
             return n;
         }

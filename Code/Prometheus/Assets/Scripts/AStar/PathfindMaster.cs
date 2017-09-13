@@ -1,25 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GridMaster;
 using System.Threading;
 
 namespace Pathfinding
 {
     //This class controls the threads
-    public class PathfindMaster : MonoBehaviour
-    {
-        //Singleton
-        private static PathfindMaster instance;
-        void Awake()
-        {
-            instance = this;
-        }
-        public static PathfindMaster GetInstance()
-        {
-            return instance;
-        }
-
+    public class PathfindMaster : SingleGameObject<PathfindMaster>
+	{
         //The maximum simultaneous threads we allow to open
         public int MaxJobs = 3;
 
@@ -76,9 +64,9 @@ namespace Pathfinding
             }
         }
 
-        public void RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback)
+        public void RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback, IGetNode nodeManager)
         {
-            Pathfinder newJob = new Pathfinder(start, target, completeCallback);
+			Pathfinder newJob = new Pathfinder(start, target, completeCallback, nodeManager);
             todoJobs.Add(newJob);
         }
     }

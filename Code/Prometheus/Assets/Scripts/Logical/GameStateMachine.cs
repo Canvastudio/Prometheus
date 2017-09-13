@@ -5,18 +5,6 @@ using UnityEngine;
 
 public class GameStateMachine : SingleObject<GameStateMachine> {
     
-    public enum GameState
-    {
-        NIL,
-        LOADING,
-        INIT,
-        PLAYER,
-        MONSTER,
-        MAP,
-        END,
-        PAUSE,
-    }
-
     public GameState gameState
     {
         get
@@ -36,4 +24,9 @@ public class GameStateMachine : SingleObject<GameStateMachine> {
     {
 
     }
+}
+
+public enum GameState
+{
+	
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Brick : MonoBehaviour {
 
@@ -37,6 +38,12 @@ public class Brick : MonoBehaviour {
 #endregion
 
 
+	public Node pathNode
+	{
+		get { return _pathNode; }
+	}
+
+	private Node _pathNode;
 }
 
 public enum BrickType

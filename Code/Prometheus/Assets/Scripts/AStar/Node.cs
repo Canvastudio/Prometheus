@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GridMaster
+namespace Pathfinding
 {
     public class Node
     {
@@ -10,8 +10,13 @@ namespace GridMaster
         public int y;
         public int z;
 
+		//current node Cost
+		public float nCost;
+
         //Node's costs for pathfinding purposes
         public float hCost;
+
+		//parent gCost + node nCost
         public float gCost;
         
         public float fCost
@@ -23,6 +28,7 @@ namespace GridMaster
         }
 
         public Node parentNode;
+
         public bool isWalkable = true;
         
         //Reference to the world object so we can have the world position of the node among other things
@@ -30,6 +36,7 @@ namespace GridMaster
 
         //Types of nodes we can have, we will use this later on a case by case examples
         public NodeType nodeType;
+
         public enum NodeType
         {
             ground,
