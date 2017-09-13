@@ -35,6 +35,10 @@ public class Brick : MonoBehaviour {
     }
 
     private BrickBlock _brickBlock = BrickBlock.NIL;
+
+    public int row;
+    public int column;
+
 #endregion
 
 

@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class BrickCore : SingleObject<BrickCore> , IGetNode {
+public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
+
+    [SerializeField]
+    Transform _mapRoot;
+
+    [SerializeField]
+    Brick _brickPrefab;
 
 	public Node GetNode(int row, int column)
 	{
@@ -14,4 +20,9 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 	{
 		return null;
 	}
+
+    public void CreateBrickGroup(ulong groupID)
+    {
+        MapConfig map = SuperConfig.Instance.GetConfigDataById<MapConfig>(groupID);
+    }
 }
