@@ -1,12 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
+public interface ISingleHandler
+{
+    void CleanData();
+    void ResetData();
+}
+
 /// <summary>
 /// 继承该类以实现单例模式，使用Init代替new进行初始化
 /// </summary>
-public abstract class SingleObject<T> where T : new()
+public class SingleObject<T> : ISingleHandler where T : new() 
 {
-    private static bool alow;
     private static T _instance;
     public static T Instance
     {
@@ -14,8 +19,9 @@ public abstract class SingleObject<T> where T : new()
         {
             if (_instance == null)
             {
-                alow = true;
                 _instance = new T();
+
+                SingleManager.RegisterSingle(_instance as ISingleHandler);
             }
             return _instance;
         }
@@ -23,14 +29,15 @@ public abstract class SingleObject<T> where T : new()
 
     protected SingleObject()
     {
-        if (!alow) throw new ArgumentException("单利模式不能使用new，使用Instance访问唯一对象\nError@" + typeof(T));
-        alow = false;
         Init();
     }
+
     /// <summary>
     /// 单利的初始化方法，代替new
     /// </summary>
-    protected abstract void Init();
+    protected virtual void Init() { }
+    public virtual void CleanData() { }
+    public virtual void ResetData() { CleanData(); Init(); }
 }
 
 
@@ -38,7 +45,7 @@ public abstract class SingleObject<T> where T : new()
 /// <summary>
 /// MonoBehaviour的单例模式，使用Init替代Awake
 /// </summary>
-public abstract class SingleGameObject<T> : MonoBehaviour
+public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler
 {
     private static T _instance;
 
@@ -46,21 +53,35 @@ public abstract class SingleGameObject<T> : MonoBehaviour
     {
         get
         {
-            //if (_instance == null) throw new Exception("\n1. "+typeof(T) + "没有绑定GameObject   2. " + typeof(T)+"中使用了Awake");
+            if (_instance == null)
+            {
+                //if (_instance == null) throw new Exception("\n1. "+typeof(T) + "没有绑定GameObject   2. " + typeof(T)+"中使用了Awake");
+                _instance = (GameObject.FindObjectOfType(typeof(T)) as GameObject).GetComponent<T>();
+
+                SingleManager.RegisterSingle(_instance as ISingleHandler);
+            }
+
             return _instance;
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
-        if (_instance != null) throw new Exception("出现多个对象\nError@" + typeof(T));
-        _instance = GetComponent<T>();
-        Init();
+        if (_instance == null)
+        {
+            _instance = GetComponent<T>();
+
+            SingleManager.RegisterSingle(_instance as ISingleHandler);
+
+            Init();
+        }
     }
 
     /// <summary>
     /// 单利的初始化方法，代替new
     /// </summary>
-    protected abstract void Init();
+    protected virtual void Init() { }
+    public virtual void CleanData() { }
+    public virtual void ResetData() { CleanData();Init(); }
 
 }
