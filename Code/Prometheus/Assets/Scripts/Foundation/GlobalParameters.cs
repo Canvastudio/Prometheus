@@ -33,10 +33,7 @@ public class GlobalParameters
 
 }
 
-public enum DamageType
-{
-    Physical,
-}
+
 
 public struct Attack
 {
