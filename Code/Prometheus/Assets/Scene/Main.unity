@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.5748249, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -177,8 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee72e4cda525b4ac3bee05d4d535c3d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapRoot: {fileID: 733013760}
-  brickPrefab: {fileID: 114494466525321234, guid: a6481a8d07c70c74a86237663733c2b0,
+  _mapRoot: {fileID: 733013760}
+  _brickPrefab: {fileID: 114494466525321234, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
 --- !u!1 &767272855
 GameObject:
