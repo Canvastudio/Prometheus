@@ -11,6 +11,8 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     [SerializeField]
     Brick _brickPrefab;
 
+    MapConfig currentLevel;
+    
 	public Node GetNode(int row, int column)
 	{
 		return GetNode(row, 0 , column);
@@ -21,8 +23,19 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 		return null;
 	}
 
-    public void CreateBrickGroup(ulong groupID)
+    public void CreateBrickGroup(int distance)
     {
-        MapConfig map = SuperConfig.Instance.GetConfigDataById<MapConfig>(groupID);
+        var mapData = MapConfig.GetConfigDataList<MapConfig>();
+
+        ulong levelId = 0;
+
+        for (int i = mapData.Count - 1; i >= 0; ++i)
+        {
+            if (mapData[i].distance > distance)
+            {
+                levelId = mapData[i].id;
+            }
+        }
+
     }
 }
