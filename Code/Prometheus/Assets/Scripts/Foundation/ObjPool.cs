@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIObj
+public class Obj
 {
     public Object obj;
+
 	public GameObject m_gameobject;
+
     public int id;
-    public UIObj(Object o, int _id = int.MaxValue)
+
+    public Obj(Object o, int _id = int.MaxValue)
     {
         obj = o;
 		m_gameobject = (GameObject)obj;
@@ -15,40 +18,55 @@ public class UIObj
     }
 }
 
+public static class ObjExtend
+{
+    public static void Push(this List<Obj> l, Obj o)
+    {
+        l.Add(o);
+    }
+
+    public static Obj Kick(this List<Obj> l, int id)
+    {
+        var res = l[id];
+
+        l.RemoveAt(id);
+
+        return res;
+    }
+
+    public static Obj Pop(this List<Obj> l)
+    {
+        if (l.Count == 0) return null;
+
+        var res = l[l.Count - 1];
+
+        l.RemoveAt(l.Count - 1);
+
+        return res;
+    }
+
+    public static Obj Peek(this List<Obj> l)
+    {
+        if (l.Count == 0) return null;
+
+        return l[l.Count - 1];
+    }
+}
+
+
 class UNode
 {
     public bool instantiate = true;
     public Component component;
     public Object source;
-    public List<UIObj> u = new List<UIObj>();
-    public List<UIObj> uu = new List<UIObj>();
+    public List<Obj> u = new List<Obj>();
+    public List<Obj> uu = new List<Obj>();
     public int capacity;
 }
 
-
-public class UIObjPool : MonoBehaviour {
+public class ObjPool : SingleGameObject<ObjPool> {
 
     int _id = int.MinValue;
-    static UIObjPool _instance;
-    public static UIObjPool instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject go = new GameObject("UIObjPool");
-                go.hideFlags = HideFlags.DontSave;
-                _instance = go.AddComponent<UIObjPool>();
-            }
-
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
 
     private Dictionary<string, UNode> Data = new Dictionary<string, UNode>();
 
@@ -113,7 +131,7 @@ public class UIObjPool : MonoBehaviour {
                 o = source;
             }
 
-            n.uu.Push(new UIObj(o, _id++));
+            n.uu.Push(new Obj(o, _id++));
 
             ++m;
 
@@ -163,12 +181,12 @@ public class UIObjPool : MonoBehaviour {
                 if (Data[name].instantiate)
                 {
                     res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new UIObj(res, _id++));
+                    Data[name].u.Push(new Obj(res, _id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new UIObj(res, _id++));
+                    Data[name].u.Push(new Obj(res, _id++));
                 }
             }
 
@@ -181,12 +199,12 @@ public class UIObjPool : MonoBehaviour {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new UIObj(res, _id++));
+                Data[name].u.Push(new Obj(res, _id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new UIObj(res, _id++));
+                Data[name].u.Push(new Obj(res, _id++));
             }
 
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -231,12 +249,12 @@ public class UIObjPool : MonoBehaviour {
                 {
                     if (Data[name].source != null)
                         res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new UIObj(res, _id++));
+                    Data[name].u.Push(new Obj(res, _id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new UIObj(res, _id++));
+                    Data[name].u.Push(new Obj(res, _id++));
                 }
             }
 
@@ -247,12 +265,12 @@ public class UIObjPool : MonoBehaviour {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new UIObj(res, _id++));
+                Data[name].u.Push(new Obj(res, _id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new UIObj(res, _id++));
+                Data[name].u.Push(new Obj(res, _id++));
             }
      
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -342,7 +360,7 @@ public class UIObjPool : MonoBehaviour {
                     o = Data[name].source;
                 }
 
-                Data[name].uu.Push(new UIObj(o, _id++));
+                Data[name].uu.Push(new Obj(o, _id++));
             }
         }
     }
@@ -383,5 +401,12 @@ public class UIObjPool : MonoBehaviour {
         }
 
         _id = int.MinValue;
+    }
+
+    public override void ResetData()
+    {
+        base.ResetData();
+
+        DiscardAll();
     }
 }

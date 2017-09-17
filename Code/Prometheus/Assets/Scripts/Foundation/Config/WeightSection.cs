@@ -27,6 +27,7 @@ public class WeightSection
         for (int i = 0; i < arg.rateList.Length; i++)
         {
             totle += 1f;
+            arg.weightList = new float[arg.rateList.Length];
             arg.weightList[i] = 1f;
             arg.rateList[i] = totle;
         }

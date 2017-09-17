@@ -53,17 +53,23 @@ public class SuperConfig : SingleObject<SuperConfig>
     /// 读取传入路径的txt，如果不传递参数，自动读取Resources/LoadPath/textPath.asset
     /// 异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
     /// </summary>
-    public void LoadAsync(string[] names = null)
+    public System.Collections.IEnumerator LoadAsync(string[] names = null)
     {
         isDone = false;
         var check = names ?? SuperTool.GetConfigData("DefaultPath", "Config");
+
         foreach (string t in check)
         {
             ResourceRequest data = Resources.LoadAsync<TextAsset>(t);
             resDatas.Add(data);
         }
 
-        SuperTimer.Instance.RegisterFrameFunction(CheckRes);
+        while (!CheckRes(null))
+        {
+            yield return 0;
+        }
+
+        //SuperTimer.Instance.RegisterFrameFunction(CheckRes);
     }
 
     /// <summary>
