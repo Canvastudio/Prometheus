@@ -64,12 +64,9 @@ public class SuperConfig : SingleObject<SuperConfig>
             resDatas.Add(data);
         }
 
-        while (!CheckRes(null))
-        {
-            yield return 0;
-        }
+        SuperTimer.Instance.RegisterFrameFunction(CheckRes);
 
-        //SuperTimer.Instance.RegisterFrameFunction(CheckRes);
+        yield return new WaitUntil(() => IsDone);
     }
 
     /// <summary>

@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this);
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        //加载数据
-        //SuperTimer.Instance.CoroutineStart(GameStateMachine.Instance.SwitchGameState(GameState.LOAD_DATA), this);
-       
+        SuperTimer.Instance.CreatAndBound(this, 30, true);
+
+        yield return SuperTimer.Instance.CoroutineStart(GameStateMachine.Instance.Begin(Predefine.GAME_LOADDATA), this);
     }
 }
