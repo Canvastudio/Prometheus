@@ -631,9 +631,9 @@ public class SuperTool
     /// <summary>
     /// 将一个四则混合运算的字符串转换成逆波兰式字符串
     /// </summary>
-    public static string ToRpn(string str)
+    public static string ToRpn(string input)
     {
-        str = str.Trim();
+        string str = ConverSpace(input);
         if (string.IsNullOrEmpty(str)) return null;
         string left = null;
         Regex reg = new Regex(@"[=]");
@@ -673,11 +673,7 @@ public class SuperTool
         int check = 0;
         for (int i = 0; i < temp.Length; i++)
         {
-            if (++check > 500)
-            {
-                Debug.LogError("死循环");
-                throw new Exception();
-            }
+            if (++check > 500) throw new Exception("逆波兰式转换发生死循环，公式不对？？  →" + input);
             if (IsOperator(temp[i]) == 0) result.Append(temp[i] + ',');
             else if (IsOperator(temp[i]) == 2)
             {
@@ -749,6 +745,7 @@ public class SuperTool
     /// </summary>
     public static Color CreateColor(string hex)
     {
+        hex = ConverSpace(hex);
         Color color = new Color();
         Regex regex = new Regex(@"^..");
         string str_r = regex.Match(hex).ToString();
