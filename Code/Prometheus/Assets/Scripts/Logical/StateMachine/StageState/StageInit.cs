@@ -3,23 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInit : IState
-{
+public class StageInit : IState {
     public string name
     {
         get
         {
-            return Predefine.GAME_INIT;
+            return Predefine.STAGE_INIT;
         }
     }
 
     public IEnumerator DoState()
     {
-        yield return CoroCore.Instance.StartInnerCoro(SuperConfig.Instance.LoadAsync());
+        BrickCore.Instance.CreatePrimitiveStage();
+
+        return null;
     }
 
     public IState GetNextState()
     {
-        return GameStateMachine.Instance.GetStateByName(Predefine.GAME_STAGE);
+        throw new NotImplementedException();
     }
 }

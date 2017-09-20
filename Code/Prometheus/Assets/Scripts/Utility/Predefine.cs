@@ -6,6 +6,9 @@ public static class Predefine {
 
     public const string GAME_INIT = "Game_Init";
     public const string GAME_LOADDATA = "Game_LoadData";
+    public const string GAME_STAGE = "Game_Stage";
+
+    public const string STAGE_INIT = "Stage_Init";
 
     public const int BRICK_VIEW_WIDTH = 6;
 

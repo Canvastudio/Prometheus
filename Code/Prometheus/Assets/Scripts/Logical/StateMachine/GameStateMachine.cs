@@ -11,6 +11,7 @@ public class GameStateMachine : StateMachineBase<GameStateMachine> {
 
         Register(new GameLoadData());
         Register(new GameInit());
+        Register(new GameStage());
     }
 }
 
