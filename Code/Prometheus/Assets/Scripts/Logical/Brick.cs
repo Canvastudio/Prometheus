@@ -4,8 +4,12 @@ using UnityEngine;
 using Pathfinding;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public class Brick : MonoBehaviour, IPointerClickHandler {
+
+    [SerializeField]
+    Image picture;
 
 #region BrickInfo
     public BrickType brickType
@@ -16,6 +20,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
         }
     }
 
+    [SerializeField]
     private BrickType _brickType;
 
     public BrickExplored brickExplored
@@ -26,6 +31,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
         }
     }
 
+    [SerializeField]
     private BrickExplored _brickExplored = BrickExplored.UNEXPLORED;
 
     public BrickBlock brickBlock
@@ -36,6 +42,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
         }
     }
 
+    [SerializeField]
     private BrickBlock _brickBlock = BrickBlock.NIL;
 
     public int row
@@ -53,8 +60,9 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
             return _column; 
         }
     }
-
+    [SerializeField]
     private int _row;
+    [SerializeField]
     private int _column;
 
     #endregion
@@ -65,6 +73,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
 		get { return _pathNode; }
 	}
 
+    [SerializeField]
 	private Node _pathNode;
 
     public void OnPointerClick(PointerEventData eventData)
@@ -74,9 +83,20 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
 
     public void Init(int row, int column, BrickType type)
     {
+       //Debug.Log("Add New brick, row: " + row + " column: " + column);
+
         _row = row;
         _column = column;
         _brickType = type;
+
+        if (type == BrickType.OBSTACLE)
+        {
+            picture.sprite = BrickCore.Instance.brickView.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
+        }
+        else if (type == BrickType.Normal)
+        {
+           picture.sprite = BrickCore.Instance.brickView.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_UNREACHABLE);
+        }
 
         _pathNode = new Node()
         {
@@ -93,6 +113,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
 public enum BrickType
 {
     EMPTY,
+    Normal,
     OBSTACLE,
     MONSTER,
     TRADER,

@@ -11,7 +11,14 @@ public class CoroCore : SingleGameObject<CoroCore>{
 
 	public IEnumerator StartInnerCoro(IEnumerator coro)
 	{
-		yield return StartCoroutine(coro);
+		if (coro != null)
+		{
+			yield return StartCoroutine(coro);
+		}
+		else
+		{
+			yield return null;
+		}
 	}
 
 	public void StopCoro(IEnumerator coro)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.5748249, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -316,6 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _brickPrefab: {fileID: 114494466525321234, guid: a6481a8d07c70c74a86237663733c2b0,
+    type: 2}
+  brickAtlas: {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184,
     type: 2}
   viewBrickRow: 9
 --- !u!114 &733013763

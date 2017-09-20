@@ -16,7 +16,7 @@ public class GameLoadData : IState
 
     public IEnumerator DoState()
     {
-        yield return SuperTimer.Instance.CoroutineStart(SuperConfig.Instance.LoadAsync(), this);
+        yield return CoroCore.Instance.StartInnerCoro(SuperConfig.Instance.LoadAsync());
     }
 
     public IState GetNextState()

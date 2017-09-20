@@ -2,7 +2,8 @@
 using System.Collections;
 
 namespace Pathfinding
-{
+{   
+    [System.Serializable]
     public class Node
     {
         //Node's position in the grid
@@ -36,7 +37,7 @@ namespace Pathfinding
 
         //Types of nodes we can have, we will use this later on a case by case examples
         public NodeType nodeType;
-
+        
         public enum NodeType
         {
             ground,

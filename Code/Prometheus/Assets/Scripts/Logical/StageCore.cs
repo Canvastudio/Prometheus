@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class StageCore : SingleObject<StageCore> {
 
-
+    public void CreateAvatar()
+    {
+        
+    }
 }

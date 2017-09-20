@@ -20,6 +20,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
     ulong curLevelId = 0;
     WeightSection _weightSection;
 
+    BrickData data = new BrickData();
 
     protected override void Init()
     {
@@ -37,9 +38,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         while (_row < max_Distance)
         {
-            CreateBrickModuel(_row);
-
-            _row += 1;
+            _row += CreateBrickModuel(_row);
         }
     }
 
@@ -50,10 +49,10 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
 	public Node GetNode(int x, int y ,int z)
 	{
-		return null;
+		return data.GetBrick(x,z).pathNode;
 	}
 
-    public void CreateBrickModuel(int distance)
+    public int CreateBrickModuel(int distance)
     {
         var map_Data = MapConfig.GetConfigDataList<MapConfig>();
 
@@ -100,13 +99,15 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
             {
                 var brick_Desc = moduel.GetBrickInfo(row, col);
 
+                Brick _brick = null;
+
                 if (string.IsNullOrEmpty(brick_Desc))
                 {
-                    brickView.AddEmpty();
+                    _brick = brickView.AddEmpty();
                 }
                 else if ("o" == brick_Desc)
                 {
-                    brickView.Addobstacle();
+                    _brick = brickView.Addobstacle();
                 }
                 else if (brick_Desc.Contains('r'))
                 {
@@ -116,12 +117,15 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                     if (Random.Range(0, 1) <= probility)
                     {
-                        brickView.AddEnemy(int.Parse(monster_Desc[1]));
+                        _brick = brickView.AddEnemy(int.Parse(monster_Desc[1]));
                     }
                 }
                     
+                data.PushBrick( row, col, _brick);
             }
 
         }
+
+        return moduel_RowCount;
     }
 }

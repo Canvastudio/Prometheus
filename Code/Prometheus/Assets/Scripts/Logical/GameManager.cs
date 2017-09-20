@@ -13,6 +13,6 @@ public class GameManager : MonoBehaviour {
     {
         SuperTimer.Instance.CreatAndBound(this, 30, true);
 
-        yield return SuperTimer.Instance.CoroutineStart(GameStateMachine.Instance.Begin(Predefine.GAME_LOADDATA), this);
+        yield return CoroCore.Instance.StartInnerCoro(GameStateMachine.Instance.Begin(Predefine.GAME_LOADDATA));
     }
 }

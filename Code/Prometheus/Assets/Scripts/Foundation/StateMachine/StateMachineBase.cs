@@ -70,7 +70,7 @@ public class StateMachineBase<T> : SingleObject<T> where T : new()
         {
             while (_gameState != null)
             {
-                yield return SuperTimer.Instance.CoroutineStart(_gameState.DoState(), _gameState);
+                yield return CoroCore.Instance.StartInnerCoro(_gameState.DoState());
                 _gameState = _gameState.GetNextState();
             }
         }

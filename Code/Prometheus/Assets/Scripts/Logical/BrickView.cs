@@ -1,42 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.U2D;
 
 public class BrickView : MonoBehaviour {
 
-    private int lastRow;
-    private int lastColumn;
+    private int lastRow = 0;
+    private int lastColumn = 0;
 
     [SerializeField]
     Brick _brickPrefab;
+    [SerializeField]
+    public SpriteAtlas brickAtlas;
 
     public int viewBrickRow = 9;
 
     public List<Brick[]> brickGrid = new List<Brick[]>();
 
-    public void AddEmpty(int row = -1, int col = -1)
+    public Brick AddEmpty(int row = -1, int col = -1)
     {
-        AddBrick(row, col, BrickType.EMPTY);
+        return AddBrick(row, col, BrickType.EMPTY);
     }
 
-    public void AddEnemy(int power, int row = -1, int col = -1)
+    public Brick AddEnemy(int power, int row = -1, int col = -1)
     {
-        AddBrick(row, col, BrickType.MONSTER);
+        return AddBrick(row, col, BrickType.MONSTER);
     }
 
-    public void Addobstacle(int row = -1, int col = -1)
+    public Brick Addobstacle(int row = -1, int col = -1)
     {
-        AddBrick(row, col, BrickType.OBSTACLE);
+        return AddBrick(row, col, BrickType.OBSTACLE);
     }
 
-    private void AddBrick(int row, int col, BrickType type)
+    public Brick AddNormal(int row = -1, int col = -1)
     {
-        row = CheckRow(row);
-        col = CheckCol(col);
+        return AddBrick(row, col, BrickType.Normal);
+    }
+
+    private Brick AddBrick(int row, int col, BrickType type)
+    {
+        if (col == -1) 
+        {
+            if (lastColumn + 1 > Predefine.BRICK_VIEW_WIDTH - 1)
+            {
+                col = lastColumn = 0;
+                row = ++lastRow;
+            }
+            else
+            {
+                col = ++lastColumn;
+                row = lastRow;
+            }
+        }
 
         Brick _brick = GameObject.Instantiate<Brick>(_brickPrefab, this.transform);
 
         _brick.Init(row, col, type);
+
+        #if UNITY_EDITOR
+        _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.brickType.ToString();
+        #endif
 
         switch(type)
         {
@@ -50,17 +74,20 @@ public class BrickView : MonoBehaviour {
                 //未处理
                 break;
         }
+
+        return _brick;
     }
 
-    private int CheckRow(int row)
+    private int Check(int row, int col)
     {
-        if (row == -1) return lastRow + 1;
+        if (row == -1) return ++lastRow;
         else return row;
+
+        if (col == -1) 
+        {
+            lastColumn = lastColumn + 1 > 5 ? 1 : lastColumn + 1;
+            lastRow += 1;
+        }
     }
 
-    private int CheckCol(int col)
-    {
-        if (col == -1) return col = lastColumn + 1 > 5 ? 1 : lastColumn + 1;
-        else return col;
-    }
 }

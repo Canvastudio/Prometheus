@@ -45,7 +45,7 @@ public class SingleObject<T> : ISingleHandler where T : new()
 /// <summary>
 /// MonoBehaviour的单例模式，使用Init替代Awake
 /// </summary>
-public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler
+public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler where T: Component
 {
     private static T _instance;
 
@@ -56,7 +56,18 @@ public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler
             if (_instance == null)
             {
                 //if (_instance == null) throw new Exception("\n1. "+typeof(T) + "没有绑定GameObject   2. " + typeof(T)+"中使用了Awake");
-                _instance = (GameObject.FindObjectOfType(typeof(T)) as GameObject).GetComponent<T>();
+                var go = (GameObject.FindObjectOfType(typeof(T)) as GameObject);
+                
+                if (go != null)
+                {
+                    _instance = go.GetComponent<T>();
+                }
+                else
+                {
+                    _instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
+                }
+
+                DontDestroyOnLoad(go);
 
                 SingleManager.RegisterSingle(_instance as ISingleHandler);
             }

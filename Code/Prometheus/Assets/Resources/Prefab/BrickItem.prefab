@@ -56,6 +56,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e37619fac788654d8064f90ceb78d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  picture: {fileID: 114750807176929424}
+  _brickType: 0
+  _brickExplored: 0
+  _brickBlock: 0
+  _row: 0
+  _column: 0
+  _pathNode:
+    x: 0
+    y: 0
+    z: 0
+    nCost: 0
+    hCost: 0
+    gCost: 0
+    isWalkable: 1
+    worldObject: {fileID: 0}
+    nodeType: 0
 --- !u!114 &114750807176929424
 MonoBehaviour:
   m_ObjectHideFlags: 1
