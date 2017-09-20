@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class B : MonoBehaviour {
+public class ConfigTest : MonoBehaviour
+{
+
+
 
 	// Use this for initialization
 	void Start () {
