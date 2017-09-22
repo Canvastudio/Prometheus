@@ -117,7 +117,15 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                     if (Random.Range(0, 1) <= probility)
                     {
-                        _brick = brickView.AddEnemy(int.Parse(monster_Desc[1]));
+                        var enemys = next_Map.enemys.ToArray();
+                        var enemy_Index = Random.Range(0, enemys.Length);
+                        var enemy_Id = enemys[enemy_Index];
+
+                        int lv_min = next_Map.enemy_level[0];
+                        int lv_max = next_Map.enemy_level[1];
+                        int lv = Random.Range(lv_min, lv_max + 1);
+                        
+                        _brick = brickView.AddEnemy(int.Parse(monster_Desc[1]), enemy_Id, lv);
                     }
                 }
                     
