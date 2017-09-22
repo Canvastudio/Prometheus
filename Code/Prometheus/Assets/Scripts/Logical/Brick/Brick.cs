@@ -65,6 +65,11 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     [SerializeField]
     private int _column;
 
+    /// <summary>
+    /// 当前格子得怪物，为空表示没有怪物
+    /// </summary>
+    public Monster monster;
+
     #endregion
 
 
@@ -80,6 +85,7 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     {
         throw new NotImplementedException();
     }
+
 
     public void Init(int row, int column, BrickType type)
     {
@@ -107,6 +113,20 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
             x = row,
             z = column
         };
+    }
+
+    /// <summary>
+    /// 在当前网格放置一个全新的怪物
+    /// </summary>
+    /// <param name="power"></param>
+    /// <param name="id"></param>
+    /// <param name="lv"></param>
+    public void CreateMonter(int power, ulong id, int lv)
+    {
+        //创建数据
+        monster = StageCore.Instance.CreateMonster(power, id, lv);
+
+        //根据数据创建view
     }
 }
 

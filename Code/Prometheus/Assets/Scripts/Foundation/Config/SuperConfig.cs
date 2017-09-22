@@ -67,6 +67,8 @@ public class SuperConfig : SingleObject<SuperConfig>
         SuperTimer.Instance.RegisterFrameFunction(CheckRes);
 
         yield return new WaitUntil(() => IsDone);
+
+        SuperTimer.Instance.LogoutFrameFunction(CheckRes);
     }
 
     /// <summary>

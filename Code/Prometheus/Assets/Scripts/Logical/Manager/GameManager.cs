@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this);
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
         SuperTimer.Instance.CreatAndBound(this, 30, true);
 
-        yield return CoroCore.Instance.StartInnerCoro(GameStateMachine.Instance.Begin(Predefine.GAME_LOADDATA));
+        CoroCore.Instance.StartCoro(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
     }
 }

@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProperty : LivePropery
+public class PlayerProperty : PropertyData
 {
-    public float AtkSpped { get { return 0; } }
+    public PlayerProperty InitProperty(
+    float hp,
+    float speed,
+    float melee,
+    float laser,
+    float cartridge)
+    {
+        SetFloatProperty("mhp", hp);
+        SetFloatProperty("speed", speed);
+        SetFloatProperty("melee", melee);
+        SetFloatProperty("laser", laser);
+        SetFloatProperty("cartridge", cartridge);
 
-    public float ReloadSpped { get { return 0; } }
+        return this;
+    }
 
-    public float Speed { get { return 1; } }
-
-    public float Capacity { get { return 10; } }
-
-    public float Motorized { get { return 0; } }
 }

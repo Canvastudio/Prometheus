@@ -23,14 +23,17 @@ public class BrickView : MonoBehaviour {
         return AddBrick(row, col, BrickType.EMPTY);
     }
 
-    public Brick AddEnemy(int power, int row = -1, int col = -1)
+    public Brick AddEnemy(int power, ulong id, int lv, int row = -1, int col = -1)
     {
-        return AddBrick(row, col, BrickType.MONSTER);
+        var brick = AddBrick(row, col, BrickType.MONSTER);
+        brick.CreateMonter(power, id, lv);
+        return brick;
     }
 
     public Brick Addobstacle(int row = -1, int col = -1)
     {
-        return AddBrick(row, col, BrickType.OBSTACLE);
+        var brick = AddBrick(row, col, BrickType.OBSTACLE);
+        return brick;
     }
 
     public Brick AddNormal(int row = -1, int col = -1)
@@ -77,17 +80,4 @@ public class BrickView : MonoBehaviour {
 
         return _brick;
     }
-
-    private int Check(int row, int col)
-    {
-        if (row == -1) return ++lastRow;
-        else return row;
-
-        if (col == -1) 
-        {
-            lastColumn = lastColumn + 1 > 5 ? 1 : lastColumn + 1;
-            lastRow += 1;
-        }
-    }
-
 }
