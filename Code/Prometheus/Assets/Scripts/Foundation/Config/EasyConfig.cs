@@ -29,8 +29,10 @@ public class EasyConfig : IEnumerable
         get { return contentList.Count; }
     }
 
-    public static EasyConfig GetConfig(string path)
+    public static EasyConfig GetConfig(string configPath)
     {
+        Regex reg=new Regex(@"\.txt$");
+        string path = reg.Replace(configPath.Trim(),"");
         if (_totleDic == null) _totleDic = new Dictionary<string, EasyConfig>();
         if (_totleDic.ContainsKey(path)) return _totleDic[path];
         var res = Resources.Load<TextAsset>(path);

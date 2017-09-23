@@ -50,7 +50,7 @@ public class SuperConfig : SingleObject<SuperConfig>
 
 
     /// <summary>
-    /// 读取传入路径的txt，如果不传递参数，自动读取Resources/LoadPath/textPath.asset
+    /// 读取传入路径的txt，如果不传递参数，自动读取Resources/DefaultPath.txt
     /// 异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
     /// </summary>
     public System.Collections.IEnumerator LoadAsync(string[] names = null)
