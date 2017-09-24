@@ -28,6 +28,30 @@ public class StageCore : SingleObject<StageCore> {
             lv_Property.m_cartridge * propertys[pwr, 4]
             );
 
+        int skill_Count = config.skill_normal.Count();
+
+        for(int i = 0; i < skill_Count; ++i)
+        {
+            string type = config.skill_normal[i, 0];
+            string skill_Id = config.skill_normal[i, 1];
+
+            switch (type)
+            {
+                case "p":
+                    PassiveSkillsConfig pconfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_Id);
+                    monster.fightComponet.passiveSkillConfigs.Add(pconfig);
+                    break;
+                case "a":
+                    ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_Id);
+                    monster.fightComponet.activeSkillConfigs.Add(aconfig);
+                    break;
+                case "s":
+                    SummonSkillsConfig sconfig = ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(skill_Id);
+                    monster.fightComponet.summonSkillConfigs.Add(sconfig);
+                    break;
+            }
+        }
+
         RegisterMonster(monster);
 
         return monster;

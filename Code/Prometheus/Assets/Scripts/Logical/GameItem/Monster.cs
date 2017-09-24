@@ -8,8 +8,13 @@ public class Monster {
 
     public ulong uid = 0;
 
+    public Brick monsterBrick;
+
     /// <summary>
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
+
+    public FightComponet fightComponet;
+
 }
