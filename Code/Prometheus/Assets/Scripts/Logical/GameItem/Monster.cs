@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster {
+public class Monster : MonoBehaviour{
      
     public MonsterProperty property;
 
@@ -15,6 +15,9 @@ public class Monster {
     /// </summary>
     public MonsterConfig config;
 
+    /// <summary>
+    /// 战斗组件
+    /// </summary>
     public FightComponet fightComponet;
 
 }

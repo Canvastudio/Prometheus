@@ -8,6 +8,7 @@ public class StageCore : SingleObject<StageCore> {
 
     public Monster CreateMonster(int pwr, ulong id, int lv)
     {
+        //TODO:替换成正式的生成一个游戏中的对象
         Monster monster = new Monster();
 
         MonsterConfig config = ConfigDataBase.GetConfigDataById<MonsterConfig>(id);
@@ -27,6 +28,8 @@ public class StageCore : SingleObject<StageCore> {
             lv_Property.m_laser * propertys[pwr, 3],
             lv_Property.m_cartridge * propertys[pwr, 4]
             );
+
+        monster.fightComponet = new FightComponet();
 
         int skill_Count = config.skill_normal.Count();
 
@@ -51,6 +54,10 @@ public class StageCore : SingleObject<StageCore> {
                     break;
             }
         }
+
+        monster.fightComponet.SortAcitveSkill();
+
+        monster.fightComponet.ownerObject = monster;
 
         RegisterMonster(monster);
 
