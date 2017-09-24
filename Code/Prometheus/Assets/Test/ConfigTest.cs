@@ -6,8 +6,9 @@ public class ConfigTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SuperConfig.Instance.Load(SuperTool.GetConfigData("DefaultPath.txt", "Config"));
-        Debug.Log(TotemConfig.GetConfigDataById<TotemConfig>(1).totemType);
+        //SuperConfig.Instance.Load(SuperTool.GetConfigData("DefaultPath.txt", "Config"));
+	    SuperConfig.Instance.Load();
+        Debug.Log(BoxDropConfig.GetConfigDataById<BoxDropConfig>(1).distance);
         //SuperTool.ToRpn()
 
         //var t=SuperTool.CreateWeightSection(new List<int> { 1, 2, 3 });

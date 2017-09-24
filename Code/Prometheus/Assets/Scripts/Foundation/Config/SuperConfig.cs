@@ -103,23 +103,23 @@ public class SuperConfig : SingleObject<SuperConfig>
         string dataString = textAsset.text;
         string className = SuperTool.ConverSpace(textAsset.name);
         string[] dataLine = dataString.Split('\r');
-        string[] typeWhithArr = dataLine[1].Split('\t');//第二行是类型+数组标记
-        string[] parType = new string[typeWhithArr.Length];//类型
-        string[] splitMak = new string[typeWhithArr.Length];//切分标记
+        string[] typeAndArr = dataLine[1].Split('\t');//第二行是类型+数组标记
+        string[] parType = new string[typeAndArr.Length];//类型
+        string[] splitMak = new string[typeAndArr.Length];//切分标记
         Regex reg = new Regex(@"\[.+\]");
-        for (int i = 0; i < typeWhithArr.Length; i++)
+        for (int i = 0; i < typeAndArr.Length; i++)
         {
-            typeWhithArr[i] = ReplaceQuote(typeWhithArr[i]);
-            if (reg.IsMatch(typeWhithArr[i]))
+            typeAndArr[i] = ReplaceQuote(typeAndArr[i]);
+            if (reg.IsMatch(typeAndArr[i]))
             {
-                splitMak[i] = reg.Match(typeWhithArr[i]).Value;
-                parType[i] = typeWhithArr[i].Replace(splitMak[i], "");
+                splitMak[i] = reg.Match(typeAndArr[i]).Value;
+                parType[i] = typeAndArr[i].Replace(splitMak[i], "");
                 splitMak[i] = splitMak[i].Substring(1, splitMak[i].Length - 2);
             }
             else
             {
                 splitMak[i] = null;
-                parType[i] = typeWhithArr[i];
+                parType[i] = typeAndArr[i];
             }
         }
         string[] parName = dataLine[2].Split('\t');//第三行是变量名
@@ -137,9 +137,10 @@ public class SuperConfig : SingleObject<SuperConfig>
                 parType[j] = SuperTool.ConverSpace(parType[j]);
                 if (!string.IsNullOrEmpty(aData[j]))
                 {
-                    if (parName[j].ToLower() == "linkId")
+                    //强制将id类型修正为ulong
+                    if (parName[j].ToLower() == "id")
                     {
-                        parName[j] = "linkId";
+                        parName[j] = "id";
                         parType[j] = "ulong";
                         splitMak[j] = null;
                     }
