@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 存储怪物信息
+/// </summary>
 public class Monster : MonoBehaviour{
      
     public MonsterProperty property;
@@ -14,10 +17,4 @@ public class Monster : MonoBehaviour{
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
-
-    /// <summary>
-    /// 战斗组件
-    /// </summary>
-    public FightComponet fightComponet;
-
 }

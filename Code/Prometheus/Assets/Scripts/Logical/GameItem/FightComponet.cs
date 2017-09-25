@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightComponet : ITimeDrive {
+public class FightComponet :MonoBehaviour, ITimeDrive {
 
     /// <summary>
     /// ref主动技能配置表
@@ -101,6 +101,7 @@ public class FightComponet : ITimeDrive {
         }
     }
 
+#region active skill region
     public void SortAcitveSkill()
     {
         activeSort.Clear();
@@ -112,6 +113,7 @@ public class FightComponet : ITimeDrive {
 
         activeSort.Sort();
     }
+#endregion
 
     public void OnTurn()
     {

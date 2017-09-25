@@ -16,6 +16,7 @@ public class GameStage : IState
     public IEnumerator DoState()
     {
         BrickCore.Instance.CreatePrimitiveStage();
+        BrickCore.Instance.CreatePlayer();
 
         return null;
     }

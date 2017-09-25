@@ -97,12 +97,12 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
 
         if (type == BrickType.OBSTACLE)
         {
-            picture.sprite = BrickCore.Instance.brickView.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
+            picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
         }
-        else if (type == BrickType.Normal)
-        {
-           picture.sprite = BrickCore.Instance.brickView.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_UNREACHABLE);
-        }
+        //else if (type == BrickType.Normal)
+        //{
+        //   picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_UNREACHABLE);
+        //}
 
         _pathNode = new Node()
         {
@@ -116,27 +116,52 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     }
 
     /// <summary>
-    /// 在当前网格放置一个全新的怪物
+    /// 在当前网格放置一个全新的怪物,由于Grid的刷新问题，要等到下一帧才能获得正确位置，如果有问题会改成
+    /// 手动来设置，而不使用自带的组件来管理位置
     /// </summary>
     /// <param name="power"></param>
     /// <param name="id"></param>
     /// <param name="lv"></param>
-    public void CreateMonter(int power, ulong id, int lv)
+    public Brick CreateMonter(int power, ulong uid, int lv)
     {
         //创建数据
-        monster = StageCore.Instance.CreateMonster(power, id, lv);
+        StartCoroutine(_CreateMonster(power, uid, lv));
 
-        //根据数据创建view
+        return this;
+    }
+
+    public Brick CreatePlayer()
+    {
+        //创建数据
+        StartCoroutine(_CreatePlayer());
+
+        return this;
+    }
+
+    IEnumerator _CreateMonster(int pwr, ulong uid, int lv)
+    {
+        yield return 0;
+
+        GameItemFactory.Instance.CreateMonster(pwr, uid, lv, transform.position);
+    }
+
+    IEnumerator _CreatePlayer()
+    {
+        yield return 0;
+
+        GameItemFactory.Instance.CreatePlayer(transform.position);
     }
 }
 
 public enum BrickType
 {
     EMPTY,
-    Normal,
+    TABLET,
     OBSTACLE,
     MONSTER,
-    TRADER,
+    MAINTENANCE,
+    SUPPLY,
+    TREASURE,
     OTHERS,
 }
 

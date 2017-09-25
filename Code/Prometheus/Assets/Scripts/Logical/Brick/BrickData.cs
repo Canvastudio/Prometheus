@@ -40,4 +40,63 @@ public class BrickData {
 	{
 		bricks.Clear();
 	}
+
+    /// <summary>
+    /// 从存储数据中的第一排中找到一个未被占用的格子
+    /// </summary>
+    /// <returns></returns>
+    public Brick GetFirstRowEmpty()
+    {
+        //:-0 娱乐写法
+        //int v = Random.Range(1, 61); 
+
+        //int tmp = v;
+
+        //var row_Bricks = bricks[0];
+
+        //int m = 0;
+
+        //while (true)
+        //{ 
+        //    if (row_Bricks[m % 6].brickType == BrickType.EMPTY)
+        //    {
+        //        v -= 1;
+
+        //        if (v == 0)
+        //            break;
+        //    }
+
+
+        //    ++m;
+        //    if (m > 6 && tmp =)
+        //}
+
+        //return row_Bricks[m];
+
+        int[] emptyIndex = new int[6];
+
+        var row_Bricks = bricks[0];
+
+        int m = 0;
+
+        for (int i = 0; i< 6; ++i)
+        {
+            if (row_Bricks[i].brickType == BrickType.EMPTY)
+            {
+                emptyIndex[m++] = i;
+            }
+        }
+
+        if (m > 0)
+        {
+            int v = Random.Range(0, m);
+
+            return row_Bricks[emptyIndex[v]];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 }

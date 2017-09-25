@@ -36,11 +36,6 @@ public class BrickView : MonoBehaviour {
         return brick;
     }
 
-    public Brick AddNormal(int row = -1, int col = -1)
-    {
-        return AddBrick(row, col, BrickType.Normal);
-    }
-
     private Brick AddBrick(int row, int col, BrickType type)
     {
         if (col == -1) 
