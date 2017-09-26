@@ -257,13 +257,8 @@ public class SuperConfig : SingleObject<SuperConfig>
         if (value == null) return null;
         if (value == "") return "";
         value = SuperTool.ConverSpace(value);
-        value = Regex.Replace(value, @"^""+", "");
-        value = Regex.Replace(value, @"""+$", "");
-
-        //Regex reg1 = new Regex(@"^""+");
-        //Regex reg2 = new Regex(@"""+$");
-        //if (reg1.IsMatch(value)) value = reg1.Replace(value, "");
-        //if (reg2.IsMatch(value)) value = reg2.Replace(value, "");
+        Regex reg = new Regex(@"^"".*""$");
+        if (reg.IsMatch(value)) value = value.Substring(1, value.Length - 2);
         return value;
     }
 
