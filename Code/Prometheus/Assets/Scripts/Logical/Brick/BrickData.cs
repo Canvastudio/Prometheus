@@ -11,7 +11,8 @@ public class BrickData {
 
 	public Brick GetBrick(int row ,int column)
 	{
-		if (row < _lowestRow) throw new System.ArgumentException("row 不能低于最低的rowzhi");	
+        if (row < _lowestRow) return null; // throw new System.ArgumentException("row 不能低于最低的row: " + _lowestRow);	
+        if (column < 0 || column > 5) return null;
 		if (row > _lowestRow + bricks.Count - 1) throw new System.ArgumentOutOfRangeException("row 超出的限制");
 
 		return bricks[row - _lowestRow][column];

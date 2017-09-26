@@ -15,10 +15,12 @@ public class GameStage : IState
 
     public IEnumerator DoState()
     {
+        //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
+        //生成玩家
         BrickCore.Instance.CreatePlayer();
-
-        return null;
+        //开始执行关卡内部的逻辑循环
+        yield return CoroCore.Instance.StartInnerCoro(StageCore.Instance.RunLoop());
     }
 
     public IState GetNextState()

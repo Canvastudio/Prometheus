@@ -76,7 +76,7 @@ public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler where 
         }
     }
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         if (_instance == null)
         {

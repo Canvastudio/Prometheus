@@ -22,6 +22,7 @@ public class StageView : SingleGameObject<StageView> {
 
     public List<Brick[]> brickGrid = new List<Brick[]>();
 
+#region Add Brick
     public Brick AddEmpty(int row = -1, int col = -1)
     {
         return CreateBrick(row, col, BrickType.EMPTY);
@@ -29,17 +30,17 @@ public class StageView : SingleGameObject<StageView> {
 
     public Brick AddTREASURE(int quality, int row = -1, int col = -1)
     {
-        return CreateBrick(row, col, BrickType.TREASURE);
+        return CreateBrick(row, col, BrickType.TREASURE).CreateTreasure();
     }
 
     public Brick AddSupply(int lv, int row = -1, int col = -1)
     {
-        return CreateBrick(row, col, BrickType.SUPPLY);
+        return CreateBrick(row, col, BrickType.SUPPLY).CreateSupply();
     }
 
     public Brick AddTablet(int id, int row = -1, int col = -1)
     {
-        return CreateBrick(row, col, BrickType.TABLET);
+        return CreateBrick(row, col, BrickType.TABLET).CreateTalbet();
     }
 
     public Brick AddMaintenance(int row = -1, int col = -1)
@@ -86,5 +87,32 @@ public class StageView : SingleGameObject<StageView> {
 #endif
 
         return _brick;
+    }
+    #endregion
+
+    List<Brick> pathBrick = new List<Brick>(20);
+
+    public void SetNodeAsPath(List<Pathfinding.Node> list)
+    {
+        pathBrick.Clear();
+
+        foreach(var node in list)
+        {
+            var brick = node.behavirour as Brick;
+
+            brick.SetAsPathNode();
+
+            pathBrick.Add(brick);
+        }
+    }
+
+    public void CancelPahtNode()
+    {
+        for (int i = 0; i < pathBrick.Count; ++i)
+        {
+            pathBrick[i].CancelAsPathNode();
+        }
+
+        pathBrick.Clear();
     }
 }

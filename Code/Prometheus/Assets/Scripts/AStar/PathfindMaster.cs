@@ -9,7 +9,7 @@ namespace Pathfinding
     public class PathfindMaster : SingleGameObject<PathfindMaster>
 	{
         //The maximum simultaneous threads we allow to open
-        public int MaxJobs = 3;
+        public int MaxJobs = 2;
 
         //Delegates are a variable that points to a function
         public delegate void PathfindingJobComplete(List<Node> path);
@@ -17,13 +17,16 @@ namespace Pathfinding
         private List<Pathfinder> currentJobs;
         private List<Pathfinder> todoJobs;
 
-        void Start()
+        protected override void Awake()
         {
-            currentJobs = new List<Pathfinder>();
-            todoJobs = new List<Pathfinder>();
+            //base.Awake();
+
+            //currentJobs = new List<Pathfinder>();
+            //todoJobs = new List<Pathfinder>();
+            //Update();
         }
-   
-        void Update() 
+
+        void _Update() 
         {
             /*
              * Another way to keep track of the threads we have open would have been to create 
@@ -64,10 +67,14 @@ namespace Pathfinding
             }
         }
 
-        public void RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback, IGetNode nodeManager)
+        public IEnumerator RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback, IGetNode nodeManager)
         {
 			Pathfinder newJob = new Pathfinder(start, target, completeCallback, nodeManager);
-            todoJobs.Add(newJob);
+            newJob.FindPath();
+
+            yield return new WaitUntil(()=> newJob.jobDone);
+
+            newJob.NotifyComplete();
         }
     }
 }

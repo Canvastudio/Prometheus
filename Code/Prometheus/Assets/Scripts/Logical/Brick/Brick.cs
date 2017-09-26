@@ -18,6 +18,10 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
         {
             return _brickType;
         }
+        private set
+        {
+            _brickType = value;
+        }
     }
 
     [SerializeField]
@@ -83,14 +87,12 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new NotImplementedException();
+        Messenger<Brick>.Invoke(StageAction.PlayerClickBrick, this);
     }
 
 
     public void Init(int row, int column, BrickType type)
     {
-       //Debug.Log("Add New brick, row: " + row + " column: " + column);
-
         _row = row;
         _column = column;
         _brickType = type;
@@ -99,22 +101,20 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
         {
             picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
         }
-        //else if (type == BrickType.Normal)
-        //{
-        //   picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_UNREACHABLE);
-        //}
 
         _pathNode = new Node()
         {
-            isWalkable = _brickExplored == BrickExplored.EXPLORED && _brickBlock == BrickBlock.NIL && _brickType == BrickType.EMPTY,
+            //isWalkable = _brickExplored == BrickExplored.EXPLORED && _brickBlock == BrickBlock.NIL && _brickType == BrickType.EMPTY,
+            isWalkable = true,
             nCost = 1f,
-            worldObject = this.gameObject,
+            behavirour = this,
             nodeType = Node.NodeType.ground,
             x = row,
             z = column
         };
     }
 
+#region Add Item
     /// <summary>
     /// 在当前网格放置一个全新的怪物,由于Grid的刷新问题，要等到下一帧才能获得正确位置，如果有问题会改成
     /// 手动来设置，而不使用自带的组件来管理位置
@@ -126,6 +126,30 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     {
         //创建数据
         StartCoroutine(_CreateMonster(power, uid, lv));
+
+        return this;
+    }
+
+    public Brick CreateSupply()
+    {
+        //创建数据
+        StartCoroutine(_CreateSupply());
+
+        return this;
+    }
+
+    public Brick CreateTalbet()
+    {
+        //创建数据
+        StartCoroutine(_CreateTalbet());
+
+        return this;
+    }
+
+    public Brick CreateTreasure()
+    {
+        //创建数据
+        StartCoroutine(_CreateTreasure());
 
         return this;
     }
@@ -142,14 +166,46 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     {
         yield return 0;
 
-        GameItemFactory.Instance.CreateMonster(pwr, uid, lv, transform.position);
+        GameItemFactory.Instance.CreateMonster(pwr, uid, lv, this);
     }
 
     IEnumerator _CreatePlayer()
     {
         yield return 0;
 
-        GameItemFactory.Instance.CreatePlayer(transform.position);
+        GameItemFactory.Instance.CreatePlayer(this);
+    }
+
+    IEnumerator _CreateSupply()
+    {
+        yield return 0;
+
+        GameItemFactory.Instance.CreateSupply(this);
+    }
+
+    IEnumerator _CreateTalbet()
+    {
+        yield return 0;
+
+        GameItemFactory.Instance.CreateTablet(this);
+    }
+
+    IEnumerator _CreateTreasure()
+    {
+        yield return 0;
+
+        GameItemFactory.Instance.CreateTreasure(this);
+    }
+    #endregion
+
+    public void SetAsPathNode()
+    {
+        picture.color = Color.red;
+    }
+
+    public void CancelAsPathNode()
+    {
+        picture.color = Color.white;
     }
 }
 

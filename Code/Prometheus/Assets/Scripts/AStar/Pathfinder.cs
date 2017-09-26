@@ -7,10 +7,10 @@ using System.Collections.Generic;
 namespace Pathfinding
 {
 
-	public interface IGetNode
-	{
-		Node GetNode (int x, int y, int z);
-	}
+    public interface IGetNode
+    {
+        Node GetNode(int x, int y, int z);
+    }
 
     public class Pathfinder
     {
@@ -32,7 +32,7 @@ namespace Pathfinding
         }
 
         public void FindPath()
-        {         
+        {
             foundPath = FindPathActual(startPosition, endPosition);
 
             jobDone = true;
@@ -40,7 +40,7 @@ namespace Pathfinding
 
         public void NotifyComplete()
         {
-            if(completeCallback != null)
+            if (completeCallback != null)
             {
                 completeCallback(foundPath);
             }
@@ -92,13 +92,13 @@ namespace Pathfinding
                 }
 
                 //if we haven't reached our target, then we need to start looking the neighbours
-                foreach (Node neighbour in GetNeighbours(currentNode,true))
+                foreach (Node neighbour in GetNeighboursXZ(currentNode))
                 {
                     if (!closedSet.Contains(neighbour))
                     {
                         //we create a new movement cost for our neighbours
                         //float newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
-						float newMovementCostToNeighbour = currentNode.gCost + neighbour.nCost;
+                        float newMovementCostToNeighbour = currentNode.gCost + neighbour.nCost;
 
                         //and if it's lower than the neighbour's cost
                         if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
@@ -117,7 +117,7 @@ namespace Pathfinding
                     }
                 }
             }
-            
+
             //we return the path at the end
             return foundPath;
         }
@@ -141,51 +141,42 @@ namespace Pathfinding
             return path;
         }
 
-        private List<Node> GetNeighbours(Node node, bool getVerticalneighbours = false)
+        private List<Node> GetNeighboursXZ(Node node)
         {
             //This is were we start taking our neighbours
             List<Node> retList = new List<Node>();
 
+            int y = 0;
+
             for (int x = -1; x <= 1; x++)
             {
-                for (int yIndex = -1; yIndex <= 1; yIndex++)
+                for (int z = -1; z <= 1; z++)
                 {
-                    for (int z = -1; z <= 1; z++)
+                    if (x != 0 && z!= 0)
                     {
-                        int y = yIndex;
+                        //四方向寻路
+                    }
+                    else
+                    {
 
-                        //If we don't want a 3d A*, then we don't search the y
-                        if (!getVerticalneighbours)
+                        Node searchPos = new Node();
+
+                        //the nodes we want are what's forward/backwars,left/righ,up/down from us
+                        searchPos.x = node.x + x;
+                        searchPos.y = node.y + y;
+                        searchPos.z = node.z + z;
+
+                        Node newNode = GetNeighbourNode(searchPos, false, node);
+
+                        if (newNode != null)
                         {
-                            y = 0;
-                        }
-
-                        if (x == 0 && y == 0 && z == 0)
-                        {
-                            //000 is the current node
-                        }
-                        else
-                        {
-                            Node searchPos = new Node();
-
-                            //the nodes we want are what's forward/backwars,left/righ,up/down from us
-                            searchPos.x = node.x + x;
-                            searchPos.y = node.y + y;
-                            searchPos.z = node.z + z;
-
-                            Node newNode = GetNeighbourNode(searchPos, true, node);
-
-                            if (newNode != null)
-                            {
-                                retList.Add(newNode);
-                            }
+                            retList.Add(newNode);
                         }
                     }
                 }
             }
 
             return retList;
-
         }
 
         private Node GetNeighbourNode(Node adjPos, bool searchTopDown, Node currentNodePos)
@@ -195,7 +186,7 @@ namespace Pathfinding
             //but first let's start from the the usual stuff you'll see in A*
 
             Node retVal = null;
-            
+
             //let's take the node from the adjacent positions we passed
             Node node = GetNode(adjPos.x, adjPos.y, adjPos.z);
 
@@ -210,7 +201,7 @@ namespace Pathfinding
                 //then look what the adjacent node have under him
                 adjPos.y -= 1;
                 Node bottomBlock = GetNode(adjPos.x, adjPos.y, adjPos.z);
-                
+
                 //if there is a bottom block and we can walk on it
                 if (bottomBlock != null && bottomBlock.isWalkable)
                 {
@@ -266,9 +257,9 @@ namespace Pathfinding
         {
             Node n = null;
 
-			lock(_nodeManager)
+            lock (_nodeManager)
             {
-				n = _nodeManager.GetNode(x, y, z);
+                n = _nodeManager.GetNode(x, y, z);
             }
             return n;
         }

@@ -48,7 +48,16 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
 	public Node GetNode(int x, int y ,int z)
 	{
-		return data.GetBrick(x,z).pathNode;
+        var brick = data.GetBrick(x, z);
+
+        if (brick != null)
+        {
+            return brick.pathNode;
+        }
+        else
+        {
+            return null;
+        }
 	}
 
     public int CreateBrickModuel(int distance)

@@ -21,16 +21,15 @@ GameObject:
   - component: {fileID: 224859639751209890}
   - component: {fileID: 222637041449783584}
   - component: {fileID: 114950792208918696}
-  - component: {fileID: 114317214844124038}
-  - component: {fileID: 114815608018449888}
+  - component: {fileID: 114903022162973130}
   m_Layer: 5
-  m_Name: Player
+  m_Name: Tablet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114317214844124038
+--- !u!114 &114903022162973130
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -38,22 +37,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714161537929942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3590d7272073580488559d48b26a556f, type: 3}
+  m_Script: {fileID: 11500000, guid: 744e09dd79978aa43b14c6a23d6bf103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  standBrick: {fileID: 0}
---- !u!114 &114815608018449888
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1714161537929942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a9ac4839a38cb41b078777d4f6b88e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerObject: {fileID: 0}
 --- !u!114 &114950792208918696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,7 +59,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 21399cadeaa7bc2459bfae7c9365c63e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2be7d2adfd8477a4f915cb63471293ee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

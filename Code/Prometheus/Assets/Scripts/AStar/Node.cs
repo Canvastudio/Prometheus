@@ -33,7 +33,7 @@ namespace Pathfinding
         public bool isWalkable = true;
         
         //Reference to the world object so we can have the world position of the node among other things
-        public GameObject worldObject;
+        public MonoBehaviour behavirour;
 
         //Types of nodes we can have, we will use this later on a case by case examples
         public NodeType nodeType;

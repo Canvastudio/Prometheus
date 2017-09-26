@@ -34,35 +34,47 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 22c2ac74281b15f87d1e330db5ade23e
+      Hash: 262f38be38d1376f8d7d18e6704ef53d
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 25
-    hashString: 22c2ac74281b15f87d1e330db5ade23e
-    totalSpriteSurfaceArea: 202265
+    hashString: 262f38be38d1376f8d7d18e6704ef53d
+    totalSpriteSurfaceArea: 348915
     packables:
     - {fileID: 102900000, guid: 6151873936a30034888f68f242ebf425, type: 3}
     packedSpriteRenderDataKeys:
+    - 43d07c03c76a0e74bb2382cc7afffff3: 21300000
     - e765f69fedc07a4499b6d14728fcce8c: 21300000
     - 21399cadeaa7bc2459bfae7c9365c63e: 21300000
+    - 34ef08438de0fdd4180494e3679408d3: 21300000
     - f345c506bf9cd5846a8c0da933d4b436: 21300000
+    - c789e1dbf2fa2384ba946ba750ea0160: 21300000
+    - 2be7d2adfd8477a4f915cb63471293ee: 21300000
     - 191ca2ea1a561224a907724d52b5b5d8: 21300000
     - b65920cee6f620143ab0450ff1d0b06c: 21300000
     - 09003360ec2b9ff46afb1e82e4d9a6e5: 21300000
     - ba29e7d2bbf93dd488a81b587ed93374: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 43d07c03c76a0e74bb2382cc7afffff3, type: 3}
   - {fileID: 21300000, guid: e765f69fedc07a4499b6d14728fcce8c, type: 3}
   - {fileID: 21300000, guid: 21399cadeaa7bc2459bfae7c9365c63e, type: 3}
+  - {fileID: 21300000, guid: 34ef08438de0fdd4180494e3679408d3, type: 3}
   - {fileID: 21300000, guid: f345c506bf9cd5846a8c0da933d4b436, type: 3}
+  - {fileID: 21300000, guid: c789e1dbf2fa2384ba946ba750ea0160, type: 3}
+  - {fileID: 21300000, guid: 2be7d2adfd8477a4f915cb63471293ee, type: 3}
   - {fileID: 21300000, guid: 191ca2ea1a561224a907724d52b5b5d8, type: 3}
   - {fileID: 21300000, guid: b65920cee6f620143ab0450ff1d0b06c, type: 3}
   - {fileID: 21300000, guid: 09003360ec2b9ff46afb1e82e4d9a6e5, type: 3}
   - {fileID: 21300000, guid: ba29e7d2bbf93dd488a81b587ed93374, type: 3}
   m_PackedSpriteNamesToIndex:
-  - monster_1
-  - player
+  - "\u5DF2\u63A2\u7D22\u65B9\u5757"
+  - "\u602A\u7269_1"
+  - "\u73A9\u5BB6_1"
+  - "\u5B9D\u85CF"
   - box_0_dark
+  - "\u8865\u7ED9\u7AD9"
+  - "\u77F3\u7891"
   - role_0
   - box_0_light
   - stone_0_light
