@@ -21,15 +21,15 @@ GameObject:
   - component: {fileID: 224859639751209890}
   - component: {fileID: 222637041449783584}
   - component: {fileID: 114950792208918696}
-  - component: {fileID: 114903022162973130}
+  - component: {fileID: 114076161945553916}
   m_Layer: 5
-  m_Name: Tablet
+  m_Name: Treasure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114903022162973130
+--- !u!114 &114076161945553916
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -37,7 +37,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714161537929942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744e09dd79978aa43b14c6a23d6bf103, type: 3}
+  m_Script: {fileID: 11500000, guid: bf70dcede53e1104eb5beaf6cc7fdde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114950792208918696
@@ -59,7 +59,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2be7d2adfd8477a4f915cb63471293ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 34ef08438de0fdd4180494e3679408d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
