@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StageInit : IState {
+
     public string name
     {
         get
@@ -20,6 +21,11 @@ public class StageInit : IState {
     }
 
     public IState GetNextState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerator StopState()
     {
         throw new NotImplementedException();
     }

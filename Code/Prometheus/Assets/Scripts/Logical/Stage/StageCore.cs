@@ -12,6 +12,8 @@ public class StageCore : SingleObject<StageCore> {
     bool isPlayerActionFilish;
     WaitUntil playerActionFinish;
 
+    public bool isLooping = false;  
+
     protected override void Init()
     {
         base.Init();
@@ -33,15 +35,30 @@ public class StageCore : SingleObject<StageCore> {
 
     public IEnumerator RunLoop()
     {
-        while (true)
+        isLooping = true;
+
+        while (isLooping)
         {
             isPlayerActionFilish = false;
             Messenger<Brick>.AddListener(StageAction.PlayerClickBrick, HandlerBrickClick);
             yield return playerActionFinish;
-        }
-     
-    }
 
+        }
+    }
+    
+    public IEnumerator StopLoop()
+    {
+        //停止逻辑循环
+        CoroCore.Instance.StopCoro("RunLoop");
+        //重置标志
+        isLooping = false;
+
+        yield return 0;
+    }
+    /// <summary>
+    /// 负责处理玩家点击砖块的逻辑
+    /// </summary>
+    /// <param name="brick"></param>
     private void HandlerBrickClick(Brick brick)
     {
         //停止监听砖块点击事件

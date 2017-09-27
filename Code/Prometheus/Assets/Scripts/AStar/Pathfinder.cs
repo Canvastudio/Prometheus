@@ -281,5 +281,14 @@ namespace Pathfinding
             return 14 * distX + 10 * (distZ - distX) + 10 * distY;
         }
 
+        private int GetManttanDistance(Node posA, Node posB)
+        {
+            int distX = Mathf.Abs(posA.x - posB.x);
+            int distZ = Mathf.Abs(posA.z - posB.z);
+
+            return distX + distZ;
+        }
+
+
     }
 }

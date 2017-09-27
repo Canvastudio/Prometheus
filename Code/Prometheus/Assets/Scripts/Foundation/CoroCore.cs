@@ -9,18 +9,6 @@ public class CoroCore : SingleGameObject<CoroCore>{
 		return StartCoroutine(coro);
 	}
 
-	public IEnumerator StartInnerCoro(IEnumerator coro)
-	{
-		if (coro != null)
-		{
-			yield return StartCoroutine(coro);
-		}
-		else
-		{
-			yield return null;
-		}
-	}
-
 	public void StopCoro(IEnumerator coro)
 	{
 		StopCoroutine(coro);
@@ -31,6 +19,11 @@ public class CoroCore : SingleGameObject<CoroCore>{
 		StopCoroutine(coro);
 	}
 
-	public WaitForSeconds waitForOneSecone = new WaitForSeconds(1f);
+    public void StopCoro(string methodName)
+    {
+        StopCoroutine(methodName);
+    }
+
+    public WaitForSeconds waitForOneSecone = new WaitForSeconds(1f);
 	public WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 }

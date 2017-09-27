@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 游戏阶段，首先生成地图和地图上的怪物，其次生成玩家，然后开始跑逻辑循环
+/// </summary>
 public class GameStage : IState
 {
     public string name
@@ -20,21 +23,19 @@ public class GameStage : IState
         //生成玩家
         BrickCore.Instance.CreatePlayer();
         //开始执行关卡内部的逻辑循环
-        yield return CoroCore.Instance.StartInnerCoro(StageCore.Instance.RunLoop());
+        yield return StageCore.Instance.RunLoop();
+
+        Debug.Log("12312312");
     }
 
     public IState GetNextState()
     {
+  
         return null;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public IEnumerator StopState()
+    {
+        yield return StageCore.Instance.StopLoop();
+    }
 }

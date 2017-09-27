@@ -11,4 +11,5 @@ public interface IState {
 
     IEnumerator DoState();
     IState GetNextState();
+    IEnumerator StopState();
 }

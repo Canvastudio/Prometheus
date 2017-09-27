@@ -16,11 +16,16 @@ public class GameLoadData : IState
 
     public IEnumerator DoState()
     {
-        yield return CoroCore.Instance.StartInnerCoro(SuperConfig.Instance.LoadAsync());
+        yield return CoroCore.Instance.StartCoroutine(SuperConfig.Instance.LoadAsync());
     }
 
     public IState GetNextState()
     {
         return GameStateMachine.Instance.GetStateByName(Predefine.GAME_INIT);
+    }
+
+    public IEnumerator StopState()
+    {
+        throw new NotImplementedException();
     }
 }

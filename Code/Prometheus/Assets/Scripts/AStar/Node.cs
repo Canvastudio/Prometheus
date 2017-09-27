@@ -17,14 +17,14 @@ namespace Pathfinding
         //Node's costs for pathfinding purposes
         public float hCost;
 
-		//parent gCost + node nCost
+		//parent gCost
         public float gCost;
         
         public float fCost
         {
             get //the fCost is the gCost+hCost so we can get it directly this way
             {
-                return gCost + hCost;
+                return gCost + nCost;
             }
         }
 
