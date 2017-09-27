@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -36,6 +37,7 @@ public class EasyConfig : IEnumerable
         if (_totleDic == null) _totleDic = new Dictionary<string, EasyConfig>();
         if (_totleDic.ContainsKey(path)) return _totleDic[path];
         var res = Resources.Load<TextAsset>(path);
+        if(res==null) throw new NullReferenceException("EasyConfig获取路径出错@ "+ configPath);
         var ec = new EasyConfig { path = path };
         if (res != null) ec.BuildingContent(res.text);
         _totleDic.Add(path, ec);
