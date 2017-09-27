@@ -34,12 +34,43 @@ public class SuperConfig : SingleObject<SuperConfig>
 
 
     /// <summary>
+    /// 读取EasyConfig获取配置表路径数组
+    /// </summary>
+    public string[] GetPathByEasyConfig(string path = null)
+    {
+        if (path == null)
+        {
+            try
+            {
+                path = (string)Type.GetType("SuperConfigInform").GetField("SuperConfigDefaultPathOfEasyConfig").GetValue(null);
+            }
+            catch (Exception)
+            {
+                path = "DefaultPath";
+            }
+        }
+        return SuperTool.GetConfigData(path, "Config");
+    }
+
+    /// <summary>
+    /// 通过配置表路径记录EasyConfig读取配置表。
+    /// 一般情况下，是不需要指定参数的（由外部VBA生成），除非有特殊需求读取其他位置的配置表。
     /// TXT读取非常快，提供阻塞读取方法
     /// </summary>
-    public void Load(string[] names = null)
+    public void Load(string path = null)
     {
-        var check = names ?? SuperTool.GetConfigData("DefaultPath", "Config");
-        foreach (var v in check)
+        var paths = GetPathByEasyConfig(path);
+        Load(paths);
+    }
+
+
+    /// <summary>
+    /// 通过配置表路径数组读取配置表。
+    /// TXT读取非常快，提供阻塞读取方法
+    /// </summary>
+    public void Load(string[] names)
+    {
+        foreach (var v in names)
         {
             var res = Resources.Load<TextAsset>(v);
             DataConver(res);
@@ -47,27 +78,31 @@ public class SuperConfig : SingleObject<SuperConfig>
         isDone = true;
     }
 
-
+    /// <summary>
+    /// 通过配置表路径记录EasyConfig读取配置表。
+    /// 一般情况下，是不需要指定参数的（由外部VBA生成），除非有特殊需求读取其他位置的配置表。
+    ///  异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
+    /// </summary>
+    public System.Collections.IEnumerator LoadAsync(string path = null)
+    {
+        var paths = GetPathByEasyConfig(path);
+        yield return LoadAsync(paths);
+    }
 
     /// <summary>
-    /// 读取传入路径的txt，如果不传递参数，自动读取Resources/DefaultPath.txt
+    /// 通过配置表路径数组读取配置表。
     /// 异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
     /// </summary>
-    public System.Collections.IEnumerator LoadAsync(string[] names = null)
+    public System.Collections.IEnumerator LoadAsync(string[] names)
     {
         isDone = false;
-        var check = names ?? SuperTool.GetConfigData("DefaultPath", "Config");
-
-        foreach (string t in check)
+        foreach (string t in names)
         {
             ResourceRequest data = Resources.LoadAsync<TextAsset>(t);
             resDatas.Add(data);
         }
-
         SuperTimer.Instance.RegisterFrameFunction(CheckRes);
-
         yield return new WaitUntil(() => IsDone);
-
         SuperTimer.Instance.LogoutFrameFunction(CheckRes);
     }
 
@@ -109,7 +144,8 @@ public class SuperConfig : SingleObject<SuperConfig>
         Regex reg = new Regex(@"\[.+\]");
         for (int i = 0; i < typeAndArr.Length; i++)
         {
-            typeAndArr[i] = ReplaceQuote(typeAndArr[i]);
+            typeAndArr[i] = SuperTool.ConverSpace(ReplaceQuote(typeAndArr[i]));
+
             if (reg.IsMatch(typeAndArr[i]))
             {
                 splitMak[i] = reg.Match(typeAndArr[i]).Value;
@@ -123,7 +159,7 @@ public class SuperConfig : SingleObject<SuperConfig>
             }
         }
         string[] parName = dataLine[2].Split('\t');//第三行是变量名
-        for (int i = 0; i < parName.Length; i++) parName[i] = ReplaceQuote(parName[i]);
+        for (int i = 0; i < parName.Length; i++) parName[i] = SuperTool.ConverSpace(ReplaceQuote(parName[i]));
         ulong inIndex = 1;
         List<ConfigDataBase> dataList = new List<ConfigDataBase>();
         for (int x = 3; x < dataLine.Length; x++)
@@ -134,7 +170,6 @@ public class SuperConfig : SingleObject<SuperConfig>
             for (int j = 0; j < aData.Length; j++)
             {
                 aData[j] = ReplaceQuote(aData[j]);
-                parType[j] = SuperTool.ConverSpace(parType[j]);
                 if (!string.IsNullOrEmpty(aData[j]))
                 {
                     //强制将id类型修正为ulong
@@ -250,21 +285,15 @@ public class SuperConfig : SingleObject<SuperConfig>
     }
 
     /// <summary>
-    /// 去掉开头和结尾的半角引号，与空白字符
+    /// 去掉开头和结尾的半角引号，顺便Trim
     /// </summary>
     private static string ReplaceQuote(string value)
     {
         if (value == null) return null;
         if (value == "") return "";
-        value = SuperTool.ConverSpace(value);
-        value = Regex.Replace(value, @"^""+", "");
-        value = Regex.Replace(value, @"""+$", "");
-
-        //Regex reg1 = new Regex(@"^""+");
-        //Regex reg2 = new Regex(@"""+$");
-        //if (reg1.IsMatch(value)) value = reg1.Replace(value, "");
-        //if (reg2.IsMatch(value)) value = reg2.Replace(value, "");
-        return value;
+        Regex reg = new Regex(@"^"".*""$");
+        if (reg.IsMatch(value)) value = value.Substring(1, value.Length - 2);
+        return value.Trim();
     }
 
     /// <summary>
