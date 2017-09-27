@@ -54,6 +54,7 @@ public class SuperConfig : SingleObject<SuperConfig>
 
     /// <summary>
     /// 通过配置表路径记录EasyConfig读取配置表。
+    /// 一般情况下，是不需要指定参数的（由外部VBA生成），除非有特殊需求读取其他位置的配置表。
     /// TXT读取非常快，提供阻塞读取方法
     /// </summary>
     public void Load(string path = null)
@@ -79,6 +80,7 @@ public class SuperConfig : SingleObject<SuperConfig>
 
     /// <summary>
     /// 通过配置表路径记录EasyConfig读取配置表。
+    /// 一般情况下，是不需要指定参数的（由外部VBA生成），除非有特殊需求读取其他位置的配置表。
     ///  异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
     /// </summary>
     public System.Collections.IEnumerator LoadAsync(string path = null)
