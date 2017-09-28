@@ -38,17 +38,7 @@ public class SuperConfig : SingleObject<SuperConfig>
     /// </summary>
     public string[] GetPathByEasyConfig(string path = null)
     {
-        if (path == null)
-        {
-            try
-            {
-                path = (string)Type.GetType("SuperConfigInform").GetField("SuperConfigDefaultPathOfEasyConfig").GetValue(null);
-            }
-            catch (Exception)
-            {
-                path = "DefaultPath";
-            }
-        }
+        if (path == null) path = (string)SuperTool.GetSuperConfigInform("SuperConfigDefaultPathOfEasyConfig") ?? "DefaultPath";
         return SuperTool.GetConfigData(path, "Config");
     }
 
@@ -187,41 +177,41 @@ public class SuperConfig : SingleObject<SuperConfig>
                             switch (parType[j])
                             {
                                 case "string":
-                                    pi.SetValue(dataBase, aData[j], null);
-                                    break;
+                                pi.SetValue(dataBase, aData[j], null);
+                                break;
                                 case "float":
-                                    pi.SetValue(dataBase, float.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, float.Parse(aData[j]), null);
+                                break;
                                 case "int":
-                                    pi.SetValue(dataBase, int.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, int.Parse(aData[j]), null);
+                                break;
                                 case "ulong":
-                                    pi.SetValue(dataBase, ulong.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, ulong.Parse(aData[j]), null);
+                                break;
                                 case "bool":
-                                    pi.SetValue(dataBase, ConverBool(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, ConverBool(aData[j]), null);
+                                break;
                                 case "double":
-                                    pi.SetValue(dataBase, double.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, double.Parse(aData[j]), null);
+                                break;
                                 case "long":
-                                    pi.SetValue(dataBase, long.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, long.Parse(aData[j]), null);
+                                break;
                                 case "short":
-                                    pi.SetValue(dataBase, short.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, short.Parse(aData[j]), null);
+                                break;
                                 case "char":
-                                    pi.SetValue(dataBase, char.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, char.Parse(aData[j]), null);
+                                break;
                                 case "uint":
-                                    pi.SetValue(dataBase, uint.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, uint.Parse(aData[j]), null);
+                                break;
                                 case "byte":
-                                    pi.SetValue(dataBase, byte.Parse(aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, byte.Parse(aData[j]), null);
+                                break;
                                 default:
-                                    pi.SetValue(dataBase, Enum.Parse(Type.GetType(parType[j]), aData[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, Enum.Parse(Type.GetType(parType[j]), aData[j]), null);
+                                break;
                             }
                         }
                         else
@@ -229,45 +219,45 @@ public class SuperConfig : SingleObject<SuperConfig>
                             switch (parType[j])
                             {
                                 case "string":
-                                    pi.SetValue(dataBase, new SuperArray<string>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<string>(aData[j], splitMak[j]), null);
+                                break;
                                 case "float":
-                                    pi.SetValue(dataBase, new SuperArray<float>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<float>(aData[j], splitMak[j]), null);
+                                break;
                                 case "int":
-                                    pi.SetValue(dataBase, new SuperArray<int>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<int>(aData[j], splitMak[j]), null);
+                                break;
                                 case "ulong":
-                                    pi.SetValue(dataBase, new SuperArray<ulong>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<ulong>(aData[j], splitMak[j]), null);
+                                break;
                                 case "bool":
-                                    pi.SetValue(dataBase, new SuperArray<bool>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<bool>(aData[j], splitMak[j]), null);
+                                break;
                                 case "double":
-                                    pi.SetValue(dataBase, new SuperArray<double>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<double>(aData[j], splitMak[j]), null);
+                                break;
                                 case "long":
-                                    pi.SetValue(dataBase, new SuperArray<long>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<long>(aData[j], splitMak[j]), null);
+                                break;
                                 case "short":
-                                    pi.SetValue(dataBase, new SuperArray<short>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<short>(aData[j], splitMak[j]), null);
+                                break;
                                 case "char":
-                                    pi.SetValue(dataBase, new SuperArray<char>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<char>(aData[j], splitMak[j]), null);
+                                break;
                                 case "uint":
-                                    pi.SetValue(dataBase, new SuperArray<uint>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<uint>(aData[j], splitMak[j]), null);
+                                break;
                                 case "byte":
-                                    pi.SetValue(dataBase, new SuperArray<byte>(aData[j], splitMak[j]), null);
-                                    break;
+                                pi.SetValue(dataBase, new SuperArray<byte>(aData[j], splitMak[j]), null);
+                                break;
                                 default:
-                                    //动态创建泛型对象
-                                    Type t = typeof(SuperArray<>);
-                                    t = t.MakeGenericType(Type.GetType(parType[j]));
-                                    object o = Activator.CreateInstance(t, aData[j], splitMak[j], -1);
-                                    pi.SetValue(dataBase, o, null);
-                                    break;
+                                //动态创建泛型对象
+                                Type t = typeof(SuperArray<>);
+                                t = t.MakeGenericType(Type.GetType(parType[j]));
+                                object o = Activator.CreateInstance(t, aData[j], splitMak[j], -1);
+                                pi.SetValue(dataBase, o, null);
+                                break;
                             }
 
                         }

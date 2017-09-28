@@ -1052,6 +1052,20 @@ public class SuperTool
         return ec.GetDataList(key);
     }
 
+    /// <summary>
+    /// 该方法尝试获取由VBA生成的代码变量，如果获取失败返回null
+    /// </summary>
+    public static object GetSuperConfigInform(string argName)
+    {
+        try
+        {
+            return Type.GetType("SuperConfigInform").GetField(argName).GetValue(null);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
     #endregion
 
 }
