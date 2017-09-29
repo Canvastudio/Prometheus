@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 游戏阶段，首先生成地图和地图上的怪物，其次生成玩家，然后开始跑逻辑循环
 /// </summary>
-public class GameStage : IState
+public class StageLoopState : IState
 {
     public string name
     {

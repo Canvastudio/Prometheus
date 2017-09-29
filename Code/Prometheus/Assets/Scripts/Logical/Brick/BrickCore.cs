@@ -5,7 +5,7 @@ using Pathfinding;
 using System.Linq;
 
 /// <summary>
-/// 创建brick和他上面对象的逻辑发起
+/// 创建brick和他上面对象的逻辑发起,管理brick对象
 /// </summary>
 public class BrickCore : SingleObject<BrickCore> , IGetNode {
 

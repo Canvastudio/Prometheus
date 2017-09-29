@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
 
-public class Brick : MonoBehaviour, IPointerClickHandler {
+public class Brick : MonoBehaviour {
 
     [SerializeField]
     Image picture;
+    [SerializeField]
+    Button brickBtn;
 
 #region BrickInfo
     public BrickType brickType
@@ -85,9 +87,21 @@ public class Brick : MonoBehaviour, IPointerClickHandler {
     [SerializeField]
 	private Node _pathNode;
 
-    public void OnPointerClick(PointerEventData eventData)
+    
+    public void OnEnable()
     {
-        Messenger<Brick>.Invoke(StageAction.PlayerClickBrick, this);
+        HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
+        HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
+    }
+
+    public void OnBrickClick()
+    {
+        Messenger<Brick>.Invoke(StageAction.PlayerClickBrick.ToString(), this);
+    }
+    
+    public void OnLongPress()
+    {
+
     }
 
 

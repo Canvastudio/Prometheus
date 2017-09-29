@@ -31,11 +31,13 @@ namespace Pathfinding
             _nodeManager = nodeManager;
         }
 
-        public void FindPath()
+        public List<Node> FindPath()
         {
             foundPath = FindPathActual(startPosition, endPosition);
 
             jobDone = true;
+
+            return foundPath;
         }
 
         public void NotifyComplete()

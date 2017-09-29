@@ -6,10 +6,13 @@
 // each other.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public delegate void Callback();
 public delegate void Callback<T>(T arg1);
+public delegate IEnumerator CoroutineCallback<T>(T arg1);
 public delegate void Callback<T, U>(T arg1, U arg2);
 public delegate void Callback<T, U, V>(T arg1, U arg2, V arg3);
 /**
@@ -133,6 +136,66 @@ static public class Messenger<T>
             }
         }
     }
+
+    /// <summary>
+    /// 用在协程中等待并执行，执行完之后携程继续
+    /// </summary>
+    public class WaitForMsg : CustomYieldInstruction
+    {
+        bool finish_call;
+
+        IEnumerator DoHanlder(CoroutineCallback<T> handler, T arg)
+        {
+            yield return CoroCore.Instance.StartCoro(handler(arg));
+
+            finish_call = true;
+
+        }
+        public WaitForMsg(string msg)
+        {
+            Messenger<T>.AddListener(msg, (T arg) =>
+            {
+                finish_call = true;  
+            });
+        }
+
+        public WaitForMsg(string msg, Callback<T> handler)
+        {
+            Messenger<T>.AddListener(msg, (T arg) =>
+            {
+                finish_call = true;
+
+                if (handler != null)
+                {
+                    handler.Invoke(arg);
+                }
+            });
+        }
+
+        public WaitForMsg(string msg, CoroutineCallback<T> handler)
+        {
+            Messenger<T>.AddListener(msg, (T arg) =>
+            {
+                if (handler != null)
+                {
+                    CoroCore.Instance.StartCoroutine(DoHanlder(handler, arg));
+                }
+                else
+                {
+                    finish_call = true;
+                }
+            });
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return !finish_call;
+            }
+        }
+    }
+
 }
 
 

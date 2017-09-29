@@ -17,35 +17,30 @@ public class HudEvent : EventTrigger {
 	public VoidDelegate onDrag;
 
 	public Callback onClick = null;
+    public Callback onLongPress = null;
 
+    public float pressTriggerTime = 0.4f;
+        
     public Vector3 scaleVec = Vector3.one * 1.2f;
     public Vector3 orignalVec;
 
+    private float pointDownTime = float.MaxValue;
+    private bool isDown = false;
+    private bool isLongPressTriggerd = false;
     private Button button;
 
 	void Awake() {
 	
 		button = this.GetComponent<Button>();
-		if(button != null) {
-		
-			button.onClick.AddListener(OnClick);
 
-            //guide event
-            //GuideManager.Instance.OnBtnGuide(this.gameObject);
-		
+		if(button != null) {
+			button.onClick.AddListener(OnClick);
 		}
 
         orignalVec = transform.lossyScale;
         scaleVec = orignalVec * 1.1f;
 	
 	}
-
-//	static public HudEvent Get (GameObject go)
-//	{
-//		HudEvent listener = go.GetComponent<HudEvent>();
-//		if (listener == null) listener = go.AddComponent<HudEvent>();
-//		return listener;
-//	}
 
 	public static HudEvent Get(GameObject go) {
 
@@ -56,7 +51,7 @@ public class HudEvent : EventTrigger {
 		return hudEvent;
 
 	}
-
+    
 	private void OnClick() {
 	
         CommonEvent();
@@ -74,37 +69,59 @@ public class HudEvent : EventTrigger {
 	
 	}
 
-	/*****************************new**********************************/
+    private void Update()
+    {
+        if (!isLongPressTriggerd && isDown)
+        {
+            if (Time.timeSinceLevelLoad - pointDownTime >= pressTriggerTime)
+            {
+                if (onLongPress != null)
+                {
+                    onLongPress.Invoke();
+                }
 
-//	public override void OnPointerClick(PointerEventData eventData)
-//	{
-//		if(onClick != null) 	onClick(gameObject);
-//	}
-	public override void OnPointerDown (PointerEventData eventData){
+                isLongPressTriggerd = true;
+                Debug.Log("HueEvent: LongPress: " + gameObject.name);
+            }
+        }
+    }
+
+    /*****************************new**********************************/
+    public override void OnPointerDown (PointerEventData eventData){
+
+        isDown = true;
+        isLongPressTriggerd = false;
+
+        pointDownTime = Time.timeSinceLevelLoad;
+
         CommonEvent();
-        //LeanTween.scale(this.gameObject, scaleVec, 0.2f);
+
 		if(onDown != null) onDown(gameObject);
 	}
+    
 	public override void OnPointerEnter (PointerEventData eventData){
+
         CommonEvent();
 		if(onEnter != null) onEnter(gameObject);
 	}
 	public override void OnPointerExit (PointerEventData eventData){
+
+        pointDownTime = float.MaxValue;
+
         CommonEvent();
 		if(onExit != null) onExit(gameObject);
 	}
 	public override void OnPointerUp (PointerEventData eventData){
+
+        isDown = false;
+
         CommonEvent();
-        //LeanTween.scale(this.gameObject, orignalVec, 0.2f);
 		if(onUp != null) onUp(gameObject);
 	}
 	public override void OnSelect (BaseEventData eventData){
-		if(onSelect != null) onSelect(gameObject);
-	}
-	public override void OnUpdateSelected (BaseEventData eventData){
-		if(onUpdateSelect != null) onUpdateSelect(gameObject);
-	}
 
+        if (onSelect != null) onSelect(gameObject);
+	}
 
     public void CommonEvent() {
     

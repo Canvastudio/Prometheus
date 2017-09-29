@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 1495498493}
   - component: {fileID: 1495498497}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BrickView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097cdbf7ad852444db7792da4f858ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brickPrefab: {fileID: 114494466525321234, guid: a6481a8d07c70c74a86237663733c2b0,
+  _brickPrefab: {fileID: 114317811207022196, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
   monsterRoot: {fileID: 267333918}
   brickRoot: {fileID: 733013760}
