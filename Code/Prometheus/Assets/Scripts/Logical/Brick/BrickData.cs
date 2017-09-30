@@ -13,7 +13,14 @@ public class BrickData {
 	{
         if (row < _lowestRow) return null; // throw new System.ArgumentException("row 不能低于最低的row: " + _lowestRow);	
         if (column < 0 || column > 5) return null;
-		if (row > _lowestRow + bricks.Count - 1) throw new System.ArgumentOutOfRangeException("row 超出的限制");
+        if (row > _lowestRow + bricks.Count - 1)
+        {
+            //throw new System.ArgumentOutOfRangeException(
+            //    string.Format("row 超出的限制: row: {0}, _lowRow: {1}, row_count: {2}",
+            //    row, _lowestRow, bricks.Count));
+
+            return null;
+        }
 
 		return bricks[row - _lowestRow][column];
 	}

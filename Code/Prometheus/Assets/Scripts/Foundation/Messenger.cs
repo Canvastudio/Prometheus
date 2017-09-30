@@ -144,49 +144,32 @@ static public class Messenger<T>
     {
         bool finish_call;
 
-        IEnumerator DoHanlder(CoroutineCallback<T> handler, T arg)
+        public T _para;
+
+        string _msg;
+
+        private void SetPara(T para)
         {
-            yield return CoroCore.Instance.StartCoro(handler(arg));
+            _para = para;
 
             finish_call = true;
 
+            Messenger<T>.RemoveListener(_msg, SetPara);
         }
+
         public WaitForMsg(string msg)
         {
-            Messenger<T>.AddListener(msg, (T arg) =>
-            {
-                finish_call = true;  
-            });
+            _msg = msg;
         }
 
-        public WaitForMsg(string msg, Callback<T> handler)
+        public WaitForMsg BeginWaiting()
         {
-            Messenger<T>.AddListener(msg, (T arg) =>
-            {
-                finish_call = true;
+            finish_call = false;
 
-                if (handler != null)
-                {
-                    handler.Invoke(arg);
-                }
-            });
+            Messenger<T>.AddListener(_msg, SetPara);
+
+            return this;
         }
-
-        public WaitForMsg(string msg, CoroutineCallback<T> handler)
-        {
-            Messenger<T>.AddListener(msg, (T arg) =>
-            {
-                if (handler != null)
-                {
-                    CoroCore.Instance.StartCoroutine(DoHanlder(handler, arg));
-                }
-                else
-                {
-                    finish_call = true;
-                }
-            });
-        }
-
         public override bool keepWaiting
         {
             get

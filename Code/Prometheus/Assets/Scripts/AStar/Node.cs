@@ -37,7 +37,20 @@ namespace Pathfinding
 
         //Types of nodes we can have, we will use this later on a case by case examples
         public NodeType nodeType;
-        
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Node)
+            {
+                var n = obj as Node;
+
+                return (x == n.x && y == n.y && z == n.z);
+            }
+            else
+            {
+                return false;
+            }
+        }
         public enum NodeType
         {
             ground,

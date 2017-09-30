@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
 
-public class Brick : MonoBehaviour {
+public class Brick : MonoBehaviour, IEquatable<Brick> {
 
     [SerializeField]
     Image picture;
@@ -220,6 +220,11 @@ public class Brick : MonoBehaviour {
     public void CancelAsPathNode()
     {
         picture.color = Color.white;
+    }
+
+    public bool Equals(Brick other)
+    {
+        return pathNode == other.pathNode;
     }
 }
 
