@@ -63,6 +63,7 @@ static public class Messenger
         // Invoke the delegate only if the event type is in the dictionary.
         if (eventTable.TryGetValue(eventType, out d))
         {
+
             // Take a local copy to prevent a race condition if another thread
             // were to unsubscribe from this event.
             Callback callback = (Callback)d;
@@ -99,6 +100,21 @@ static public class Messenger<T>
         }
     }
 
+    static public void AddListener(string eventType, Callback<string, T> handler)
+    {
+        // Obtain a lock on the event table to keep this thread-safe.
+        lock (eventTable)
+        {
+            // Create an entry for this event type if it doesn't already exist.
+            if (!eventTable.ContainsKey(eventType))
+            {
+                eventTable.Add(eventType, null);
+            }
+            // Add the handler to the event.
+            eventTable[eventType] = (Callback<string, T>)eventTable[eventType] + handler;
+        }
+    }
+
     static public void RemoveListener(string eventType, Callback<T> handler)
     {
         // Obtain a lock on the event table to keep this thread-safe.
@@ -119,20 +135,53 @@ static public class Messenger<T>
         }
     }
 
+    static public void RemoveListener(string eventType, Callback<string, T> handler)
+    {
+        // Obtain a lock on the event table to keep this thread-safe.
+        lock (eventTable)
+        {
+            // Only take action if this event type exists.
+            if (eventTable.ContainsKey(eventType))
+            {
+                // Remove the event handler from this event.
+                eventTable[eventType] = (Callback<string, T>)eventTable[eventType] - handler;
+
+                // If there's nothing left then remove the event type from the event table.
+                if (eventTable[eventType] == null)
+                {
+                    eventTable.Remove(eventType);
+                }
+            }
+        }
+    }
+
     static public void Invoke(string eventType, T arg1)
     {
         Delegate d;
         // Invoke the delegate only if the event type is in the dictionary.
         if (eventTable.TryGetValue(eventType, out d))
         {
-            // Take a local copy to prevent a race condition if another thread
-            // were to unsubscribe from this event.
-            Callback<T> callback = (Callback<T>)d;
-
-            // Invoke the delegate if it's not null.
-            if (callback != null)
+            if (d is Callback<T>)
             {
-                callback(arg1);
+                // Take a local copy to prevent a race condition if another thread
+                // were to unsubscribe from this event.
+                Callback<T> callback = (Callback<T>)d;
+
+                // Invoke the delegate if it's not null.
+                if (callback != null)
+                {
+                    callback(arg1);
+                }
+            }
+            else if (d is Callback<string, T>)
+            {
+                var callback = d as Callback<string, T>;
+
+                // Invoke the delegate if it's not null.
+                if (callback != null)
+                {
+                    callback(eventType, arg1);
+                }
             }
         }
     }
@@ -144,29 +193,25 @@ static public class Messenger<T>
     {
         bool finish_call;
 
-        public T _para;
+        public T para;
 
-        string _msg;
+        public string msg;
 
-        private void SetPara(T para)
+        private void SetPara(string _msg, T _para)
         {
-            _para = para;
+            para = _para;
+            msg = _msg;
 
             finish_call = true;
 
-            Messenger<T>.RemoveListener(_msg, SetPara);
+            Messenger<T>.RemoveListener(msg, SetPara);
         }
 
-        public WaitForMsg(string msg)
-        {
-            _msg = msg;
-        }
-
-        public WaitForMsg BeginWaiting()
+        public WaitForMsg BeginWaiting(string msg)
         {
             finish_call = false;
 
-            Messenger<T>.AddListener(_msg, SetPara);
+            Messenger<T>.AddListener(msg, SetPara);
 
             return this;
         }

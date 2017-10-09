@@ -36,7 +36,8 @@ public class StageCore : SingleObject<StageCore> {
         base.Init();
 
         playerActionFinish = new WaitUntil(() => isPlayerActionFilish);
-        brickMsg = new Messenger<Brick>.WaitForMsg(StageAction.PlayerClickBrick.ToString());
+
+        brickMsg = new Messenger<Brick>.WaitForMsg();
     }
 
     public void RegisterMonster(Monster newMonster)
@@ -73,12 +74,13 @@ public class StageCore : SingleObject<StageCore> {
                 while (!isPlayerActionFilish)
                 {
                     //如果没有处于自动状态，则等待并处理玩家点击事件
-                    yield return brickMsg.BeginWaiting();
+                    yield return brickMsg.BeginWaiting(StageAction.PlayerClickBrick.ToString());
 
                     //事件返回 从事件中得到参数
-                    brick1 = brickMsg._para;
+                    brick1 = brickMsg.para;
 
                     BrickLogical:
+
                     //停止监听砖块点击事件
                     switch (brick1.brickType)
                     {
@@ -98,10 +100,10 @@ public class StageCore : SingleObject<StageCore> {
                             else
                             {
                                 //等待玩家点击确认
-                                yield return brickMsg.BeginWaiting();
+                                yield return brickMsg.BeginWaiting(StageAction.PlayerClickBrick.ToString());
 
-                                brick2 = brickMsg._para;
-          
+                                brick2 = brickMsg.para;
+                                
                                 if (brick1 == brick2)
                                 {
                                     //确认成功
@@ -131,7 +133,7 @@ public class StageCore : SingleObject<StageCore> {
 
     IEnumerator MovePlayer()
     {
-        yield return StageCore.Instance.Player.moveComponent.MoveToNext(2f);
+        yield return StageCore.Instance.Player.moveComponent.MoveToNext(0.3f);
 
         Debug.Log("Move GO!");
 
