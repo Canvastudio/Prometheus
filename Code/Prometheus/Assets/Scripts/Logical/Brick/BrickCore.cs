@@ -152,7 +152,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                         if (prob > Random.Range(0f, 1f))
                         {
-                            _brick = StageView.Instance.AddTablet(int.Parse(infos[1]));
+                            _brick = StageView.Instance.AddTreasure(int.Parse(infos[1]));
                         }
                         else
                         {
@@ -178,7 +178,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                         var probility = float.Parse(monster_Desc[2]);
 
-                        if (Random.Range(0, 1) <= probility)
+                        if (Random.Range(0f, 1f) <= probility)
                         {
                             var enemys = next_Map.enemys.ToArray();
                             var enemy_Index = Random.Range(0, enemys.Length);
@@ -207,5 +207,23 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
 
         return moduel_RowCount;
+    }
+
+    public void OpenNearbyBrick(int row, int column)
+    {
+        for (int n = -1; n <= 1; ++n)
+        {
+            for (int m = -1; m <= 1; ++m)
+            {
+                if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
+
+                var _brick = data.GetBrick(row + n, column + m);
+
+                if (_brick != null)
+                {
+                    _brick.brickExplored = BrickExplored.EXPLORED;
+                }
+            }
+        }
     }
 }

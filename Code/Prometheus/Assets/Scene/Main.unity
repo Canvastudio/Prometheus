@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267333918}
   m_Layer: 5
-  m_Name: MonsterRoot
+  m_Name: itemRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 6
-  m_StartCorner: 2
+  m_StartCorner: 1
   m_StartAxis: 0
   m_CellSize: {x: 120, y: 120}
   m_Spacing: {x: 0, y: 0}
@@ -619,11 +619,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _brickPrefab: {fileID: 114317811207022196, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
-  monsterRoot: {fileID: 267333918}
+  itemRoot: {fileID: 267333918}
   brickRoot: {fileID: 733013760}
   brickAtlas: {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184,
     type: 2}
   viewBrickRow: 9
+  grid: {fileID: 733013761}
 --- !u!1 &1779828381
 GameObject:
   m_ObjectHideFlags: 0

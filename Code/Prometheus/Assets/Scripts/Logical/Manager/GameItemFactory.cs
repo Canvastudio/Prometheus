@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameItemFactory : SingleObject<GameItemFactory>
 {
-
     GameObject monster_1;
     GameObject player_1;
 
@@ -14,7 +13,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         if (monster_1 == null) monster_1 = Resources.Load("Prefab/Monster") as GameObject;
 
-        var go = GameObject.Instantiate(monster_1, StageView.Instance.monsterRoot) as GameObject;
+        var go = GameObject.Instantiate(monster_1, StageView.Instance.itemRoot) as GameObject;
 
         go.transform.localScale = Vector3.one;
 
@@ -22,7 +21,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         Monster monster = go.GetComponent<Monster>();
 
-        monster.monsterBrick = bornBrick;
+        monster.standBrick = bornBrick;
 
         MonsterConfig config = ConfigDataBase.GetConfigDataById<MonsterConfig>(id);
 
@@ -30,11 +29,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         monster.config = config;
 
-        monster.property = new MonsterProperty();
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        monster.property.InitBaseProperty(
+        monster.baseProperty.InitBaseProperty(
             lv_Property.m_mhp * propertys[pwr, 0],
             lv_Property.m_speed * propertys[pwr, 1],
             lv_Property.m_melee * propertys[pwr, 2],
@@ -87,7 +85,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         if (player_1 == null) player_1 = Resources.Load("Prefab/Player") as GameObject;
 
-        var go = GameObject.Instantiate(player_1, StageView.Instance.monsterRoot) as GameObject;
+        var go = GameObject.Instantiate(player_1, StageView.Instance.itemRoot) as GameObject;
 
         go.transform.localScale = Vector3.one;
 
@@ -97,6 +95,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         player.standBrick = bornBrick;
 
+        BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
+
         StageCore.Instance.RegisterPlayer(player);
 
         return player;
@@ -104,7 +104,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Supply CreateSupply(Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Supply"), StageView.Instance.monsterRoot) as GameObject;
+        var go = GameObject.Instantiate(Resources.Load("Prefab/Supply"), StageView.Instance.itemRoot) as GameObject;
 
         go.transform.localScale = Vector3.one;
 
@@ -112,12 +112,14 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var supply = go.GetComponent<Supply>();
 
+        supply.standBrick = bornBrick;
+
         return supply;
     }
 
     public Tablet CreateTablet(Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Tablet"), StageView.Instance.monsterRoot) as GameObject;
+        var go = GameObject.Instantiate(Resources.Load("Prefab/Tablet"), StageView.Instance.itemRoot) as GameObject;
 
         go.transform.localScale = Vector3.one;
 
@@ -125,18 +127,22 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var tablet = go.GetComponent<Tablet>();
 
+        tablet.standBrick = bornBrick;
+
         return tablet;
     }
 
     public Treasure CreateTreasure(Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Treasure"), StageView.Instance.monsterRoot) as GameObject;
+        var go = GameObject.Instantiate(Resources.Load("Prefab/Treasure"), StageView.Instance.itemRoot) as GameObject;
 
         go.transform.localScale = Vector3.one;
 
         go.transform.position = bornBrick.transform.position;
 
         var treasure = go.GetComponent<Treasure>();
+
+        treasure.standBrick = bornBrick;
 
         return treasure;
     }

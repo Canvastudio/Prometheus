@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterProperty : PropertyData
+public class LiveBaseProperty : PropertyData
 {
-    public MonsterProperty InitBaseProperty(
+    public LiveBaseProperty InitBaseProperty(
     float hp,
     float speed,
     float melee,
@@ -17,7 +17,7 @@ public class MonsterProperty : PropertyData
         SetFloatProperty("melee", melee);
         SetFloatProperty("laser", laser);
         SetFloatProperty("cartridge", cartridge);
-
+        SetFloatProperty("nhp", 0f);
         return this;
     }
 }

@@ -12,17 +12,30 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     Image picture;
     [SerializeField]
     Button brickBtn;
+    [SerializeField]
+    Image pathMask;
 
 #region BrickInfo
     public BrickType brickType
     {
         get
         {
-            return _brickType;
+            if (brickExplored == BrickExplored.UNEXPLORED)
+                return BrickType.UNKNOWN;
+            else
+                return _brickType;
         }
         private set
         {
             _brickType = value;
+        }
+    }
+
+    public BrickType realBrickType
+    {
+        get
+        {
+            return _brickType;
         }
     }
 
@@ -34,6 +47,21 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         get
         {
             return _brickExplored;
+        }
+        set
+        {
+            if (value == BrickExplored.UNEXPLORED)
+            {
+                picture.color = new Color(0.5f, 0.5f, 0.5f);
+                pathNode.isWalkable = true;
+            }
+            else
+            {
+                picture.color = Color.white;
+                pathNode.isWalkable = (_brickType == BrickType.EMPTY);
+            }
+
+            _brickExplored = value;
         }
     }
 
@@ -74,7 +102,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     /// <summary>
     /// 当前格子得怪物，为空表示没有怪物
     /// </summary>
-    public Monster monster;
+    public GameItemBase item;
 
     #endregion
 
@@ -101,20 +129,21 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     
     public void OnLongPress()
     {
-
+        Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
     }
-
 
     public void Init(int row, int column, BrickType type)
     {
         _row = row;
         _column = column;
-        _brickType = type;
+        brickType = type;
 
         if (type == BrickType.OBSTACLE)
         {
             picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
         }
+
+        brickExplored = BrickExplored.UNEXPLORED;
 
         _pathNode = new Node()
         {
@@ -126,6 +155,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
             x = row,
             z = column
         };
+
+        CancelAsPathNode();
     }
 
 #region Add Item
@@ -139,7 +170,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public Brick CreateMonter(int power, ulong uid, int lv)
     {
         //创建数据
-        StartCoroutine(_CreateMonster(power, uid, lv));
+        item = GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
 
         return this;
     }
@@ -147,7 +178,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public Brick CreateSupply()
     {
         //创建数据
-        StartCoroutine(_CreateSupply());
+        item = GameItemFactory.Instance.CreateSupply(this);
 
         return this;
     }
@@ -155,7 +186,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public Brick CreateTalbet()
     {
         //创建数据
-        StartCoroutine(_CreateTalbet());
+        item = GameItemFactory.Instance.CreateTablet(this);
 
         return this;
     }
@@ -163,15 +194,14 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public Brick CreateTreasure()
     {
         //创建数据
-        StartCoroutine(_CreateTreasure());
-
+        item = GameItemFactory.Instance.CreateTreasure(this);
         return this;
     }
 
     public Brick CreatePlayer()
     {
         //创建数据
-        StartCoroutine(_CreatePlayer());
+        item = GameItemFactory.Instance.CreatePlayer(this);
 
         return this;
     }
@@ -212,14 +242,16 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     }
     #endregion
 
+    Color _tempColor;
+
     public void SetAsPathNode()
     {
-        picture.color = Color.red;
+        pathMask.gameObject.SetActive(true);
     }
 
     public void CancelAsPathNode()
     {
-        picture.color = Color.white;
+        pathMask.gameObject.SetActive(false);
     }
 
     public bool Equals(Brick other)
@@ -238,6 +270,7 @@ public enum BrickType
     SUPPLY,
     TREASURE,
     OTHERS,
+    UNKNOWN,
 }
 
 public enum BrickExplored

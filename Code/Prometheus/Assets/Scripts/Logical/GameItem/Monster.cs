@@ -5,13 +5,9 @@ using UnityEngine;
 /// <summary>
 /// 存储怪物信息
 /// </summary>
-public class Monster : MonoBehaviour{
-     
-    public MonsterProperty property;
+public class Monster : LiveItem {
 
     public ulong uid = 0;
-
-    public Brick monsterBrick;
 
     /// <summary>
     /// 策划属性配置表

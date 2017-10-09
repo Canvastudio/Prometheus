@@ -85,6 +85,7 @@ public class StageCore : SingleObject<StageCore> {
                     switch (brick1.brickType)
                     {
                         case BrickType.EMPTY:
+                        case BrickType.UNKNOWN:
 
                             StageView.Instance.CancelPahtNode();
 
@@ -95,7 +96,7 @@ public class StageCore : SingleObject<StageCore> {
                             //如果路径长度小于3，不需要确认直接移动
                             if (list.Count < 3)
                             {
-                                yield return StageCore.Instance.Player.moveComponent.Go(list);
+                                yield return Player.moveComponent.Go(list);
                             }
                             else
                             {
@@ -108,7 +109,7 @@ public class StageCore : SingleObject<StageCore> {
                                 {
                                     //确认成功
                                     //yield return StageCore.Instance.Player.moveComponent.Go(list);
-                                    StageCore.Instance.Player.moveComponent.SetPaht(list);
+                                    Player.moveComponent.SetPaht(list);
 
                                     yield return MovePlayer();
                                 }
@@ -118,6 +119,21 @@ public class StageCore : SingleObject<StageCore> {
                                     goto BrickLogical;
                                 }
                             }
+                            break;
+                        case BrickType.TREASURE:
+                            Debug.Log("玩家点击了宝藏！");
+
+                            if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
+                            {
+                                var treasure = brick1.item as Treasure;
+
+                                treasure.Reactive();
+                            }
+
+                            break;
+                        case BrickType.MONSTER:
+                            break;
+                        case BrickType.SUPPLY:
                             break;
                     }
                 }
@@ -133,24 +149,37 @@ public class StageCore : SingleObject<StageCore> {
 
     IEnumerator MovePlayer()
     {
-        yield return StageCore.Instance.Player.moveComponent.MoveToNext(0.3f);
-
-        Debug.Log("Move GO!");
-
-        isPlayerActionFilish = true;
-
-        if (StageCore.Instance.Player.moveComponent.PathFinish)
+        if (StageCore.Instance.Player.moveComponent.IsNextCanMove())
         {
+            yield return StageCore.Instance.Player.moveComponent.MoveToNext(0.3f);
 
-            //移动结束，清除路径
-            StageView.Instance.CancelPahtNode();
-            //取消自动loop
-            autoMove = false;
+            Debug.Log("Move GO!");
+
+            isPlayerActionFilish = true;
+
+            if (StageCore.Instance.Player.moveComponent.PathFinish)
+            {
+
+                //移动结束，清除路径
+                StageView.Instance.CancelPahtNode();
+                //取消自动loop
+                autoMove = false;
+            }
+            else
+            {
+                //设为自动状态 下个loop逻辑会自动进行
+                autoMove = true;
+            }
         }
         else
         {
-            //设为自动状态 下个loop逻辑会自动进行
-            autoMove = true;
+            Debug.Log("触发下一个砖块效果！");
+
+            //TODO: 触发非空砖块
+
+            autoMove = false;
+            isPlayerActionFilish = true;
+            StageView.Instance.CancelPahtNode();
         }
     }
 
@@ -167,5 +196,6 @@ public class StageCore : SingleObject<StageCore> {
 
 public static class StageAction
 {
-    public const string PlayerClickBrick = "PlayerClickBrick";
+    public const string PlayerClickBrick = "PCB";
+    public const string RefreshGameItemPos = "RGIP";
 }

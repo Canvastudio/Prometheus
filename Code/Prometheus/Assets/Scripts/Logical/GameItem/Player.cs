@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : LiveItem {
 
+    PlayerProperty property;
 
 
 }

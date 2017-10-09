@@ -17,8 +17,10 @@ public class PlayerProperty : PropertyData
         SetFloatProperty("melee", melee);
         SetFloatProperty("laser", laser);
         SetFloatProperty("cartridge", cartridge);
-
+        SetFloatProperty("nhp", 0f);
         return this;
     }
 
 }
+
+

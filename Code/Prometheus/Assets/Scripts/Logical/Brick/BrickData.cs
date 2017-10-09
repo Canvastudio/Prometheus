@@ -89,7 +89,7 @@ public class BrickData {
 
         for (int i = 0; i< 6; ++i)
         {
-            if (row_Bricks[i].brickType == BrickType.EMPTY)
+            if (row_Bricks[i].item == null)
             {
                 emptyIndex[m++] = i;
             }
