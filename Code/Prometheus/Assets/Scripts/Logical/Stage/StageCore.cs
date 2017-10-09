@@ -26,10 +26,16 @@ public class StageCore : SingleObject<StageCore> {
     Brick brick2;
     /// <summary>
     /// 玩家角色正在自动执行动作，自动寻路进行移动
+    /// 时间消耗 会造成 格子下移
     /// </summary>
     bool autoMove;
 
-    public bool isLooping = false;  
+    public bool isLooping = false;
+
+    /// <summary>
+    /// 当前回合时间消耗，这个消耗不总是等于1
+    /// </summary>
+    public float turnTime = 0;
 
     protected override void Init()
     {
@@ -73,6 +79,8 @@ public class StageCore : SingleObject<StageCore> {
             {
                 while (!isPlayerActionFilish)
                 {
+                    StageView.Instance.CancelPahtNode();
+
                     //如果没有处于自动状态，则等待并处理玩家点击事件
                     yield return brickMsg.BeginWaiting(StageAction.PlayerClickBrick.ToString());
 
@@ -86,8 +94,6 @@ public class StageCore : SingleObject<StageCore> {
                     {
                         case BrickType.EMPTY:
                         case BrickType.UNKNOWN:
-
-                            StageView.Instance.CancelPahtNode();
 
                             //开始计算路径
                             var list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
@@ -125,15 +131,24 @@ public class StageCore : SingleObject<StageCore> {
 
                             if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
                             {
-                                var treasure = brick1.item as Treasure;
+                                var item = brick1.item as Treasure;
 
-                                treasure.Reactive();
+                                item.Reactive();
                             }
 
                             break;
                         case BrickType.MONSTER:
                             break;
                         case BrickType.SUPPLY:
+
+                            Debug.Log("玩家点击了补给！");
+
+                            if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
+                            {
+                                var item = brick1.item as Supply;
+
+                                item.Reactive();
+                            }
                             break;
                     }
                 }
@@ -144,6 +159,8 @@ public class StageCore : SingleObject<StageCore> {
 
             //等待玩家动作结束信号
             yield return playerActionFinish;
+
+            Debug.Log("根据消耗时间移动地图");
         }
     }
 
@@ -191,6 +208,11 @@ public class StageCore : SingleObject<StageCore> {
         isLooping = false;
 
         yield return 0;
+    }
+
+    public void AddTurnTime(float time)
+    {
+        turnTime += time;
     }
 }
 

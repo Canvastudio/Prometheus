@@ -165,7 +165,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                         if (prob > Random.Range(0f, 1f))
                         {
-                            _brick = StageView.Instance.AddSupply(int.Parse(infos[1]));
+                            _brick = StageView.Instance.AddSupply(ulong.Parse(infos[1]));
                         }
                         else
                         {

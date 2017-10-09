@@ -25,8 +25,13 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
             else
                 return _brickType;
         }
-        private set
+        set
         {
+            if (value == BrickType.EMPTY || value == BrickType.UNKNOWN)
+            {
+                pathNode.isWalkable = true;
+            }
+
             _brickType = value;
         }
     }
@@ -175,10 +180,10 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         return this;
     }
 
-    public Brick CreateSupply()
+    public Brick CreateSupply(ulong uid)
     {
         //创建数据
-        item = GameItemFactory.Instance.CreateSupply(this);
+        item = GameItemFactory.Instance.CreateSupply(uid, this);
 
         return this;
     }
@@ -195,6 +200,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         //创建数据
         item = GameItemFactory.Instance.CreateTreasure(this);
+
         return this;
     }
 
@@ -204,41 +210,6 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         item = GameItemFactory.Instance.CreatePlayer(this);
 
         return this;
-    }
-
-    IEnumerator _CreateMonster(int pwr, ulong uid, int lv)
-    {
-        yield return 0;
-
-        GameItemFactory.Instance.CreateMonster(pwr, uid, lv, this);
-    }
-
-    IEnumerator _CreatePlayer()
-    {
-        yield return 0;
-
-        GameItemFactory.Instance.CreatePlayer(this);
-    }
-
-    IEnumerator _CreateSupply()
-    {
-        yield return 0;
-
-        GameItemFactory.Instance.CreateSupply(this);
-    }
-
-    IEnumerator _CreateTalbet()
-    {
-        yield return 0;
-
-        GameItemFactory.Instance.CreateTablet(this);
-    }
-
-    IEnumerator _CreateTreasure()
-    {
-        yield return 0;
-
-        GameItemFactory.Instance.CreateTreasure(this);
     }
     #endregion
 

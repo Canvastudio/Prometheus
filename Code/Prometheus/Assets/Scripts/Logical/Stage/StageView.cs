@@ -39,9 +39,9 @@ public class StageView : SingleGameObject<StageView> {
         return CreateBrick(row, col, BrickType.TREASURE).CreateTreasure();
     }
 
-    public Brick AddSupply(int lv, int row = -1, int col = -1)
+    public Brick AddSupply(ulong uid, int row = -1, int col = -1)
     {
-        return CreateBrick(row, col, BrickType.SUPPLY).CreateSupply();
+        return CreateBrick(row, col, BrickType.SUPPLY).CreateSupply(uid);
     }
 
     public Brick AddTablet(int id, int row = -1, int col = -1)

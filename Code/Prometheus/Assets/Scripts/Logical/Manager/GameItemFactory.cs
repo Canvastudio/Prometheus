@@ -102,7 +102,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         return player;
     }
 
-    public Supply CreateSupply(Brick bornBrick)
+    public Supply CreateSupply(ulong uid, Brick bornBrick)
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Supply"), StageView.Instance.itemRoot) as GameObject;
 
@@ -113,6 +113,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var supply = go.GetComponent<Supply>();
 
         supply.standBrick = bornBrick;
+
+        supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
         return supply;
     }

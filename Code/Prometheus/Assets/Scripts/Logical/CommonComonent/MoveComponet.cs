@@ -38,25 +38,24 @@ public class MoveComponet : MonoBehaviour {
 
         while (_pathIndex < _path.Count)
         {
-            finish = false;
+            move_Finish = false;
 
             Brick brick = _path[_pathIndex].behavirour as Brick;
 
+            _brick = brick;
+
             descr = LeanTween.move(StageCore.Instance.Player.gameObject,
                 brick.transform.position,
-                0.3f).setOnComplete(() =>
-                {
-                    finish = true;
-                    owner.standBrick = brick;
+                0.3f).setOnComplete(OnMoveFinish);
 
-                    BrickCore.Instance.OpenNearbyBrick(
-                        StageCore.Instance.Player.standBrick.pathNode.x,
-                        StageCore.Instance.Player.standBrick.pathNode.z);
-                });
+            //yield return new WaitUntil(()=>finish);
 
-            yield return new WaitUntil(()=>finish);
+            //++_pathIndex;
 
-            ++_pathIndex;
+            while (!move_Finish)
+            {
+                yield return 0;
+            }
         }
     }
 
@@ -65,25 +64,36 @@ public class MoveComponet : MonoBehaviour {
         yield return MoveTo(_path[_pathIndex].behavirour as Brick, time);
     }
 
+    bool move_Finish = false;
+
+    Brick _brick;
+
     public IEnumerator MoveTo(Brick brick, float time)
     {
-        bool move_Finish = false;
+        move_Finish = false;
 
-        LeanTween.move(this.gameObject, brick.transform.position, time).setOnComplete(() =>
-        {
-            move_Finish = true;
-            owner.standBrick = brick;
-            _pathIndex++;
+        _brick = brick;
 
-            BrickCore.Instance.OpenNearbyBrick(
-                StageCore.Instance.Player.standBrick.pathNode.x,
-                StageCore.Instance.Player.standBrick.pathNode.z);
-        });
+        LeanTween.move(this.gameObject, brick.transform.position, time).setOnComplete(OnMoveFinish);
 
         while (!move_Finish)
         {
             yield return 0;
         }
+    }
+
+    public void OnMoveFinish()
+    {
+        move_Finish = true;
+
+        owner.standBrick = _brick;
+
+        _pathIndex++;
+
+        BrickCore.Instance.OpenNearbyBrick(
+            StageCore.Instance.Player.standBrick.pathNode.x,
+            StageCore.Instance.Player.standBrick.pathNode.z);
+
     }
 
     public bool IsNextCanMove()
