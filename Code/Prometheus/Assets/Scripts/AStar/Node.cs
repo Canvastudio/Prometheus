@@ -56,5 +56,19 @@ namespace Pathfinding
             ground,
             air
         }
+
+        public int Distance(Node otherNode)
+        {
+            if (otherNode != null)
+            {
+                return Mathf.Abs(otherNode.x - x)
+                    + Mathf.Abs(otherNode.y - y)
+                    + Mathf.Abs(otherNode.z - z);
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

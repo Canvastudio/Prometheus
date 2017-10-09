@@ -22,10 +22,16 @@ public class StageLoopState : IState
         BrickCore.Instance.CreatePrimitiveStage();
         //生成玩家
         BrickCore.Instance.CreatePlayer();
+
+        yield return 0;
+
+        //刷新下位置
+        Messenger.Invoke(StageAction.RefreshGameItemPos);
+
         //开始执行关卡内部的逻辑循环
         yield return StageCore.Instance.RunLoop();
 
-        Debug.Log("12312312");
+        Debug.Log("StageLoop 结束！！！！！！！！！！！");
     }
 
     public IState GetNextState()

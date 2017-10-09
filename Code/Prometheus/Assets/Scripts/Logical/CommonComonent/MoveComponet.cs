@@ -48,6 +48,10 @@ public class MoveComponet : MonoBehaviour {
                 {
                     finish = true;
                     owner.standBrick = brick;
+
+                    BrickCore.Instance.OpenNearbyBrick(
+                        StageCore.Instance.Player.standBrick.pathNode.x,
+                        StageCore.Instance.Player.standBrick.pathNode.z);
                 });
 
             yield return new WaitUntil(()=>finish);
@@ -70,11 +74,25 @@ public class MoveComponet : MonoBehaviour {
             move_Finish = true;
             owner.standBrick = brick;
             _pathIndex++;
+
+            BrickCore.Instance.OpenNearbyBrick(
+                StageCore.Instance.Player.standBrick.pathNode.x,
+                StageCore.Instance.Player.standBrick.pathNode.z);
         });
 
         while (!move_Finish)
         {
             yield return 0;
         }
+    }
+
+    public bool IsNextCanMove()
+    {
+        if (_pathIndex == _path.Count)
+        {
+            return false;
+        }
+        else
+            return (_path[_pathIndex].behavirour as Brick).brickType == BrickType.EMPTY;
     }
 }

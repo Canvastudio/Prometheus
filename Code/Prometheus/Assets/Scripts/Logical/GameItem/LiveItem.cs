@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiveItem : MonoBehaviour {
-
-    public Brick standBrick;
-
+public class LiveItem : GameItemBase
+{
     [SerializeField]
     private MoveComponet _moveComponet;
     [HideInInspector]
@@ -22,4 +20,30 @@ public class LiveItem : MonoBehaviour {
             return _moveComponet;
         }
     }
+
+    /// <summary>
+    /// 基础属性，血量，速度等
+    /// </summary>
+    public LiveBaseProperty baseProperty = new LiveBaseProperty();
+
+    public void AddHpPercent(float percent)
+    {
+        var max_Hp = baseProperty.GetFloatProperty(PDName.maxHp);
+        var cur_Hp = baseProperty.GetFloatProperty(PDName.curHp);
+
+        cur_Hp += max_Hp * percent;
+        cur_Hp = Mathf.Min(max_Hp, cur_Hp);
+
+        baseProperty.SetFloatProperty(PDName.curHp, cur_Hp);
+    }
+}
+
+/// <summary>
+/// 怪物和玩家数据名字缓存
+/// </summary>
+public class PDName
+{
+    public const string maxHp = "mhp";
+    public const string curHp = "nhp";
+    public const string speed = "speed";
 }

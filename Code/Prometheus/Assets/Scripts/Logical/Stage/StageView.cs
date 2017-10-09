@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.U2D;
 
+/// <summary>
+/// 负责管理关卡界面中的物体的生成和初始化设置等
+/// </summary>
 public class StageView : SingleGameObject<StageView> {
 
 
@@ -12,7 +16,7 @@ public class StageView : SingleGameObject<StageView> {
     [SerializeField]
     Brick _brickPrefab;
 
-    public Transform monsterRoot;
+    public Transform itemRoot;
     public Transform brickRoot;
 
     [SerializeField]
@@ -22,13 +26,15 @@ public class StageView : SingleGameObject<StageView> {
 
     public List<Brick[]> brickGrid = new List<Brick[]>();
 
+    public GridLayoutGroup grid;
+
 #region Add Brick
     public Brick AddEmpty(int row = -1, int col = -1)
     {
         return CreateBrick(row, col, BrickType.EMPTY);
     }
 
-    public Brick AddTREASURE(int quality, int row = -1, int col = -1)
+    public Brick AddTreasure(int quality, int row = -1, int col = -1)
     {
         return CreateBrick(row, col, BrickType.TREASURE).CreateTreasure();
     }
@@ -80,10 +86,12 @@ public class StageView : SingleGameObject<StageView> {
 
         Brick _brick = GameObject.Instantiate<Brick>(_brickPrefab, brickRoot);
 
+        _brick.transform.SetAsFirstSibling();
+
         _brick.Init(row, col, type);
 
 #if UNITY_EDITOR
-        _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.brickType.ToString();
+        _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.realBrickType.ToString();
 #endif
 
         return _brick;
