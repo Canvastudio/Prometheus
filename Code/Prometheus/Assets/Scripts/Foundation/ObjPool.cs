@@ -283,7 +283,6 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
     public Object RecycleObj(string poolName, int id)
     {
-        //Debug.Log("Qx: recycle: " + id);
 
         if (Data.ContainsKey(poolName))
         {
@@ -310,8 +309,6 @@ public class ObjPool : SingleGameObject<ObjPool> {
                 }
             }
         }
-
-        Debug.LogError("Qx ---------- RecycleObj faild: " + poolName + " id: " + id);
 
         return null;
     }

@@ -30,6 +30,11 @@ public class StageCore : SingleObject<StageCore> {
     /// </summary>
     bool autoMove;
 
+    /// <summary>
+    /// 当前到了第几回合
+    /// </summary>
+    public int totalRound;
+
     public bool isLooping = false;
 
     /// <summary>
@@ -102,7 +107,11 @@ public class StageCore : SingleObject<StageCore> {
                             //如果路径长度小于3，不需要确认直接移动
                             if (list.Count < 3)
                             {
-                                yield return Player.moveComponent.Go(list);
+                                Player.moveComponent.SetPaht(list);
+
+                                yield return MovePlayer();
+
+                                //yield return Player.moveComponent.Go(list);
                             }
                             else
                             {
@@ -161,6 +170,8 @@ public class StageCore : SingleObject<StageCore> {
             yield return playerActionFinish;
 
             Debug.Log("根据消耗时间移动地图");
+
+            totalRound += 1;
         }
     }
 
@@ -215,6 +226,11 @@ public class StageCore : SingleObject<StageCore> {
         turnTime += time;
 
         Messenger<float>.Invoke(StageAction.StageTimeCast, time);
+    }
+
+    public void MoveMap(float time)
+    {
+
     }
 }
 

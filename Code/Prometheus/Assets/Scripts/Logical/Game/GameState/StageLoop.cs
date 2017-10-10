@@ -20,6 +20,7 @@ public class StageLoopState : IState
     {
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
+
         //生成玩家
         BrickCore.Instance.CreatePlayer();
 

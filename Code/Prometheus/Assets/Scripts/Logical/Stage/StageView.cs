@@ -9,26 +9,28 @@ using UnityEngine.U2D;
 /// </summary>
 public class StageView : SingleGameObject<StageView> {
 
-
     private int lastRow = 0;
     private int lastColumn = 0;
-
     [SerializeField]
-    Brick _brickPrefab;
-
+    GameObject _brickPrefab;
     public Transform itemRoot;
     public Transform brickRoot;
-
+    public Transform moveRoot;
     [SerializeField]
     public SpriteAtlas brickAtlas;
-
     public int viewBrickRow = 9;
+    public float brickWidth = 120;
+    public string brickName = "brick";
+    public Camera show_camera;
 
-    public List<Brick[]> brickGrid = new List<Brick[]>();
+    protected override void Init()
+    {
+        base.Init();
 
-    public GridLayoutGroup grid;
+        ObjPool.Instance.InitOrRecyclePool(brickName, _brickPrefab);
+    }
 
-#region Add Brick
+    #region Add Brick
     public Brick AddEmpty(int row = -1, int col = -1)
     {
         return CreateBrick(row, col, BrickType.EMPTY);
@@ -84,8 +86,15 @@ public class StageView : SingleGameObject<StageView> {
             }
         }
 
-        Brick _brick = GameObject.Instantiate<Brick>(_brickPrefab, brickRoot);
+        int uid = 0;
 
+        Brick _brick = (ObjPool.Instance.GetObjFromPoolWithID(out uid, brickName) as GameObject).GetComponent<Brick>();
+
+        _brick.transform.SetParent(brickRoot);
+        _brick.transform.localScale = Vector3.one;
+        _brick.gameObject.SetActive(true);
+        _brick.uid = uid;
+        ((RectTransform)_brick.transform).anchoredPosition = new Vector2(brickWidth * col + brickWidth / 2f, brickWidth * row + brickWidth / 2f);
         _brick.transform.SetAsFirstSibling();
 
         _brick.Init(row, col, type);
@@ -122,5 +131,20 @@ public class StageView : SingleGameObject<StageView> {
         }
 
         pathBrick.Clear();
+    }
+
+    public void MoveDownMap(float distance)
+    {
+        if (StageCore.Instance.totalRound >= 4)
+        {
+            LeanTween.moveLocalY(
+                moveRoot.gameObject,
+                moveRoot.transform.localPosition.y - (brickWidth * .5f), 0.3f)
+                .setOnComplete(BrickCore.Instance.CheckNeedRecycelBrick);
+                
+     
+        }
+
+        BrickCore.Instance.CheckNeedCreawteMoudel();
     }
 }

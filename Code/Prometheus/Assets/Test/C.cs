@@ -6,6 +6,8 @@ public class C : MonoBehaviour {
 
     public int[] array = new int[] { 1, 0, 1, 0, 1, 0 };
 
+    public List<byte> bbbb = new List<byte>();
+
     public int CC()
     {
         int v = Random.Range(1, 61); //60是1,2,3,4,5,6的最小公倍数
@@ -32,11 +34,16 @@ public class C : MonoBehaviour {
 
     private void Start()
     {
-        int i = 10000;
+        byte[] a;
 
-        while(i-- > 0)
-        {
-            res[CC()] += 1;
-        }
+        a = System.BitConverter.GetBytes(1.12312f);
+
+        Debug.Log(a.Length);
     }
+
+    enum PP
+    {
+        Speed
+    }
+    
 }

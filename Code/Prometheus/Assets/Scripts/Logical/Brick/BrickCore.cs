@@ -14,6 +14,15 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
     WeightSection _weightSection;
 
     /// <summary>
+    /// 当前一共创建到多少row了
+    /// </summary>
+    int _row = 0;
+
+    /// <summary>
+    /// 还存在的最下一层
+    /// </summary>
+    int o_row = 0;
+    /// <summary>
     /// 保存了砖块数据
     /// </summary>
     BrickData data = new BrickData();
@@ -28,11 +37,37 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         //初始生成的行数
         int max_Distance = StageView.Instance.viewBrickRow;
 
-        int _row = 0;
+        _row = 0;
 
         while (_row < max_Distance)
         {
             _row += CreateBrickModuel(_row);
+        }
+    }
+
+    public void CheckNeedCreawteMoudel()
+    {
+        if (_row - (-StageView.Instance.moveRoot.localPosition.y) / StageView.Instance.brickWidth < (StageView.Instance.viewBrickRow ))
+            _row += CreateBrickModuel(_row);
+    }
+
+    public void CheckNeedRecycelBrick()
+    {
+        Brick brick = GetNode(o_row, 0).behavirour as Brick;
+
+        if (brick.CheckIfRecycle())
+        {
+            RecycleRowBrick(o_row);
+            o_row += 1;
+        }
+    }
+   
+    public void RecycleRowBrick(int row)
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            Brick brick = GetNode(o_row, i).behavirour as Brick;
+            brick.Recycle();
         }
     }
 

@@ -136,7 +136,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000086, y: 1.0000086, z: 1.0000086}
   m_Children: []
   m_Father: {fileID: 1495498496}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -197,11 +197,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 267333917}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1495498496}
+  m_Father: {fileID: 1687157433}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -237,7 +237,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1495498496}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -302,17 +302,17 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 733013759}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1495498496}
+  m_Father: {fileID: 1687157433}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -140.75015}
-  m_SizeDelta: {x: 0, y: -290.7}
+  m_AnchoredPosition: {x: 0, y: 472}
+  m_SizeDelta: {x: 650, y: 943.3}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &733013761
 MonoBehaviour:
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 733013759}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -594,8 +594,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 733013760}
-  - {fileID: 267333918}
+  - {fileID: 1687157433}
   - {fileID: 521662979}
   - {fileID: 102083441}
   m_Father: {fileID: 0}
@@ -617,14 +616,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097cdbf7ad852444db7792da4f858ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brickPrefab: {fileID: 114317811207022196, guid: a6481a8d07c70c74a86237663733c2b0,
+  _brickPrefab: {fileID: 1359432129548608, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
   itemRoot: {fileID: 267333918}
   brickRoot: {fileID: 733013760}
+  moveRoot: {fileID: 1687157433}
   brickAtlas: {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184,
     type: 2}
   viewBrickRow: 9
-  grid: {fileID: 733013761}
+  brickWidth: 120
+  show_camera: {fileID: 0}
+--- !u!1 &1687157432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1687157433}
+  m_Layer: 5
+  m_Name: MoveRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1687157433
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1687157432}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 733013760}
+  - {fileID: 267333918}
+  m_Father: {fileID: 1495498496}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1779828381
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +760,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:

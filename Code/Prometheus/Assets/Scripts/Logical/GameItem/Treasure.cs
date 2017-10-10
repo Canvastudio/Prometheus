@@ -14,5 +14,7 @@ public class Treasure : GameItemBase, IReactive {
         standBrick.brickType = BrickType.EMPTY;
 
         GameObject.Destroy(this.gameObject);
+
+
     }
 }

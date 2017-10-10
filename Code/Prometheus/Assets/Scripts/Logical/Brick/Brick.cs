@@ -15,6 +15,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     [SerializeField]
     Image pathMask;
 
+    public int uid;
+
 #region BrickInfo
     public BrickType brickType
     {
@@ -147,6 +149,10 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         {
             picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
         }
+        else
+        {
+            picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_REACHABLE);
+        }
 
         brickExplored = BrickExplored.UNEXPLORED;
 
@@ -207,13 +213,11 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public Brick CreatePlayer()
     {
         //创建数据
-        item = GameItemFactory.Instance.CreatePlayer(this);
+        GameItemFactory.Instance.CreatePlayer(this);
 
         return this;
     }
     #endregion
-
-    Color _tempColor;
 
     public void SetAsPathNode()
     {
@@ -228,6 +232,30 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     public bool Equals(Brick other)
     {
         return pathNode == other.pathNode;
+    }
+
+    public bool CheckIfRecycle()
+    {
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+
+        if (screen_Pos.y < StageView.Instance.brickWidth)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Recycle()
+    {
+        ObjPool.Instance.RecycleObj(StageView.Instance.brickName, uid);
+
+        if (item != null)
+        {
+            GameObject.Destroy(item.gameObject);
+        }
     }
 }
 

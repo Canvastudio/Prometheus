@@ -44,9 +44,9 @@ public class MoveComponet : MonoBehaviour {
 
             _brick = brick;
 
-            descr = LeanTween.move(StageCore.Instance.Player.gameObject,
-                brick.transform.position,
-                0.3f).setOnComplete(OnMoveFinish);
+            StageView.Instance.MoveDownMap(1);
+
+            descr = LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), 0.3f).setOnComplete(OnMoveFinish);
 
             //yield return new WaitUntil(()=>finish);
 
@@ -57,6 +57,8 @@ public class MoveComponet : MonoBehaviour {
                 yield return 0;
             }
         }
+
+        Debug.Log("Go 移动完成！");
     }
 
     public IEnumerator MoveToNext(float time)
@@ -74,7 +76,8 @@ public class MoveComponet : MonoBehaviour {
 
         _brick = brick;
 
-        LeanTween.move(this.gameObject, brick.transform.position, time).setOnComplete(OnMoveFinish);
+        StageView.Instance.MoveDownMap(1);
+        LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time).setOnComplete(OnMoveFinish);
 
         while (!move_Finish)
         {
@@ -94,9 +97,9 @@ public class MoveComponet : MonoBehaviour {
             StageCore.Instance.Player.standBrick.pathNode.x,
             StageCore.Instance.Player.standBrick.pathNode.z);
 
-        string formula = GlobalParameterConfig.GetConfig().motorizedFormula;
+        string formula = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula;
 
-        Debug.Log(formula);
+        //Debug.Log(formula);
 
         string[] step = formula.Split(',');
 

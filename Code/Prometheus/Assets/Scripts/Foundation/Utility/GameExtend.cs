@@ -17,4 +17,9 @@ public static class GameExtend  {
             return res;
         }
     }
+
+    public static RectTransform Rt(this GameObject go)
+    {
+        return ((RectTransform)go.transform);
+    }
 }
