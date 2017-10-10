@@ -14,6 +14,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     Button brickBtn;
     [SerializeField]
     Image pathMask;
+    [SerializeField]
+    Image blockMask;
 
     public int uid;
 
@@ -22,19 +24,16 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         get
         {
-            if (brickExplored == BrickExplored.UNEXPLORED)
+            if (brickExplored == BrickExplored.UNEXPLORED && realBrickType != BrickType.OBSTACLE)
                 return BrickType.UNKNOWN;
             else
                 return _brickType;
         }
         set
         {
-            if (value == BrickType.EMPTY || value == BrickType.UNKNOWN)
-            {
-                pathNode.isWalkable = true;
-            }
-
             _brickType = value;
+
+            RefreshWalkableAndBlockState();
         }
     }
 
@@ -60,15 +59,15 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
             if (value == BrickExplored.UNEXPLORED)
             {
                 picture.color = new Color(0.5f, 0.5f, 0.5f);
-                pathNode.isWalkable = true;
             }
             else
             {
                 picture.color = Color.white;
-                pathNode.isWalkable = (_brickType == BrickType.EMPTY);
             }
 
             _brickExplored = value;
+
+            RefreshWalkableAndBlockState();
         }
     }
 
@@ -80,6 +79,12 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         get
         {
             return _brickBlock;
+        }
+        set
+        {
+            _brickBlock = value;
+
+            RefreshWalkableAndBlockState();
         }
     }
 
@@ -129,6 +134,43 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
     }
 
+    public void RefreshWalkableAndBlockState()
+    {
+        blockMask.gameObject.SetActive(false);
+
+        if (brickType == BrickType.EMPTY)
+        {
+            if (brickBlock == BrickBlock.BLOCKED_BY_OTHER)
+            {
+                blockMask.gameObject.SetActive(true);
+                pathNode.isWalkable = false;
+            }
+            else
+            {
+                pathNode.isWalkable = true;
+            }
+        }
+        else
+        {
+            if (brickType == BrickType.UNKNOWN) 
+            {
+                if (brickBlock != BrickBlock.BLOCKED_BY_OTHER)
+                {
+                    pathNode.isWalkable = true;
+                }
+                else
+                {
+                    blockMask.gameObject.SetActive(true);
+                    pathNode.isWalkable = false;
+                }
+            }
+            else
+            {
+                pathNode.isWalkable = false;
+            }
+        }
+    }
+
     public void OnBrickClick()
     {
         Messenger<Brick>.Invoke(StageAction.PlayerClickBrick.ToString(), this);
@@ -143,7 +185,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         _row = row;
         _column = column;
-        brickType = type;
+  
 
         if (type == BrickType.OBSTACLE)
         {
@@ -166,6 +208,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
             x = row,
             z = column
         };
+
+        brickType = type;
 
         CancelAsPathNode();
     }
@@ -210,10 +254,10 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         return this;
     }
 
-    public Brick CreatePlayer()
+    public Brick CreatePlayer(ulong uid)
     {
         //创建数据
-        GameItemFactory.Instance.CreatePlayer(this);
+        GameItemFactory.Instance.CreatePlayer(uid, this);
 
         return this;
     }
@@ -250,12 +294,14 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
 
     public void Recycle()
     {
-        ObjPool.Instance.RecycleObj(StageView.Instance.brickName, uid);
-
         if (item != null)
         {
             GameObject.Destroy(item.gameObject);
+            item = null;
         }
+
+        blockMask.gameObject.SetActive(false);
+        ObjPool.Instance.RecycleObj(StageView.Instance.brickName, uid);
     }
 }
 
@@ -283,6 +329,7 @@ public enum BrickBlock
     NIL = 0,
     BLOCK_OTHER = 1,
     BLOCKED_BY_OTHER = 2,
+    NO_BLOCK = 3,
 }
 
 

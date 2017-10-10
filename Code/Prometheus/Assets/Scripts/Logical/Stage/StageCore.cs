@@ -147,6 +147,7 @@ public class StageCore : SingleObject<StageCore> {
 
                             break;
                         case BrickType.MONSTER:
+                            Player.AttackTarget(brick1.item as Monster);
                             break;
                         case BrickType.SUPPLY:
 

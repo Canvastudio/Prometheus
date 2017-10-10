@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267333918}
   m_Layer: 5
-  m_Name: itemRoot
+  m_Name: LiveItemRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,14 +618,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _brickPrefab: {fileID: 1359432129548608, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
-  itemRoot: {fileID: 267333918}
+  liveItemRoot: {fileID: 267333918}
   brickRoot: {fileID: 733013760}
   moveRoot: {fileID: 1687157433}
   brickAtlas: {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184,
     type: 2}
   viewBrickRow: 9
   brickWidth: 120
-  show_camera: {fileID: 0}
+  brickName: brick
+  show_camera: {fileID: 2105311307}
 --- !u!1 &1687157432
 GameObject:
   m_ObjectHideFlags: 0

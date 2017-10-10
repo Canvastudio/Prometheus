@@ -71,9 +71,9 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
     }
 
-    public void CreatePlayer()
+    public void CreatePlayer(ulong uid)
     {
-        data.GetFirstRowEmpty().CreatePlayer();
+        data.GetFirstRowEmpty().CreatePlayer(uid);
     }
 
     public Node GetNode(int row, int column)
@@ -257,8 +257,51 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
                 if (_brick != null)
                 {
                     _brick.brickExplored = BrickExplored.EXPLORED;
+
+                    if (_brick.item != null)
+                    {
+                        _brick.item.OnDiscoverd();
+                    }
                 }
             }
         }
     }
+
+    public void BlockNearbyBrick(int row, int column)
+    {
+        for (int n = -1; n <= 1; ++n)
+        {
+            for (int m = -1; m <= 1; ++m)
+            {
+                if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
+
+                var _brick = data.GetBrick(row + n, column + m);
+
+                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED && _brick.realBrickType != BrickType.OBSTACLE)
+                {
+                    _brick.brickBlock = BrickBlock.BLOCKED_BY_OTHER;
+                }
+            }
+        }
+    }
+
+    public void CancelBlockNearbyBrick(int row, int column)
+    {
+        for (int n = -1; n <= 1; ++n)
+        {
+            for (int m = -1; m <= 1; ++m)
+            {
+                if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
+
+                var _brick = data.GetBrick(row + n, column + m);
+
+                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
+                {
+                    _brick.brickBlock = BrickBlock.NO_BLOCK;
+                }
+            }
+        }
+    }
+
+
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,4 +14,42 @@ public class Monster : LiveItem {
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
+
+    public override void OnDiscoverd()
+    {
+        base.OnDiscoverd();
+
+        if (standBrick != null)
+        {
+            Debug.Log(gameObject.name);
+            BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+        }
+    }
+
+    public override void OnDead()
+    {
+        base.OnDead();
+
+        if (standBrick != null)
+        {
+            Debug.Log(gameObject.name);
+            BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+        }
+    }
+
+
+    private void OnDisable()
+    {
+
+    }
+
+    public override IEnumerator AttackTarget<T>(T target)
+    {
+        return null;
+    }
+
+    public override IEnumerator AttackByOther<T>(T other)
+    {
+        return null;
+    }
 }

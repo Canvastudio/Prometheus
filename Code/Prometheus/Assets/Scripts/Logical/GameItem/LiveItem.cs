@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiveItem : GameItemBase
+public abstract class LiveItem : GameItemBase
 {
     [SerializeField]
     private MoveComponet _moveComponet;
@@ -36,6 +36,17 @@ public class LiveItem : GameItemBase
 
         baseProperty.SetFloatProperty(PDName.curHp, cur_Hp);
     }
+
+    public virtual void OnDead()
+    {
+
+    }
+
+    public abstract IEnumerator AttackTarget<T>(T target) where T : LiveItem;
+
+
+    public abstract IEnumerator AttackByOther<T>(T other) where T : LiveItem;
+
 }
 
 /// <summary>

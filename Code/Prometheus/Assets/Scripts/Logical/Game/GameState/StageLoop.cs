@@ -22,7 +22,7 @@ public class StageLoopState : IState
         BrickCore.Instance.CreatePrimitiveStage();
 
         //生成玩家
-        BrickCore.Instance.CreatePlayer();
+        BrickCore.Instance.CreatePlayer(1);
 
         yield return 0;
 

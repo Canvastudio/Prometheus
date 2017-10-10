@@ -13,7 +13,7 @@ public class StageView : SingleGameObject<StageView> {
     private int lastColumn = 0;
     [SerializeField]
     GameObject _brickPrefab;
-    public Transform itemRoot;
+    public Transform liveItemRoot;
     public Transform brickRoot;
     public Transform moveRoot;
     [SerializeField]
