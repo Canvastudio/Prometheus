@@ -213,6 +213,8 @@ public class StageCore : SingleObject<StageCore> {
     public void AddTurnTime(float time)
     {
         turnTime += time;
+
+        Messenger<float>.Invoke(StageAction.StageTimeCast, time);
     }
 }
 
@@ -220,4 +222,5 @@ public static class StageAction
 {
     public const string PlayerClickBrick = "PCB";
     public const string RefreshGameItemPos = "RGIP";
+    public const string StageTimeCast = "STC";
 }

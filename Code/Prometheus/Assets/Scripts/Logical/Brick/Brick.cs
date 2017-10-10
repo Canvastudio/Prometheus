@@ -188,10 +188,10 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         return this;
     }
 
-    public Brick CreateTalbet()
+    public Brick CreateTalbet(ulong uid)
     {
         //创建数据
-        item = GameItemFactory.Instance.CreateTablet(this);
+        item = GameItemFactory.Instance.CreateTablet(uid, this);
 
         return this;
     }

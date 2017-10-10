@@ -119,7 +119,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         return supply;
     }
 
-    public Tablet CreateTablet(Brick bornBrick)
+    public Tablet CreateTablet(ulong uid, Brick bornBrick)
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Tablet"), StageView.Instance.itemRoot) as GameObject;
 
@@ -130,6 +130,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var tablet = go.GetComponent<Tablet>();
 
         tablet.standBrick = bornBrick;
+
+        tablet.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
 
         return tablet;
     }

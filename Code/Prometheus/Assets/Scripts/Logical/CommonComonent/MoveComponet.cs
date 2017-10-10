@@ -94,6 +94,13 @@ public class MoveComponet : MonoBehaviour {
             StageCore.Instance.Player.standBrick.pathNode.x,
             StageCore.Instance.Player.standBrick.pathNode.z);
 
+        string formula = GlobalParameterConfig.GetConfig().motorizedFormula;
+
+        Debug.Log(formula);
+
+        string[] step = formula.Split(',');
+
+        Stack<string> stacks = new Stack<string>();
     }
 
     public bool IsNextCanMove()
