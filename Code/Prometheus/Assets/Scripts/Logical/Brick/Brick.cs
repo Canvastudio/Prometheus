@@ -306,6 +306,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
             item = null;
         }
 
+        brickBlock = 0;
         blockMask.gameObject.SetActive(false);
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;

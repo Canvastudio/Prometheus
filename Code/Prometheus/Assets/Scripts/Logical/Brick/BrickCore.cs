@@ -299,7 +299,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
                 {
-                    _brick.brickBlock = 0;
+                    _brick.brickBlock -= 1;
                 }
             }
         }
