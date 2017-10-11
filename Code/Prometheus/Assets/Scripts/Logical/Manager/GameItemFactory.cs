@@ -32,11 +32,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
         monster.property.InitBaseProperty(
-            lv_Property.m_mhp * propertys[pwr, 0],
-            lv_Property.m_speed * propertys[pwr, 1],
-            lv_Property.m_melee * propertys[pwr, 2],
-            lv_Property.m_laser * propertys[pwr, 3],
-            lv_Property.m_cartridge * propertys[pwr, 4]
+            lv_Property.mhp * propertys[pwr, 0],
+            lv_Property.speed * propertys[pwr, 1],
+            lv_Property.melee * propertys[pwr, 2],
+            lv_Property.laser * propertys[pwr, 3],
+            lv_Property.cartridge * propertys[pwr, 4]
             );
 
         monster.InitInfoUI();
@@ -107,14 +107,14 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         player.config = config;
 
         player.property.InitBaseProperty(
-            config.p_mhp,
-            config.p_speed,
-            config.p_melee,
-            config.p_laser,
-            config.p_cartridge
+            config.mhp,
+            config.speed,
+            config.melee,
+            config.laser,
+            config.cartridge
         );
 
-        player.SetPlayerProperty(config.p_motorized, config.p_capacity, config.p_atkSpeed, config.p_reloadSpeed);
+        player.SetPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
 
         BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
