@@ -31,13 +31,16 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        monster.baseProperty.InitBaseProperty(
+        monster.property.InitBaseProperty(
             lv_Property.m_mhp * propertys[pwr, 0],
             lv_Property.m_speed * propertys[pwr, 1],
             lv_Property.m_melee * propertys[pwr, 2],
             lv_Property.m_laser * propertys[pwr, 3],
             lv_Property.m_cartridge * propertys[pwr, 4]
             );
+
+        monster.InitInfoUI();
+
         #endregion
         //添加战斗组件
         #region 战斗组件
@@ -74,6 +77,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
             fightComponet.SortAcitveSkill();
             #endregion
+
         }
         StageCore.Instance.RegisterMonster(monster);
 
@@ -101,13 +105,13 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
         player.config = config;
-        
-        player.baseProperty.InitBaseProperty(
+
+        player.property.InitBaseProperty(
             config.p_mhp,
             config.p_speed,
             config.p_melee,
             config.p_laser,
-            config.p_cartridge 
+            config.p_cartridge
         );
 
         player.SetPlayerProperty(config.p_motorized, config.p_capacity, config.p_atkSpeed, config.p_reloadSpeed);
@@ -115,6 +119,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
         StageCore.Instance.RegisterPlayer(player);
+
+        player.InitInfoUI();
 
         return player;
     }
@@ -134,6 +140,23 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
         return supply;
+    }
+
+    public Maintenance CreateMaintenance(Brick bornBrick)
+    {
+        var go = GameObject.Instantiate(Resources.Load("Prefab/Maintenance"), bornBrick.transform) as GameObject;
+
+        go.transform.localScale = Vector3.one;
+
+        go.transform.SetSiblingIndex(2);
+
+        var Maintence = go.GetComponent<Maintenance>();
+
+        Maintence.standBrick = bornBrick;
+
+        //supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
+
+        return Maintence;
     }
 
     public Tablet CreateTablet(ulong uid, Brick bornBrick)

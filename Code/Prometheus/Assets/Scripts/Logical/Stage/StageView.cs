@@ -53,7 +53,7 @@ public class StageView : SingleGameObject<StageView> {
 
     public Brick AddMaintenance(int row = -1, int col = -1)
     {
-        return CreateBrick(row, col, BrickType.MAINTENANCE);
+        return CreateBrick(row, col, BrickType.MAINTENANCE).CreateMaintence();
     }
 
     public Brick AddEnemy(int power, ulong id, int lv, int row = -1, int col = -1)

@@ -238,6 +238,12 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         return this;
     }
 
+    public Brick CreateMaintence()
+    {
+        item = GameItemFactory.Instance.CreateMaintenance(this);
+        return this;
+    }
+
     public Brick CreateTalbet(ulong uid)
     {
         //创建数据
@@ -301,7 +307,18 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         }
 
         blockMask.gameObject.SetActive(false);
+        brickType = BrickType.EMPTY;
+        brickExplored = BrickExplored.UNEXPLORED;
         ObjPool.Instance.RecycleObj(StageView.Instance.brickName, uid);
+    }
+
+    /// <summary>
+    /// 清除上面的item
+    /// </summary>
+    public void CleanItem()
+    {
+        item = null;
+        brickType = BrickType.EMPTY;
     }
 }
 

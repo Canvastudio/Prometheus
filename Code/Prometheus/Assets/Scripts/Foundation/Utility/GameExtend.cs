@@ -22,4 +22,18 @@ public static class GameExtend  {
     {
         return ((RectTransform)go.transform);
     }
+
+    public static RectTransform Rt(this Transform transform)
+    {
+        return ((RectTransform)transform);
+    }
+    /// <summary>
+    /// 不推荐, 由于Enum和enum的特殊关系，会产生GC
+    /// </summary>
+    /// <param name="e"></param>
+    /// <returns></returns>
+    public static int ToInt(this System.Enum e)
+    {
+        return System.Convert.ToInt32(e);
+    }
 }

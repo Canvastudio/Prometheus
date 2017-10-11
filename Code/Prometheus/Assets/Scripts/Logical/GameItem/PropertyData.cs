@@ -1,16 +1,33 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PropertyData
 {
-    protected Dictionary<string, float> data = new Dictionary<string, float>();
+    protected Dictionary<GameProperty, float> data = new Dictionary<GameProperty, float>();
 
-    public int GetIntProperty(string propertyName)
+    public float this[GameProperty gameProperty]
+    {
+        get
+        {
+            float result;
+
+            if (data.TryGetValue(gameProperty, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
+
+    public int GetIntProperty(GameProperty id)
     {
         float result;
 
-        if (data.TryGetValue(propertyName, out result))
+        if (data.TryGetValue(id, out result))
         {
             return Mathf.FloorToInt(result);
         }
@@ -20,11 +37,11 @@ public class PropertyData
         }
     }
 
-    public float GetFloatProperty(string propertyName)
+    public float GetFloatProperty(GameProperty id)
     {
         float result;
 
-        if (data.TryGetValue(propertyName, out result))
+        if (data.TryGetValue(id, out result))
         {
             return result;
         }
@@ -34,17 +51,18 @@ public class PropertyData
         }
     }
 
-    public PropertyData SetIntProperty(string propertyName, int value)
+    public PropertyData SetIntProperty(GameProperty id, int value)
     {
-        data[propertyName] = value;
+        data[id] = value;
 
         return this;
     }
 
-    public PropertyData SetFloatProperty(string propertyName, float value)
+    public PropertyData SetFloatProperty(GameProperty id, float value)
     {
-        data[propertyName] = value;
+        data[id] = value;
 
         return this;
     }
+
 }

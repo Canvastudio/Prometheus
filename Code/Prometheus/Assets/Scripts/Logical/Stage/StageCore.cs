@@ -147,7 +147,40 @@ public class StageCore : SingleObject<StageCore> {
 
                             break;
                         case BrickType.MONSTER:
-                            Player.AttackTarget(brick1.item as Monster);
+
+                            var monster = brick1.item as Monster;
+
+                            var player_Speed = Player.property.GetFloatProperty(GameProperty.speed);
+                            var monster_Speed = monster.property.GetFloatProperty(GameProperty.speed);
+
+                            if (player_Speed >= monster_Speed)
+                            {
+                                yield return Player.MeleeAttackTarget(monster);
+                                if (monster != null && monster.isAlive)
+                                {
+                                    yield return monster.MeleeAttackTarget(Player);
+                                }
+
+                                if (Player!= null && Player.isAlive && player_Speed >= monster_Speed * 1.5f)
+                                {
+                                    yield return Player.MeleeAttackTarget(monster);
+                                }
+                            }
+                            else
+                            {
+                                yield return monster.MeleeAttackTarget(Player);
+                                if (Player != null && Player.isAlive)
+                                {
+                                    yield return Player.MeleeAttackTarget(monster);
+                                }
+
+                                if (monster != null && monster.isAlive && monster_Speed >= player_Speed * 1.5f)
+                                {
+                                    yield return monster.MeleeAttackTarget(Player);
+                                }
+                            }
+   
+
                             break;
                         case BrickType.SUPPLY:
 
@@ -226,6 +259,13 @@ public class StageCore : SingleObject<StageCore> {
     {
         turnTime += time;
 
+        Messenger<float>.Invoke(StageAction.StageTimeCast, time);
+    }
+
+    public void AddTurnTimeAndMoveDown(float time)
+    {
+        turnTime += time;
+        StageView.Instance.MoveDownMap(time);
         Messenger<float>.Invoke(StageAction.StageTimeCast, time);
     }
 

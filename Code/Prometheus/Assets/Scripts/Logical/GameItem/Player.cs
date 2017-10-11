@@ -7,26 +7,34 @@ public class Player : LiveItem {
 
     public PlayerInitConfig config;
 
-    public PropertyData playerProperty = new PropertyData();
-
-    public override IEnumerator AttackByOther<T>(T other)
-    {
-        return null;
-    }
-
-    public override IEnumerator AttackTarget<T>(T target)
-    {
-        return null;
-    }
-
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
-        playerProperty.SetFloatProperty("motorized", motorized)
-            .SetFloatProperty("capacity", capacity)
-            .SetFloatProperty("atkSpeed", atkSpeed)
-            .SetFloatProperty("reloadSpeed", reloadSpeed);
+        property.SetFloatProperty(GameProperty.motorized, motorized)
+
+            .SetFloatProperty(GameProperty.atkSpeed, atkSpeed)
+            .SetFloatProperty(GameProperty.reloadSpeed, reloadSpeed);
 
         return this;
+    }
+
+    private void Update()
+    {
+        AddHpPercent(0.5f);
+    }
+
+    public override IEnumerator MeleeAttackTarget<T>(T target)
+    {
+        var e = base.MeleeAttackTarget(target);
+
+        var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
+        var atk_Speed = property[GameProperty.atkSpeed];
+        var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
+
+        
+        StageCore.Instance.AddTurnTimeAndMoveDown(timeSpend);
+
+
+        return e;
     }
 
 }

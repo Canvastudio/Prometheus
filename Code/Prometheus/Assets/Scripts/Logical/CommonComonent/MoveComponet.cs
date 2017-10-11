@@ -77,12 +77,15 @@ public class MoveComponet : MonoBehaviour {
         _brick = brick;
 
         StageView.Instance.MoveDownMap(1);
+
         LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time).setOnComplete(OnMoveFinish);
 
         while (!move_Finish)
         {
             yield return 0;
         }
+
+        StageCore.Instance.AddTurnTime(1);
     }
 
     public void OnMoveFinish()

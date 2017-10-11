@@ -67,6 +67,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         for (int i = 0; i < 6; ++i)
         {
             Brick brick = GetNode(o_row, i).behavirour as Brick;
+
             brick.Recycle();
         }
     }
@@ -103,7 +104,8 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         ulong level_Id = 0;
 
-        for (int i = map_Data.Count - 1; i >= 0; ++i)
+        //for (int i = map_Data.Count - 1; i >= 0; ++i)
+        for (int i = 0; i < map_Data.Count; ++i)
         {
             if (map_Data[i].distance > distance)
             {
