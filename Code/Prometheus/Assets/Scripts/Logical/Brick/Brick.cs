@@ -74,7 +74,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     [SerializeField]
     private BrickExplored _brickExplored = BrickExplored.UNEXPLORED;
 
-    public BrickBlock brickBlock
+    public int brickBlock
     {
         get
         {
@@ -89,7 +89,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     }
 
     [SerializeField]
-    private BrickBlock _brickBlock = BrickBlock.NIL;
+    private int _brickBlock = 0;
 
     public int row
     {
@@ -140,7 +140,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
 
         if (brickType == BrickType.EMPTY)
         {
-            if (brickBlock == BrickBlock.BLOCKED_BY_OTHER)
+            if (brickBlock > 0)
             {
                 blockMask.gameObject.SetActive(true);
                 pathNode.isWalkable = false;
@@ -154,7 +154,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         {
             if (brickType == BrickType.UNKNOWN) 
             {
-                if (brickBlock != BrickBlock.BLOCKED_BY_OTHER)
+                if (brickBlock == 0)
                 {
                     pathNode.isWalkable = true;
                 }

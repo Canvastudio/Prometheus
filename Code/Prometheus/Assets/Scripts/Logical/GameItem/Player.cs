@@ -17,11 +17,6 @@ public class Player : LiveItem {
         return this;
     }
 
-    private void Update()
-    {
-        AddHpPercent(0.5f);
-    }
-
     public override IEnumerator MeleeAttackTarget<T>(T target)
     {
         var e = base.MeleeAttackTarget(target);

@@ -111,12 +111,9 @@ public abstract class LiveItem : GameItemBase
     public void AddHpPercent(float percent)
     {
         var max_Hp = property.GetFloatProperty(GameProperty.mhp);
-        var cur_Hp = property.GetFloatProperty(GameProperty.nhp);
 
-        cur_Hp += max_Hp * percent;
-        cur_Hp = Mathf.Min(max_Hp, cur_Hp);
-
-        property.SetFloatProperty(GameProperty.nhp, cur_Hp);
+        cur_hp += max_Hp * percent;
+        cur_hp = Mathf.Min(max_Hp, cur_hp);
     }
 
     public virtual void OnDead()

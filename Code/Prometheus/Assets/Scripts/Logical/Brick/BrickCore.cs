@@ -279,9 +279,9 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 var _brick = data.GetBrick(row + n, column + m);
 
-                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED && _brick.realBrickType != BrickType.OBSTACLE)
+                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED && _brick.realBrickType != BrickType.OBSTACLE && _brick.realBrickType != BrickType.TABLET)
                 {
-                    _brick.brickBlock = BrickBlock.BLOCKED_BY_OTHER;
+                    _brick.brickBlock += 1;
                 }
             }
         }
@@ -299,7 +299,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
                 {
-                    _brick.brickBlock = BrickBlock.NO_BLOCK;
+                    _brick.brickBlock = 0;
                 }
             }
         }
