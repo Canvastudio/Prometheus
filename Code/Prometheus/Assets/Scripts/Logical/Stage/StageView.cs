@@ -139,7 +139,7 @@ public class StageView : SingleGameObject<StageView> {
         {
             LeanTween.moveLocalY(
                 moveRoot.gameObject,
-                moveRoot.transform.localPosition.y - (brickWidth * .5f), 0.3f)
+                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), 0.3f)
                 .setOnComplete(BrickCore.Instance.CheckNeedRecycelBrick);
                 
      
