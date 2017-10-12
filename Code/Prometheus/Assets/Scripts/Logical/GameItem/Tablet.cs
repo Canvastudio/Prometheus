@@ -27,37 +27,6 @@ public class Tablet : GameItemBase {
     /// </summary>
     int int_arg1 = 0;
 
-    private void OnEnable()
-    {
-        //Messenger.AddListener(StageAction.MapMoveDown, CheckViewArea);
-    }
-
-    private void OnDisable()
-    {
-        Messenger.RemoveListener(StageAction.MapMoveDown, CheckViewArea);
-    }
-
-    public void CheckViewArea()
-    {
-
-        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
-
-        inViewArea = RectTransformUtility.RectangleContainsScreenPoint(
-            StageView.Instance.viewArea,
-            screen_Pos,
-            StageView.Instance.show_camera);
-
-        if (inViewArea)
-        {
-            Messenger.AddListener(StageAction.MapMoveDown, CheckViewArea);
-        }
-    }
-
-    public void Close()
-    {
-
-    }
-
     public void AddRound(float t)
     {
         if (inViewArea)
@@ -86,8 +55,6 @@ public class Tablet : GameItemBase {
     public override void OnDiscoverd()
     {
         base.OnDiscoverd();
-
-        CheckViewArea();
 
         isDiscovered = true;
 

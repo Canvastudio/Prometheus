@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameItemBase : MonoBehaviour {
 
+    public ulong featur = 0;
+
     public bool isDiscovered = false;
+
+    public bool inViewArea = false;
 
     /// <summary>
     /// 当前依附的砖块
@@ -40,6 +44,18 @@ public class GameItemBase : MonoBehaviour {
     public virtual void OnDiscoverd()
     {
 
+    }
+
+    public bool CheckViewArea()
+    {
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+
+        inViewArea = RectTransformUtility.RectangleContainsScreenPoint(
+            StageView.Instance.viewArea,
+            screen_Pos,
+            StageView.Instance.show_camera);
+
+        return inViewArea;
     }
 
     // 当对象已启用并处于活动状态时调用此函数

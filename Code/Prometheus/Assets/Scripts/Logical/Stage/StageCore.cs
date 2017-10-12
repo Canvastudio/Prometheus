@@ -304,20 +304,7 @@ public static class StageAction
     public const string RefreshGameItemPos = "RGIP";
     public const string StageTimeCast = "STC";
     public const string MapMoveDown = "MMD";
+    public const string MonsterDead = "MSD";
 }
 
-public class StageRecord
-{
-    public class DeadMonsterRecord
-    {
-        int pwr;
-        ulong uid;
-        int lv;
-        Brick brick;
-    }
 
-    /// <summary>
-    /// 记录最后死亡的怪物
-    /// </summary>
-    public DeadMonsterRecord lastMonster;
-}

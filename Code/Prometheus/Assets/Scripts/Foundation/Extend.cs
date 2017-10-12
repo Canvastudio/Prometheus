@@ -1,40 +1,62 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// 一对一的互相映射，双字典简单实现
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <typeparam name="K"></typeparam>
 public class Map<T, K> {
 
-	private Dictionary<T, K> maps = new Dictionary<T, K>();
+	public Dictionary<T, K> mapT = new Dictionary<T, K>();
+    public Dictionary<K, T> mapK = new Dictionary<K, T>();
 
-	public void Bind(T t, K k) {
-	
-		maps.Add (t, k);
-	
-	}
+    public K this[T t]
+    {
+        get
+        {
+            return mapT[t];
+        }
+        set
+        {
+            mapT[t] = value;
+        }
+    }
 
-	public void UnBind(T t) {
-	
-		maps.Remove (t);
-	
-	}
+    public T this[K k]
+    {
+        get
+        {
+            return mapK[k];
+        }
+        set
+        {
+            mapK[k] = value;
+        }
+    }
 
-	public void Clear() {
-	
-		maps.Clear ();
-	
-	}
+    public void Add(T t, K k)
+    {
+        mapT.Add(t, k);
+        mapK.Add(k, t);
+    }
 
-	public K Get(T t) {
+    public void Remove(T t)
+    {
+        K k = mapT[t];
+        mapK.Remove(k);
+        mapT.Remove(t);
+    }
 
-		K k;
+    public bool ContainsKey(T t)
+    {
+        return mapT.ContainsKey(t);
+    }
 
-		if (maps.TryGetValue (t, out k)) {
-		
-			return k;
-		
-		}
+    public bool ContainsKey(K k)
+    {
+        return mapK.ContainsKey(k);
+    }
 
-		return default(K);
-	
-	}
 
 }

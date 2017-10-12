@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class E : MonoBehaviour {
 
-	// Update is called once per frame
-	void Update () {
+    public Camera c;
+    public Canvas ca;
+    public RectTransform rt;
+    float a = 1;
 
-        int m = 0;
+    // Update is called once per frame
+    void Update () {
 
-        for (int i = 0; i < 1000; i++)
+        bool inViewArea = false;
+
+        int i = 10000;
+
+        while (--i > 0)
         {
-            
+            var screen_Pos = RectTransformUtility.WorldToScreenPoint(c, transform.position);
+
+            inViewArea = RectTransformUtility.RectangleContainsScreenPoint(rt
+                ,
+                screen_Pos,
+                c);
+
+            //a *= -1;
+
+            //transform.Translate(Vector3.one * a);
         }
-	}
+    }
 }
