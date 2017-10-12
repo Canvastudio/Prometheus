@@ -256,7 +256,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 var _brick = data.GetBrick(row + n, column + m);
 
-                if (_brick != null)
+                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
                 {
                     _brick.brickExplored = BrickExplored.EXPLORED;
 
@@ -279,7 +279,9 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 var _brick = data.GetBrick(row + n, column + m);
 
-                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED && _brick.realBrickType != BrickType.OBSTACLE && _brick.realBrickType != BrickType.TABLET)
+                if (_brick != null 
+                    && (_brick.brickExplored == BrickExplored.UNEXPLORED 
+                    || _brick.realBrickType == BrickType.SUPPLY || _brick.realBrickType == BrickType.MAINTENANCE))
                 {
                     _brick.brickBlock += 1;
                 }
@@ -289,6 +291,8 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public void CancelBlockNearbyBrick(int row, int column)
     {
+        Debug.Log("取消blocl: " + row + " " + column);
+
         for (int n = -1; n <= 1; ++n)
         {
             for (int m = -1; m <= 1; ++m)
@@ -297,7 +301,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                 var _brick = data.GetBrick(row + n, column + m);
 
-                if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
+                if (_brick != null &&_brick.brickBlock > 0)
                 {
                     _brick.brickBlock -= 1;
                 }
@@ -305,5 +309,8 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
     }
 
-
+    public void CleanNodeData()
+    {
+        data.CleanAllBrickPathNodeGH();
+    }
 }

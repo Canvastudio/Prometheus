@@ -157,6 +157,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
                 if (brickBlock == 0)
                 {
                     pathNode.isWalkable = true;
+                    blockMask.gameObject.SetActive(false);
                 }
                 else
                 {
@@ -186,7 +187,6 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         _row = row;
         _column = column;
   
-
         if (type == BrickType.OBSTACLE)
         {
             picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);

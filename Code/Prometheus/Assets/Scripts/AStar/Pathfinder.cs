@@ -10,6 +10,7 @@ namespace Pathfinding
     public interface IGetNode
     {
         Node GetNode(int x, int y, int z);
+        void CleanNodeData();
     }
 
     public class Pathfinder
@@ -23,17 +24,31 @@ namespace Pathfinding
         List<Node> foundPath;
 
         //Constructor
-        public Pathfinder(Node start, Node target, PathfindMaster.PathfindingJobComplete callback, IGetNode nodeManager)
+        //public Pathfinder(Node start, Node target, PathfindMaster.PathfindingJobComplete callback, IGetNode nodeManager)
+        //{
+        //    startPosition = start;
+        //    endPosition = target;
+        //    completeCallback = callback;
+        //    _nodeManager = nodeManager;
+        //}
+
+        public Pathfinder(IGetNode nodeManager)
         {
-            startPosition = start;
-            endPosition = target;
-            completeCallback = callback;
             _nodeManager = nodeManager;
         }
 
-        public List<Node> FindPath()
+        //public List<Node> FindPath()
+        //{
+        //    foundPath = FindPathActual(startPosition, endPosition);
+
+        //    jobDone = true;
+
+        //    return foundPath;
+        //}
+
+        public List<Node> FindPath(Node s, Node e)
         {
-            foundPath = FindPathActual(startPosition, endPosition);
+            foundPath = FindPathActual(s, e);
 
             jobDone = true;
 
@@ -120,6 +135,8 @@ namespace Pathfinding
                 }
             }
 
+            _nodeManager.CleanNodeData();
+
             //we return the path at the end
             return foundPath;
         }
@@ -143,7 +160,7 @@ namespace Pathfinding
             return path;
         }
 
-        private List<Node> GetNeighboursXZ(Node node)
+        public List<Node> GetNeighboursXZ(Node node)
         {
             //This is were we start taking our neighbours
             List<Node> retList = new List<Node>();

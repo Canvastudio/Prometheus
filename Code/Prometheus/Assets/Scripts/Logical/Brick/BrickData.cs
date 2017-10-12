@@ -25,6 +25,18 @@ public class BrickData {
 		return bricks[row - _lowestRow][column];
 	}
 
+    public void CleanAllBrickPathNodeGH()
+    {
+        foreach(var brick_row in bricks)
+        {
+            foreach(var brick in brick_row)
+            {
+                brick.pathNode.gCost = 0;
+                brick.pathNode.hCost = 0;
+            }
+        }
+    }
+
 	public void PushBrick(int row, int column, Brick brick)
 	{
 		if (row < _lowestRow) throw new System.ArgumentException("row 不能低于最低的rowzhi");
@@ -89,7 +101,7 @@ public class BrickData {
 
         for (int i = 0; i< 6; ++i)
         {
-            if (row_Bricks[i].item == null)
+            if (row_Bricks[i].realBrickType == BrickType.EMPTY && row_Bricks[i].brickBlock == 0)
             {
                 emptyIndex[m++] = i;
             }

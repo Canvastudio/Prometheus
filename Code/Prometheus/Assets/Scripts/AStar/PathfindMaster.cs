@@ -67,21 +67,42 @@ namespace Pathfinding
         //    }
         //}
 
-        public IEnumerator RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback, IGetNode nodeManager)
-        {
-			Pathfinder newJob = new Pathfinder(start, target, completeCallback, nodeManager);
-            newJob.FindPath();
+   //     public IEnumerator RequestPathfind(Node start, Node target, PathfindingJobComplete completeCallback, IGetNode nodeManager)
+   //     {
+			//Pathfinder newJob = new Pathfinder(start, target, completeCallback, nodeManager);
+   //         newJob.FindPath();
 
-            yield return new WaitUntil(()=> newJob.jobDone);
+   //         yield return new WaitUntil(()=> newJob.jobDone);
 
-            newJob.NotifyComplete();
-        }
-
+   //         newJob.NotifyComplete();
+   //     }
+        
         public List<Node> RequestPathfind(Node start, Node target, IGetNode nodeManager)
         {
-            Pathfinder newJob = new Pathfinder(start, target, null, nodeManager);
+            Pathfinder finder = new Pathfinder(nodeManager);
 
-            return newJob.FindPath();
+            return finder.FindPath(start, target);
+        }
+
+        public List<Node> RequestShortestPathToNeigbour(Node curNode, Node startNode, IGetNode nodeManager)
+        {
+            Pathfinder finder = new Pathfinder(nodeManager);
+
+            var neighbours = finder.GetNeighboursXZ(curNode);
+
+            List<Node> shortestPath = null;
+
+            foreach(var nb in neighbours)
+            {
+                var path = finder.FindPath(startNode, nb);
+
+                if (shortestPath == null || path.Count < shortestPath.Count)
+                {
+                    shortestPath = path;
+                }
+            }
+
+            return shortestPath;
         }
     }
 }

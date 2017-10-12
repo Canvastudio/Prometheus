@@ -22,6 +22,7 @@ public class StageView : SingleGameObject<StageView> {
     public float brickWidth = 120;
     public string brickName = "brick";
     public Camera show_camera;
+    public RectTransform viewArea;
 
     protected override void Init()
     {
@@ -135,16 +136,19 @@ public class StageView : SingleGameObject<StageView> {
 
     public void MoveDownMap(float distance)
     {
+        //return;
+
         if (StageCore.Instance.totalRound >= 4)
         {
             LeanTween.moveLocalY(
                 moveRoot.gameObject,
                 moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), 0.3f)
                 .setOnComplete(BrickCore.Instance.CheckNeedRecycelBrick);
-                
-     
         }
 
         BrickCore.Instance.CheckNeedCreawteMoudel();
+
+        Messenger.Invoke(StageAction.MapMoveDown);
     }
+
 }

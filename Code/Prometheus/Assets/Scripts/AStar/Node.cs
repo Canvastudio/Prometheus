@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Pathfinding
 {   
@@ -24,7 +24,7 @@ namespace Pathfinding
         {
             get //the fCost is the gCost+hCost so we can get it directly this way
             {
-                return gCost + nCost;
+                return gCost + hCost;
             }
         }
 

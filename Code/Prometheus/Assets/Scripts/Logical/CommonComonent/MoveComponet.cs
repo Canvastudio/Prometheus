@@ -116,6 +116,6 @@ public class MoveComponet : MonoBehaviour {
             return false;
         }
         else
-            return (_path[_pathIndex].behavirour as Brick).brickType == BrickType.EMPTY;
+            return (_path[_pathIndex].behavirour as Brick).realBrickType == BrickType.EMPTY;
     }
 }

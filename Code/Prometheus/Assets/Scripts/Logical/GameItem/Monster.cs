@@ -34,8 +34,11 @@ public class Monster : LiveItem
 
         if (standBrick != null)
         {
-            Debug.Log(gameObject.name);
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+        }
+        else
+        {
+            Debug.LogError("怪物阵亡时发现: standbrick 为空");
         }
     }
 

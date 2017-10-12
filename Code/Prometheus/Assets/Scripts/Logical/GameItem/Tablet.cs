@@ -6,27 +6,51 @@ public class Tablet : GameItemBase {
 
     public TotemConfig config;
 
+    [SerializeField]
     private float round = 0;
+
+    public bool inViewArea = false;
+
+#if UNITY_EDITOR
+    [SerializeField]
+    TotemType type;
+#endif
+
+    /// <summary>
+    /// 起效的回合数
+    /// </summary>
+    [SerializeField]
+    private float activeRound = int.MaxValue;
+
+    /// <summary>
+    /// 效果整形参数1
+    /// </summary>
+    int int_arg1 = 0;
 
     private void OnEnable()
     {
-        Messenger<float>.AddListener(StageAction.StageTimeCast, AddRound);
+        //Messenger.AddListener(StageAction.MapMoveDown, CheckViewArea);
     }
 
-    public void Open()
+    private void OnDisable()
     {
-        switch (config.totemType)
-        {
-            case TotemType.Protect:
-                break;
-            case TotemType.Renew:
-                break;
-            case TotemType.Resurgence:
-                break;
-            case TotemType.Summon:
-                break;
-        }
+        Messenger.RemoveListener(StageAction.MapMoveDown, CheckViewArea);
+    }
 
+    public void CheckViewArea()
+    {
+
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+
+        inViewArea = RectTransformUtility.RectangleContainsScreenPoint(
+            StageView.Instance.viewArea,
+            screen_Pos,
+            StageView.Instance.show_camera);
+
+        if (inViewArea)
+        {
+            Messenger.AddListener(StageAction.MapMoveDown, CheckViewArea);
+        }
     }
 
     public void Close()
@@ -36,9 +60,56 @@ public class Tablet : GameItemBase {
 
     public void AddRound(float t)
     {
-        round += t;
+        if (inViewArea)
+        {
+            round += t;
+
+            if (round > activeRound)
+            {
+                round -= activeRound;
+                TakeEffect();
+            }
+        }
     }
 
+    public void TakeEffect()
+    {
+        Debug.Log("石碑发动: " + gameObject.name + ",type: " + config.totemType.ToString());
 
+        switch (config.totemType)
+        {
+            case TotemType.Protect:
+                break;
+        }
+    }
+
+    public override void OnDiscoverd()
+    {
+        base.OnDiscoverd();
+
+        CheckViewArea();
+
+        isDiscovered = true;
+
+        Messenger<float>.AddListener(StageAction.StageTimeCast, AddRound);
+
+        switch (config.totemType)
+        {
+            case TotemType.Protect:
+                activeRound = int.Parse(config.arg);
+                break;
+            case TotemType.Summon:
+                string[] args = config.arg.Split('_');
+                activeRound = int.Parse(args[0]);
+                int_arg1 = int.Parse(args[1]);
+                break;
+            case TotemType.Resurgence:
+                activeRound = int.Parse(config.arg);
+                break;
+            case TotemType.Renew:
+                activeRound = int.Parse(config.arg);
+                break;
+        }
+    }
 }
 
