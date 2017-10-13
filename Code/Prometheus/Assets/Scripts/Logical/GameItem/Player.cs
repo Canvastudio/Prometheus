@@ -24,12 +24,17 @@ public class Player : LiveItem {
         var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
         var atk_Speed = property[GameProperty.atkSpeed];
         var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
-
         
         StageCore.Instance.AddTurnTimeAndMoveDown(timeSpend);
 
-
         return e;
+    }
+
+    protected override void OnSetStandBrick(Brick brick)
+    {
+        base.OnSetStandBrick(brick);
+
+        brick.brickType = BrickType.PLAYER;
     }
 
 }

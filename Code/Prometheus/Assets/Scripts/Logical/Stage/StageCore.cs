@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class StageCore : SingleObject<StageCore> {
 
+    List<GameItemBase> allItems = new List<GameItemBase>();
+
     delegate IEnumerator LoopAction();
 
     Queue<LoopAction> activeQueue = new Queue<LoopAction>();
-
-    public Dictionary<ulong, Monster> monsterDic = new Dictionary<ulong, Monster>();
 
     public Player Player;
 
@@ -20,6 +20,7 @@ public class StageCore : SingleObject<StageCore> {
     bool inputConfrim;
 
     WaitUntil playerActionFinish;
+
     Messenger<Brick>.WaitForMsg brickMsg;
     /// <summary>
     /// 第一次点击的方块
@@ -29,11 +30,6 @@ public class StageCore : SingleObject<StageCore> {
     /// 第二次点击的方块（通常用于确认）
     /// </summary>
     Brick brick2;
-    /// <summary>
-    /// 玩家角色正在自动执行动作，自动寻路进行移动
-    /// 时间消耗 会造成 格子下移
-    /// </summary>
-    bool autoMove;
 
     /// <summary>
     /// 当前到了第几回合
@@ -47,30 +43,70 @@ public class StageCore : SingleObject<StageCore> {
     /// </summary>
     public float turnTime = 0;
 
+    /// <summary>
+    /// 实例标签管理
+    /// </summary>
+    public EntitysTag<GameItemBase> tagMgr;
+
+    /// <summary>
+    /// 关卡记录,保存一些之后需要读取的信息
+    /// </summary>
+    public StageRecording records;
+
     protected override void Init()
     {
         base.Init();
 
+        tagMgr = new EntitysTag<GameItemBase>();
+        records = new StageRecording();
+
         playerActionFinish = new WaitUntil(() => isPlayerActionFilish);
 
         brickMsg = new Messenger<Brick>.WaitForMsg();
-    }
 
-    public void RegisterMonster(Monster newMonster)
-    {
-        newMonster.uid = monsterId++;
-
-        monsterDic.Add(newMonster.uid, newMonster);
-    }
-
-    public void UnregisterMonster(ulong monsterUid)
-    {
-        monsterDic.Remove(monsterUid);
+        //监听一些重要事件
+        Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
     }
 
     public void RegisterPlayer(Player player)
     {
         Player = player;
+    }
+
+    public void RegisterItem(GameItemBase gameItemBase)
+    {
+        tagMgr.AddEntity(gameItemBase
+            , ETag.GetETag(gameItemBase.GetType().ToString()));
+
+        if (gameItemBase is Player)
+        {
+            Player = gameItemBase as Player;
+        }
+        else if (gameItemBase is Monster)
+        {
+            tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.ENEMY));
+        }
+
+        gameItemBase.itemId = allItems.Count;
+
+        allItems.Add(gameItemBase);
+    }
+    
+    public void UnRegisterItem(GameItemBase gameItem)
+    {
+        allItems.Remove(gameItem);
+        tagMgr.RemoveEntity(gameItem);
+    }
+
+    public void OnMonsterDead(Monster monster)
+    {
+        if (records.lastDeadMonster == null)
+            records.lastDeadMonster = new StageRecording.DeadMonsterRecord();
+
+        records.lastDeadMonster.brick = monster.standBrick;
+        records.lastDeadMonster.lv = monster.lv;
+        records.lastDeadMonster.pwr = monster.pwr;
+        records.lastDeadMonster.uid = monster.cid;
     }
 
     /// <summary>
@@ -98,7 +134,7 @@ public class StageCore : SingleObject<StageCore> {
                     StageView.Instance.CancelPahtNode();
 
                     //如果没有处于自动状态，则等待并处理玩家点击事件
-                    yield return brickMsg.BeginWaiting(StageAction.PlayerClickBrick.ToString());
+                    yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
 
                     //事件返回 从事件中得到参数
                     brick1 = brickMsg.para;
@@ -146,7 +182,7 @@ public class StageCore : SingleObject<StageCore> {
                                 else
                                 {
                                     //等待玩家点击确认
-                                    yield return brickMsg.BeginWaiting(StageAction.PlayerClickBrick.ToString());
+                                    yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
 
                                     brick2 = brickMsg.para;
 
@@ -224,8 +260,6 @@ public class StageCore : SingleObject<StageCore> {
             Debug.Log("Move GO!");
         }
 
-        Debug.Log("触发下一个砖块效果！");
-
         //TODO: 触发非空砖块
 
         //autoMove = false;
@@ -282,23 +316,20 @@ public class StageCore : SingleObject<StageCore> {
     {
         turnTime += time;
 
-        Messenger<float>.Invoke(StageAction.StageTimeCast, time);
+        Messenger<float>.Invoke(SA.StageTimeCast, time);
     }
 
     public void AddTurnTimeAndMoveDown(float time)
     {
         turnTime += time;
         StageView.Instance.MoveDownMap(time);
-        Messenger<float>.Invoke(StageAction.StageTimeCast, time);
-    }
-
-    public void MoveMap(float time)
-    {
-
+        Messenger<float>.Invoke(SA.StageTimeCast, time);
     }
 }
 
-public static class StageAction
+
+
+public static class SA
 {
     public const string PlayerClickBrick = "PCB";
     public const string RefreshGameItemPos = "RGIP";
@@ -306,5 +337,15 @@ public static class StageAction
     public const string MapMoveDown = "MMD";
     public const string MonsterDead = "MSD";
 }
+
+public static class ST
+{
+    public const string PLAYER = "PR";
+    public const string ENEMY = "EY";
+    public const string VISIBLE = "VE";
+    public const string Brick = "Brick";
+    public const string Monster = "Monster";
+}
+
 
 

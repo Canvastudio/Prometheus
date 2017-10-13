@@ -9,13 +9,23 @@ using UnityEngine.UI;
 /// </summary>
 public class Monster : LiveItem
 {
-
-    public ulong uid = 0;
-
     /// <summary>
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
+
+    /// <summary>
+    /// 当前怪物强度
+    /// </summary>
+    public int pwr;
+    /// <summary>
+    /// 当前怪物等级
+    /// </summary>
+    public int lv;
+    /// <summary>
+    /// 当前怪物在表中的id
+    /// </summary>
+    public ulong cid;
 
     public override void OnDiscoverd()
     {
@@ -30,8 +40,6 @@ public class Monster : LiveItem
 
     public override void OnDead()
     {
-        base.OnDead();
-
         if (standBrick != null)
         {
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
@@ -40,6 +48,10 @@ public class Monster : LiveItem
         {
             Debug.LogError("怪物阵亡时发现: standbrick 为空");
         }
+
+        Messenger<Monster>.Invoke(SA.MonsterDead, this);
+
+        base.OnDead();
     }
 
 

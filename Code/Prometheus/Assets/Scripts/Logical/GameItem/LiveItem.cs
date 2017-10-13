@@ -49,20 +49,65 @@ public abstract class LiveItem : GameItemBase
         }
         set
         {
+            if (cur_hp != value)
+            {
+                if (value <= 0)
+                {
+                    value = 0;
+
+                    OnDead();
+                }
+
+                property.SetFloatProperty(GameProperty.nhp, value);
+
+                _cur_hp = value;
+
+                if (hp_value != null)
+                {
+                    hp_value.text = value.ToString();
+                }
+            }
+        }
+    }
+
+    [SerializeField]
+    private float? _fmax_hp;
+    public float fmax_hp
+    {
+        get
+        {
+            if (!_fmax_hp.HasValue)
+                _fmax_hp = property.GetFloatProperty(GameProperty.mhp) * (1 + property.GetFloatProperty(GameProperty.mhp_percent));
+
+            return _fmax_hp.Value;
+        }
+    }
+
+    [SerializeField]
+    private float? _max_hp;
+    public float max_hp
+    {
+        get
+        {
+            if (!_max_hp.HasValue)
+                _max_hp = property.GetFloatProperty(GameProperty.mhp);
+
+            return _max_hp.Value;
+        }
+        set
+        {
             if (value <= 0)
             {
-                value = 0;
-
-                OnDead();
+                Debug.LogError("max hp 的值可以小于等于0？");
             }
-      
-            property.SetFloatProperty(GameProperty.nhp, value);
 
-            _cur_hp = value;
+            property.SetFloatProperty(GameProperty.mhp, value);
 
-            if (hp_value != null)
+            _max_hp = value;
+
+            if (_fmax_hp < cur_hp)
             {
-                hp_value.text = value.ToString();
+                cur_hp = _fmax_hp.Value;
             }
         }
     }
@@ -110,15 +155,15 @@ public abstract class LiveItem : GameItemBase
 
     public void AddHpPercent(float percent)
     {
-        var max_Hp = property.GetFloatProperty(GameProperty.mhp);
-
-        cur_hp += max_Hp * percent;
-        cur_hp = Mathf.Min(max_Hp, cur_hp);
+        cur_hp += fmax_hp * percent;
+        cur_hp = Mathf.Min(fmax_hp, cur_hp);
     }
 
     public virtual void OnDead()
     {
         standBrick.CleanItem();
+
+        StageCore.Instance.UnRegisterItem(this);
 
         GameObject.Destroy(gameObject);
     }

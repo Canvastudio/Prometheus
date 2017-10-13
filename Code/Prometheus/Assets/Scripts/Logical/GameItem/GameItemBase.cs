@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameItemBase : MonoBehaviour {
+public class GameItemBase : MonoBehaviour, ITagable {
+
+    public int itemId = 0;
 
     public ulong featur = 0;
 
@@ -24,6 +26,7 @@ public class GameItemBase : MonoBehaviour {
             if (_stanbBrick != null)
             {
                 _stanbBrick.item = null;
+                _stanbBrick.brickType = BrickType.EMPTY;
             }
 
             OnSetStandBrick(value);
@@ -31,6 +34,15 @@ public class GameItemBase : MonoBehaviour {
             _stanbBrick = value;
             _stanbBrick.item = this;
         }
+    }
+
+    /// <summary>
+    /// 不手动修改，如果写在entity那边 又需要一个字典 没有必要
+    /// </summary>
+    public HashSet<ETag> Etag
+    {
+        get;
+        set;
     }
 
     [SerializeField]
@@ -43,41 +55,58 @@ public class GameItemBase : MonoBehaviour {
 
     public virtual void OnDiscoverd()
     {
-
+        isDiscovered = true;
+        CheckViewArea();
     }
 
     public bool CheckViewArea()
     {
-        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+        bool visible = false;
 
-        inViewArea = RectTransformUtility.RectangleContainsScreenPoint(
-            StageView.Instance.viewArea,
-            screen_Pos,
-            StageView.Instance.show_camera);
+        if (isDiscovered)
+        {
+            var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
 
-        return inViewArea;
+            visible = RectTransformUtility.RectangleContainsScreenPoint(
+                StageView.Instance.viewArea,
+                screen_Pos,
+                StageView.Instance.show_camera);
+
+            if (visible != inViewArea)
+            {
+                inViewArea = visible;
+                StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.VISIBLE), inViewArea);
+
+            }
+        }
+
+        return visible;
     }
 
     // 当对象已启用并处于活动状态时调用此函数
     private void Awake()
     {
-        Messenger.AddListener(StageAction.RefreshGameItemPos, RefreshPosistion);
+        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.AddListener(SA.MapMoveDown, OnMapMoveDown);
     }
 
     public void RefreshPosistion()
     {
-        if (standBrick == null)
-        {
-            Debug.LogError(string.Format("{0} 没有 standbrick", gameObject.name));
-        }
-        else
+        if (standBrick != null)
         {
             transform.position = standBrick.transform.position;
         }
+
+        CheckViewArea();
+    }
+
+    protected virtual void OnMapMoveDown()
+    {
+        CheckViewArea();
     }
 
     private void OnDestroy()
     {
-        Messenger.RemoveListener(StageAction.RefreshGameItemPos, RefreshPosistion);
+        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
     }
 }

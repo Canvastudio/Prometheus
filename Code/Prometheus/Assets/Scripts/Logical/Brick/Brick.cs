@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
 
-public class Brick : MonoBehaviour, IEquatable<Brick> {
+public class Brick : GameItemBase, IEquatable<Brick> {
 
     [SerializeField]
     Image picture;
@@ -18,6 +18,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     Image blockMask;
 
     public int uid;
+    public ulong moduel_id = 0;
+    public ulong level_id = 0;
 
 #region BrickInfo
     public BrickType brickType
@@ -134,6 +136,13 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
     }
 
+    public override void OnDiscoverd()
+    {
+        base.OnDiscoverd();
+
+        brickExplored = BrickExplored.EXPLORED;
+    }
+
     public void RefreshWalkableAndBlockState()
     {
         blockMask.gameObject.SetActive(false);
@@ -174,7 +183,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
 
     public void OnBrickClick()
     {
-        Messenger<Brick>.Invoke(StageAction.PlayerClickBrick.ToString(), this);
+        Messenger<Brick>.Invoke(SA.PlayerClickBrick.ToString(), this);
     }
     
     public void OnLongPress()
@@ -211,6 +220,8 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
 
         brickType = type;
 
+        StageCore.Instance.RegisterItem(this);
+
         CancelAsPathNode();
     }
 
@@ -227,6 +238,25 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
         //创建数据
         item = GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
 
+        brickType = BrickType.MONSTER;
+        return this;
+    }
+
+    public Brick CreateMonter()
+    {
+        //创建数据
+        var map_Config = ConfigDataBase.GetConfigDataById<MapConfig>(level_id);
+
+        int lv_min = map_Config.enemy_level[0];
+        int lv_max = map_Config.enemy_level[1];
+        int lv = UnityEngine.Random.Range(lv_min, lv_max + 1);
+
+        var enemys = map_Config.enemys.ToArray();
+        var enemy_Index = UnityEngine.Random.Range(0, enemys.Length);
+        var enemy_Id = enemys[enemy_Index];
+
+        CreateMonter(1, enemy_Id, lv);
+
         return this;
     }
 
@@ -234,13 +264,14 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         //创建数据
         item = GameItemFactory.Instance.CreateSupply(uid, this);
-
+        brickType = BrickType.SUPPLY;
         return this;
     }
 
     public Brick CreateMaintence()
     {
         item = GameItemFactory.Instance.CreateMaintenance(this);
+        brickType = BrickType.MAINTENANCE;
         return this;
     }
 
@@ -248,15 +279,15 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         //创建数据
         item = GameItemFactory.Instance.CreateTablet(uid, this);
-
+        brickType = BrickType.TABLET;
         return this;
     }
 
-    public Brick CreateTreasure()
+    public Brick CreateTreasure(ulong uid)
     {
         //创建数据
         item = GameItemFactory.Instance.CreateTreasure(this);
-
+        brickType = BrickType.TREASURE;
         return this;
     }
 
@@ -264,7 +295,7 @@ public class Brick : MonoBehaviour, IEquatable<Brick> {
     {
         //创建数据
         GameItemFactory.Instance.CreatePlayer(uid, this);
-
+        brickType = BrickType.PLAYER;
         return this;
     }
     #endregion
@@ -334,6 +365,7 @@ public enum BrickType
     TREASURE,
     OTHERS,
     UNKNOWN,
+    PLAYER,
 }
 
 public enum BrickExplored

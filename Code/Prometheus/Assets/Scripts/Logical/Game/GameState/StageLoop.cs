@@ -27,7 +27,7 @@ public class StageLoopState : IState
         yield return 0;
 
         //刷新下位置
-        Messenger.Invoke(StageAction.RefreshGameItemPos);
+        Messenger.Invoke(SA.RefreshGameItemPos);
 
         //开始执行关卡内部的逻辑循环
         yield return StageCore.Instance.RunLoop();

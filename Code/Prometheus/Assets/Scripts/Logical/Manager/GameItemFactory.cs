@@ -79,7 +79,17 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             #endregion
 
         }
-        StageCore.Instance.RegisterMonster(monster);
+
+        StageCore.Instance.RegisterItem(monster);
+
+        monster.pwr = pwr;
+        monster.cid = id;
+        monster.lv = lv;
+
+        if (bornBrick.brickExplored == BrickExplored.EXPLORED)
+        {
+            monster.OnDiscoverd();
+        }
 
         return monster;
     }
@@ -118,7 +128,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
-        StageCore.Instance.RegisterPlayer(player);
+        StageCore.Instance.RegisterItem(player);
 
         player.InitInfoUI();
 
@@ -139,6 +149,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
+        StageCore.Instance.RegisterItem(supply);
+
         return supply;
     }
 
@@ -155,6 +167,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         Maintence.standBrick = bornBrick;
 
         //supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
+
+        StageCore.Instance.RegisterItem(Maintence);
 
         return Maintence;
     }
@@ -173,6 +187,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         tablet.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
 
+        StageCore.Instance.RegisterItem(tablet);
+
         return tablet;
     }
 
@@ -187,6 +203,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var treasure = go.GetComponent<Treasure>();
 
         treasure.standBrick = bornBrick;
+
+        StageCore.Instance.RegisterItem(treasure);
 
         return treasure;
     }

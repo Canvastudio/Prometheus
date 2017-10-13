@@ -32,45 +32,7 @@ public class StageView : SingleGameObject<StageView> {
     }
 
     #region Add Brick
-    public Brick AddEmpty(int row = -1, int col = -1)
-    {
-        return CreateBrick(row, col, BrickType.EMPTY);
-    }
-
-    public Brick AddTreasure(int quality, int row = -1, int col = -1)
-    {
-        return CreateBrick(row, col, BrickType.TREASURE).CreateTreasure();
-    }
-
-    public Brick AddSupply(ulong uid, int row = -1, int col = -1)
-    {
-        return CreateBrick(row, col, BrickType.SUPPLY).CreateSupply(uid);
-    }
-
-    public Brick AddTablet(ulong id, int row = -1, int col = -1)
-    {
-        return CreateBrick(row, col, BrickType.TABLET).CreateTalbet(id);
-    }
-
-    public Brick AddMaintenance(int row = -1, int col = -1)
-    {
-        return CreateBrick(row, col, BrickType.MAINTENANCE).CreateMaintence();
-    }
-
-    public Brick AddEnemy(int power, ulong id, int lv, int row = -1, int col = -1)
-    {
-        var brick = CreateBrick(row, col, BrickType.MONSTER).CreateMonter(power, id, lv);
-
-        return brick;
-    }
-
-    public Brick Addobstacle(int row = -1, int col = -1)
-    {
-        var brick = CreateBrick(row, col, BrickType.OBSTACLE);
-        return brick;
-    }
-
-    private Brick CreateBrick(int row, int col, BrickType type)
+    public Brick CreateBrick(ulong select_Moduel, ulong select_level, BrickType type = BrickType.EMPTY, int row = -1, int col = -1)
     {
         if (col == -1)
         {
@@ -95,10 +57,12 @@ public class StageView : SingleGameObject<StageView> {
         _brick.transform.localScale = Vector3.one;
         _brick.gameObject.SetActive(true);
         _brick.uid = uid;
+        _brick.moduel_id = select_Moduel;
+        _brick.level_id = select_level;
         ((RectTransform)_brick.transform).anchoredPosition = new Vector2(brickWidth * col + brickWidth / 2f, brickWidth * row + brickWidth / 2f);
         _brick.transform.SetAsFirstSibling();
 
-        _brick.Init(row, col, type);
+        _brick.Init(row, col,  type);
 
 #if UNITY_EDITOR
         _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.realBrickType.ToString();
@@ -136,7 +100,7 @@ public class StageView : SingleGameObject<StageView> {
 
     public void MoveDownMap(float distance)
     {
-        //return;
+        return;
 
         if (StageCore.Instance.totalRound >= 4)
         {
@@ -148,7 +112,7 @@ public class StageView : SingleGameObject<StageView> {
 
         BrickCore.Instance.CheckNeedCreawteMoudel();
 
-        Messenger.Invoke(StageAction.MapMoveDown);
+        Messenger.Invoke(SA.MapMoveDown);
     }
 
 }
