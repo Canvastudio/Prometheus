@@ -128,14 +128,13 @@ public class SuperConfig : SingleObject<SuperConfig>
         string dataString = textAsset.text;
         string className = SuperTool.ConverSpace(textAsset.name);
         string[] dataLine = dataString.Split('\r');
-        string[] typeAndArr = dataLine[1].Split('\t');//第二行是类型+数组标记
+        string[] typeAndArr = dataLine[0].Split('\t');//第1行是类型+数组标记
         string[] parType = new string[typeAndArr.Length];//类型
         string[] splitMak = new string[typeAndArr.Length];//切分标记
         Regex reg = new Regex(@"\[.+\]");
         for (int i = 0; i < typeAndArr.Length; i++)
         {
             typeAndArr[i] = SuperTool.ConverSpace(ReplaceQuote(typeAndArr[i]));
-
             if (reg.IsMatch(typeAndArr[i]))
             {
                 splitMak[i] = reg.Match(typeAndArr[i]).Value;
@@ -148,11 +147,11 @@ public class SuperConfig : SingleObject<SuperConfig>
                 parType[i] = typeAndArr[i];
             }
         }
-        string[] parName = dataLine[2].Split('\t');//第三行是变量名
+        string[] parName = dataLine[1].Split('\t');//第2行是变量名
         for (int i = 0; i < parName.Length; i++) parName[i] = SuperTool.ConverSpace(ReplaceQuote(parName[i]));
         ulong inIndex = 1;
         List<ConfigDataBase> dataList = new List<ConfigDataBase>();
-        for (int x = 3; x < dataLine.Length; x++)
+        for (int x = 2; x < dataLine.Length; x++)
         {
             if (string.IsNullOrEmpty(dataLine[x].Trim())) continue;
             ConfigDataBase dataBase = Activator.CreateInstance(Type.GetType(className)) as ConfigDataBase;
@@ -259,7 +258,6 @@ public class SuperConfig : SingleObject<SuperConfig>
                                 pi.SetValue(dataBase, o, null);
                                 break;
                             }
-
                         }
                     }
                     catch (Exception)
@@ -268,6 +266,7 @@ public class SuperConfig : SingleObject<SuperConfig>
                     }
                 }
             }
+
             if (dataBase.id == 0) dataBase.id = inIndex++;
             dataList.Add(dataBase);
         }
