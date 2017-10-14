@@ -100,9 +100,10 @@ public class StageView : SingleGameObject<StageView> {
 
     public void MoveDownMap(float distance)
     {
-        return;
+        Debug.Log("move down: " + distance);
+        //return;
 
-        if (StageCore.Instance.totalRound >= 4)
+        if (StageCore.Instance.turnTime >= 4)
         {
             LeanTween.moveLocalY(
                 moveRoot.gameObject,

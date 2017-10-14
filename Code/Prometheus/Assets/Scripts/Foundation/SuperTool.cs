@@ -58,6 +58,12 @@ public class SuperTool
         return CreateWeightSection(listTemp);
     }
 
+    public static WeightSection CreateWeightSection(List<string> list)
+    {
+        List<float> listTemp = list.Select(t => (float.Parse(t))).ToList();
+        return CreateWeightSection(listTemp);
+    }
+
 
     /// <summary>
     /// 将一个字符串转换成相应的数组

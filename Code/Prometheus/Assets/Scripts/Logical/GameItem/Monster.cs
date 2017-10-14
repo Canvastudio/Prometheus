@@ -33,7 +33,7 @@ public class Monster : LiveItem
 
         if (standBrick != null)
         {
-            Debug.Log(gameObject.name);
+            Debug.Log("发现: " + gameObject.name);
             BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
         }
     }

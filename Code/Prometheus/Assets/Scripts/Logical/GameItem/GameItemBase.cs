@@ -108,5 +108,6 @@ public class GameItemBase : MonoBehaviour, ITagable {
     private void OnDestroy()
     {
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.RemoveListener(SA.MapMoveDown, OnMapMoveDown);
     }
 }

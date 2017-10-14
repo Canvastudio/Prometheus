@@ -14,15 +14,17 @@ public class MoveComponet : MonoBehaviour {
     {
         get
         {
-            return _pathIndex > _path.Count - 1;
+            return (_pathIndex > _path.Count - 1) || blocking;
         }
     }
 
+    private bool blocking = false;
 
     public MoveComponet SetPaht(List<Pathfinding.Node> path)
     {
         _path = path;
         _pathIndex = 0;
+        blocking = false;
         return this;
     }
 
@@ -34,8 +36,6 @@ public class MoveComponet : MonoBehaviour {
 
         LTDescr descr;
 
-        bool finish;
-
         while (_pathIndex < _path.Count)
         {
             move_Finish = false;
@@ -46,11 +46,11 @@ public class MoveComponet : MonoBehaviour {
 
             StageView.Instance.MoveDownMap(1);
 
-            descr = LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), 0.3f).setOnComplete(OnMoveFinish);
-
-            //yield return new WaitUntil(()=>finish);
-
-            //++_pathIndex;
+            descr = LeanTween.moveLocal(
+                this.gameObject, 
+                transform.parent.InverseTransformPoint(brick.transform.position), 
+                0.3f)
+                .setOnComplete(OnMoveFinish);
 
             while (!move_Finish)
             {
@@ -63,12 +63,33 @@ public class MoveComponet : MonoBehaviour {
 
     public IEnumerator MoveToNext(float time)
     {
-        yield return MoveTo(_path[_pathIndex].behavirour as Brick, time);
+        Brick brick = _path[_pathIndex].behavirour as Brick;
+
+        if (!IsNextBlock())
+        {
+            yield return MoveTo(brick, time);
+        }
+        else
+        {
+            yield return Open(brick, time);
+            blocking = true;
+        }
     }
 
     bool move_Finish = false;
 
     Brick _brick;
+
+    public IEnumerator Open(Brick brick, float time)
+    {
+        StageView.Instance.MoveDownMap(1);
+
+        BrickCore.Instance.OpenBrick(brick);
+
+        yield return new WaitForSeconds(time);
+
+        CastMoveTime();
+    }
 
     public IEnumerator MoveTo(Brick brick, float time)
     {
@@ -84,8 +105,6 @@ public class MoveComponet : MonoBehaviour {
         {
             yield return 0;
         }
-
-        StageCore.Instance.AddTurnTime(1);
     }
 
     public void OnMoveFinish()
@@ -96,31 +115,28 @@ public class MoveComponet : MonoBehaviour {
 
         _pathIndex++;
 
-        BrickCore.Instance.OpenNearbyBrick(
-            StageCore.Instance.Player.standBrick.pathNode.x,
-            StageCore.Instance.Player.standBrick.pathNode.z);
+        //BrickCore.Instance.OpenNearbyBrick(
+        //    StageCore.Instance.Player.standBrick.pathNode.x,
+        //    StageCore.Instance.Player.standBrick.pathNode.z);
 
-        string formula = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula;
-
-        //Debug.Log(formula);
-
-        string[] step = formula.Split(',');
-
-        Stack<string> stacks = new Stack<string>();
+        CastMoveTime();
     }
 
-    public bool IsNextCanMove()
+    public void CastMoveTime()
     {
-        if (_pathIndex == _path.Count)
-        {
-            return false;
-        }
-        else
-        {
-            Brick brick = (_path[_pathIndex].behavirour) as Brick;
-
-            return brick.realBrickType == BrickType.EMPTY && brick.brickBlock == 0;
-        }
-
+        StageCore.Instance.AddTurnTime(1);
     }
+
+    public bool IsNextBlock()
+    {
+        Brick brick = (_path[_pathIndex].behavirour) as Brick;
+
+        return !(brick.realBrickType == BrickType.EMPTY) || brick.brickBlock != 0;
+    }
+
+    public bool MoveEnd()
+    {
+        return PathFinish;
+    }
+
 }

@@ -283,10 +283,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         return this;
     }
 
-    public Brick CreateTreasure(ulong uid)
+    public Brick CreateTreasure(ulong uid, int distance)
     {
         //创建数据
-        item = GameItemFactory.Instance.CreateTreasure(this);
+        item = GameItemFactory.Instance.CreateTreasure(this, uid, distance);
         brickType = BrickType.TREASURE;
         return this;
     }

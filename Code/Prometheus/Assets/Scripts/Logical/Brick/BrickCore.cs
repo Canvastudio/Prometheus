@@ -180,7 +180,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
                         {
                             float prob = float.Parse(infos[2]);
 
-                            //if (prob > Random.Range(0f, 1f))
+                            if (prob > Random.Range(0f, 1f))
                             {
                                 _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
                             }
@@ -191,7 +191,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                             if (prob > Random.Range(0f, 1f))
                             {
-                                _brick = _brick.CreateTreasure(ulong.Parse(infos[1]));
+                                _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), real_Row);
                             }
 
                         }
@@ -264,6 +264,19 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
     }
 
+    public void OpenBrick(Brick _brick)
+    {
+        if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
+        {
+            _brick.OnDiscoverd();
+
+            if (_brick.item != null)
+            {
+                _brick.item.OnDiscoverd();
+            }
+        }
+    }
+
     public void BlockNearbyBrick(int row, int column)
     {
         for (int n = -1; n <= 1; ++n)
@@ -286,7 +299,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public void CancelBlockNearbyBrick(int row, int column)
     {
-        Debug.Log("取消blocl: " + row + " " + column);
+        Debug.Log("取消block: " + row + " " + column);
 
         for (int n = -1; n <= 1; ++n)
         {

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : LiveItem {
 
     public PlayerInitConfig config;
+    public Inventory inventory = new Inventory();
 
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
@@ -35,6 +36,7 @@ public class Player : LiveItem {
         base.OnSetStandBrick(brick);
 
         brick.brickType = BrickType.PLAYER;
+        brick.brickExplored = BrickExplored.EXPLORED;
     }
 
 }

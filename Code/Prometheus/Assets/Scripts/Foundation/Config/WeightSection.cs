@@ -39,8 +39,22 @@ public class WeightSection
 
     public static WeightSection Create(List<float> list)
     {
-        WeightSection arg = new WeightSection { weightList = new float[list.Count] };
-        arg.CalculateTotalAndRate();
+        WeightSection arg = new WeightSection
+        {
+            weightList = new float[list.Count],
+            rateList = new float[list.Count]
+        };
+
+        float totle = 0;
+
+        for (int i = 0; i < arg.rateList.Length; i++)
+        {
+            totle += arg.weightList[i];
+            arg.rateList[i] = totle;
+        }
+
+        arg.total = totle;
+
         return arg;
     }
 
@@ -66,7 +80,7 @@ public class WeightSection
     {
         float rad = Random.Range(0, total);
         for (int j = 0; j < rateList.Length; j++)
-            if (rad < rateList[j]) return j;
+            if (rad <= rateList[j]) return j;
         Debug.LogError("区间随机异常");
         throw new Exception();
     }

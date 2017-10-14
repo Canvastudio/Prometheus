@@ -126,7 +126,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         player.SetPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
 
-        BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
+        //BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
         StageCore.Instance.RegisterItem(player);
 
@@ -192,7 +192,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         return tablet;
     }
 
-    public Treasure CreateTreasure(Brick bornBrick)
+    public Treasure CreateTreasure(Brick bornBrick, ulong uid, int distance)
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Treasure"), bornBrick.transform) as GameObject;
 
@@ -203,6 +203,13 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var treasure = go.GetComponent<Treasure>();
 
         treasure.standBrick = bornBrick;
+
+        treasure.distance = distance;
+
+        treasure.config = ConfigDataBase.GetConfigDataById<BoxConfig>(uid);
+
+        ///宝箱比较复杂，需要去初始化一些东西
+        treasure.Init();
 
         StageCore.Instance.RegisterItem(treasure);
 

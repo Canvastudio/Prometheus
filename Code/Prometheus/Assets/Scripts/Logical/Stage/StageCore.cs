@@ -39,7 +39,7 @@ public class StageCore : SingleObject<StageCore> {
     public bool isLooping = false;
 
     /// <summary>
-    /// 当前回合时间消耗，这个消耗不总是等于1
+    /// 时间
     /// </summary>
     public float turnTime = 0;
 
@@ -109,6 +109,33 @@ public class StageCore : SingleObject<StageCore> {
         records.lastDeadMonster.uid = monster.cid;
     }
 
+    public IEnumerator DoNearByBrickSpecialAction(Brick brick1)
+    {
+        var type = brick1.brickType;
+
+        if (type == BrickType.MONSTER)
+        {
+            yield return PlayerMeleeAction(brick1);
+        }
+        else if (type == BrickType.SUPPLY)
+        {
+            var item = brick1.item as Supply;
+            yield return Player.moveComponent.MoveTo(brick1, 0.3f);
+
+            //吃掉
+            item.Reactive();
+        }
+        else if (type == BrickType.TREASURE)
+        {
+            var item = brick1.item as Treasure;
+
+            yield return Player.moveComponent.MoveTo(brick1, 0.3f);
+
+            //吃掉
+            item.Reactive();
+        }
+    }
+
     /// <summary>
     /// 关卡内部逻辑循环
     /// </summary>
@@ -136,105 +163,91 @@ public class StageCore : SingleObject<StageCore> {
                     //如果没有处于自动状态，则等待并处理玩家点击事件
                     yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
 
-                    //事件返回 从事件中得到参数
                     brick1 = brickMsg.para;
-                    BrickType type = brick1.brickType;
 
-                    BrickLogical:
-
-                    //停止监听砖块点击事件
-                    switch (type)
+                    if (brick1 != Player.standBrick)
                     {
-                        case BrickType.EMPTY:
-                        case BrickType.UNKNOWN:
-                        case BrickType.MONSTER:
+                        //事件返回 从事件中得到参数
+    
+                        BrickType type = brick1.brickType;
 
-                            if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1 && type == BrickType.MONSTER)
-                            {
-                                yield return PlayerMeleeAction(brick1);
-                            }
-                            else
-                            {
-                                List<Pathfinding.Node> list = null;
+                        BrickLogical:
 
-                                if (type == BrickType.MONSTER)
+                        //停止监听砖块点击事件
+                        switch (type)
+                        {
+                            case BrickType.EMPTY:
+                            case BrickType.UNKNOWN:
+                            case BrickType.MONSTER:
+                            case BrickType.SUPPLY:
+                            case BrickType.TREASURE:
+
+                                int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
+
+                                bool need_action = false;
+
+                                if (d == 1 && type != BrickType.EMPTY && type != BrickType.UNKNOWN)
                                 {
-                                    list = Pathfinding.PathfindMaster.Instance.RequestShortestPathToNeigbour(brick1.pathNode, Player.standBrick.pathNode, BrickCore.Instance);
+                                    yield return DoNearByBrickSpecialAction(brick1);
                                 }
                                 else
                                 {
-                                    //开始计算路径
-                                    list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
-                                }
+                                    List<Pathfinding.Node> list = null;
 
-                                //标记路径
-                                StageView.Instance.CancelPahtNode();
-                                StageView.Instance.SetNodeAsPath(list);
-                                //如果路径长度小于3，不需要确认直接移动
-                                if (list.Count < 3)
-                                {
-                                    Player.moveComponent.SetPaht(list);
-
-                                    yield return MovePlayer();
-                                    if (type == BrickType.MONSTER) yield return PlayerMeleeAction(brick1);
-                                    //yield return Player.moveComponent.Go(list);
-                                }
-                                else
-                                {
-                                    //等待玩家点击确认
-                                    yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
-
-                                    brick2 = brickMsg.para;
-
-                                    if (brick1 == brick2)
+                                    if (type != BrickType.EMPTY && type != BrickType.UNKNOWN)
                                     {
-                                        //确认成功
-                                        //yield return StageCore.Instance.Player.moveComponent.Go(list);
+                                        list = Pathfinding.PathfindMaster.Instance.RequestShortestPathToNeigbour(brick1.pathNode, Player.standBrick.pathNode, BrickCore.Instance);
+                                        need_action = true;
+                                    }
+                                    else
+                                    {
+                                        //开始计算路径
+                                        list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
+                                    }
+
+                                    //标记路径
+                                    StageView.Instance.CancelPahtNode();
+                                    StageView.Instance.SetNodeAsPath(list);
+                                    //如果路径长度小于3，不需要确认直接移动
+                                    if (list.Count < 3)
+                                    {
                                         Player.moveComponent.SetPaht(list);
 
                                         yield return MovePlayer();
 
-                                        if (type == BrickType.MONSTER) yield return PlayerMeleeAction(brick1);
+                                        if (need_action)
+                                            yield return DoNearByBrickSpecialAction(brick1);
                                     }
                                     else
                                     {
-                                        brick1 = brick2;
-                                        goto BrickLogical;
+                                        //等待玩家点击确认
+                                        yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
+
+                                        brick2 = brickMsg.para;
+
+                                        if (brick1 == brick2)
+                                        {
+                                            //确认成功
+                                            //yield return StageCore.Instance.Player.moveComponent.Go(list);
+                                            Player.moveComponent.SetPaht(list);
+
+                                            yield return MovePlayer();
+
+                                            if (need_action)
+                                                yield return DoNearByBrickSpecialAction(brick1);
+                                        }
+                                        else
+                                        {
+                                            brick1 = brick2;
+                                            goto BrickLogical;
+                                        }
                                     }
+
+
+
                                 }
-
- 
-
-                            }
-                            break;
-                        case BrickType.TREASURE:
-                            Debug.Log("玩家点击了宝藏！");
-
-                            if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
-                            {
-                                var item = brick1.item as Treasure;
-
-                                item.Reactive();
-                            }
-
-                            break;
-                        case BrickType.SUPPLY:
-
-                            Debug.Log("玩家点击了补给！");
-
-                            if (Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
-                            {
-                                var item = brick1.item as Supply;
-
-                                item.Reactive();
-                            }
-                            break;
-                        case BrickType.TABLET:
-
-                            var tablet = brick1.item as Tablet;
-
-                            break;
-                       
+                                break;
+                        }
                     }
                 }
 
@@ -253,7 +266,7 @@ public class StageCore : SingleObject<StageCore> {
 
     IEnumerator MovePlayer()
     {
-        while (StageCore.Instance.Player.moveComponent.IsNextCanMove())
+        while (!Instance.Player.moveComponent.MoveEnd())
         {
             yield return StageCore.Instance.Player.moveComponent.MoveToNext(0.3f);
 
@@ -266,7 +279,7 @@ public class StageCore : SingleObject<StageCore> {
         isPlayerActionFilish = true;
         StageView.Instance.CancelPahtNode();
     }
-
+    
     IEnumerator PlayerMeleeAction(Brick brick1)
     {
         var monster = brick1.item as Monster;
@@ -314,6 +327,8 @@ public class StageCore : SingleObject<StageCore> {
 
     public void AddTurnTime(float time)
     {
+        Debug.Log("时间增加: " + time);
+
         turnTime += time;
 
         Messenger<float>.Invoke(SA.StageTimeCast, time);

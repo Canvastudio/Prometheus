@@ -8,18 +8,20 @@ SpriteAtlas:
   m_Name: Atlas
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 2
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings:
     - m_BuildTarget: iPhone
       m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
       m_TextureFormat: 33
       m_TextureCompression: 1
       m_CompressionQuality: 100
@@ -27,18 +29,19 @@ SpriteAtlas:
       m_AllowsAlphaSplitting: 0
       m_Overridden: 1
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 4f0a8297c630250c4f2eb19cd5b93820
+      Hash: 9a20e33ee0ac70422949f31a6fdd9a55
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 25
-    hashString: 4f0a8297c630250c4f2eb19cd5b93820
+    hashString: 9a20e33ee0ac70422949f31a6fdd9a55
     totalSpriteSurfaceArea: 588024
     packables:
     - {fileID: 102900000, guid: 6151873936a30034888f68f242ebf425, type: 3}
