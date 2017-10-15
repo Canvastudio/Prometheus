@@ -20,6 +20,7 @@ public class StageView : SingleGameObject<StageView> {
     public SpriteAtlas brickAtlas;
     public int viewBrickRow = 9;
     public float brickWidth = 120;
+    public int column_per_row = 6;
     public string brickName = "brick";
     public Camera show_camera;
     public RectTransform viewArea;
@@ -59,7 +60,8 @@ public class StageView : SingleGameObject<StageView> {
         _brick.uid = uid;
         _brick.moduel_id = select_Moduel;
         _brick.level_id = select_level;
-        ((RectTransform)_brick.transform).anchoredPosition = new Vector2(brickWidth * col + brickWidth / 2f, brickWidth * row + brickWidth / 2f);
+        float offset = (750 - brickWidth * column_per_row) / 2f;
+        ((RectTransform)_brick.transform).anchoredPosition = new Vector2(offset + brickWidth * col + brickWidth / 2f, brickWidth * row + brickWidth / 2f);
         _brick.transform.SetAsFirstSibling();
 
         _brick.Init(row, col,  type);

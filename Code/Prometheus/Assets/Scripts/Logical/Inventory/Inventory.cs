@@ -58,4 +58,10 @@ public class ChipInventory
     public ChipConfig config;
 
     public int count;
+
+    public int power;
+
+    public int power_max;
+
+    public int power_min;
 }
