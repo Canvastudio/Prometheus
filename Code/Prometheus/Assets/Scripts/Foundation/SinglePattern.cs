@@ -55,7 +55,6 @@ public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler where 
         {
             if (_instance == null)
             {
-                //if (_instance == null) throw new Exception("\n1. "+typeof(T) + "没有绑定GameObject   2. " + typeof(T)+"中使用了Awake");
                 var go = (GameObject.FindObjectOfType(typeof(T)) as GameObject);
                 
                 if (go != null)

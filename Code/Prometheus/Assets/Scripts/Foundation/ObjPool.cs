@@ -2,30 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Obj
+public class Obj<T>
 {
-    public Object obj;
-
-	public GameObject m_gameobject;
+    public T obj;
 
     public int id;
 
-    public Obj(Object o, int _id = int.MaxValue)
+    public Obj(T o, int _id = int.MaxValue)
     {
         obj = o;
-		m_gameobject = (GameObject)obj;
         id = _id;
     }
 }
 
 public static class ObjExtend
 {
-    public static void Push(this List<Obj> l, Obj o)
+    public static void Push<T>(this List<Obj<T>> l, Obj<T> o)
     {
         l.Add(o);
     }
 
-    public static Obj Kick(this List<Obj> l, int id)
+    public static Obj<T> Kick<T>(this List<Obj<T>> l, int id)
     {
         var res = l[id];
 
@@ -34,7 +31,7 @@ public static class ObjExtend
         return res;
     }
 
-    public static Obj Pop(this List<Obj> l)
+    public static Obj<T> Pop<T>(this List<Obj<T>> l)
     {
         if (l.Count == 0) return null;
 
@@ -45,7 +42,7 @@ public static class ObjExtend
         return res;
     }
 
-    public static Obj Peek(this List<Obj> l)
+    public static Obj<T> Peek<T>(this List<Obj<T>> l)
     {
         if (l.Count == 0) return null;
 
@@ -54,36 +51,38 @@ public static class ObjExtend
 }
 
 
-class UNode
+class UNode<T>
 {
     public bool instantiate = true;
-    public Component component;
-    public Object source;
-    public List<Obj> u = new List<Obj>();
-    public List<Obj> uu = new List<Obj>();
+    public T source;
+    public List<Obj<T>> u = new List<Obj<T>>();
+    public List<Obj<T>> uu = new List<Obj<T>>();
     public int capacity;
 }
 
-public class ObjPool : SingleGameObject<ObjPool> {
+public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
+
+    public Transform transform;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
+    }
 
     int _id = int.MinValue;
 
-    private Dictionary<string, UNode> Data = new Dictionary<string, UNode>();
-
-
-    public void InitNewPool(string name, Object source, Component componet = null, int count = 10, bool Instantiate = true)
-    {
-        StartCoroutine(InitData(name, source, componet, count, Instantiate));
-    }
+    private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();
 
     //如果对象池存在就回收所有的对象，如果不存在则创建
-    public void InitOrRecyclePool(string name, Object source, Component componet = null, int count = 10, bool Instantiate = true)
+    public void InitOrRecyclePool(string name, T source, int count = 10, bool Instantiate = true)
     {
         if (Data.ContainsKey(name) == false)
         {
             float t1 = Time.realtimeSinceStartup;
 
-            StartCoroutine(InitData(name, source, componet, count, Instantiate));
+            CoroCore.Instance.StartCoro(InitData(name, source, count, Instantiate));
 
             Debug.Log("Qx: Ini Pool: " + name + ", cast: " + (Time.realtimeSinceStartup - t1).ToString());
         }
@@ -93,11 +92,11 @@ public class ObjPool : SingleGameObject<ObjPool> {
         }
     }
 
-    IEnumerator InitData(string name, Object source, Component componet = null, int count = 10, bool Instantiate = true)
+    IEnumerator InitData(string name, T source, int count = 10, bool Instantiate = true)
     {
-        UNode n = new UNode();
+        UNode<T> n = new UNode<T>();
+
         n.instantiate = Instantiate;
-        n.component = componet;
         n.capacity = count;
 
         if (Data.ContainsKey(name))
@@ -105,13 +104,11 @@ public class ObjPool : SingleGameObject<ObjPool> {
             Debug.LogError("Qing Xin: Use same key name.");
         }
 
-        Object o;
+        T o;
 
         Data[name] = n;
 
         n.source = source;
-        n.component = componet;
-
 
         int m = 0;
 
@@ -119,19 +116,19 @@ public class ObjPool : SingleGameObject<ObjPool> {
         {
             if (Instantiate)
             {
-                o = GameObject.Instantiate(source) as GameObject;
+                o = GameObject.Instantiate<T>(source);
 
                 o.name = o.name + i.ToString();
 
-                ((GameObject)o).SetActive(false);
-                ((GameObject)o).transform.SetParent(transform);
+                (o.gameObject).SetActive(false);
+                (o.gameObject).transform.SetParent(transform);
             }
             else
             {
                 o = source;
             }
 
-            n.uu.Push(new Obj(o, _id++));
+            n.uu.Push(new Obj<T>(o, _id++));
 
             ++m;
 
@@ -148,9 +145,9 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
 
 
-    public Object GetObjFromPoolWithID(out int id,string name, GameObject source = null, Component componet = null, bool autoCreatePool = true)
+    public T GetObjFromPoolWithID(out int id,string name, T source = null, Component componet = null, bool autoCreatePool = true)
     {
-        Object res;
+        T res;
 
         id = 0;
 
@@ -160,7 +157,7 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
             if (autoCreatePool)
             {
-                StartCoroutine(InitData(name, source, componet));
+                CoroCore.Instance.StartCoro(InitData(name, source));
             }
             else
             {
@@ -181,12 +178,12 @@ public class ObjPool : SingleGameObject<ObjPool> {
                 if (Data[name].instantiate)
                 {
                     res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, _id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, _id++));
                 }
             }
 
@@ -199,12 +196,12 @@ public class ObjPool : SingleGameObject<ObjPool> {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, _id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, _id++));
             }
 
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -219,9 +216,9 @@ public class ObjPool : SingleGameObject<ObjPool> {
     }
 
 
-    public Object GetObjFromPool(string name, GameObject source = null, Component componet = null, bool autoCreatePool = true)
+    public T GetObjFromPool(string name, T source = null, Component componet = null, bool autoCreatePool = true)
     {
-        Object res;
+        T res;
 
         if (Data.ContainsKey(name) == false)
         {
@@ -229,7 +226,7 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
             if (autoCreatePool)
             {
-                StartCoroutine(InitData(name, source, componet));
+                CoroCore.Instance.StartCoro(InitData(name, source));
             }
             else
             {
@@ -249,12 +246,12 @@ public class ObjPool : SingleGameObject<ObjPool> {
                 {
                     if (Data[name].source != null)
                         res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, _id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, _id++));
                 }
             }
 
@@ -265,12 +262,12 @@ public class ObjPool : SingleGameObject<ObjPool> {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, _id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, _id++));
             }
      
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -297,13 +294,13 @@ public class ObjPool : SingleGameObject<ObjPool> {
                     if (Data[poolName].instantiate)
                     {
                         //((GameObject)d.obj).SetActive(false);
-                        if (d.m_gameobject != null)
-						    d.m_gameobject.SetActive(false);
+                        if (d.obj != null)
+						    d.obj.gameObject.SetActive(false);
                     }
 
                     d.id = int.MaxValue;
 
-                    d.m_gameobject.transform.SetParent(transform, true);
+                    d.obj.gameObject.transform.SetParent(transform, true);
 
                     return d.obj;
                 }
@@ -323,7 +320,7 @@ public class ObjPool : SingleGameObject<ObjPool> {
         while (Data[name].u.Count > 0)
         {
             var o = Data[name].u.Pop();
-            var obj = ((GameObject)(o).obj);
+            var obj = (o).obj;
 
             if (obj != null)
             {
@@ -331,7 +328,7 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
                 if (Data[name].instantiate)
                 {
-                    obj.SetActive(false);
+                    obj.gameObject.SetActive(false);
                 }
                 //obj.transform.SetParent(transform);
             }
@@ -339,25 +336,25 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
         if (Data[name].uu.Count < Data[name].capacity)
         {
-            Object o;
+            T o;
 
             for (int i = 0; i < Data[name].capacity; i = Data[name].uu.Count)
             {
                 if (Data[name].instantiate)
                 {
-                    o = GameObject.Instantiate(Data[name].source) as GameObject;
+                    o = GameObject.Instantiate<T>(Data[name].source);
 
                     o.name = o.name + i.ToString();
 
-                    ((GameObject)o).SetActive(false);
-                    ((GameObject)o).transform.SetParent(transform);
+                    (o).gameObject.SetActive(false);
+                    (o).gameObject.transform.SetParent(transform);
                 }
                 else
                 {
                     o = Data[name].source;
                 }
 
-                Data[name].uu.Push(new Obj(o, _id++));
+                Data[name].uu.Push(new Obj<T>(o, _id++));
             }
         }
     }
@@ -384,7 +381,6 @@ public class ObjPool : SingleGameObject<ObjPool> {
 
         Data[name].uu = null;
         Data[name].source = null;
-        Data[name].component = null;
         Data.Remove(name);
     }
 

@@ -341,7 +341,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         blockMask.gameObject.SetActive(false);
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;
-        ObjPool.Instance.RecycleObj(StageView.Instance.brickName, uid);
+        ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, uid);
     }
 
     /// <summary>

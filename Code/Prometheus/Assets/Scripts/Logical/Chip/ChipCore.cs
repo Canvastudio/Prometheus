@@ -6,6 +6,6 @@ public class ChipCore : SingleObject<ChipCore> {
 
     public ChipInventory AssembleChip(ChipInventory a, ChipInventory b)
     {
-        return new ChipInventory();
+        return new ChipInventory(1);
     }
 }

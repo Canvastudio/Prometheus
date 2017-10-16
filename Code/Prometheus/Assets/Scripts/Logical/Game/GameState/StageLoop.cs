@@ -18,11 +18,16 @@ public class StageLoopState : IState
 
     public IEnumerator DoState()
     {
+        yield return ChipBoard.Instance.InitBoard(1);
+
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
 
         //生成玩家
         BrickCore.Instance.CreatePlayer(1);
+
+        StageCore.Instance.Player.inventory.AddChip(100011);
+        StageCore.Instance.Player.inventory.AddChip(100026);
 
         yield return 0;
 

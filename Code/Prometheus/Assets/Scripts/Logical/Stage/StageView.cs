@@ -12,7 +12,7 @@ public class StageView : SingleGameObject<StageView> {
     private int lastRow = 0;
     private int lastColumn = 0;
     [SerializeField]
-    GameObject _brickPrefab;
+    Brick _brickPrefab;
     public Transform liveItemRoot;
     public Transform brickRoot;
     public Transform moveRoot;
@@ -29,7 +29,7 @@ public class StageView : SingleGameObject<StageView> {
     {
         base.Init();
 
-        ObjPool.Instance.InitOrRecyclePool(brickName, _brickPrefab);
+        ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
     }
 
     #region Add Brick
@@ -52,7 +52,7 @@ public class StageView : SingleGameObject<StageView> {
 
         int uid = 0;
 
-        Brick _brick = (ObjPool.Instance.GetObjFromPoolWithID(out uid, brickName) as GameObject).GetComponent<Brick>();
+        Brick _brick = ObjPool<Brick>.Instance.GetObjFromPoolWithID(out uid, brickName);
 
         _brick.transform.SetParent(brickRoot);
         _brick.transform.localScale = Vector3.one;

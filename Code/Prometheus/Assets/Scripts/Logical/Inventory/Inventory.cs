@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Inventory {
 
     Dictionary<ulong, StuffInventory> stuffDic = new Dictionary<ulong, StuffInventory>();
 
-    Dictionary<ulong, ChipInventory> chipDic = new Dictionary<ulong, ChipInventory>();
+    [SerializeField]
+    List<ChipInventory> chipList = new List<ChipInventory>();
 
     public void AddStuff(ulong id, int count)
     {
@@ -26,23 +28,20 @@ public class Inventory {
         }
     }
 
-    public void AddChip(ulong id, int count)
+    public void AddChip(ulong id)
     {
-        Debug.Log("获得chip: " + id.ToString() + " " + count.ToString());
-        ChipInventory chipInventory;
+        chipList.Add(new ChipInventory(id));
+    }
 
-        if (chipDic.TryGetValue(id, out chipInventory))
-        {
-            chipInventory.count += count;
-        }
-        else
-        {
-            chipDic.Add(id, new ChipInventory()
-            {
-                config = ConfigDataBase.GetConfigDataById<ChipConfig>(id),
-                count = count
-            });
-        }
+
+    public void AddChip(ChipInventory chip)
+    {
+        chipList.Add(chip);
+    }
+
+    public List<ChipInventory> GetChipList()
+    {
+        return chipList;
     }
 }
 
@@ -53,15 +52,31 @@ public class StuffInventory
     public int count;
 }
 
+[SerializeField]
 public class ChipInventory
 {
     public ChipConfig config;
-
-    public int count;
 
     public int power;
 
     public int power_max;
 
     public int power_min;
+
+    public int[] model;
+
+    public ChipInventory(ulong id)
+    {
+        config = ConfigDataBase.GetConfigDataById<ChipConfig>(id);
+
+        var power_range = config.power.ToArray();
+        power_min = power_range[0];
+        power_max = power_range[1];
+
+        power = Random.Range(power_min, power_max);
+
+        int model_count = config.model.Count();
+
+        model = config.model.ToArray(Random.Range(0, model_count - 1));
+    }
 }

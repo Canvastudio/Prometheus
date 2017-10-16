@@ -36,4 +36,6 @@ public static class GameExtend  {
     {
         return System.Convert.ToInt32(e);
     }
+
+    public static WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 }

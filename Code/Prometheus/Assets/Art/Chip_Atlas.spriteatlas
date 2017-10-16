@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Chip_Atlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 2
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings:
+    - m_BuildTarget: iPhone
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 33
+      m_TextureCompression: 1
+      m_CompressionQuality: 100
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: bb0cad1f80025f58e20721c5da703d03
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 47
+    hashString: bb0cad1f80025f58e20721c5da703d03
+    totalSpriteSurfaceArea: 34275
+    packables:
+    - {fileID: 102900000, guid: d98bb82ec6cf24c4eb374e1f3672a52e, type: 3}
+    packedSpriteRenderDataKeys:
+    - 7908eaca49b7aff46bcfbf22256dc2b9: 21300000
+    - bdbed3bf7f217574bb9e168d16ca8e7f: 21300000
+    - a9752e8be0eb9ab46b7a280af7b68004: 21300000
+    - 27740a8df6f611a45bd0ecacbab377d9: 21300000
+    - c81c87d9747b94c429365f6ae159e0e1: 21300000
+    - c93a3357b635e2d4ba62fb8dcc082b9f: 21300000
+    - faaa000f09893db48bbb9e174c039f65: 21300000
+    - a20d99e686b34c4439319952c38b8f75: 21300000
+    - 97cae1d08aec4e14c8cff9e52920f7b3: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 7908eaca49b7aff46bcfbf22256dc2b9, type: 3}
+  - {fileID: 21300000, guid: bdbed3bf7f217574bb9e168d16ca8e7f, type: 3}
+  - {fileID: 21300000, guid: a9752e8be0eb9ab46b7a280af7b68004, type: 3}
+  - {fileID: 21300000, guid: 27740a8df6f611a45bd0ecacbab377d9, type: 3}
+  - {fileID: 21300000, guid: c81c87d9747b94c429365f6ae159e0e1, type: 3}
+  - {fileID: 21300000, guid: c93a3357b635e2d4ba62fb8dcc082b9f, type: 3}
+  - {fileID: 21300000, guid: faaa000f09893db48bbb9e174c039f65, type: 3}
+  - {fileID: 21300000, guid: a20d99e686b34c4439319952c38b8f75, type: 3}
+  - {fileID: 21300000, guid: 97cae1d08aec4e14c8cff9e52920f7b3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - blue_chippart
+  - yellow_chippart
+  - red_chippart
+  - blue_chipsquare
+  - yellow_chipsquare
+  - black_chipsquare
+  - green_chipsquare
+  - white_chipsquare
+  - red_chipsquare
+  m_Tag: Chip_Atlas
+  m_IsVariant: 0
