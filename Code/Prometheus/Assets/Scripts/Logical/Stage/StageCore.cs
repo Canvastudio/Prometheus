@@ -15,11 +15,11 @@ public class StageCore : SingleObject<StageCore> {
 
     ulong monsterId = 0;
 
-    bool isPlayerActionFilish;
+    bool isMonsterActionFilish = true;
 
     bool inputConfrim;
 
-    WaitUntil playerActionFinish;
+    WaitUntil AllActionFinish;
 
     Messenger<Brick>.WaitForMsg brickMsg;
     /// <summary>
@@ -60,7 +60,7 @@ public class StageCore : SingleObject<StageCore> {
         tagMgr = new EntitysTag<GameItemBase>();
         records = new StageRecording();
 
-        playerActionFinish = new WaitUntil(() => isPlayerActionFilish);
+        AllActionFinish = new WaitUntil(() => isMonsterActionFilish);
 
         brickMsg = new Messenger<Brick>.WaitForMsg();
 
@@ -146,7 +146,6 @@ public class StageCore : SingleObject<StageCore> {
 
         while (isLooping)
         {
-            isPlayerActionFilish = false;
             inputConfrim = false;
 
             //如果执行队列还有东西，那么自动执行
@@ -156,61 +155,78 @@ public class StageCore : SingleObject<StageCore> {
             }
             else
             {
-                while (!isPlayerActionFilish)
+
+                StageView.Instance.CancelPahtNode();
+
+                //如果没有处于自动状态，则等待并处理玩家点击事件
+                yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
+
+                brick1 = brickMsg.para;
+
+                if (brick1 != Player.standBrick)
                 {
-                    StageView.Instance.CancelPahtNode();
+                    //事件返回 从事件中得到参数
 
-                    //如果没有处于自动状态，则等待并处理玩家点击事件
-                    yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
+                    BrickType type = brick1.brickType;
 
-                    brick1 = brickMsg.para;
+                    BrickLogical:
 
-                    if (brick1 != Player.standBrick)
+                    //停止监听砖块点击事件
+                    switch (type)
                     {
-                        //事件返回 从事件中得到参数
-    
-                        BrickType type = brick1.brickType;
+                        case BrickType.EMPTY:
+                        case BrickType.UNKNOWN:
+                        case BrickType.MONSTER:
+                        case BrickType.SUPPLY:
+                        case BrickType.TREASURE:
 
-                        BrickLogical:
+                            int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
 
-                        //停止监听砖块点击事件
-                        switch (type)
-                        {
-                            case BrickType.EMPTY:
-                            case BrickType.UNKNOWN:
-                            case BrickType.MONSTER:
-                            case BrickType.SUPPLY:
-                            case BrickType.TREASURE:
+                            bool need_action = false;
 
-                                int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
+                            if (d == 1 && type != BrickType.EMPTY && type != BrickType.UNKNOWN)
+                            {
+                                yield return DoNearByBrickSpecialAction(brick1);
+                            }
+                            else
+                            {
+                                List<Pathfinding.Node> list = null;
 
-                                bool need_action = false;
-
-                                if (d == 1 && type != BrickType.EMPTY && type != BrickType.UNKNOWN)
+                                if (type != BrickType.EMPTY && type != BrickType.UNKNOWN)
                                 {
-                                    yield return DoNearByBrickSpecialAction(brick1);
+                                    list = Pathfinding.PathfindMaster.Instance.RequestShortestPathToNeigbour(brick1.pathNode, Player.standBrick.pathNode, BrickCore.Instance);
+                                    need_action = true;
                                 }
                                 else
                                 {
-                                    List<Pathfinding.Node> list = null;
+                                    //开始计算路径
+                                    list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
+                                }
 
-                                    if (type != BrickType.EMPTY && type != BrickType.UNKNOWN)
-                                    {
-                                        list = Pathfinding.PathfindMaster.Instance.RequestShortestPathToNeigbour(brick1.pathNode, Player.standBrick.pathNode, BrickCore.Instance);
-                                        need_action = true;
-                                    }
-                                    else
-                                    {
-                                        //开始计算路径
-                                        list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
-                                    }
+                                //标记路径
+                                StageView.Instance.CancelPahtNode();
+                                StageView.Instance.SetNodeAsPath(list);
+                                //如果路径长度小于3，不需要确认直接移动
+                                if (list.Count < 3)
+                                {
+                                    Player.moveComponent.SetPaht(list);
 
-                                    //标记路径
-                                    StageView.Instance.CancelPahtNode();
-                                    StageView.Instance.SetNodeAsPath(list);
-                                    //如果路径长度小于3，不需要确认直接移动
-                                    if (list.Count < 3)
+                                    yield return MovePlayer();
+
+                                    if (need_action)
+                                        yield return DoNearByBrickSpecialAction(brick1);
+                                }
+                                else
+                                {
+                                    //等待玩家点击确认
+                                    yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
+
+                                    brick2 = brickMsg.para;
+
+                                    if (brick1 == brick2)
                                     {
+                                        //确认成功
+                                        //yield return StageCore.Instance.Player.moveComponent.Go(list);
                                         Player.moveComponent.SetPaht(list);
 
                                         yield return MovePlayer();
@@ -220,43 +236,23 @@ public class StageCore : SingleObject<StageCore> {
                                     }
                                     else
                                     {
-                                        //等待玩家点击确认
-                                        yield return brickMsg.BeginWaiting(SA.PlayerClickBrick.ToString());
-
-                                        brick2 = brickMsg.para;
-
-                                        if (brick1 == brick2)
-                                        {
-                                            //确认成功
-                                            //yield return StageCore.Instance.Player.moveComponent.Go(list);
-                                            Player.moveComponent.SetPaht(list);
-
-                                            yield return MovePlayer();
-
-                                            if (need_action)
-                                                yield return DoNearByBrickSpecialAction(brick1);
-                                        }
-                                        else
-                                        {
-                                            brick1 = brick2;
-                                            goto BrickLogical;
-                                        }
+                                        brick1 = brick2;
+                                        goto BrickLogical;
                                     }
-
-
-
                                 }
-                                break;
-                        }
+
+
+
+                            }
+                            break;
                     }
                 }
-
             }
 
             Debug.Log("关卡action1： 玩家执行完毕");
 
             //等待玩家动作结束信号
-            yield return playerActionFinish;
+            yield return AllActionFinish;
 
             Debug.Log("根据消耗时间移动地图");
 
@@ -276,7 +272,6 @@ public class StageCore : SingleObject<StageCore> {
         //TODO: 触发非空砖块
 
         //autoMove = false;
-        isPlayerActionFilish = true;
         StageView.Instance.CancelPahtNode();
     }
     
