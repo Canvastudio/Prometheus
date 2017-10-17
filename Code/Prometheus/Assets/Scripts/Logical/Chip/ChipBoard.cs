@@ -144,7 +144,10 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
 
         int rn;
         int cn;
-        var models = RemoveRedundant(model, out rn, out cn);
+        int mr;
+        int mc;
+
+        var models = RemoveRedundant(model, out rn, out cn, out mr, out mc);
 
         //仔细想想这个和字符串匹配一样 可以做很多的算法优化啊...
         for (int r = 0; r <= h - 3; ++r)
@@ -157,7 +160,7 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                 }
                 else
                 {
-                    instance.transform.localPosition = chipSquareArray[r + 1, c + 1].transform.localPosition;
+                    instance.transform.localPosition = chipSquareArray[r + 1 - (1 - mr), c + 1 - (1 - mc)].transform.localPosition;
                     instance.lastLocalPos = instance.transform.localPosition;
                     return true;
                 }
@@ -167,8 +170,12 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
         return false;
     }
 
-    private List<int> RemoveRedundant(int[] models, out int rn, out int cn)
+    private List<int> RemoveRedundant(int[] models, out int rn, out int cn, out int mr, out int mc)
     {
+        int temp = models[4];
+
+        models[4] = -1;
+
         List<int> modelsList = new List<int>();
 
         rn = 0;
@@ -225,7 +232,20 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
             }
         }
 
+        int index = modelsList.FindIndex((int a) => a == -1);
+
+        mr = index / cn;
+        mc = index % cn;
+
+        modelsList[index] = temp;
+        models[4] = temp;
+
         return modelsList;
+    }
+
+    private bool ChipSquarePutable(int r, int c)
+    {
+        return chipSquareArray[r, c].state == ChipSquareState.Free && chipSquareArray[r, c].chipGrid != ChipGrid.None;
     }
 
     private bool MatrixPut(int r, int c, int rn, int cn, List<int> modelsList, ChipBoardInstance instance)
@@ -234,9 +254,35 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
         {
             for (int m = 0; m < cn; ++m)
             {
-                if (modelsList[i * cn + m] > 0 && (chipSquareArray[r + i, c + m].state != ChipSquareState.Free || chipSquareArray[r + i, c + m].chipGrid == ChipGrid.None))
+                if (modelsList[i * cn + m] > 0)
                 {
-                    return false;
+                    if (!ChipSquarePutable(r + i, c + m))
+                    {
+                        return false;
+                    }
+
+                    if (m > 0 && i < rn -1)
+                    {
+                        if (modelsList[(i+1) * cn + (m-1)] > 0)
+                        {
+                            if (!ChipSquarePutable(r+i, c+m -1) && !ChipSquarePutable(r + i + 1, c + m))
+                            {
+                                return false;
+                            }
+                        }
+
+                    }
+
+                    if (m < cn - 1 && i < rn - 1)
+                    {
+                        if (modelsList[(i + 1) * cn + (m + 1)] > 0)
+                        {
+                            if (!ChipSquarePutable(r + i + 1, c + m) && !ChipSquarePutable(r + i, c + m + 1))
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
         }

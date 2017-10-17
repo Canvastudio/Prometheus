@@ -18,11 +18,11 @@ public class ChipSquare : MonoBehaviour {
 
     public int power = 1;
 
-    public ChipGrid chipGrid = ChipGrid.None;
+    private ChipGrid _chipGrid = ChipGrid.None;
 
     public ChipBoardInstance boardInstance;
     public int index;
-    public ChipSquareState state = ChipSquareState.Free;
+    private ChipSquareState _state = ChipSquareState.Free;
 
     public static string[] chipSquareSpriteName = new string[]
     {
@@ -34,6 +34,41 @@ public class ChipSquare : MonoBehaviour {
         "green_chipsquare",
     };
 
+    public ChipGrid chipGrid
+    {
+        get
+        {
+            return _chipGrid;
+        }
+
+        set
+        {
+            if (value == ChipGrid.None)
+            {
+                image.color = Color.red;
+            }
+
+            _chipGrid = value;
+        }
+    }
+
+    public ChipSquareState state
+    {
+        get
+        {
+            return _state;
+        }
+
+        set
+        {
+            if (value != ChipSquareState.Free)
+            {
+                image.color = Color.red;
+            }
+
+            _state = value;
+        }
+    }
 
     private string ChipGridTypeToSpriteName(ChipGrid type)
     {
