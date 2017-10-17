@@ -15,26 +15,33 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
     [SerializeField]
     ChipSquare chipSquare;
     [SerializeField]
+    ChipListItem listItem;
+    [SerializeField]
+    ChipBoardInstance boardInstance;
+    [Space(5)]
+    [SerializeField]
     RectTransform chipRoot;
+    [SerializeField]
+    RectTransform chipListRoot;
+    [Space(5)]
     [SerializeField]
     GameObject backgroud;
 
-    [Space(5)]
     [SerializeField]
     public SpriteAtlas spriteAtlas;
-
-    private ChipDiskConfig config;
-    private List<ChipGrid> gridList;
     [SerializeField]
     CanvasGroup canvasGroup;
     [SerializeField]
     Button closeBtn;
-    [SerializeField]
-    RectTransform chipListRoot;
-    [SerializeField]
-    ChipListItem listItem;
+
+    private ChipDiskConfig config;
 
     string itemName = "ChipListItem";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
 
     private void Start()
     {
@@ -103,5 +110,12 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
             chip.gameObject.SetActive(true);
             StartCoroutine(chip.InitItem(chipList[i]));
         }
+    }
+
+    public ChipBoardInstance CreateBoardInstance(ChipListItem item)
+    {
+        var instance = GameObject.Instantiate(boardInstance);
+
+        return instance;
     }
 }

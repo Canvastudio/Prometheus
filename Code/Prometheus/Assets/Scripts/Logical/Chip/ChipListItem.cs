@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ChipListItem : MonoBehaviour {
+public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler  {
 
     [SerializeField]
     List<Image> itemsList;
@@ -13,6 +14,8 @@ public class ChipListItem : MonoBehaviour {
     GameObject positive;
     [SerializeField]
     GameObject negative;
+    [SerializeField]
+    ScrollRect scrollRect;
 
     private Color color;
 
@@ -21,6 +24,7 @@ public class ChipListItem : MonoBehaviour {
         yield return GameExtend.waitForEndOfFrame;
 
         HudEvent.Get(btn).onLongPress = OnLongPress;
+        HudEvent.Get(btn).onClick = OnClick;
 
         color = SuperTool.CreateColor(chipInventory.config.color);
 
@@ -48,7 +52,30 @@ public class ChipListItem : MonoBehaviour {
         }
     }
 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        scrollRect.OnBeginDrag(eventData);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        scrollRect.OnDrag(eventData);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        scrollRect.OnEndDrag(eventData);
+    }
+
     private void OnLongPress()
+    {
+
+    }
+
+    /// <summary>
+    /// 点击的是偶需要生成一个实例
+    /// </summary>
+    private void OnClick()
     {
 
     }
