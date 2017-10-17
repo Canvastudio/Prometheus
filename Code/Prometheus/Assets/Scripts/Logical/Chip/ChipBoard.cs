@@ -201,7 +201,7 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
 
             for (int m = 0; m < rn; ++m)
             {
-                if (modelsList[i + m * 3] == 0)
+                if (modelsList[i + m * cn] == 0)
                 {
                     zero += 1;
                 }
