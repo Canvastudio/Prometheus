@@ -8,12 +8,12 @@ public class ConfigTest : MonoBehaviour {
 	void Start () {
         //SuperConfig.Instance.Load(SuperTool.GetConfigData("DefaultPath.txt", "Config"));
 	    SuperConfig.Instance.Load();
-        Debug.Log(BoxDropConfig.GetConfigDataById<BoxDropConfig>(1).distance);
+        Debug.Log(PassiveSkillsConfig.GetConfigDataById<PassiveSkillsConfig>(3000001).name);
         //SuperTool.ToRpn()
 
         //var t=SuperTool.CreateWeightSection(new List<int> { 1, 2, 3 });
         //   Debug.Log(t.RanPoint());
-        //var t = new SuperArray<int>("1:2|3",":|");
+        //var t = new SuperArrayValue<int>("1:2|3",":|");
         //   Debug.Log(t[0,0]);
 
     }

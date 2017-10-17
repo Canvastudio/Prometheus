@@ -6,7 +6,7 @@ public class Treasure : GameItemBase, IReactive {
     public int distance;
 
     BoxDropConfig cur_drop;
-    SuperArray<string> drop_desc;
+    SuperArrayValue<string> drop_desc;
 
     public void Reactive()
     {

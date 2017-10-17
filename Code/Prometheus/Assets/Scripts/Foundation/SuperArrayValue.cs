@@ -9,7 +9,7 @@ using System.Linq;
 /// 使用多维下标方式取得数据，例如superArray[0,1,2]，只读，
 /// 下标长度与切割字符串长度一致。
 /// </summary>
-public class SuperArray<T> : IEnumerable
+public class SuperArrayValue<T> : IEnumerable
 {
     private readonly ArrayList dataList;
     private readonly int maxDepth;
@@ -18,7 +18,7 @@ public class SuperArray<T> : IEnumerable
     private readonly Dictionary<string, T> valueDictionary;
     private readonly string saveDataStr;
 
-    public SuperArray(string dataStr, string splitChar, int depth = -1)
+    public SuperArrayValue(string dataStr, string splitChar, int depth = -1)
     {
         saveDataStr = dataStr;
         countDictionary = new Dictionary<string, int>();

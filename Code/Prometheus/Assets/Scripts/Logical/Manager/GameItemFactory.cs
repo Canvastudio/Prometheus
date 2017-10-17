@@ -25,7 +25,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterConfig config = ConfigDataBase.GetConfigDataById<MonsterConfig>(id);
 
-        SuperArray<float> propertys = config.propertys;
+        SuperArrayValue<float> propertys = config.propertys;
 
         monster.config = config;
 
