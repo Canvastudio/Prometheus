@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758c648b33154c245b481fe20b1fe709, type: 3}
+  m_Name: SupplyConfig
+  m_EditorClassIdentifier: 
+  className: SupplyConfig
+  types:
+  - ulong
+  - string
+  - string
+  - string
+  - short
+  - string
+  splitMaks:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  names:
+  - id
+  - name
+  - describe
+  - prefab
+  - level
+  - arg
+  datas:
+  - 101
+  - "\u8840\u74F6"
+  - "\u6062\u590D10%\u751F\u547D\u503C"
+  - 
+  - 1
+  - 0.1
+  - 102
+  - "\u8840\u74F6"
+  - "\u6062\u590D15%\u751F\u547D\u503C"
+  - 
+  - 2
+  - 0.15
+  - 103
+  - "\u8840\u74F6"
+  - "\u6062\u590D20%\u751F\u547D\u503C"
+  - 
+  - 3
+  - 0.2

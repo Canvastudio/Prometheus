@@ -1,0 +1,894 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758c648b33154c245b481fe20b1fe709, type: 3}
+  m_Name: StateConfig
+  m_EditorClassIdentifier: 
+  className: StateConfig
+  types:
+  - ulong
+  - string
+  - string
+  - string
+  - bool
+  - int
+  - int
+  - float
+  - string
+  - int
+  - StateEffect
+  - string
+  splitMaks:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - ;
+  - ;
+  names:
+  - id
+  - name
+  - describe
+  - prefab
+  - isBuff
+  - max
+  - time
+  - interval
+  - mark
+  - priority
+  - stateEffects
+  - args
+  datas:
+  - 4000001
+  - "\u660F\u8FF7"
+  - "\u70AB\u5149\u5C04\u7EBF\uFF1A\u65E0\u6CD5\u653B\u51FB"
+  - DeBbuff0001
+  - FALSE
+  - 10
+  - 1
+  - 
+  - 
+  - 1
+  - Freeze
+  - 
+  - 4000002
+  - "\u50AC\u7720"
+  - "\u65E0\u6CD5\u653B\u51FB\u3002\u53D7\u5230\u4EFB\u4F55\u4F24\u5BB3\u4F1A\u89E3\u9664\u50AC\u7720"
+  - DeBbuff0002
+  - FALSE
+  - 10
+  - 10
+  - 
+  - 
+  - 1
+  - Sleep
+  - 
+  - 4000003
+  - "\u6C89\u9ED8"
+  - "\u88AB\u52A8\u6280\u80FD\u5931\u6548"
+  - DeBbuff0003
+  - FALSE
+  - 10
+  - 10
+  - 
+  - 
+  - 1
+  - Silent
+  - 
+  - 4000004
+  - "\u7F34\u68B0"
+  - "\u65E0\u6CD5\u4F7F\u7528\u4E3B\u52A8\u6280\u80FD"
+  - DeBbuff0004
+  - FALSE
+  - 10
+  - 10
+  - 
+  - 
+  - 1
+  - Disarm
+  - 
+  - 4000005
+  - "\u6B7B\u4EA1\u6807\u8BB0"
+  - "\u6B7B\u4EA1\u65F6\uFF0C\u4F1A\u968F\u673A\u6740\u6B7B\u4E00\u4E2A\u6CA1\u6709\u7FFB\u5F00\u7684\u654C\u4EBA\u3002"
+  - DeBbuff0005
+  - FALSE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - DeathMark
+  - 1
+  - 4100027
+  - "\u6C89\u9ED8"
+  - "\u6C89\u9ED8\u73A9\u5BB65\u56DE\u5408"
+  - DeBbuff0006
+  - FALSE
+  - 10
+  - 5
+  - 
+  - 
+  - 1
+  - Silent
+  - 
+  - 4100028
+  - "\u6C89\u9ED8"
+  - "\u6C89\u9ED8\u73A9\u5BB68\u56DE\u5408"
+  - DeBbuff0006
+  - FALSE
+  - 10
+  - 8
+  - 
+  - 
+  - 1
+  - Silent
+  - 
+  - 4100029
+  - "\u6C89\u9ED8"
+  - "\u6C89\u9ED8\u73A9\u5BB612\u56DE\u5408"
+  - DeBbuff0006
+  - FALSE
+  - 10
+  - 12
+  - 
+  - 
+  - 1
+  - Silent
+  - 
+  - 4100030
+  - "\u6C89\u9ED8"
+  - "\u6C89\u9ED8\u73A9\u5BB615\u56DE\u5408"
+  - DeBbuff0006
+  - FALSE
+  - 10
+  - 15
+  - 
+  - 
+  - 1
+  - Silent
+  - 
+  - 4100039
+  - "\u6076\u5FC3\u5149\u73AF"
+  - "\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
+  - DeBbuff0007
+  - FALSE
+  - 5
+  - 99
+  - 1
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2203318222850,1103806595075,1103806595074"'
+  - 4100040
+  - "\u6076\u5FC3\u5149\u73AF"
+  - "\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
+  - DeBbuff0007
+  - FALSE
+  - 5
+  - 99
+  - 1
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2203318222851,1103806595075,1103806595074"'
+  - 4100041
+  - "\u6076\u5FC3\u5149\u73AF"
+  - "\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
+  - DeBbuff0007
+  - FALSE
+  - 5
+  - 99
+  - 1
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2203318222852,1103806595075,1103806595074"'
+  - 4100042
+  - "\u6076\u5FC3\u5149\u73AF"
+  - "\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
+  - DeBbuff0007
+  - FALSE
+  - 5
+  - 99
+  - 1
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2203318222853,1103806595075,1103806595074"'
+  - 4100043
+  - "\u75C5\u6BD2"
+  - "\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
+  - DeBbuff0008
+  - FALSE
+  - 10
+  - 10
+  - 2
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595108,2207613190169,1103806595075,1103806595074"'
+  - 4000006
+  - "\u5149\u7EBF\u504F\u8F6C"
+  - "\u53D7\u5230\u7684\u6240\u6709\u5149\u7EBF\u4F24\u5BB3\u4F1A\u8BEF\u5BFC\u7ED9\u5176\u4ED6\u654C\u4EBA\uFF0C\u4F46\u5982\u679C\u6CA1\u6709\u5B58\u5728\u7684\u654C\u4EBA\uFF0C\u504F\u8F6C\u4F1A\u5931\u8D25"
+  - Bbuff0001
+  - TRUE
+  - 1
+  - 10
+  - 
+  - 
+  - 1
+  - DamageTransfer
+  - 9999_4_DamageTypeLaser
+  - 4000007
+  - "\u4F24\u75DB\u8BB0\u5FC6"
+  - "\u4FDD\u5B58\u53D7\u5230\u7684\u4F24\u5BB3\uFF0C\u72B6\u6001\u6D88\u5931\u65F6\u6062\u590D2\u500D\u7684\u751F\u547D\u503C"
+  - Bbuff0002
+  - TRUE
+  - 1
+  - 10
+  - 
+  - 
+  - 1
+  - DamageStore
+  - 999_2_None
+  - 4000008
+  - "\u6025\u901F\u586B\u88C5"
+  - "\u6240\u6709\u7684\u8FDC\u7A0B\u653B\u51FB\u6D88\u8017\u65F6\u95F4\u51CF\u534A"
+  - Bbuff0003
+  - TRUE
+  - 1
+  - 10
+  - 
+  - 
+  - 1
+  - Rapidly
+  - 0.5
+  - 4000009
+  - "\u53CD\u5E94\u88C5\u7532"
+  - "\u4E00\u5B9A\u51E0\u7387\u514D\u75AB\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0004
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 0.05_1_DamageTypeCartridge
+  - 4000010
+  - "\u7EB3\u7C73\u6D82\u5C42"
+  - "\u53D7\u5230\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E"
+  - Bbuff0005
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_0.1_DamageTypeLaser
+  - 4000011
+  - "\u65A9\u6740"
+  - "\u5BF9\u751F\u547D\u503C20%\u4EE5\u4E0B\u7684\u654C\u4EBA\u8FD1\u6218\u653B\u51FB\uFF0C\u9020\u6210\u4F24\u5BB3\u989D\u5916\u589E\u52A050%"
+  - Bbuff0006
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - Vjua
+  - 0.2_0.5_DamageTypeMelee
+  - 4000012
+  - "\u5F3A\u51FB\u5149\u7EBF"
+  - "\u5BF9\u751F\u547D\u503C80%\u4EE5\u4E0A\u7684\u76EE\u6807\u4F7F\u7528\u5149\u7EBF\u653B\u51FB\uFF0C\u9020\u6210\u4F24\u5BB3\u589E\u52A025%"
+  - Bbuff0007
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - Enhance
+  - 0.8_0.25_DamageTypeLaser
+  - 4000013
+  - "\u71C3\u6599\u5F15\u7206"
+  - "\u5B9E\u5F39\u653B\u51FB\uFF0C\u5BF9\u8DDD\u79BB2\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u7684\u4F24\u5BB3\u589E\u52A025%"
+  - Bbuff0008
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - FuelDetonation
+  - 2_0.25_DamageTypeCartridge
+  - 4000014
+  - "\u7EB3\u7C73\u4FEE\u590D"
+  - "\u6BCF1\u56DE\u5408\uFF0C\u6062\u590D\u751F\u547D\u503C0.5%"
+  - Bbuff0009
+  - TRUE
+  - 3
+  - 99
+  - 1
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595081,2211908157445,1103806595075,1103806595073"'
+  - 4000015
+  - "\u81F4\u547D\u653B\u51FB"
+  - "\u8FD1\u6218\u653B\u51FB\u4E00\u5B9A\u6982\u7387\u9020\u62102\u500D\u4F24\u5BB3"
+  - Bbuff0010
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - Critical
+  - 0.1_2_DamageTypeMelee
+  - 4100001
+  - "\u6307\u5411\u514D\u75AB"
+  - "\u4E0D\u80FD\u9009\u62E9\u8BE5\u654C\u4EBA\u4F5C\u4E3A\u6280\u80FD\u76EE\u6807"
+  - Bbuff0011
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - SelectImmune
+  - 
+  - 4100002
+  - "\u653B\u51FB\u589E\u5F3A"
+  - "\u653B\u51FB\u529B\u589E\u52A020%"
+  - Bbuff0012
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - Property
+  - '"1103806595090,1103806595072,1103806595090,2203318222859,1103806595075|1103806595095,1103806595072,1103806595095,2203318222859,1103806595075|1103806595098,1103806595072,1103806595098,2203318222859,1103806595075"'
+  - 4100003
+  - "\u5149\u8010\u6027"
+  - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E30%"
+  - Bbuff0013
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_0.3_DamageTypeLaser
+  - 4100004
+  - "\u5149\u8010\u6027"
+  - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E50%"
+  - Bbuff0013
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_0.5_DamageTypeLaser
+  - 4100005
+  - "\u5149\u504F\u8F6C"
+  - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u5C06\u968F\u673A\u504F\u8F6C\u7ED9\u9644\u8FD1\u5176\u4ED6\u76EE\u6807"
+  - Bbuff0014
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageTransfer
+  - 999_4_DamageTypeLaser
+  - 4100006
+  - "\u5149\u504F\u8F6C"
+  - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u5C06\u968F\u673A\u504F\u8F6C\u7ED9\u5176\u4ED6\u76EE\u6807"
+  - Bbuff0014
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageTransfer
+  - 999_10_DamageTypeLaser
+  - 4100007
+  - "\u5B9E\u5F39\u8010\u6027"
+  - "\u53D7\u5230\u7684\u5B9E\u5F39\u4F24\u5BB3\u964D\u4F4E30%"
+  - Bbuff0015
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_0.3_DamageTypeCartridge
+  - 4100008
+  - "\u5B9E\u5F39\u8010\u6027"
+  - "\u53D7\u5230\u7684\u5B9E\u5F39\u4F24\u5BB3\u964D\u4F4E60%"
+  - Bbuff0015
+  - TRUE
+  - 5
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_0.6_DamageTypeCartridge
+  - 4100009
+  - "\u5B9E\u5F39\u514D\u4F24"
+  - "\u514D\u75AB\u4E00\u5207\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0016
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 1_1_DamageTypeCartridge
+  - 4100010
+  - "\u62A5\u8B66"
+  - "5\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
+  - Bbuff0017
+  - TRUE
+  - 10
+  - 5
+  - 
+  - 
+  - 1
+  - Alarm
+  - 4
+  - 4100011
+  - "\u62A5\u8B66"
+  - "4\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
+  - Bbuff0017
+  - TRUE
+  - 10
+  - 4
+  - 
+  - 
+  - 1
+  - Alarm
+  - 4
+  - 4100012
+  - "\u62A5\u8B66"
+  - "3\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
+  - Bbuff0017
+  - TRUE
+  - 10
+  - 3
+  - 
+  - 
+  - 1
+  - Alarm
+  - 4
+  - 4100013
+  - "\u62A5\u8B66"
+  - "2\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
+  - Bbuff0017
+  - TRUE
+  - 10
+  - 2
+  - 
+  - 
+  - 1
+  - Alarm
+  - 4
+  - 4100014
+  - "\u6700\u540E\u4E00\u4EBA"
+  - "\u9664\u975E\u8BE5\u602A\u7269\u662F\u573A\u4E0A\u552F\u4E00\uFF0C\u5426\u5219\u514D\u75AB\u4E00\u5207\u4F24\u5BB3"
+  - Bbuff0018
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - Last
+  - 
+  - 4100015
+  - "\u751F\u547D\u5F3A\u5316"
+  - "\u751F\u547D\u503C\u589E\u52A030%"
+  - Bbuff0019
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - Property
+  - '"1103806595081,1103806595072,1103806595081,2203318222861,1103806595075"'
+  - 4100016
+  - "\u81EA\u7206"
+  - "5\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0020
+  - TRUE
+  - 10
+  - 5
+  - 
+  - 
+  - 1
+  - Explode
+  - 1103806595080
+  - 4100017
+  - "\u81EA\u7206"
+  - "4\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0020
+  - TRUE
+  - 10
+  - 4
+  - 
+  - 
+  - 1
+  - Explode
+  - 1103806595080
+  - 4100018
+  - "\u81EA\u7206"
+  - "3\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0020
+  - TRUE
+  - 10
+  - 3
+  - 
+  - 
+  - 1
+  - Explode
+  - 1103806595080
+  - 4100019
+  - "\u81EA\u7206"
+  - "2\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0020
+  - TRUE
+  - 10
+  - 2
+  - 
+  - 
+  - 1
+  - Explode
+  - 1103806595080
+  - 4100020
+  - "\u5B9A\u65F6\u70B8\u5F39"
+  - "5\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E50%\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
+  - Bbuff0021
+  - TRUE
+  - 10
+  - 5
+  - 
+  - 
+  - 1
+  - Explode
+  - '"1103806595080,2203318222853,1103806595075"'
+  - 4100021
+  - "\u5F31\u70B9\u653B\u51FB"
+  - "\u5BF9\u751F\u547D\u503C\u9AD8\u4E8E70%\u7684\u76EE\u6807\uFF0C\u9020\u6210\u7684\u4F24\u5BB3\u63D0\u9AD850%"
+  - Bbuff0022
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - Enhance
+  - 0.7_0.5_None
+  - 4100022
+  - "\u5F31\u70B9\u653B\u51FB"
+  - "\u5BF9\u751F\u547D\u503C\u9AD8\u4E8E70%\u7684\u76EE\u6807\uFF0C\u9020\u6210\u7684\u4F24\u5BB3\u63D0\u9AD870%"
+  - Bbuff0022
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - Enhance
+  - 0.7_0.7_None
+  - 4100023
+  - "\u6295\u5F39"
+  - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8100%"
+  - Bbuff0023
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - FuelDetonation
+  - 2_None_1
+  - 4100024
+  - "\u6295\u5F39"
+  - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8150%"
+  - Bbuff0023
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - FuelDetonation
+  - 2_None_1.5
+  - 4100025
+  - "\u6295\u5F39"
+  - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8200%"
+  - Bbuff0023
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - FuelDetonation
+  - 2_None_2
+  - 4100026
+  - "\u6295\u5F39"
+  - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8250%"
+  - Bbuff0023
+  - TRUE
+  - 10
+  - 99
+  - 
+  - 
+  - 1
+  - FuelDetonation
+  - 2_None_2.5
+  - 4100031
+  - "\u80BF\u7624\u589E\u751F"
+  - "5\u56DE\u5408\u6062\u590D\u751F\u547D\u503C"
+  - Bbuff0024
+  - TRUE
+  - 1
+  - 99
+  - 5
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2199023255554,1103806595075,1103806595073"'
+  - 4100032
+  - "\u80BF\u7624\u589E\u751F"
+  - "4\u56DE\u5408\u6062\u590D\u751F\u547D\u503C"
+  - Bbuff0024
+  - TRUE
+  - 1
+  - 99
+  - 4
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2199023255554,1103806595075,1103806595073"'
+  - 4100033
+  - "\u80BF\u7624\u589E\u751F"
+  - "3\u56DE\u5408\u6062\u590D\u751F\u547D\u503C"
+  - Bbuff0024
+  - TRUE
+  - 1
+  - 99
+  - 3
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2199023255554,1103806595075,1103806595073"'
+  - 4100034
+  - "\u80BF\u7624\u589E\u751F"
+  - "2\u56DE\u5408\u6062\u590D\u751F\u547D\u503C"
+  - Bbuff0024
+  - TRUE
+  - 1
+  - 99
+  - 2
+  - 
+  - 1
+  - Property
+  - '"1103806595080,1103806595072,1103806595080,1103806595115,2199023255554,1103806595075,1103806595073"'
+  - 4100035
+  - "\u95EA\u907F"
+  - "10%\u6982\u7387\u514D\u75AB\u4F24\u5BB3"
+  - Bbuff0025
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 0.1_1_None
+  - 4100036
+  - "\u95EA\u907F"
+  - "15%\u6982\u7387\u514D\u75AB\u4F24\u5BB3"
+  - Bbuff0025
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 0.15_1_None
+  - 4100037
+  - "\u95EA\u907F"
+  - "20%\u6982\u7387\u514D\u75AB\u4F24\u5BB3"
+  - Bbuff0025
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 0.2_1_None
+  - 4100038
+  - "\u95EA\u907F"
+  - "25%\u6982\u7387\u514D\u75AB\u4F24\u5BB3"
+  - Bbuff0025
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageResist
+  - 0.25_1_None
+  - 4100044
+  - "\u4F24\u5BB3\u514D\u75AB"
+  - "\u514D\u75AB1\u6B21\u4F24\u5BB3"
+  - Bbuff0026
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageAbsorb
+  - 1_None
+  - 4100045
+  - "\u4F24\u5BB3\u514D\u75AB"
+  - "\u514D\u75AB2\u6B21\u4F24\u5BB3"
+  - Bbuff0026
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageAbsorb
+  - 2_None
+  - 4100046
+  - "\u4F24\u5BB3\u514D\u75AB"
+  - "\u514D\u75AB3\u6B21\u4F24\u5BB3"
+  - Bbuff0026
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageAbsorb
+  - 3_None
+  - 4100047
+  - "\u4F24\u5BB3\u514D\u75AB"
+  - "\u514D\u75AB5\u6B21\u4F24\u5BB3"
+  - Bbuff0026
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageAbsorb
+  - 5_None
+  - 4100048
+  - "\u590D\u4EC7"
+  - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768420%"
+  - Bbuff0027
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageRebound
+  - None_0.2
+  - 4100049
+  - "\u590D\u4EC7"
+  - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768430%"
+  - Bbuff0027
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageRebound
+  - None_0.3
+  - 4100050
+  - "\u590D\u4EC7"
+  - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768440%"
+  - Bbuff0027
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageRebound
+  - None_0.4
+  - 4100051
+  - "\u590D\u4EC7"
+  - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768450%"
+  - Bbuff0027
+  - TRUE
+  - 1
+  - 99
+  - 
+  - 
+  - 1
+  - DamageRebound
+  - None_0.5
+  - 4100052
+  - "\u6597\u58EB"
+  - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A010%"
+  - Bbuff0028
+  - TRUE
+  - 1
+  - 1
+  - 
+  - 
+  - 1
+  - Angry
+  - None_0.1_0.1_0.1
+  - 4100053
+  - "\u6597\u58EB"
+  - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A015%"
+  - Bbuff0028
+  - TRUE
+  - 1
+  - 1
+  - 
+  - 
+  - 1
+  - Angry
+  - None_0.15_0.15_0.15
+  - 4100054
+  - "\u6597\u58EB"
+  - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A020%"
+  - Bbuff0028
+  - TRUE
+  - 1
+  - 1
+  - 
+  - 
+  - 1
+  - Angry
+  - None_0.2_0.2_0.2
+  - 4100055
+  - "\u6597\u58EB"
+  - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A025%"
+  - Bbuff0028
+  - TRUE
+  - 1
+  - 1
+  - 
+  - 
+  - 1
+  - Angry
+  - None_0.25_0.25_0.25

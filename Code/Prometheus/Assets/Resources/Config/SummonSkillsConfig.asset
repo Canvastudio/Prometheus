@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758c648b33154c245b481fe20b1fe709, type: 3}
+  m_Name: SummonSkillsConfig
+  m_EditorClassIdentifier: 
+  className: SummonSkillsConfig
+  types:
+  - ulong
+  - string
+  - string
+  - string
+  - TargetType
+  - int
+  - string
+  - string
+  - float
+  - SpecialAction
+  - string
+  splitMaks:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - ~
+  - 
+  - ';:'
+  - 
+  - 
+  - _
+  names:
+  - id
+  - name
+  - describe
+  - prefab
+  - targetType
+  - carry
+  - prefab2
+  - stuffCost
+  - costTime
+  - specialAction
+  - speciaArg
+  datas:
+  - 2000001
+  - "\u53EC\u5524\u70AE\u53F0"
+  - "\u53EC\u5524\u4E00\u4E2A\u70AE\u5854\u5BF9\u76EE\u6807\u8FDB\u884C\u653B\u51FB"
+  - Skill_Summon_0001
+  - "\u70AE\u53F0\u4F4D\u7F6E"
+  - 0~7
+  - GUN01
+  - Coherer:1|Organics:1
+  - 0.5
+  - NormalAttack
+  - 1010001
+  - 2000002
+  - "\u6D6E\u6E38A1\u578B"
+  - "\u5BF9\u5355\u4E2A\u76EE\u6807\u53D1\u5C04\u6FC0\u5149"
+  - Skill_Summon_0002
+  - "\u536B\u661F"
+  - 0~0
+  - "\u536B\u661F\u673A1"
+  - Coherer:1|Organics:1
+  - 0
+  - NormalAttack
+  - 1010002
+  - 2000003
+  - "\u6D6E\u6E38A2\u578B"
+  - "\u968F\u673A\u653B\u51FB\u4E24\u4E2A\u654C\u4EBA"
+  - Skill_Summon_0003
+  - "\u536B\u661F"
+  - 0~0
+  - "\u536B\u661F\u673A1"
+  - Coherer:1|Organics:1
+  - 0
+  - NormalAttack
+  - 1010003
+  - 2000004
+  - "\u6D6E\u6E38B1\u578B"
+  - "\u8F85\u52A9\u73A9\u5BB6\u653B\u51FB\u7684\u6D6E\u6E38\u70AE\uFF0C\u8FD9\u662F\u4E00\u79CD\u6709\u9AD8\u8017\u4E0A\u9650\u7684\u6D6E\u6E38\u70AE\uFF0C\u5B83\u53EF\u4EE5\u590D\u5236\u7EDD\u5927\u591A\u6570\u6280\u80FD\uFF0C\u4F46\u80FD\u91CF\u6062\u590D\u8F83\u6162"
+  - Skill_Summon_0004
+  - "\u536B\u661F"
+  - 0~0
+  - "\u536B\u661F\u673A2"
+  - Coherer:1|Organics:1
+  - 0
+  - CopyAttack
+  - 25_14
+  - 2000005
+  - "\u6D6E\u6E38B2\u578B"
+  - "\u8F85\u52A9\u73A9\u5BB6\u653B\u51FB\u7684\u6D6E\u6E38\u70AE\uFF0C\u8FD9\u662F\u4E00\u79CD\u5FEB\u901F\u6062\u590D\u80FD\u91CF\u7684\u6D6E\u6E38\u70AE\uFF0C\u4F46\u5B83\u80FD\u91CF\u4E0A\u9650\u8F83\u4F4E\uFF0C\u53EF\u4EE5\u590D\u5236\u7684\u6280\u80FD\u6709\u9650"
+  - Skill_Summon_0005
+  - "\u536B\u661F"
+  - 0~0
+  - "\u536B\u661F\u673A2"
+  - Coherer:1|Organics:1
+  - 0
+  - CopyAttack
+  - 10_8

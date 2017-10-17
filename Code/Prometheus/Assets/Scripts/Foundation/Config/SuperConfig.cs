@@ -1,14 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Reflection;
-using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEngine;
 
+
+/// <summary>
+/// 利用Unity自带Resources方式读取文本，并处理成相应对象类型。
+/// 配置表中不能使用空格与引号。
+/// </summary>
 public class SuperConfig : SingleObject<SuperConfig>
 {
     private readonly Dictionary<string, List<ConfigDataBase>> dataDic = new Dictionary<string, List<ConfigDataBase>>();
     private readonly List<ResourceRequest> resDatas = new List<ResourceRequest>();
+    private readonly List<XYZW<ConfigDataBase, PropertyInfo, string, ulong>> postponeList = new List<XYZW<ConfigDataBase, PropertyInfo, string, ulong>>();
+
     private float resProgress;
     public float ResProgress
     {
@@ -27,20 +36,69 @@ public class SuperConfig : SingleObject<SuperConfig>
         {
             return isDone;
         }
+        private set
+        {
+            if (value) PostponeVoluation();
+            isDone = value;
+        }
     }
 
 
     protected override void Init() { }
 
+#if UNITY_EDITOR
+    [MenuItem("SuperTool/TXT转换成ScriptableObject &%9")]
+    static void FormatConversion(MenuCommand cmd)
+    {
+        TxtToSo();
+    }
+#endif
+
+    private static void TxtToSo()
+    {
+#if UNITY_EDITOR
+        var paths = GetPathByEasyConfig();
+        foreach (var path in paths)
+        {
+            //txt读取
+            var res = Resources.Load<TextAsset>(path);
+            if (res == null) continue;
+            ConfigData cd = ScriptableObject.CreateInstance<ConfigData>();
+            cd.SetDataDic(TxtAnalyze(res));
+            AssetDatabase.CreateAsset(cd, Path.Combine("Assets/Resources", path + ".asset"));
+            string txtFile = Path.Combine("Assets/Resources", path + ".txt");
+            if (File.Exists(txtFile)) File.Delete(txtFile);
+        }
+        AssetDatabase.SaveAssets();
+#endif
+    }
+
 
     /// <summary>
-    /// 读取EasyConfig获取配置表路径数组
+    /// 读取EasyConfig获取配置表路径（对应Config行）数组
     /// </summary>
-    public string[] GetPathByEasyConfig(string path = null)
+    public static string[] GetPathByEasyConfig(string path = null)
     {
-        if (path == null) path = (string)SuperTool.GetSuperConfigInform("SuperConfigDefaultPathOfEasyConfig") ?? "DefaultPath";
-        return SuperTool.GetConfigData(path, "Config");
+        if (path == null) path = (string)GetSuperConfigInform("SuperConfigDefaultPathOfEasyConfig") ?? "DefaultPath";
+        EasyConfig ec = EasyConfig.GetConfig(path);
+        return ec.GetDataList("Config");
     }
+
+    /// <summary>
+    /// 该方法尝试获取由VBA生成的代码变量，如果获取失败返回null
+    /// </summary>
+    public static object GetSuperConfigInform(string argName)
+    {
+        try
+        {
+            return Type.GetType("SuperConfigInform").GetField(argName).GetValue(null);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
 
     /// <summary>
     /// 通过配置表路径记录EasyConfig读取配置表。
@@ -54,24 +112,24 @@ public class SuperConfig : SingleObject<SuperConfig>
     }
 
 
-    /// <summary>
-    /// 通过配置表路径数组读取配置表。
-    /// TXT读取非常快，提供阻塞读取方法
-    /// </summary>
-    public void Load(string[] names)
+    private void Load(string[] names)
     {
         foreach (var v in names)
         {
+            //如果存在TXT，就读取TXT，否则读取OS
             var res = Resources.Load<TextAsset>(v);
-            DataConver(res);
+            var dic = res != null ? TxtAnalyze(Resources.Load<TextAsset>(v)) : Resources.Load<ConfigData>(v).GetDataDic();
+            DataConver(dic);
         }
-        isDone = true;
+        IsDone = true;
+
     }
+
 
     /// <summary>
     /// 通过配置表路径记录EasyConfig读取配置表。
     /// 一般情况下，是不需要指定参数的（由外部VBA生成），除非有特殊需求读取其他位置的配置表。
-    ///  异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
+    /// 异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
     /// </summary>
     public System.Collections.IEnumerator LoadAsync(string path = null)
     {
@@ -79,17 +137,14 @@ public class SuperConfig : SingleObject<SuperConfig>
         yield return LoadAsync(paths);
     }
 
-    /// <summary>
-    /// 通过配置表路径数组读取配置表。
-    /// 异步读取，IsDone与resProgress分别表示读取是否完成与读取进度
-    /// </summary>
+
     public System.Collections.IEnumerator LoadAsync(string[] names)
     {
         isDone = false;
         foreach (string t in names)
         {
-            ResourceRequest data = Resources.LoadAsync<TextAsset>(t);
-            resDatas.Add(data);
+            resDatas.Add(Resources.LoadAsync<TextAsset>(t));
+            resDatas.Add(Resources.LoadAsync<ConfigData>(t));
         }
         SuperTimer.Instance.RegisterFrameFunction(CheckRes);
         yield return new WaitUntil(() => IsDone);
@@ -101,29 +156,34 @@ public class SuperConfig : SingleObject<SuperConfig>
     /// </summary>
     private bool CheckRes(object obj)
     {
-        isDone = true;
+        IsDone = true;
         resProgress = 0;
         foreach (ResourceRequest t in resDatas)
         {
+            if(t.asset == null) continue;
             if (t.isDone)
             {
-                if (!dataDic.ContainsKey(t.asset.name)) DataConver((TextAsset)t.asset);
+                if (!dataDic.ContainsKey(t.asset.name))
+                {
+                    var dic = t.asset.GetType() == typeof (TextAsset) ? TxtAnalyze((TextAsset)t.asset) : ((ConfigData)t.asset).GetDataDic();
+                    if(dic!=null) DataConver(dic);
+                }
             }
             else
             {
-                isDone = false;
+                IsDone = false;
             }
             resProgress += t.progress;
         }
         resProgress = resProgress / resDatas.Count;
-        if (isDone) return true;
+        if (IsDone) return true;
         return false;
     }
 
     /// <summary>
-    /// 将一个txt资源转换成相应内容
+    /// 解析一个TXT资源，分离表头与数据
     /// </summary>
-    private void DataConver(TextAsset textAsset)
+    private static Dictionary<string, object> TxtAnalyze(TextAsset textAsset)
     {
         string dataString = textAsset.text;
         string className = SuperTool.ConverSpace(textAsset.name);
@@ -131,7 +191,7 @@ public class SuperConfig : SingleObject<SuperConfig>
         string[] typeAndArr = dataLine[0].Split('\t');//第1行是类型+数组标记
         string[] parType = new string[typeAndArr.Length];//类型
         string[] splitMak = new string[typeAndArr.Length];//切分标记
-        Regex reg = new Regex(@"\[.+\]");
+        Regex reg = new Regex(@"\[.+\]$");
         for (int i = 0; i < typeAndArr.Length; i++)
         {
             typeAndArr[i] = SuperTool.ConverSpace(ReplaceQuote(typeAndArr[i]));
@@ -149,17 +209,51 @@ public class SuperConfig : SingleObject<SuperConfig>
         }
         string[] parName = dataLine[1].Split('\t');//第2行是变量名
         for (int i = 0; i < parName.Length; i++) parName[i] = SuperTool.ConverSpace(ReplaceQuote(parName[i]));
+
+        List<string[]> datas = new List<string[]>();//除开前两行的数据
+        for (int i = 2; i < dataLine.Length; i++)
+        {
+            if (dataLine[i].Trim()=="" || dataLine[i].Trim() == "\r") continue;
+            var tempArr = dataLine[i].Split('\t');
+            for (int j = 0; j < tempArr.Length; j++)
+            {
+                tempArr[j] = tempArr[j].Replace("\n","");
+            }
+            datas.Add(tempArr);
+        }
+
+        Dictionary<string, object> resDic = new Dictionary<string, object>
+        {
+            {"ClassName", className},
+            {"Types", parType},
+            {"SplitMaks", splitMak},
+            {"Names", parName},
+            {"Datas", datas},
+        };
+        return resDic;
+    }
+
+
+    /// <summary>
+    /// 将一个内容转换成相应内容
+    /// </summary>
+    private void DataConver(Dictionary<string, object> resDic)
+    {
+        string className = (string)resDic["ClassName"];
+        string[] parType = (string[])resDic["Types"];//类型
+        string[] splitMak = (string[])resDic["SplitMaks"];//切分标记
+        string[] parName = (string[])resDic["Names"];//参数名
+        List<string[]> dataLine = (List<string[]>)resDic["Datas"];
+
         ulong inIndex = 1;
         List<ConfigDataBase> dataList = new List<ConfigDataBase>();
-        for (int x = 2; x < dataLine.Length; x++)
+        foreach (string[] data in dataLine)
         {
-            if (string.IsNullOrEmpty(dataLine[x].Trim())) continue;
             ConfigDataBase dataBase = Activator.CreateInstance(Type.GetType(className)) as ConfigDataBase;
-            string[] aData = dataLine[x].Split('\t');
-            for (int j = 0; j < aData.Length; j++)
+            for (int j = 0; j < data.Length; j++)
             {
-                aData[j] = ReplaceQuote(aData[j]);
-                if (!string.IsNullOrEmpty(aData[j]))
+                data[j] = ReplaceQuote(data[j]);
+                if (!string.IsNullOrEmpty(data[j]))
                 {
                     //强制将id类型修正为ulong
                     if (parName[j].ToLower() == "id")
@@ -176,40 +270,50 @@ public class SuperConfig : SingleObject<SuperConfig>
                             switch (parType[j])
                             {
                                 case "string":
-                                pi.SetValue(dataBase, aData[j], null);
+                                pi.SetValue(dataBase, data[j], null);
                                 break;
                                 case "float":
-                                pi.SetValue(dataBase, float.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, float.Parse(data[j]), null);
                                 break;
                                 case "int":
-                                pi.SetValue(dataBase, int.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, int.Parse(data[j]), null);
                                 break;
                                 case "ulong":
-                                pi.SetValue(dataBase, ulong.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, ulong.Parse(data[j]), null);
                                 break;
                                 case "bool":
-                                pi.SetValue(dataBase, ConverBool(aData[j]), null);
+                                pi.SetValue(dataBase, ConverBool(data[j]), null);
                                 break;
                                 case "double":
-                                pi.SetValue(dataBase, double.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, double.Parse(data[j]), null);
                                 break;
                                 case "long":
-                                pi.SetValue(dataBase, long.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, long.Parse(data[j]), null);
                                 break;
                                 case "short":
-                                pi.SetValue(dataBase, short.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, short.Parse(data[j]), null);
                                 break;
                                 case "char":
-                                pi.SetValue(dataBase, char.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, char.Parse(data[j]), null);
                                 break;
                                 case "uint":
-                                pi.SetValue(dataBase, uint.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, uint.Parse(data[j]), null);
                                 break;
                                 case "byte":
-                                pi.SetValue(dataBase, byte.Parse(aData[j]), null);
+                                pi.SetValue(dataBase, byte.Parse(data[j]), null);
                                 break;
                                 default:
-                                pi.SetValue(dataBase, Enum.Parse(Type.GetType(parType[j]), aData[j]), null);
+                                if (pi.PropertyType.IsEnum)
+                                {
+                                    pi.SetValue(dataBase, Enum.Parse(Type.GetType(parType[j]), data[j]), null);
+                                }
+                                else
+                                {
+                                    AddPostpone(dataBase, pi, parType[j], ulong.Parse(data[j]));
+                                    //这是一个对泛型方法的调用，虽然没用上，但是还是留在这里以做参考
+                                    //MethodInfo serviceMethod = this.GetType().GetMethod("TryAdd");
+                                    //var t = serviceMethod.MakeGenericMethod(Type.GetType(parType[j])).Invoke(this, new object[] { ulong.Parse(aData[j]), parType[j], pi.GetValue(dataBase, null) });
+                                }
                                 break;
                             }
                         }
@@ -218,43 +322,43 @@ public class SuperConfig : SingleObject<SuperConfig>
                             switch (parType[j])
                             {
                                 case "string":
-                                pi.SetValue(dataBase, new SuperArray<string>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<string>(data[j], splitMak[j]), null);
                                 break;
                                 case "float":
-                                pi.SetValue(dataBase, new SuperArray<float>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<float>(data[j], splitMak[j]), null);
                                 break;
                                 case "int":
-                                pi.SetValue(dataBase, new SuperArray<int>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<int>(data[j], splitMak[j]), null);
                                 break;
                                 case "ulong":
-                                pi.SetValue(dataBase, new SuperArray<ulong>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<ulong>(data[j], splitMak[j]), null);
                                 break;
                                 case "bool":
-                                pi.SetValue(dataBase, new SuperArray<bool>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<bool>(data[j], splitMak[j]), null);
                                 break;
                                 case "double":
-                                pi.SetValue(dataBase, new SuperArray<double>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<double>(data[j], splitMak[j]), null);
                                 break;
                                 case "long":
-                                pi.SetValue(dataBase, new SuperArray<long>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<long>(data[j], splitMak[j]), null);
                                 break;
                                 case "short":
-                                pi.SetValue(dataBase, new SuperArray<short>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<short>(data[j], splitMak[j]), null);
                                 break;
                                 case "char":
-                                pi.SetValue(dataBase, new SuperArray<char>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<char>(data[j], splitMak[j]), null);
                                 break;
                                 case "uint":
-                                pi.SetValue(dataBase, new SuperArray<uint>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<uint>(data[j], splitMak[j]), null);
                                 break;
                                 case "byte":
-                                pi.SetValue(dataBase, new SuperArray<byte>(aData[j], splitMak[j]), null);
+                                pi.SetValue(dataBase, new SuperArrayValue<byte>(data[j], splitMak[j]), null);
                                 break;
                                 default:
                                 //动态创建泛型对象
-                                Type t = typeof(SuperArray<>);
+                                Type t = Type.GetType(parType[j]).IsEnum ? typeof(SuperArrayValue<>) : typeof(SuperArrayObj<>);
                                 t = t.MakeGenericType(Type.GetType(parType[j]));
-                                object o = Activator.CreateInstance(t, aData[j], splitMak[j], -1);
+                                object o = Activator.CreateInstance(t, data[j], splitMak[j]);
                                 pi.SetValue(dataBase, o, null);
                                 break;
                             }
@@ -262,16 +366,18 @@ public class SuperConfig : SingleObject<SuperConfig>
                     }
                     catch (Exception)
                     {
-                        throw new ArgumentException("配置表动态赋值出错：" + className + "→ " + parName[j] + "@" + aData[j]);
+                        throw new ArgumentException("配置表动态赋值出错：<" + className + ">   " + parName[j] + "=" + data[j]);
                     }
                 }
             }
 
             if (dataBase.id == 0) dataBase.id = inIndex++;
             dataList.Add(dataBase);
+            dataBase.OnLoadDone();
         }
         dataDic.Add(className, dataList);
     }
+
 
     /// <summary>
     /// 去掉开头和结尾的半角引号，顺便Trim
@@ -336,12 +442,6 @@ public class SuperConfig : SingleObject<SuperConfig>
         {
             return (T)v;
         }
-        //foreach (var v in dataDic[temp])
-        //{
-        //    object compar = v.GetType().GetProperty(pro).GetValue(v, null);
-        //    if (compar == null || compar.Equals(null) || string.IsNullOrEmpty(compar.ToString())) continue;
-        //    if (compar == value || compar.Equals(value) || compar.ToString() == value.ToString()) return (T)v;
-        //}
         Debug.LogWarning("配置表<" + temp + ">不存在[" + pro + "]为[" + value + "]的值");
         return null;
     }
@@ -369,18 +469,110 @@ public class SuperConfig : SingleObject<SuperConfig>
     }
 
 
-
     /// <summary>
     /// 判断一个配置中是否存在该id的数据
     /// </summary>
     public bool Exists<T>(ulong id) where T : ConfigDataBase
     {
         string temp = typeof(T).ToString();
-        if (!dataDic.ContainsKey(temp))
-            throw new ArgumentNullException("不存在的配置表：" + temp);
+        if (!dataDic.ContainsKey(temp)) return false;
         var tempList = dataDic[temp];
         return tempList.Exists(x => x.id == id);
     }
 
+
+    /// <summary>
+    /// 配置表初始完成之前，某些对象是不能得到正确赋值的，所以把它们暂时存起来，在配置表初始完成后一并赋值
+    /// </summary>
+    public void AddPostpone(ConfigDataBase cdb, PropertyInfo pi, string type, ulong id)
+    {
+        var arg = new XYZW<ConfigDataBase, PropertyInfo, string, ulong>(cdb, pi, type, id);
+        postponeList.Add(arg);
+    }
+
+    /// <summary>
+    /// 给延迟对象赋值
+    /// </summary>
+    private void PostponeVoluation()
+    {
+        foreach (var arg in postponeList)
+        {
+            if (!dataDic.ContainsKey(arg.z)) throw new ArgumentNullException("不存在的配置表：" + arg.z);
+            List<ConfigDataBase> tempList = dataDic[arg.z];
+            ConfigDataBase t = tempList.Find(x => x.id == arg.w);
+            arg.y.SetValue(arg.x, t, null);
+        }
+        postponeList.Clear();
+    }
+}
+
+/// <summary>
+/// 配置表类的基类
+/// 该配置表第一行为参数说明，第二行为参数类型，第三行为参数名字
+/// </summary>
+public abstract class ConfigDataBase
+{
+
+    /// <summary>
+    /// 主键，唯一
+    /// </summary>
+    public ulong id { get; set; }
+
+
+    /// <summary>
+    /// 根据ID返回一个配置表对象
+    /// </summary>
+    public static T GetConfigDataById<T>(ulong id) where T : ConfigDataBase
+    {
+        return SuperConfig.Instance.GetConfigDataById<T>(id);
+    }
+    /// <summary>
+    /// 根据ID返回一个配置表对象
+    /// </summary>
+    public static T GetConfigDataById<T>(string idStr) where T : ConfigDataBase
+    {
+        return GetConfigDataById<T>(ulong.Parse(idStr));
+    }
+
+    /// <summary>
+    /// 根据类型返回配置表所有对象
+    /// </summary>
+    public static List<T> GetConfigDataList<T>() where T : ConfigDataBase
+    {
+        return SuperConfig.Instance.GetConfigDataList<T>();
+    }
+
+    /// <summary>
+    /// 根据属性名称，查找配置表中第一个符合条件的对象
+    /// </summary>
+    /// <typeparam name="T">配置表类型</typeparam>
+    /// <param name="pro">属性名</param>
+    /// <param name="value">属性值</param>
+    /// <returns></returns>
+    public static T GetConfigDataByProperty<T>(string pro, object value) where T : ConfigDataBase
+    {
+        return SuperConfig.Instance.GetConfigDataByProperty<T>(pro, value);
+    }
+
+    /// <summary>
+    /// 判断一个配置中是否存在该id的数据
+    /// </summary>
+    public static bool Exists<T>(ulong id) where T : ConfigDataBase
+    {
+        return SuperConfig.Instance.Exists<T>(id);
+    }
+
+    /// <summary>
+    /// 判断一个配置中是否存在该id的数据
+    /// </summary>
+    public static bool Exists<T>(string idStr) where T : ConfigDataBase
+    {
+        return Exists<T>(ulong.Parse(idStr));
+    }
+
+    /// <summary>
+    /// 每个配置表对象初始化完成时被调用
+    /// </summary>
+    public virtual void OnLoadDone() { }
 
 }
