@@ -39,9 +39,19 @@ public class Inventory {
         chipList.Add(chip);
     }
 
-    public List<ChipInventory> GetChipList()
+    public List<ChipInventory> GetUnusedChipList()
     {
-        return chipList;
+        List<ChipInventory> list = new List<ChipInventory>();
+
+        foreach(var chip in chipList)
+        {
+            if (chip.listItem == null)
+            {
+                list.Add(chip);
+            }
+        }
+
+        return list;
     }
 }
 
@@ -64,6 +74,9 @@ public class ChipInventory
     public int power_min;
 
     public int[] model;
+
+    public ChipBoardInstance boardInstance;
+    public ChipListItem listItem;
 
     public ChipInventory(ulong id)
     {

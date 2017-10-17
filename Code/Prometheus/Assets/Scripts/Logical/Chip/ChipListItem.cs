@@ -17,10 +17,14 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     [SerializeField]
     ScrollRect scrollRect;
 
+    public ChipInventory chipInventory;
+    public ChipBoardInstance boardInstance;
     private Color color;
 
     public IEnumerator InitItem(ChipInventory chipInventory)
     {
+        this.chipInventory = chipInventory;
+        chipInventory.listItem = this;
         yield return GameExtend.waitForEndOfFrame;
 
         HudEvent.Get(btn).onLongPress = OnLongPress;
@@ -77,6 +81,6 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     /// </summary>
     private void OnClick()
     {
-
+        boardInstance = ChipBoard.Instance.CreateBoardInstance(this);
     }
 }

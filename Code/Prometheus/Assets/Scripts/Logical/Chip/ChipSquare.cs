@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ChipSquareState
+{
+    Free,
+    Use,
+    Passitive,
+    Negative,
+}
+
 public class ChipSquare : MonoBehaviour {
 
     [SerializeField]
@@ -11,6 +19,10 @@ public class ChipSquare : MonoBehaviour {
     public int power = 1;
 
     public ChipGrid chipGrid = ChipGrid.None;
+
+    public ChipBoardInstance boardInstance;
+    public int index;
+    public ChipSquareState state = ChipSquareState.Free;
 
     public static string[] chipSquareSpriteName = new string[]
     {
@@ -38,5 +50,11 @@ public class ChipSquare : MonoBehaviour {
         {
             this.power = power;
         }
+    }
+
+    public void Empoly(ChipBoardInstance boardInstance, int index)
+    {
+        this.boardInstance = boardInstance;
+        this.index = index;
     }
 }

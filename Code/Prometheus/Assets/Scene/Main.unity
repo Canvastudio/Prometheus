@@ -1414,14 +1414,18 @@ MonoBehaviour:
   colNum: 11
   chipSquare: {fileID: 114898044491075630, guid: 9f1bfbf3be0d6ac41b29282829fef4af,
     type: 2}
+  listItem: {fileID: 824867705}
+  boardInstance: {fileID: 114710001726412642, guid: 8b8a410560be6574b93292962d848f49,
+    type: 2}
   chipRoot: {fileID: 1533297349}
+  chipListRoot: {fileID: 1010451932}
+  chipInstanceRoot: {fileID: 597194904}
   backgroud: {fileID: 496746717}
   spriteAtlas: {fileID: 4343727234628468602, guid: 2c9b9256f598550408d8b8e6b73291fd,
     type: 2}
   canvasGroup: {fileID: 1409930623}
   closeBtn: {fileID: 839511604}
-  chipListRoot: {fileID: 1010451932}
-  listItem: {fileID: 824867705}
+  listInstance: []
 --- !u!225 &1409930623
 CanvasGroup:
   m_ObjectHideFlags: 0
