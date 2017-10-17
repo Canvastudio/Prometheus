@@ -1,49 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ChipBoardInstance : MonoBehaviour {
+public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHandler{
 
     public ChipGrid chipGrid;
 
     public ChipInventory chipInventory;
 
     [SerializeField]
-    List<Image> itemsList;
-    [SerializeField]
-    GameObject positive;
-    [SerializeField]
-    GameObject negative;
+    List<BoardInstanceNode> itemsList;
 
     public Vector3 lastLocalPos;
 
     public void Init(ChipListItem chipItem)
     {
         chipInventory = chipItem.chipInventory;
+        Color color = SuperTool.CreateColor(chipInventory.config.color);
         chipItem.chipInventory.boardInstance = this;
 
         for (int i = 0; i < itemsList.Count; ++i)
         {
             int v = chipInventory.model[i];
 
-            if (v > 0)
-            {
-                itemsList[i].gameObject.SetActive(true);
-
-                if (v == 2)
-                {
-                    positive.transform.position = itemsList[i].transform.position;
-                }
-                else if (v == 3)
-                {
-                    negative.transform.position = itemsList[i].transform.position;
-                }
-            }
-            else
-            {
-                itemsList[i].gameObject.SetActive(false);
-            }
+            itemsList[i].Set(v, color);
         }
     }
 
@@ -52,4 +32,18 @@ public class ChipBoardInstance : MonoBehaviour {
 
     }
 
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.localPosition += new Vector3(eventData.delta.x, eventData.delta.y);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
+    }
 }

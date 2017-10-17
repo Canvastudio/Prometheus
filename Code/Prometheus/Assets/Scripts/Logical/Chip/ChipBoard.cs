@@ -46,6 +46,11 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
     string itemName = "CI";
     string instanceName = "BI";
 
+    [Space(5)]
+    public Sprite normalSpirte;
+    public Sprite positiveSprite;
+    public Sprite negativeSprite;
+
     /// <summary>
     /// 
     /// </summary>
@@ -245,10 +250,12 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
 
     private bool ChipSquarePutable(int r, int c)
     {
-        return chipSquareArray[r, c].state == ChipSquareState.Free && chipSquareArray[r, c].chipGrid != ChipGrid.None;
+        return chipSquareArray[r, c].state == ChipSquareState.Free 
+            && chipSquareArray[r, c].chipGrid != ChipGrid.None
+            && chipSquareArray[r, c].chipGrid != ChipGrid.Power;
     }
 
-    private bool MatrixPut(int r, int c, int rn, int cn, List<int> modelsList, ChipBoardInstance instance)
+    public bool MatrixPut(int r, int c, int rn, int cn, List<int> modelsList, ChipBoardInstance instance)
     {
         for (int i = 0; i < rn; ++i)
         {
