@@ -140,11 +140,12 @@ public class SuperConfig : SingleObject<SuperConfig>
 
     public System.Collections.IEnumerator LoadAsync(string[] names)
     {
-        isDone = false;
+        IsDone = false;
         foreach (string t in names)
         {
-            resDatas.Add(Resources.LoadAsync<TextAsset>(t));
-            resDatas.Add(Resources.LoadAsync<ConfigData>(t));
+            var rr = Resources.LoadAsync<TextAsset>(t);
+            if (rr.asset == null) rr = Resources.LoadAsync<ConfigData>(t);
+            resDatas.Add(rr);
         }
         SuperTimer.Instance.RegisterFrameFunction(CheckRes);
         yield return new WaitUntil(() => IsDone);
