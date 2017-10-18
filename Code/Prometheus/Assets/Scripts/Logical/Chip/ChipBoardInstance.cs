@@ -4,18 +4,21 @@ using UnityEngine.EventSystems;
 
 public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHandler{
 
-    public ChipGrid chipGrid;
+    public uint uid;
 
+    public ChipGrid chipGrid;
     public ChipInventory chipInventory;
+    public ChipSquare powerSquare;
 
     [SerializeField]
     List<BoardInstanceNode> itemsList;
 
     public Vector3 lastLocalPos;
-
     private Vector3 temp_localpos;
-
     private Vector2 offset;
+
+    public int positiveIndex = int.MinValue;
+    public int negativeIndex = int.MinValue;
 
     /// <summary>
     /// 9宫格中心所在的行列索引
@@ -26,6 +29,7 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
 
     public void Init(ChipListItem chipItem)
     {
+        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnCheckPower);
         chipInventory = chipItem.chipInventory;
         Color color = SuperTool.CreateColor(chipInventory.config.color);
         chipItem.chipInventory.boardInstance = this;
@@ -35,7 +39,19 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
             int v = chipInventory.model[i];
 
             itemsList[i].Set(v, color);
+
+            if (v == 2)
+            {
+                positiveIndex = i;
+            }
+
+            else if (v == 3) negativeIndex = i;
         }
+    }
+
+    private void OnCheckPower()
+    {
+        powerSquare = null;
     }
 
     public void PutBack()
@@ -79,5 +95,28 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
         {
             PutBack();
         }
+    }
+
+    public void OnDisable()
+    {
+        Messenger.RemoveListener(ChipBoardEvent.CheckPowerState, OnCheckPower);
+    }
+
+    public void GetNegativeRC(out int r, out int c)
+    {
+        int positive_index = -1;
+
+        for (int i = 0; i < 9; ++i)
+        {
+            int v = chipInventory.model[i];
+
+            if (v ==3)
+            {
+                positive_index = i;
+            }
+        }
+
+        r = (int)row_col.x - 1 + positive_index / 3;
+        c = (int)row_col.y - 1 + positive_index % 3;
     }
 }

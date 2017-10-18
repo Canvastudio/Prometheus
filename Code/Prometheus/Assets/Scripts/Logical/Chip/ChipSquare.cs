@@ -7,7 +7,7 @@ public enum ChipSquareState
 {
     Free,
     Use,
-    Passitive,
+    Positive,
     Negative,
 }
 
@@ -16,13 +16,40 @@ public class ChipSquare : MonoBehaviour {
     [SerializeField]
     Image image;
 
-    public int power = 1;
+    [SerializeField]
+    private int _power;
+    public int power
+    {
+        get
+        {
+            if (_chipGrid == ChipGrid.Power)
+            {
+                return _power;
+            }
+            else
+            {
+                return boardInstance.powerSquare.leftPower;
+            }
+        }
+        set
+        {
+            _power = value;
+        }
+    }
 
+    public int leftPower = int.MinValue;
+    public int assigned_power = int.MinValue;
+
+    [SerializeField]
     private ChipGrid _chipGrid = ChipGrid.None;
 
     public ChipBoardInstance boardInstance;
     public int index;
+    [SerializeField]
     private ChipSquareState _state = ChipSquareState.Free;
+
+    public int row;
+    public int col;
 
     public static string[] chipSquareSpriteName = new string[]
     {
@@ -43,10 +70,6 @@ public class ChipSquare : MonoBehaviour {
 
         set
         {
-            if (value == ChipGrid.None)
-            {
-                image.color = Color.red;
-            }
 
             _chipGrid = value;
         }
@@ -65,7 +88,7 @@ public class ChipSquare : MonoBehaviour {
             {
                 image.color = Color.red;
             }
-            else
+            else 
             {
                 image.color = Color.white;
             }

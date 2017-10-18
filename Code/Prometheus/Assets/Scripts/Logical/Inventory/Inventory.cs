@@ -62,7 +62,7 @@ public class StuffInventory
     public int count;
 }
 
-[SerializeField]
+[System.Serializable]
 public class ChipInventory
 {
     public ChipConfig config;
@@ -86,7 +86,8 @@ public class ChipInventory
         power_min = power_range[0];
         power_max = power_range[1];
 
-        power = Random.Range(power_min, power_max);
+        //power = Random.Range(power_min, power_max);
+        power = power_min;
 
         int model_count = config.model.Count();
 
