@@ -37,6 +37,10 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
     CanvasGroup canvasGroup;
     [SerializeField]
     Button closeBtn;
+    [SerializeField]
+    float itemWidth = 60f;
+
+    public Camera camera;
 
     private ChipDiskConfig config;
 
@@ -165,14 +169,71 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                 }
                 else
                 {
-                    instance.transform.localPosition = chipSquareArray[r + 1 - (1 - mr), c + 1 - (1 - mc)].transform.localPosition;
+                    int mr9 = r + 1 - (1 - mr);
+                    int mc9 = c + 1 - (1 - mc);
+
+                    instance.transform.localPosition = chipSquareArray[mr9, mc9].transform.localPosition;
+                    instance.row_col = new Vector2(mr9, mc9);
                     instance.lastLocalPos = instance.transform.localPosition;
+
                     return true;
                 }
             }
         }
 
         return false;
+    }
+
+  
+    private bool ChipSquarePutable(int r, int c)
+    {
+        //保证目标sqaure的索引在正确的范围
+        if (r < 0 || r >= rowNum || c < 0 || c >= colNum) return false;
+
+        bool putable = chipSquareArray[r, c].state == ChipSquareState.Free
+            && chipSquareArray[r, c].chipGrid != ChipGrid.None
+            && chipSquareArray[r, c].chipGrid != ChipGrid.Power;
+        
+        if (putable == false)
+        {
+            Debug.Log("1");
+        }
+
+        return putable;
+    }
+
+    /// <summary>
+    /// 拖动结束的时候帮助判断
+    /// </summary>
+    /// <param name="instance"></param>
+    /// <returns></returns>
+    public bool MatrixDragPut(ChipBoardInstance instance)
+    {
+        Vector2 first_localpos = instance.transform.localPosition + new Vector3(-itemWidth, itemWidth, 0);
+
+        int r, c;
+        ConvertVector2ToNodeRC(first_localpos, out r, out c);
+
+        if(MatrixPut(r, c, 3, 3, new List<int>(instance.chipInventory.model), instance))
+        {
+            instance.transform.localPosition = chipSquareArray[r + 1, c + 1].transform.localPosition;
+            instance.lastLocalPos = instance.transform.localPosition;
+            instance.row_col = new Vector2(r + 1, c + 1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void ConvertVector2ToNodeRC(Vector2 vec2, out int r, out int c)
+    {
+        float topBound = rowNum / 2f * itemWidth;
+        float rightBound = colNum / 2f * -itemWidth;
+
+        r = Mathf.FloorToInt((topBound - vec2.y) / itemWidth);
+        c = Mathf.FloorToInt((vec2.x - rightBound) / itemWidth);
     }
 
     private List<int> RemoveRedundant(int[] models, out int rn, out int cn, out int mr, out int mc)
@@ -248,15 +309,33 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
         return modelsList;
     }
 
-    private bool ChipSquarePutable(int r, int c)
-    {
-        return chipSquareArray[r, c].state == ChipSquareState.Free 
-            && chipSquareArray[r, c].chipGrid != ChipGrid.None
-            && chipSquareArray[r, c].chipGrid != ChipGrid.Power;
-    }
-
     public bool MatrixPut(int r, int c, int rn, int cn, List<int> modelsList, ChipBoardInstance instance)
     {
+        if (instance.hasPut)
+        {
+            var m = instance.chipInventory.model;
+
+            var r1 = (int)instance.row_col.x;
+            var c1 = (int)instance.row_col.y;
+
+            int i = 0;
+
+            for (int q = -1; q <= 1; ++q)
+            {
+                for (int p = -1; p <= 1; ++p)
+                {
+                    if (m[i] > 0)
+                    {
+                        chipSquareArray[r1 + q, c1 + p].state = ChipSquareState.Free;
+                    }
+
+                    ++i;
+                }
+            }
+        }
+
+        bool b = true;
+
         for (int i = 0; i < rn; ++i)
         {
             for (int m = 0; m < cn; ++m)
@@ -265,7 +344,7 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                 {
                     if (!ChipSquarePutable(r + i, c + m))
                     {
-                        return false;
+                        b = false;
                     }
 
                     if (m > 0 && i < rn -1)
@@ -274,7 +353,7 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                         {
                             if (!ChipSquarePutable(r+i, c+m -1) && !ChipSquarePutable(r + i + 1, c + m))
                             {
-                                return false;
+                                b = false;
                             }
                         }
 
@@ -286,13 +365,53 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                         {
                             if (!ChipSquarePutable(r + i + 1, c + m) && !ChipSquarePutable(r + i, c + m + 1))
                             {
-                                return false;
+                                b = false;
                             }
                         }
                     }
                 }
             }
         }
+
+        if (instance.hasPut && !b)
+        {
+            var m = instance.chipInventory.model;
+
+            var r1 = (int)instance.row_col.x;
+            var c1 = (int)instance.row_col.y;
+
+            int i = 0;
+
+            for (int q = -1; q <= 1; ++q)
+            {
+                for (int p = -1; p <= 1; ++p)
+                {
+                    if (m[i] > 0)
+                    {
+                        int v = m[i];
+                        ChipSquare chipSquare = chipSquareArray[r1 + q, c1 + p];
+                        if (v == 1)
+                        {
+                            chipSquare.state = ChipSquareState.Use;
+                        }
+                        else if (v == 2)
+                        {
+                            chipSquare.state = ChipSquareState.Passitive;
+                        }
+                        else
+                        {
+                            chipSquare.state = ChipSquareState.Negative;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (b == false)
+        {
+            return false;
+        }
+
 
         for (int i = 0; i < rn; ++i)
         {
@@ -321,6 +440,8 @@ public class ChipBoard : SingleGameObject<ChipBoard> {
                 }
             }
         }
+
+        instance.hasPut = true;
 
         return true;
     }

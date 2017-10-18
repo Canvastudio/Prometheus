@@ -65,6 +65,10 @@ public class ChipSquare : MonoBehaviour {
             {
                 image.color = Color.red;
             }
+            else
+            {
+                image.color = Color.white;
+            }
 
             _state = value;
         }

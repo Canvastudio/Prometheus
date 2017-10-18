@@ -137,7 +137,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 102083440}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -596.625, z: 0}
+  m_LocalPosition: {x: 0, y: -596.2916, z: 0}
   m_LocalScale: {x: 1.0000086, y: 1.0000086, z: 1.0000086}
   m_Children:
   - {fileID: 1660077076}
@@ -218,7 +218,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 107472826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -662, z: 0}
+  m_LocalPosition: {x: 0, y: -661.6666, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1647154002}
@@ -389,7 +389,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 521662978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 596.62506, z: 0}
+  m_LocalPosition: {x: 0, y: 596.2917, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1495498496}
@@ -1018,7 +1018,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 839511602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -325, y: 642, z: 0}
+  m_LocalPosition: {x: -325, y: 641.6666, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2042427136}
@@ -1384,7 +1384,7 @@ RectTransform:
   m_GameObject: {fileID: 1409930617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.0074962517, y: 0.0074962517, z: 0.0074962517}
+  m_LocalScale: {x: 0.0075000003, y: 0.0075000003, z: 0.0075000003}
   m_Children:
   - {fileID: 496746718}
   - {fileID: 1533297349}
@@ -1425,6 +1425,8 @@ MonoBehaviour:
     type: 2}
   canvasGroup: {fileID: 1409930623}
   closeBtn: {fileID: 839511604}
+  itemWidth: 60
+  camera: {fileID: 2105311307}
   normalSpirte: {fileID: 21300000, guid: 17a70ef816075465ca7b89198a8ac5ba, type: 3}
   positiveSprite: {fileID: 21300000, guid: f6fbb2cbd12de4b0d982f3c014358902, type: 3}
   negativeSprite: {fileID: 21300000, guid: cdeef5d3e8dee434883d62232f90bede, type: 3}
@@ -1598,7 +1600,7 @@ RectTransform:
   m_GameObject: {fileID: 1495498492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.0074962517, y: 0.0074962517, z: 0.0074962517}
+  m_LocalScale: {x: 0.0075000003, y: 0.0075000003, z: 0.0075000003}
   m_Children:
   - {fileID: 1687157433}
   - {fileID: 521662979}

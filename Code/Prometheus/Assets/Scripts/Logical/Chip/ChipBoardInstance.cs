@@ -13,6 +13,17 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
 
     public Vector3 lastLocalPos;
 
+    private Vector3 temp_localpos;
+
+    private Vector2 offset;
+
+    /// <summary>
+    /// 9宫格中心所在的行列索引
+    /// </summary>
+    public Vector2 row_col;
+
+    public bool hasPut = false;
+
     public void Init(ChipListItem chipItem)
     {
         chipInventory = chipItem.chipInventory;
@@ -27,6 +38,11 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
         }
     }
 
+    public void PutBack()
+    {
+        transform.localPosition = temp_localpos;
+    }
+
     private void OnLongPress()
     {
 
@@ -34,16 +50,34 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.localPosition += new Vector3(eventData.delta.x, eventData.delta.y);
+        Vector2 local_pos;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            transform.parent.Rt(),
+            eventData.position,
+            ChipBoard.Instance.camera,
+            out local_pos);
+
+        transform.localPosition = local_pos - offset;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            transform.Rt(),
+            eventData.position,
+            ChipBoard.Instance.camera,
+            out offset);
 
+        temp_localpos = transform.localPosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-
+        //尝试放在拖动位置
+        if (!ChipBoard.Instance.MatrixDragPut(this))
+        {
+            PutBack();
+        }
     }
 }
