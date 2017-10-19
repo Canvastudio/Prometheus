@@ -752,21 +752,11 @@ public class SuperTool
     public static Color CreateColor(string hex)
     {
         hex = ConverSpace(hex);
-        Color color = new Color();
-        Regex regex = new Regex(@"^..");
-        string str_r = regex.Match(hex).ToString();
-        color.r = Convert.ToInt32(str_r, 16) / 255f;
-        regex = new Regex(@"^....");
-        string temp = regex.Match(hex).ToString();
-        string str_g = Regex.Replace(temp, @"^..", "");
-        color.g = Convert.ToInt32(str_g, 16) / 255f;
-        regex = new Regex(@"....$");
-        temp = regex.Match(hex).ToString();
-        string str_b = Regex.Replace(temp, @"..$", "");
-        color.b = Convert.ToInt32(str_b, 16) / 255f;
-        regex = new Regex(@"..$");
-        string str_a = regex.Match(hex).ToString();
-        color.a = Convert.ToInt32(str_a, 16) / 255f;
+        float r = (float)Convert.ToInt32(hex.Substring(0, 2), 16) / 255;
+        float g = (float)Convert.ToInt32(hex.Substring(2, 2), 16) / 255;
+        float b = (float)Convert.ToInt32(hex.Substring(4, 2), 16) / 255;
+        float a = (float)Convert.ToInt32(hex.Substring(6, 2), 16) / 255;
+        Color color = new Color(r, g, b, a);
         return color;
     }
 
