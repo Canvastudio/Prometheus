@@ -18,7 +18,7 @@ MonoBehaviour:
   - string
   - string
   - PassiveType
-  - string
+  - SkillArg
   splitMaks:
   - 
   - 
@@ -32,443 +32,443 @@ MonoBehaviour:
   - describe
   - prefab
   - passiveType
-  - args
+  - passiveSkillArgs
   datas:
   - 3000001
   - "\u5148\u53D1\u5236\u4EBA"
   - "\u5BF9\u521A\u521A\u7FFB\u5F00\u7684\u654C\u4EBA\uFF0C\u653B\u51FB\u901F\u5EA6\u63D0\u9AD830%"
-  - Skill_Passive_0001
+  - Skill_Passive_0000
   - Just
-  - '"1103806595085,1103806595072,1103806595085,2203318222861,1103806595075"'
+  - 201
   - 3000002
   - "\u53CD\u5E94\u88C5\u7532"
   - "\u4E00\u5B9A\u51E0\u7387\u514D\u75AB\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0002
+  - Skill_Passive_0000
   - Halo
-  - 4000009_0_false
+  - 202
   - 3000003
   - "\u7EB3\u7C73\u6D82\u5C42"
   - "\u53D7\u5230\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E"
-  - Skill_Passive_0003
+  - Skill_Passive_0000
   - Halo
-  - 4000010_0_false
+  - 203
   - 3000004
   - "\u51B2\u950B"
   - "\u6BCF\u8D701\u683C\uFF0C\u8FD1\u6218\u4F24\u5BB3\u589E\u52A05%\u3002\u5728\u653B\u51FB\u540E\uFF08\u8FD1\u6218&\u8FDC\u7A0B\uFF09\u6548\u679C\u91CD\u7F6E"
-  - Skill_Passive_0004
+  - Skill_Passive_0000
   - Assault
-  - 0.05_DamageTypeMelee
+  - 204
   - 3000005
   - "\u5B9E\u5F39\u589E\u5F3A"
   - "\u6BCF1\u56DE\u5408\uFF0C\u5B9E\u5F39\u4F24\u5BB3\u589E\u52A02%\uFF0C\u76F4\u5230\u4F7F\u7528\u5B9E\u5F39\u7CFB\u6280\u80FD"
-  - Skill_Passive_0005
+  - Skill_Passive_0000
   - DamageBoost
-  - 0.02_5_DamageTypeCartridge
+  - 205
   - 3000006
   - "\u5149\u7EBF\u589E\u5F3A"
   - "\u6BCF1\u56DE\u5408\uFF0C\u5B9E\u5F39\u4F24\u5BB3\u589E\u52A02%\uFF0C\u76F4\u5230\u4F7F\u7528\u5149\u7EBF\u7CFB\u6280\u80FD"
-  - Skill_Passive_0006
+  - Skill_Passive_0000
   - DamageBoost
-  - 0.02_5_DamageTypeLaser
+  - 206
   - 3000007
   - "\u65A9\u6740"
   - "\u5BF9\u751F\u547D\u503C20%\u4EE5\u4E0B\u7684\u654C\u4EBA\u8FD1\u6218\u653B\u51FB\uFF0C\u9020\u6210\u4F24\u5BB3\u989D\u5916\u589E\u52A050%"
-  - Skill_Passive_0007
+  - Skill_Passive_0000
   - Halo
-  - 4000011_0_false
+  - 207
   - 3000008
   - "\u5F3A\u51FB\u5149\u7EBF"
   - "\u5BF9\u751F\u547D\u503C80%\u4EE5\u4E0A\u7684\u76EE\u6807\u4F7F\u7528\u5149\u7EBF\u653B\u51FB\uFF0C\u9020\u6210\u4F24\u5BB3\u589E\u52A025%"
-  - Skill_Passive_0008
+  - Skill_Passive_0000
   - Halo
-  - 4000012_0_false
+  - 208
   - 3000009
   - "\u71C3\u6599\u5F15\u7206"
   - "\u5B9E\u5F39\u653B\u51FB\uFF0C\u5BF9\u8DDD\u79BB2\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u7684\u4F24\u5BB3\u589E\u52A025%"
-  - Skill_Passive_0009
+  - Skill_Passive_0000
   - Halo
-  - 4000013_0_false
+  - 209
   - 3000010
   - "\u673A\u68B0\u5DE5\u7A0B"
   - "\u6BCF\u6740\u6B7B\u4E00\u4E2A\u673A\u68B0\u5355\u4F4D\uFF0C\u5149\u7EBF\u7CFB\u4F24\u5BB3\u589E\u52A010%\uFF0C\u4F7F\u7528\u5149\u7EBF\u7CFB\u653B\u51FB\u540E\u91CD\u7F6E"
-  - Skill_Passive_0010
+  - Skill_Passive_0000
   - Massacre
-  - 0.1_2_MonsterTypeIron_DamageTypeLaser
+  - 210
   - 3000011
   - "\u751F\u547D\u5DE5\u7A0B"
   - "\u6BCF\u6740\u6B7B\u4E00\u4E2A\u751F\u547D\u5355\u4F4D\uFF0C\u5B9E\u5F39\u7CFB\u4F24\u5BB3\u589E\u52A010%\uFF0C\u4F7F\u7528\u5B9E\u5F39\u7CFB\u653B\u51FB\u540E\u91CD\u7F6E"
-  - Skill_Passive_0011
+  - Skill_Passive_0000
   - Massacre
-  - 0.1_2_MonsterTypeOrganisms_DamageTypeCartridge
+  - 211
   - 3000012
   - "\u70ED\u529B\u8FFD\u8E2A"
   - "\u573A\u4E0A\u6BCF\u67091\u4E2A\u654C\u4EBA\uFF0C\u5B9E\u5F39\u7CFB\u4F24\u5BB3\u589E\u52A010%"
-  - Skill_Passive_0012
+  - Skill_Passive_0000
   - Property
-  - '"1103806595095,1103806595072,1103806595095,2199023255553,2203318222849,1103806595110,1103806595075,1103806595073,1103806595075"'
+  - 212
   - 3000013
   - "\u6CA1\u6709\u96FE\u973E"
   - "\u573A\u4E0A\u6BCF\u6709\u4E00\u4E2A\u7FFB\u5F00\u7684\u683C\u5B50\uFF0C\u5149\u7EBF\u4F24\u5BB3\u589E\u52A02%"
-  - Skill_Passive_0013
+  - Skill_Passive_0000
   - Property
-  - '"1103806595098,1103806595072,1103806595098,2199023255553,2207613190146,1103806595113,1103806595075,1103806595073,1103806595075"'
+  - 213
   - 3000014
   - "\u7EB3\u7C73\u4FEE\u590D"
   - "\u6BCF1\u56DE\u5408\uFF0C\u6062\u590D\u751F\u547D\u503C0.5%"
-  - Skill_Passive_0014
+  - Skill_Passive_0000
   - Halo
-  - 4000014_0_false
+  - 214
   - 3000015
   - "\u7075\u9B42\u4FEE\u590D"
   - "\u8FD1\u6218\u653B\u51FB\u6BCF\u6D88\u706D\u4E00\u4E2A\u751F\u547D\u7CFB\u654C\u4EBA\uFF0C\u6062\u590D\u751F\u547D\u503C2%"
-  - Skill_Passive_0015
+  - Skill_Passive_0000
   - SoulRepair
-  - 0.02
+  - 215
   - 3000016
   - "\u6655\u7729\u653B\u51FB"
   - "\u8FD1\u6218\u653B\u51FB\u4E00\u5B9A\u6982\u7387\u4F7F\u654C\u4EBA\u660F\u8FF72\u56DE\u5408"
-  - Skill_Passive_0016
+  - Skill_Passive_0000
   - Bang
-  - 0.05_2_DamageTypeMelee
+  - 216
   - 3000017
   - "\u81F4\u547D\u653B\u51FB"
   - "\u8FD1\u6218\u653B\u51FB\u4E00\u5B9A\u6982\u7387\u9020\u62102\u500D\u4F24\u5BB3"
-  - Skill_Passive_0017
+  - Skill_Passive_0000
   - Halo
-  - 4000015_0_false
+  - 217
   - 3000018
   - "\u6D6E\u6E38A1\u578B"
   - "\u53EC\u55241\u53F0\u6D6E\u6E38A1\u578B"
-  - Skill_Passive_0018
+  - Skill_Passive_0000
   - Summon
-  - 1
+  - 218
   - 3000019
   - "\u6D6E\u6E38A2\u578B"
   - "\u53EC\u55241\u53F0\u6D6E\u6E38A2\u578B"
-  - Skill_Passive_0019
+  - Skill_Passive_0000
   - Summon
-  - 1
+  - 219
   - 3000020
   - "\u6D6E\u6E38B1\u578B"
   - "\u53EC\u55241\u53F0\u6D6E\u6E38B1\u578B"
-  - Skill_Passive_0020
+  - Skill_Passive_0000
   - Summon
-  - 11000060
+  - 220
   - 3000021
   - "\u6D6E\u6E38B2\u578B"
   - "\u53EC\u55241\u53F0\u6D6E\u6E38B2\u578B"
-  - Skill_Passive_0021
+  - Skill_Passive_0000
   - Summon
-  - 1
+  - 221
   - 3100001
   - "\u6307\u5411\u514D\u75AB"
   - "\u4E0D\u80FD\u9009\u62E9\u8BE5\u654C\u4EBA\u4F5C\u4E3A\u6280\u80FD\u76EE\u6807"
-  - Skill_Passive_0022
+  - Skill_Passive_0000
   - Halo
-  - 4100001_0_false
+  - 222
   - 3100002
   - "\u653B\u51FB\u589E\u5F3A"
   - "\u589E\u52A0\u9644\u52A0\u602A\u7269\u7684\u653B\u51FB\u529B"
-  - Skill_Passive_0023
+  - Skill_Passive_0000
   - Halo
-  - 4100002_4_false
+  - 223
   - 3100003
   - "\u5149\u8010\u6027"
   - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E30%"
-  - Skill_Passive_0024
+  - Skill_Passive_0000
   - Halo
-  - 4100003_0_false
+  - 224
   - 3100004
   - "\u5149\u8010\u6027"
   - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u964D\u4F4E50%"
-  - Skill_Passive_0024
+  - Skill_Passive_0000
   - Halo
-  - 4100004_0_false
+  - 225
   - 3100005
   - "\u5149\u504F\u8F6C"
   - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u5C06\u968F\u673A\u504F\u8F6C\u7ED9\u9644\u8FD1\u5176\u4ED6\u76EE\u6807"
-  - Skill_Passive_0025
+  - Skill_Passive_0000
   - Halo
-  - 4100005_0_false
+  - 226
   - 3100006
   - "\u5149\u504F\u8F6C"
   - "\u53D7\u5230\u7684\u5149\u7EBF\u4F24\u5BB3\u5C06\u968F\u673A\u504F\u8F6C\u7ED9\u5176\u4ED6\u76EE\u6807"
-  - Skill_Passive_0025
+  - Skill_Passive_0000
   - Halo
-  - 4100006_0_false
+  - 227
   - 3100007
   - "\u5B9E\u5F39\u8010\u6027"
   - "\u53D7\u5230\u7684\u5B9E\u5F39\u4F24\u5BB3\u964D\u4F4E30%"
-  - Skill_Passive_0026
+  - Skill_Passive_0000
   - Halo
-  - 4100007_0_false
+  - 228
   - 3100008
   - "\u5B9E\u5F39\u8010\u6027"
   - "\u53D7\u5230\u7684\u5B9E\u5F39\u4F24\u5BB3\u964D\u4F4E60%"
-  - Skill_Passive_0026
+  - Skill_Passive_0000
   - Halo
-  - 4100008_0_false
+  - 229
   - 3100009
   - "\u5B9E\u5F39\u514D\u4F24"
   - "\u514D\u75AB\u4E00\u5207\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0027
+  - Skill_Passive_0000
   - Halo
-  - 4100009_0_false
+  - 230
   - 3100010
   - "\u6700\u540E\u4E00\u4EBA"
   - "\u9664\u975E\u8BE5\u602A\u7269\u662F\u573A\u4E0A\u552F\u4E00\uFF0C\u5426\u5219\u514D\u75AB\u4E00\u5207\u4F24\u5BB3"
-  - Skill_Passive_0028
+  - Skill_Passive_0000
   - Halo
-  - 4100014_0_false
+  - 231
   - 3100011
   - "\u751F\u547D\u5F3A\u5316"
   - "\u5468\u56F4\u7684\u602A\u7269\u751F\u547D\u503C\u589E\u52A030%"
-  - Skill_Passive_0029
+  - Skill_Passive_0000
   - Halo
-  - 4100015_4_false
+  - 232
   - 3100012
   - "\u5F31\u70B9\u653B\u51FB"
   - "\u5BF9\u751F\u547D\u503C\u9AD8\u4E8E70%\u7684\u76EE\u6807\uFF0C\u9020\u6210\u7684\u4F24\u5BB3\u63D0\u9AD850%"
-  - Skill_Passive_0030
+  - Skill_Passive_0000
   - Halo
-  - 4100021_0_false
+  - 233
   - 3100013
   - "\u5F31\u70B9\u653B\u51FB"
   - "\u5BF9\u751F\u547D\u503C\u9AD8\u4E8E70%\u7684\u76EE\u6807\uFF0C\u9020\u6210\u7684\u4F24\u5BB3\u63D0\u9AD870%"
-  - Skill_Passive_0030
+  - Skill_Passive_0000
   - Halo
-  - 4100022_0_false
+  - 234
   - 3100014
   - "\u6295\u5F39"
   - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8100%"
-  - Skill_Passive_0031
+  - Skill_Passive_0000
   - Halo
-  - 4100023_0_false
+  - 235
   - 3100015
   - "\u6295\u5F39"
   - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8150%"
-  - Skill_Passive_0031
+  - Skill_Passive_0000
   - Halo
-  - 4100024_0_false
+  - 236
   - 3100016
   - "\u6295\u5F39"
   - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8200%"
-  - Skill_Passive_0031
+  - Skill_Passive_0000
   - Halo
-  - 4100025_0_false
+  - 237
   - 3100017
   - "\u6295\u5F39"
   - "\u5BF9\u8303\u56F42\u4EE5\u5185\u7684\u76EE\u6807\u9020\u6210\u4F24\u5BB3\u63D0\u9AD8250%"
-  - Skill_Passive_0031
+  - Skill_Passive_0000
   - Halo
-  - 4100026_0_false
+  - 238
   - 3100018
   - "\u683C\u6597\u5BB6"
   - "\u8FD1\u6218\u4F24\u5BB3\u63D0\u9AD8100%"
-  - Skill_Passive_0032
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595090,2199023255554,1103806595075"'
+  - 239
   - 3100019
   - "\u683C\u6597\u5BB6"
   - "\u8FD1\u6218\u4F24\u5BB3\u63D0\u9AD8150%"
-  - Skill_Passive_0032
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595090,2203318222873,1103806595075"'
+  - 240
   - 3100020
   - "\u683C\u6597\u5BB6"
   - "\u8FD1\u6218\u4F24\u5BB3\u63D0\u9AD8200%"
-  - Skill_Passive_0032
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595090,2199023255555,1103806595075"'
+  - 241
   - 3100021
   - "\u683C\u6597\u5BB6"
   - "\u8FD1\u6218\u4F24\u5BB3\u63D0\u9AD8250%"
-  - Skill_Passive_0032
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595090,2203318222883,1103806595075"'
+  - 242
   - 3100022
   - "\u80C6\u5C0F\u9B3C"
   - "\u573A\u4E0A\u6BCF\u6709\u4E00\u4E2A\u654C\u4EBA\u589E\u52A010%\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0033
+  - Skill_Passive_0000
   - Property
-  - '"1103806595095,1103806595072,1103806595095,2199023255553,2203318222849,1103806595110,1103806595075,1103806595073,1103806595075"'
+  - 243
   - 3100023
   - "\u80C6\u5C0F\u9B3C"
   - "\u573A\u4E0A\u6BCF\u6709\u4E00\u4E2A\u654C\u4EBA\u589E\u52A020%\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0033
+  - Skill_Passive_0000
   - Property
-  - '"1103806595095,1103806595072,1103806595095,2199023255553,2203318222850,1103806595110,1103806595075,1103806595073,1103806595075"'
+  - 244
   - 3100024
   - "\u80C6\u5C0F\u9B3C"
   - "\u573A\u4E0A\u6BCF\u6709\u4E00\u4E2A\u654C\u4EBA\u589E\u52A030%\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0033
+  - Skill_Passive_0000
   - Property
-  - '"1103806595095,1103806595072,1103806595095,2199023255553,2203318222851,1103806595110,1103806595075,1103806595073,1103806595075"'
+  - 245
   - 3100025
   - "\u80C6\u5C0F\u9B3C"
   - "\u573A\u4E0A\u6BCF\u6709\u4E00\u4E2A\u654C\u4EBA\u589E\u52A040%\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Passive_0033
+  - Skill_Passive_0000
   - Property
-  - '"1103806595095,1103806595072,1103806595095,2199023255553,2203318222852,1103806595110,1103806595075,1103806595073,1103806595075"'
+  - 246
   - 3100026
   - "\u6FC0\u5149\u53D1\u5C04\u5668"
   - "\u6BCF\u6709\u4E00\u4E2A\u7FFB\u5F00\u7684\u683C\u5B503%\u5149\u7EBF\u4F24\u5BB3"
-  - Skill_Passive_0034
+  - Skill_Passive_0000
   - Property
-  - '"1103806595098,1103806595072,1103806595098,2199023255553,2207613190147,1103806595113,1103806595075,1103806595073,1103806595075"'
+  - 247
   - 3100027
   - "\u6FC0\u5149\u53D1\u5C04\u5668"
   - "\u6BCF\u6709\u4E00\u4E2A\u7FFB\u5F00\u7684\u683C\u5B506%\u5149\u7EBF\u4F24\u5BB3"
-  - Skill_Passive_0034
+  - Skill_Passive_0000
   - Property
-  - '"1103806595098,1103806595072,1103806595098,2199023255553,2207613190150,1103806595113,1103806595075,1103806595073,1103806595075"'
+  - 248
   - 3100028
   - "\u6FC0\u5149\u53D1\u5C04\u5668"
   - "\u6BCF\u6709\u4E00\u4E2A\u7FFB\u5F00\u7684\u683C\u5B509%\u5149\u7EBF\u4F24\u5BB3"
-  - Skill_Passive_0034
+  - Skill_Passive_0000
   - Property
-  - '"1103806595098,1103806595072,1103806595098,2199023255553,2207613190153,1103806595113,1103806595075,1103806595073,1103806595075"'
+  - 249
   - 3100029
   - "\u6FC0\u5149\u53D1\u5C04\u5668"
   - "\u6BCF\u6709\u4E00\u4E2A\u7FFB\u5F00\u7684\u683C\u5B5015%\u5149\u7EBF\u4F24\u5BB3"
-  - Skill_Passive_0034
+  - Skill_Passive_0000
   - Property
-  - '"1103806595098,1103806595072,1103806595098,2199023255553,2207613190159,1103806595113,1103806595075,1103806595073,1103806595075"'
+  - 250
   - 3100030
   - "\u5E72\u6270\u53D1\u751F\u5668"
   - "\u7F34\u68B0\u73A9\u5BB6"
-  - Skill_Passive_0035
+  - Skill_Passive_0000
   - Halo
-  - 4000004_99_true
+  - 251
   - 3100031
   - "\u80BF\u7624\u589E\u751F"
   - "\u6BCF5\u56DE\u5408\u7ED9\u6240\u6709\u602A\u7269\u56DE\u8840"
-  - Skill_Passive_0036
+  - Skill_Passive_0000
   - Halo
-  - 4100031_99_false
+  - 252
   - 3100032
   - "\u80BF\u7624\u589E\u751F"
   - "\u6BCF4\u56DE\u5408\u7ED9\u6240\u6709\u602A\u7269\u56DE\u8840"
-  - Skill_Passive_0036
+  - Skill_Passive_0000
   - Halo
-  - 4100032_99_false
+  - 253
   - 3100033
   - "\u80BF\u7624\u589E\u751F"
   - "\u6BCF3\u56DE\u5408\u7ED9\u6240\u6709\u602A\u7269\u56DE\u8840"
-  - Skill_Passive_0036
+  - Skill_Passive_0000
   - Halo
-  - 4100033_99_false
+  - 254
   - 3100034
   - "\u80BF\u7624\u589E\u751F"
   - "\u6BCF2\u56DE\u5408\u7ED9\u6240\u6709\u602A\u7269\u56DE\u8840"
-  - Skill_Passive_0036
+  - Skill_Passive_0000
   - Halo
-  - 4100034_99_false
+  - 255
   - 3100035
   - "\u8FC7\u5EA6\u4EA2\u594B"
   - "\u6BCF1\u56DE\u5408\u964D\u4F4E10%\u653B\u51FB\u529B"
-  - Skill_Passive_0037
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595090,2199023255553,2203318222849,1103806595109,1103806595075,1103806595074,1103806595075|1103806595095,1103806595072,1103806595095,2199023255553,2203318222849,1103806595109,1103806595075,1103806595074,1103806595075|1103806595098,1103806595072,1103806595098,2199023255553,2203318222849,1103806595109,1103806595075,1103806595074,1103806595075"'
+  - 256
   - 3100036
   - "\u95EA\u907F\u5149\u73AF"
   - "\u5468\u56F4\u602A\u726910%\u6982\u7387\u514D\u75AB\u653B\u51FB"
-  - Skill_Passive_0038
+  - Skill_Passive_0000
   - Halo
-  - 4100035_99_false
+  - 257
   - 3100037
   - "\u95EA\u907F\u5149\u73AF"
   - "\u5468\u56F4\u602A\u726915%\u6982\u7387\u514D\u75AB\u653B\u51FB"
-  - Skill_Passive_0038
+  - Skill_Passive_0000
   - Halo
-  - 4100036_99_false
+  - 258
   - 3100038
   - "\u95EA\u907F\u5149\u73AF"
   - "\u5468\u56F4\u602A\u726920%\u6982\u7387\u514D\u75AB\u653B\u51FB"
-  - Skill_Passive_0038
+  - Skill_Passive_0000
   - Halo
-  - 4100037_99_false
+  - 259
   - 3100039
   - "\u95EA\u907F\u5149\u73AF"
   - "\u5468\u56F4\u602A\u726925%\u6982\u7387\u514D\u75AB\u653B\u51FB"
-  - Skill_Passive_0038
+  - Skill_Passive_0000
   - Halo
-  - 4100038_99_false
+  - 260
   - 3100040
   - "\u6076\u5FC3\u5149\u73AF"
   - "\u9644\u8FD1\u7684\u654C\u5BF9\u76EE\u6807\uFF0C\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
-  - Skill_Passive_0039
+  - Skill_Passive_0000
   - Halo
-  - 4100039_3_true
+  - 261
   - 3100041
   - "\u6076\u5FC3\u5149\u73AF"
   - "\u9644\u8FD1\u7684\u654C\u5BF9\u76EE\u6807\uFF0C\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
-  - Skill_Passive_0039
+  - Skill_Passive_0000
   - Halo
-  - 4100040_3_true
+  - 262
   - 3100042
   - "\u6076\u5FC3\u5149\u73AF"
   - "\u9644\u8FD1\u7684\u654C\u5BF9\u76EE\u6807\uFF0C\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
-  - Skill_Passive_0039
+  - Skill_Passive_0000
   - Halo
-  - 4100041_4_true
+  - 263
   - 3100043
   - "\u6076\u5FC3\u5149\u73AF"
   - "\u9644\u8FD1\u7684\u654C\u5BF9\u76EE\u6807\uFF0C\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
-  - Skill_Passive_0039
+  - Skill_Passive_0000
   - Halo
-  - 4100042_5_true
+  - 264
   - 3100044
   - "\u94C1\u6876"
   - "\u653B\u51FB\u529B\u7B49\u4E8E\u751F\u547D\u503C"
-  - Skill_Passive_0040
+  - Skill_Passive_0000
   - Property
-  - '"1103806595090,1103806595072,1103806595080|1103806595095,1103806595072,1103806595080|1103806595098,1103806595072,1103806595080"'
+  - 265
   - 3100045
   - "\u590D\u4EC7"
   - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768420%"
-  - Skill_Passive_0041
+  - Skill_Passive_0000
   - Halo
-  - 4100048_0_false
+  - 266
   - 3100046
   - "\u590D\u4EC7"
   - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768430%"
-  - Skill_Passive_0041
+  - Skill_Passive_0000
   - Halo
-  - 4100049_0_false
+  - 267
   - 3100047
   - "\u590D\u4EC7"
   - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768440%"
-  - Skill_Passive_0041
+  - Skill_Passive_0000
   - Halo
-  - 4100050_0_false
+  - 268
   - 3100048
   - "\u590D\u4EC7"
   - "\u53CD\u5F39\u53D7\u5230\u4F24\u5BB3\u768450%"
-  - Skill_Passive_0041
+  - Skill_Passive_0000
   - Halo
-  - 4100051_0_false
+  - 269
   - 3100049
   - "\u6597\u58EB"
   - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A010%"
-  - Skill_Passive_0042
+  - Skill_Passive_0000
   - Halo
-  - 4100052_0_false
+  - 270
   - 3100050
   - "\u6597\u58EB"
   - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A015%"
-  - Skill_Passive_0042
+  - Skill_Passive_0000
   - Halo
-  - 4100053_0_false
+  - 271
   - 3100051
   - "\u6597\u58EB"
   - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A020%"
-  - Skill_Passive_0042
+  - Skill_Passive_0000
   - Halo
-  - 4100054_0_false
+  - 272
   - 3100052
   - "\u6597\u58EB"
   - "\u6BCF\u6B21\u53D7\u5230\u4F24\u5BB3\uFF0C\u653B\u51FB\u589E\u52A025%"
-  - Skill_Passive_0042
+  - Skill_Passive_0000
   - Halo
-  - 4100055_0_false
+  - 273

@@ -24,11 +24,13 @@ MonoBehaviour:
   - string
   - string
   - int
+  - DamageType
   - string
   - float
-  - string
-  - string
-  - string
+  - SpecialEffect
+  - short
+  - SkillArg
+  - StuffCostArg
   - float
   - float
   - float
@@ -44,11 +46,13 @@ MonoBehaviour:
   - '|'
   - '|'
   - ~
-  - ':'
+  - 
+  - 
   - ;
-  - ';:'
   - ;
-  - '|:'
+  - ;
+  - ;
+  - 
   - 
   - 
   - 
@@ -64,10 +68,12 @@ MonoBehaviour:
   - effect_fly
   - effect_hit
   - carry
+  - damageType
   - damage
   - successRate
-  - specialEffect
-  - specialEffectArgs
+  - specialEffects
+  - phase
+  - activeSkillArgs
   - stuffCost
   - costTime
   - usePower
@@ -76,7 +82,7 @@ MonoBehaviour:
   - 1000001
   - "\u5357\u74DC"
   - "\u5BF9\u76EE\u6807\u9020\u62101~3\u500D\u5149\u7EBF\u4F24\u5BB3\u3002\u81EA\u5DF1\u751F\u547D\u503C\u8D8A\u4F4E\uFF0C\u4F24\u5BB3\u8D8A\u9AD8"
-  - Skill_Main_0001
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -84,18 +90,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~4
-  - '"Laser:1103806595081,1103806595080,1103806595074,2199023255554,1103806595075,1103806595081,1103806595076,2199023255553,1103806595073,1103806595098,1103806595075"'
+  - Laser
+  - '"1103806595081,1103806595080,1103806595074,2199023255554,1103806595075,1103806595081,1103806595076,2199023255553,1103806595073,1103806595098,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 0.8
   - 5
   - 5
   - 1000002
   - "\u69B4\u5F39"
   - "\u5BF9\u76EE\u6807\u9020\u62101~2\u500D\u5B9E\u5F39\u4F24\u5BB3\u3002\u8DDD\u79BB\u8D8A\u8FDC\uFF0C\u4F24\u5BB3\u8D8A\u9AD8"
-  - Skill_Main_0002
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -103,18 +111,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~5
-  - '"Cartridge:1103806595107,2199023255555,1103806595073,2199023255556,1103806595076,1103806595095,1103806595075"'
+  - Cartridge
+  - '"1103806595107,2199023255555,1103806595073,2199023255556,1103806595076,1103806595095,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 0.8
   - 5
   - 5
   - 1000003
   - "\u8D2F\u901A\u5C04\u7EBF"
   - "\u5BF9\u4E00\u6761\u76F4\u7EBF\u4E0A\u7684\u76EE\u6807\u9020\u6210110%\u5149\u7EBF\u7CFB\u4F24\u5BB3"
-  - Skill_Main_0003
+  - Skill_Main_0000
   - Direction
   - 
   - Line
@@ -122,18 +132,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
-  - '"Laser:1103806595098,2203318222859,1103806595075"'
+  - Laser
+  - '"1103806595098,2203318222859,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 1.5
   - 10
   - 5
   - 1000004
   - "\u5168\u5F39\u9F50\u53D1"
   - "\u5BF9\u968F\u673A3\u4E2A\u76EE\u6807\u9020\u621080%\u5B9E\u5F39\u7CFB\u4F24\u5BB3\uFF0C\u76EE\u6807\u53EF\u4EE5\u91CD\u590D\uFF0C\u6240\u4EE5\u76EE\u6807\u8D8A\u5C11\uFF0C\u4F24\u5BB3\u8D8A\u96C6\u4E2D"
-  - Skill_Main_0004
+  - Skill_Main_0000
   - DontSelectTarget
   - 
   - Random_2
@@ -141,18 +153,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
-  - '"Cartridge:1103806595095,2203318222856,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222856,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 1.5
   - 13
   - 5
   - 1000005
   - "\u6563\u5C04"
   - "\u5BF9\u968F\u673A5\u4E2A\u76EE\u6807\u9020\u6210100%\u5149\u7EBF\u7CFB\u4F24\u5BB3\uFF0C\u76EE\u6807\u4E0D\u91CD\u590D\u3002"
-  - Skill_Main_0005
+  - Skill_Main_0000
   - DontSelectTarget
   - 
   - Random
@@ -160,18 +174,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
-  - Laser:1103806595098
+  - Laser
+  - 1103806595098
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 1.7
   - 15
   - 5
   - 1000006
   - "\u6C7D\u6CB9\u5F39"
   - "\u5BF9\u76EE\u6807\u5468\u56F42\u683C\u5185\u7684\u6240\u6709\u654C\u4EBA\u9020\u6210130%\u5B9E\u5F39\u7CFB\u4F24\u5BB3\u3002"
-  - Skill_Main_0006
+  - Skill_Main_0000
   - Monster
   - 
   - Diffuse_2
@@ -179,18 +195,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~3
-  - '"Cartridge:1103806595095,2203318222861,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222861,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 1.2
   - 12
   - 5
   - 1000007
   - "\u70AB\u5149\u5C04\u7EBF"
   - "\u5BF9\u76EE\u6807\u9020\u621090%\u5149\u7EBF\u4F24\u5BB3\uFF0C\u5E76\u4F7F\u5176\u660F\u8FF71\u56DE\u5408"
-  - Skill_Main_0007
+  - Skill_Main_0000
   - Monster
   - 
   - Normal
@@ -198,18 +216,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 2~4
-  - '"Laser:1103806595098,2203318222857,1103806595075"'
+  - Laser
+  - '"1103806595098,2203318222857,1103806595075"'
   - 1;1;1;1
-  - b:AddState
-  - 4000001
-  - Coherer:1|Organics:1
+  - AddState
+  - 
+  - 101
+  - 1
   - 1.5
   - 7
   - 5
   - 1000008
   - "\u7CBE\u795E\u9519\u4E71"
   - "\u4EA4\u6362\u76EE\u6807\u7684\u751F\u547D\u503C\u4E0E\u653B\u51FB\u529B\u3002\u54C1\u8D28\u8D8A\u9AD8\u7684\u602A\uFF0C\u8D8A\u4E0D\u5BB9\u6613\u547D\u4E2D"
-  - Skill_Main_0008
+  - Skill_Main_0000
   - Monster
   - 
   - Normal
@@ -218,17 +238,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 1~4
   - 
+  - 
   - 1;1;0.7;0.5
-  - b:Property
-  - '"1103806595102,1103806595072,1103806595082|1103806595082,1103806595072,1103806595091|1103806595083,1103806595072,1103806595091|1103806595091,1103806595072,1103806595102"'
-  - Coherer:1|Organics:1
+  - Property
+  - 0
+  - 102
+  - 1
   - 0.5
   - 9999
   - 5
   - 1000009
   - "\u53D8\u5F62"
   - "\u5C06\u654C\u4EBA\u53D8\u6210\u4E00\u4E2A\u5C0F\u9E21\uFF0C\u5E76\u4E14\u751F\u547D\u503C\u4E0E\u4F24\u5BB3\u51CF\u534A\u3002\u53EA\u80FD\u5BF9\u751F\u7269\u7C7B\u4F7F\u7528\u3002\u54C1\u8D28\u8D8A\u9AD8\u7684\u602A\uFF0C\u8D8A\u4E0D\u5BB9\u6613\u547D\u4E2D"
-  - Skill_Main_0009
+  - Skill_Main_0000
   - Monster_organisms
   - Limit_iron
   - Normal
@@ -237,17 +259,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~4
   - 
+  - 
   - 1;1;0.7;0.5
-  - b:Transfiguration;Property
-  - "\"\u6682\u65F6\u6CA1\u6709;1103806595082,1103806595072,1103806595082,2199023255554,1103806595076|1103806595083,1103806595072,1103806595083,2199023255554,1103806595076|1103806595091,1103806595072,1103806595091,2199023255554,1103806595076\""
-  - Coherer:1|Organics:1
+  - Transfiguration;Property
+  - 0;0
+  - 103;104
+  - 1
   - 0.4
   - 9999
   - 5
   - 1000010
   - "\u5974\u5F79"
   - "\u5974\u5F79\u4E00\u4E2A\u673A\u68B0\u654C\u4EBA\uFF0C\u5B83\u4F1A\u7528\u81EA\u5DF1\u7684\u8FDC\u7A0B\u6B66\u5668\u5E2E\u5FD9\u653B\u51FB\u3002\u54C1\u8D28\u8D8A\u9AD8\u7684\u602A\uFF0C\u8D8A\u4E0D\u5BB9\u6613\u547D\u4E2D"
-  - Skill_Main_0010
+  - Skill_Main_0000
   - Monster_iron
   - Limit_organisms
   - Normal
@@ -256,17 +280,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~4
   - 
-  - 1;0.9;0.6;0.4
-  - b:Enslave
   - 
-  - Coherer:1|Organics:1
+  - 1;0.9;0.6;0.4
+  - Enslave
+  - 0
+  - 105
+  - 1
   - 0.4
   - 9999
   - 5
   - 1000011
   - "\u50AC\u7720"
   - "\u50AC\u7720\u4E00\u4E2A\u76EE\u680710\u56DE\u5408\uFF0C\u76EE\u6807\u53D7\u5230\u4EFB\u4F55\u4F24\u5BB3\u4F1A\u89E3\u9664\u50AC\u7720\u3002\u54C1\u8D28\u8D8A\u9AD8\u7684\u602A\uFF0C\u8D8A\u4E0D\u5BB9\u6613\u547D\u4E2D"
-  - Skill_Main_0011
+  - Skill_Main_0000
   - Monster
   - 
   - Normal
@@ -275,17 +301,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~3
   - 
+  - 
   - 1;1;1;0.7
-  - b:AddState
-  - 4000002
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 106
+  - 1
   - 6
   - 9999
   - 5
   - 1000012
   - "\u6C89\u9ED8"
   - "\u6C89\u9ED8\u4E00\u4E2A\u76EE\u680710\u56DE\u5408\uFF0C\u5728\u6B64\u65BD\u52A0\u5185\uFF0C\u76EE\u6807\u7684\u88AB\u52A8\u6280\u80FD\u5931\u6548\u3002\u54C1\u8D28\u8D8A\u9AD8\u7684\u602A\uFF0C\u8D8A\u4E0D\u5BB9\u6613\u547D\u4E2D"
-  - Skill_Main_0012
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -294,17 +322,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~4
   - 
+  - 
   - 1;1;1;0.6
-  - b:AddState
-  - 4000003
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 107
+  - 1
   - 0.3
   - 9999
   - 5
   - 1000013
   - "\u955C\u82B1\u6C34\u6708"
   - "\u7FA4\u4F53\u50AC\u7720"
-  - Skill_Main_0013
+  - Skill_Main_0000
   - DontSelectTarget
   - 
   - All
@@ -313,17 +343,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
   - 
+  - 
   - 1;1;0.9;0.7
-  - b:AddState
-  - 4000002
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 108
+  - 1
   - 1.5
   - 9999
   - 5
   - 1000014
   - "\u751F\u547D\u62BD\u53D6"
   - "\u5BF9\u573A\u4E0A\u6240\u6709\u751F\u547D\u7C7B\u602A\u7269\u9020\u621050%\u5149\u7EBF\u4F24\u5BB3\uFF0C\u9020\u6210\u4F24\u5BB3\u768450%\u6062\u590D\u81EA\u5DF1\u7684\u751F\u547D\u503C"
-  - Skill_Main_0014
+  - Skill_Main_0000
   - DontSelectTarget
   - Limit_iron
   - All
@@ -331,18 +363,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
-  - '"Laser:1103806595098,2203318222853,1103806595075"'
+  - Laser
+  - '"1103806595098,2203318222853,1103806595075"'
   - 1;1;1;1
-  - a:Property
-  - '"1103806595080,1103806595072,1103806595080,1103806595108,2203318222853,1103806595075,1103806595073"'
-  - Coherer:1|Organics:1
+  - Property
+  - 1
+  - 109
+  - 1
   - 2
   - 20
   - 5
   - 1000015
   - "\u4E2D\u5B50\u5F39"
   - "\u5BF9\u573A\u4E0A\u6240\u6709\u673A\u68B0\u654C\u4EBA\u9020\u621070%\u5B9E\u5F39\u4F24\u5BB3\uFF0C\u5E76\u4E14\u4F7F\u4ED6\u4EEC\u7F34\u68B0"
-  - Skill_Main_0015
+  - Skill_Main_0000
   - DontSelectTarget
   - Limit_organisms
   - All
@@ -350,18 +384,20 @@ MonoBehaviour:
   - 
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~30
-  - '"Cartridge:1103806595095,2203318222855,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222855,1103806595075"'
   - 1;1;0.9;0.7
-  - b:AddState
-  - 4000004
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 110
+  - 1
   - 1.8
   - 15
   - 5
   - 1000016
   - "\u5E72\u6270\u5F39"
   - "\u5BF9\u76EE\u6807\u9020\u6210150%\u5B9E\u5F39\u4F24\u5BB3\uFF0C50%\u6982\u7387\u4F7F\u76EE\u6807\u7F34\u68B0"
-  - Skill_Main_0016
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -369,18 +405,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~3
-  - '"Cartridge:1103806595095,2203318222863,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222863,1103806595075"'
   - 0.5;0.5;0.5;0.5
-  - b:AddState
-  - 4000004
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 111
+  - 1
   - 1
   - 7
   - 5
   - 1000017
   - "\u795E\u5A01"
   - "\u7FFB\u5F00\u4E00\u4E2A\u683C\u5B50\uFF0C\u4EE5\u53CA\u5B83\u56DB\u5468\u7684\u683C\u5B50\u3002\u5982\u679C\u7FFB\u5F00\u7684\u4F4D\u7F6E\uFF08\u4E0D\u542B\u5468\u56F4\uFF09\u6709\u602A\u7269\uFF0C\u76F4\u63A5\u6740\u6B7B\u8FD9\u4E2A\u602A\u7269\uFF0C\u5E76\u8FD4\u8FD8\u4E00\u534A\u7684\u6D88\u8017"
-  - Skill_Main_0017
+  - Skill_Main_0000
   - DarkBlock
   - 
   - Normal
@@ -389,17 +427,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~7
   - 
+  - 
   - 1;1;1;1
-  - b:OpenBlockWithNear;b:HalfCostReturn;b:Property
-  - '"1;HasMonster;1103806595082,1103806595072,2199023255552"'
-  - Coherer:1|Organics:1
+  - OpenBlockWithNear;HalfCostReturn;Property
+  - 0;0;0
+  - 112;113;114
+  - 1
   - 0.3
   - 9999
   - 5
   - 1000018
   - "\u65F6\u7A7A\u8F6C\u79FB"
   - "\u7FFB\u5F00\u4E00\u4E2A\u683C\u5B50\u5E76\u4F20\u9001\u5230\u6B64\uFF0C\u5982\u679C\u8BE5\u683C\u5B50\u975E\u7A7A\uFF0C\u4F1A\u4F20\u9001\u5931\u8D25"
-  - Skill_Main_0018
+  - Skill_Main_0000
   - DarkBlock
   - 
   - Normal
@@ -408,17 +448,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~7
   - 
+  - 
   - 1;1;1;1
-  - b:OpenBlockWithNear;b:TransferSelf
-  - 0;Empty
-  - Coherer:1|Organics:1
+  - OpenBlockWithNear;TransferSelf
+  - 0;0
+  - 115;116
+  - 1
   - 0.3
   - 9999
   - 5
   - 1000019
   - "\u6B7B\u4EA1\u6807\u8BB0"
   - "\"\u7FFB\u5F00\u4E00\u4E2A\u683C\u5B50\uFF0C\u4EE5\u53CA\u5B83\u56DB\u5468\u7684\u683C\u5B50\u3002\u88AB\u7FFB\u5F00\u7684\u4F4D\u7F6E\u5982\u679C\u6709\u654C\u4EBA\uFF0C\u5219\u5BF9\u4ED6\u4EEC\u91CA\u653E\u6B7B\u4EA1\u6807\u8BB0\u3002\u88AB\u6B7B\u4EA1\u6807\u8BB0\u7684\u654C\u4EBA\u6B7B\u4EA1\u540E\uFF0C\u4F1A\u968F\u673A\u6740\u6B7B\u4E00\u4E2A\u6CA1\u6709\u7FFB\u5F00\u7684\u654C\u4EBA\u3002\""
-  - Skill_Main_0019
+  - Skill_Main_0000
   - DarkBlock
   - 
   - Round_1
@@ -427,17 +469,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~4
   - 
+  - 
   - 1;1;1;1
-  - b:OpenBlockWithNear;b:AddState
-  - 1;4000005
-  - Coherer:1|Organics:1
+  - OpenBlockWithNear;AddState
+  - 0;0
+  - 117;118
+  - 1
   - 0.5
   - 9999
   - 5
   - 1000020
   - "\u866B\u6D1E"
   - "\u5C06\u4E00\u4E2A\u654C\u4EBA\u968F\u673A\u4F20\u9001\u4E00\u4E2A\u5DF2\u7ECF\u7FFB\u5F00\u7684\u4F4D\u7F6E\u4E0A"
-  - Skill_Main_0020
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -446,17 +490,19 @@ MonoBehaviour:
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~3
   - 
-  - 1;1;1;1
-  - b:TransferTarget
   - 
-  - Coherer:1|Organics:1
+  - 1;1;1;1
+  - TransferTarget
+  - 0
+  - 119
+  - 1
   - 0.5
   - 9999
   - 5
   - 1000021
   - "\u504F\u8F6C\u6D82\u5C42"
   - "\u63A5\u4E0B\u6765\u768410\u56DE\u5408\uFF0C\u53D7\u5230\u7684\u6240\u6709\u5149\u7EBF\u4F24\u5BB3\u4F1A\u8BEF\u5BFC\u7ED9\u5176\u4ED6\u654C\u4EBA\uFF0C\u4F46\u5982\u679C\u6CA1\u6709\u5B58\u5728\u7684\u654C\u4EBA\uFF0C\u504F\u8F6C\u4F1A\u5931\u8D25"
-  - Skill_Main_0021
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -466,16 +512,18 @@ MonoBehaviour:
   - 0~0
   - 
   - 
-  - b:AddState
-  - 4000006
-  - Coherer:1|Organics:1
+  - 
+  - AddState
+  - 0
+  - 120
+  - 1
   - 0
   - 9999
   - 5
   - 1000022
   - "\u4F24\u75DB\u8BB0\u5FC6"
   - "\u63A5\u4E0B\u676510\u56DE\u5408\u5185\uFF0C\u53D7\u5230\u7684\u6240\u6709\u4F24\u5BB3\u6570\u503C\u4F1A\u4FDD\u5B58\uFF0C\u5E76\u5728\u8FD9\u4E4B\u540E\u4E3A\u4F60\u56DE\u590D\u53D7\u5230\u4F24\u5BB32\u500D\u7684\u751F\u547D\u503C"
-  - Skill_Main_0022
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -485,16 +533,18 @@ MonoBehaviour:
   - 0~0
   - 
   - 
-  - b:AddState
-  - 4000007
-  - Coherer:1|Organics:1
+  - 
+  - AddState
+  - 0
+  - 121
+  - 1
   - 0
   - 9999
   - 5
   - 1000023
   - "\u6025\u901F\u586B\u88C5"
   - "\u63A5\u4E0B\u6765\u768410\u56DE\u5408\u5185\uFF0C\u4F60\u6240\u6709\u7684\u8FDC\u7A0B\u653B\u51FB\u6D88\u8017\u65F6\u95F4\u51CF\u534A"
-  - Skill_Main_0023
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -504,16 +554,18 @@ MonoBehaviour:
   - 0~0
   - 
   - 
-  - b:AddState
-  - 4000008
-  - Coherer:1|Organics:1
+  - 
+  - AddState
+  - 0
+  - 122
+  - 1
   - 0
   - 9999
   - 5
   - 1010001
   - "\u70AE\u53F0"
   - "\u653B\u51FB\u5355\u4E2A\u654C\u4EBA"
-  - Skill_Main_0024
+  - Skill_Main_0000
   - Monster
   - 
   - Normal
@@ -521,18 +573,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 1~6
-  - '"Cartridge:1103806595095,2203318222859,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222859,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 3
   - 9999
   - 5
   - 1010002
   - "\u6D6E\u6E38A1\u578B"
   - "\u5BF9\u5355\u4E2A\u76EE\u6807\u53D1\u5C04\u6FC0\u5149"
-  - Skill_Main_0025
+  - Skill_Main_0000
   - Monster
   - 
   - Normal
@@ -540,18 +594,20 @@ MonoBehaviour:
   - Laser01
   - "\u547D\u4E2D_\u7206\u70B8"
   - 2~5
-  - '"Laser:1103806595098,2203318222856,1103806595075,2199023255557,1103806595073"'
+  - Laser
+  - '"1103806595098,2203318222856,1103806595075,2199023255557,1103806595073"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 3
   - 9999
   - 5
   - 1010003
   - "\u6D6E\u6E38A2\u578B"
   - "\u968F\u673A\u653B\u51FB\u4E24\u4E2A\u654C\u4EBA"
-  - Skill_Main_0026
+  - Skill_Main_0000
   - Monster
   - 
   - Random
@@ -559,18 +615,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 2~6
-  - '"Cartridge:1103806595095,2203318222854,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222854,1103806595075"'
   - 1;1;1;1
   - 
   - 
-  - Coherer:1|Organics:1
+  - 
+  - 1
   - 4
   - 9999
   - 5
   - 1100001
   - "\u62A5\u8B66"
   - "5\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
-  - Skill_Main_0027
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -579,17 +637,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100010
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 123
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100002
   - "\u62A5\u8B66"
   - "4\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
-  - Skill_Main_0027
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -598,17 +658,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100011
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 124
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100003
   - "\u62A5\u8B66"
   - "3\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
-  - Skill_Main_0027
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -617,17 +679,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100012
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 125
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100004
   - "\u62A5\u8B66"
   - "2\u56DE\u5408\u62A5\u8B66\uFF1A\u62A5\u8B66\u4F1A\u5524\u9192\u5468\u56F4\u7684\u602A\u7269\uFF0C\u5E76\u4F7F\u4ED6\u4EEC\u5904\u4E8E\u5371\u9669\u7684\u72B6\u6001"
-  - Skill_Main_0027
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -636,17 +700,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100013
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 126
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100005
   - "\u81EA\u7206"
   - "5\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Main_0028
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -655,17 +721,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100016
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 127
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100006
   - "\u81EA\u7206"
   - "4\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Main_0028
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -674,17 +742,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100017
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 128
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100007
   - "\u81EA\u7206"
   - "3\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Main_0028
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -693,17 +763,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100018
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 129
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100008
   - "\u81EA\u7206"
   - "2\u56DE\u5408\u540E\u81EA\u7206\uFF0C\u5BF9\u73A9\u5BB6\u9020\u6210\u7B49\u540C\u4E8E\u751F\u547D\u503C\u7684\u5B9E\u5F39\u4F24\u5BB3"
-  - Skill_Main_0028
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -712,17 +784,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100019
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 130
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100009
   - "\u5B9A\u65F6\u70B8\u5F39"
   - "\u4F7F\u5468\u56F4\u7684\u602A\u72695\u56DE\u5408\u540E\u81EA\u7206"
-  - Skill_Main_0029
+  - Skill_Main_0000
   - Self
   - 
   - Diffuse_5
@@ -731,17 +805,19 @@ MonoBehaviour:
   - 
   - 0~0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100020
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 131
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100010
   - "\u6076\u7075\u6C89\u9ED8"
   - "\u6C89\u9ED8\u73A9\u5BB65\u56DE\u5408"
-  - Skill_Main_0030
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -750,17 +826,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100027
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 132
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100011
   - "\u6076\u7075\u6C89\u9ED8"
   - "\u6C89\u9ED8\u73A9\u5BB68\u56DE\u5408"
-  - Skill_Main_0030
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -769,17 +847,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100028
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 133
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100012
   - "\u6076\u7075\u6C89\u9ED8"
   - "\u6C89\u9ED8\u73A9\u5BB612\u56DE\u5408"
-  - Skill_Main_0030
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -788,17 +868,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100029
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 134
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100013
   - "\u6076\u7075\u6C89\u9ED8"
   - "\u6C89\u9ED8\u73A9\u5BB615\u56DE\u5408"
-  - Skill_Main_0030
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -807,17 +889,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100030
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 135
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100014
   - "\u4FEE\u7406\u673A\u5668\u4EBA"
   - "\u6BCF6\u56DE\u5408\u968F\u673A\u7ED9\u4E00\u4E2A\u602A\u7269\u6062\u590D\u751F\u547D\u503C"
-  - Skill_Main_0031
+  - Skill_Main_0000
   - Help
   - 
   - Random
@@ -826,17 +910,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:Property
-  - '"1103806595082,1103806595072,1103806595082,1103806595090,2199023255555,1103806595075,1103806595073"'
-  - Coherer:1|Organics:1
+  - Property
+  - 0
+  - 136
+  - 1
   - 9999
   - 9999
   - 6
   - 1100015
   - "\u4FEE\u7406\u673A\u5668\u4EBA"
   - "\u6BCF5\u56DE\u5408\u968F\u673A\u7ED9\u4E00\u4E2A\u602A\u7269\u6062\u590D\u751F\u547D\u503C"
-  - Skill_Main_0031
+  - Skill_Main_0000
   - Help
   - 
   - Random
@@ -845,17 +931,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:Property
-  - '"1103806595082,1103806595072,1103806595082,1103806595090,2199023255555,1103806595075,1103806595073"'
-  - Coherer:1|Organics:1
+  - Property
+  - 0
+  - 137
+  - 1
   - 9999
   - 9999
   - 5
   - 1100016
   - "\u4FEE\u7406\u673A\u5668\u4EBA"
   - "\u6BCF4\u56DE\u5408\u968F\u673A\u7ED9\u4E00\u4E2A\u602A\u7269\u6062\u590D\u751F\u547D\u503C"
-  - Skill_Main_0031
+  - Skill_Main_0000
   - Help
   - 
   - Random
@@ -864,17 +952,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:Property
-  - '"1103806595082,1103806595072,1103806595082,1103806595090,2199023255555,1103806595075,1103806595073"'
-  - Coherer:1|Organics:1
+  - Property
+  - 0
+  - 138
+  - 1
   - 9999
   - 9999
   - 4
   - 1100017
   - "\u4FEE\u7406\u673A\u5668\u4EBA"
   - "\u6BCF3\u56DE\u5408\u968F\u673A\u7ED9\u4E00\u4E2A\u602A\u7269\u6062\u590D\u751F\u547D\u503C"
-  - Skill_Main_0031
+  - Skill_Main_0000
   - Help
   - 
   - Random
@@ -883,17 +973,19 @@ MonoBehaviour:
   - 
   - 0~99
   - 
+  - 
   - 1;1;1;1
-  - b:Property
-  - '"1103806595082,1103806595072,1103806595082,1103806595090,2199023255555,1103806595075,1103806595073"'
-  - Coherer:1|Organics:1
+  - Property
+  - 0
+  - 139
+  - 1
   - 9999
   - 9999
   - 3
   - 1100018
   - "\u75C5\u7076"
   - "\u4E00\u5B9A\u6982\u7387\u4F7F\u76EE\u6807\u4E2D\u6BD2\uFF0C\u6BCF\u56DE\u5408\u53D7\u5230\u4F24\u5BB3"
-  - Skill_Main_0032
+  - Skill_Main_0000
   - Enemy
   - 
   - Normal
@@ -901,18 +993,20 @@ MonoBehaviour:
   - "\u5B50\u5F39A"
   - "\u547D\u4E2D_\u7206\u70B8"
   - 0~3
-  - '"Cartridge:1103806595095,2203318222859,1103806595075"'
+  - Cartridge
+  - '"1103806595095,2203318222859,1103806595075"'
   - 0.2;0.2;0.2;0.2
-  - b:AddState
-  - 4100043
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 140
+  - 1
   - 9999
   - 9999
   - 4
   - 1100019
   - "\u4F24\u5BB3\u514D\u75AB"
   - "\u514D\u75AB1\u6B21\u4F24\u5BB3"
-  - Skill_Main_0033
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -921,17 +1015,19 @@ MonoBehaviour:
   - 
   - 0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100044
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 141
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100020
   - "\u4F24\u5BB3\u514D\u75AB"
   - "\u514D\u75AB2\u6B21\u4F24\u5BB3"
-  - Skill_Main_0033
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -940,17 +1036,19 @@ MonoBehaviour:
   - 
   - 0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100045
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 142
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100021
   - "\u4F24\u5BB3\u514D\u75AB"
   - "\u514D\u75AB3\u6B21\u4F24\u5BB3"
-  - Skill_Main_0033
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -959,17 +1057,19 @@ MonoBehaviour:
   - 
   - 0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100046
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 143
+  - 1
   - 9999
   - 9999
   - 9999
   - 1100022
   - "\u4F24\u5BB3\u514D\u75AB"
   - "\u514D\u75AB5\u6B21\u4F24\u5BB3"
-  - Skill_Main_0033
+  - Skill_Main_0000
   - Self
   - 
   - Normal
@@ -978,10 +1078,12 @@ MonoBehaviour:
   - 
   - 0
   - 
+  - 
   - 1;1;1;1
-  - b:AddState
-  - 4100047
-  - Coherer:1|Organics:1
+  - AddState
+  - 0
+  - 144
+  - 1
   - 9999
   - 9999
   - 9999

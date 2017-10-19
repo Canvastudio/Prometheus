@@ -19,7 +19,7 @@ MonoBehaviour:
   - string
   - int
   - ulong
-  - string
+  - StuffCostArg
   - int
   - int
   - ChipGrid
@@ -32,7 +32,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  - '|:'
+  - 
   - ~
   - '|:'
   - 
@@ -58,7 +58,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100002
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1001:1
   - Normal
@@ -70,7 +70,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100003
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1001:1
   - Normal
@@ -82,7 +82,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100004
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1001:1
   - Normal
@@ -94,7 +94,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100005
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1001:1
   - Normal
@@ -106,7 +106,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1001:1
   - Normal
@@ -118,7 +118,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100007
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1002:1
   - Normal
@@ -130,7 +130,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100008
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1002:1
   - Normal
@@ -142,7 +142,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100009
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1002:1
   - Normal
@@ -154,7 +154,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100010
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1002:1
   - Normal
@@ -166,7 +166,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1002:1
   - Normal
@@ -178,7 +178,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100012
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1003:1
   - Normal
@@ -190,7 +190,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100013
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1003:1
   - Normal
@@ -202,7 +202,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100014
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1003:1
   - Normal
@@ -214,7 +214,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100015
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1003:1
   - Normal
@@ -226,7 +226,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1003:1
   - Normal
@@ -238,7 +238,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100017
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1004:1
   - Normal
@@ -250,7 +250,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100018
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1004:1
   - Normal
@@ -262,7 +262,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100019
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1004:1
   - Normal
@@ -274,7 +274,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100020
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1004:1
   - Normal
@@ -286,7 +286,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1004:1
   - Normal
@@ -298,7 +298,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100022
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1005:1
   - Normal
@@ -310,7 +310,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100023
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1005:1
   - Normal
@@ -322,7 +322,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100024
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1005:1
   - Normal
@@ -334,7 +334,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100025
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1005:1
   - Normal
@@ -346,7 +346,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1005:1
   - Normal
@@ -358,7 +358,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100027
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1006:1
   - Normal
@@ -370,7 +370,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100028
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1006:1
   - Normal
@@ -382,7 +382,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100029
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1006:1
   - Normal
@@ -394,7 +394,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100030
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1006:1
   - Normal
@@ -406,7 +406,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1006:1
   - Normal
@@ -418,7 +418,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100032
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1007:1
   - Normal
@@ -430,7 +430,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100033
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1007:1
   - Normal
@@ -442,7 +442,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100034
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1007:1
   - Normal
@@ -454,7 +454,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100035
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1007:1
   - Normal
@@ -466,7 +466,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1007:1
   - Normal
@@ -478,7 +478,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100037
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1008:1
   - Normal
@@ -490,7 +490,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100038
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1008:1
   - Normal
@@ -502,7 +502,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100039
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1008:1
   - Normal
@@ -514,7 +514,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100040
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1008:1
   - Normal
@@ -526,7 +526,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1008:1
   - Normal
@@ -538,7 +538,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100042
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1009:1
   - Normal
@@ -550,7 +550,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100043
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1009:1
   - Normal
@@ -562,7 +562,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100044
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1009:1
   - Normal
@@ -574,7 +574,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100045
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1009:1
   - Normal
@@ -586,7 +586,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1009:1
   - Normal
@@ -598,7 +598,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100047
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1010:1
   - Blue
@@ -610,7 +610,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100048
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1010:1
   - Blue
@@ -622,7 +622,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100049
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1010:1
   - Blue
@@ -634,7 +634,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100050
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1010:1
   - Blue
@@ -646,7 +646,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1010:1
   - Blue
@@ -658,7 +658,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100052
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1011:1
   - Normal
@@ -670,7 +670,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100053
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1011:1
   - Normal
@@ -682,7 +682,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100054
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1011:1
   - Normal
@@ -694,7 +694,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100055
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1011:1
   - Normal
@@ -706,7 +706,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1011:1
   - Normal
@@ -718,7 +718,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100057
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1012:1
   - Normal
@@ -730,7 +730,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100058
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1012:1
   - Normal
@@ -742,7 +742,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100059
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1012:1
   - Normal
@@ -754,7 +754,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100060
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1012:1
   - Normal
@@ -766,7 +766,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1012:1
   - Normal
@@ -778,7 +778,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100062
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1013:1
   - Normal
@@ -790,7 +790,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100063
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1013:1
   - Normal
@@ -802,7 +802,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100064
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1013:1
   - Normal
@@ -814,7 +814,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100065
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1013:1
   - Normal
@@ -826,7 +826,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1013:1
   - Normal
@@ -838,7 +838,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100067
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1014:1
   - Normal
@@ -850,7 +850,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100068
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1014:1
   - Normal
@@ -862,7 +862,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100069
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1014:1
   - Normal
@@ -874,7 +874,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100070
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1014:1
   - Normal
@@ -886,7 +886,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1014:1
   - Normal
@@ -898,7 +898,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100072
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1015:1
   - Normal
@@ -910,7 +910,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100073
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1015:1
   - Normal
@@ -922,7 +922,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100074
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1015:1
   - Normal
@@ -934,7 +934,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100075
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1015:1
   - Normal
@@ -946,7 +946,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1015:1
   - Normal
@@ -958,7 +958,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100077
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1016:1
   - Normal
@@ -970,7 +970,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100078
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1016:1
   - Normal
@@ -982,7 +982,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100079
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1016:1
   - Normal
@@ -994,7 +994,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100080
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1016:1
   - Normal
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1016:1
   - Normal
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100082
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1017:1
   - Normal
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100083
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1017:1
   - Normal
@@ -1042,7 +1042,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100084
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1017:1
   - Normal
@@ -1054,7 +1054,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100085
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1017:1
   - Normal
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1017:1
   - Normal
@@ -1078,7 +1078,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100087
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1018:1
   - Normal
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100088
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1018:1
   - Normal
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100089
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1018:1
   - Normal
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100090
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1018:1
   - Normal
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1018:1
   - Normal
@@ -1138,7 +1138,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100092
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1019:1
   - Normal
@@ -1150,7 +1150,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100093
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1019:1
   - Normal
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100094
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1019:1
   - Normal
@@ -1174,7 +1174,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100095
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1019:1
   - Normal
@@ -1186,7 +1186,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1019:1
   - Normal
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100097
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1020:1
   - Normal
@@ -1210,7 +1210,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100098
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1020:1
   - Normal
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100099
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1020:1
   - Normal
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100100
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1020:1
   - Normal
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1020:1
   - Normal
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100102
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1021:1
   - Normal
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100103
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1021:1
   - Normal
@@ -1282,7 +1282,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100104
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1021:1
   - Normal
@@ -1294,7 +1294,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100105
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1021:1
   - Normal
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1021:1
   - Normal
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100107
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1022:1
   - Normal
@@ -1330,7 +1330,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100108
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1022:1
   - Normal
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100109
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1022:1
   - Normal
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100110
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1022:1
   - Normal
@@ -1366,7 +1366,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1022:1
   - Normal
@@ -1378,7 +1378,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100112
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1023:1
   - Normal
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100113
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1023:1
   - Normal
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100114
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1023:1
   - Normal
@@ -1414,7 +1414,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100115
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1023:1
   - Normal
@@ -1426,7 +1426,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1023:1
   - Normal
@@ -1438,7 +1438,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100117
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1024:1
   - Normal
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100118
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1024:1
   - Normal
@@ -1462,7 +1462,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100119
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1024:1
   - Normal
@@ -1474,7 +1474,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100120
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1024:1
   - Normal
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1024:1
   - Normal
@@ -1498,7 +1498,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100122
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1025:1
   - Normal
@@ -1510,7 +1510,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100123
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1025:1
   - Normal
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100124
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1025:1
   - Normal
@@ -1534,7 +1534,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100125
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1025:1
   - Normal
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1025:1
   - Normal
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100127
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1026:1
   - Normal
@@ -1570,7 +1570,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100128
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1026:1
   - Normal
@@ -1582,7 +1582,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100129
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1026:1
   - Normal
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100130
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1026:1
   - Normal
@@ -1606,7 +1606,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1026:1
   - Normal
@@ -1618,7 +1618,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100132
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1027:1
   - Normal
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100133
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1027:1
   - Normal
@@ -1642,7 +1642,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100134
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1027:1
   - Normal
@@ -1654,7 +1654,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100135
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1027:1
   - Normal
@@ -1666,7 +1666,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1027:1
   - Normal
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100137
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1028:1
   - Normal
@@ -1690,7 +1690,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100138
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1028:1
   - Normal
@@ -1702,7 +1702,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100139
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1028:1
   - Normal
@@ -1714,7 +1714,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100140
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1028:1
   - Normal
@@ -1726,7 +1726,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1028:1
   - Normal
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100142
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1029:1
   - Normal
@@ -1750,7 +1750,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100143
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1029:1
   - Normal
@@ -1762,7 +1762,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100144
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1029:1
   - Normal
@@ -1774,7 +1774,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100145
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1029:1
   - Normal
@@ -1786,7 +1786,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1029:1
   - Normal
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100147
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1030:1
   - Normal
@@ -1810,7 +1810,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100148
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1030:1
   - Normal
@@ -1822,7 +1822,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100149
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1030:1
   - Normal
@@ -1834,7 +1834,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100150
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1030:1
   - Normal
@@ -1846,7 +1846,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1030:1
   - Normal
@@ -1858,7 +1858,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100152
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1031:1
   - Normal
@@ -1870,7 +1870,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100153
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1031:1
   - Normal
@@ -1882,7 +1882,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100154
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1031:1
   - Normal
@@ -1894,7 +1894,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100155
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1031:1
   - Normal
@@ -1906,7 +1906,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1031:1
   - Normal
@@ -1918,7 +1918,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100157
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1032:1
   - Normal
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100158
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1032:1
   - Normal
@@ -1942,7 +1942,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100159
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1032:1
   - Normal
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100160
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1032:1
   - Normal
@@ -1966,7 +1966,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1032:1
   - Normal
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100162
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1033:1
   - Normal
@@ -1990,7 +1990,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100163
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1033:1
   - Normal
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100164
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1033:1
   - Normal
@@ -2014,7 +2014,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100165
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1033:1
   - Normal
@@ -2026,7 +2026,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1033:1
   - Normal
@@ -2038,7 +2038,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100167
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1034:1
   - Normal
@@ -2050,7 +2050,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100168
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1034:1
   - Normal
@@ -2062,7 +2062,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100169
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1034:1
   - Normal
@@ -2074,7 +2074,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100170
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1034:1
   - Normal
@@ -2086,7 +2086,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1034:1
   - Normal
@@ -2098,7 +2098,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100172
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1035:1
   - Normal
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100173
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1035:1
   - Normal
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100174
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1035:1
   - Normal
@@ -2134,7 +2134,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100175
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1035:1
   - Normal
@@ -2146,7 +2146,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1035:1
   - Normal
@@ -2158,7 +2158,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100177
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1036:1
   - Normal
@@ -2170,7 +2170,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100178
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1036:1
   - Normal
@@ -2182,7 +2182,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100179
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1036:1
   - Normal
@@ -2194,7 +2194,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100180
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1036:1
   - Normal
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1036:1
   - Normal
@@ -2218,7 +2218,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100182
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1037:1
   - Normal
@@ -2230,7 +2230,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100183
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1037:1
   - Normal
@@ -2242,7 +2242,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100184
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1037:1
   - Normal
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100185
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1037:1
   - Normal
@@ -2266,7 +2266,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1037:1
   - Normal
@@ -2278,7 +2278,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100187
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1038:1
   - Normal
@@ -2290,7 +2290,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100188
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1038:1
   - Normal
@@ -2302,7 +2302,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100189
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1038:1
   - Normal
@@ -2314,7 +2314,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100190
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1038:1
   - Normal
@@ -2326,7 +2326,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1038:1
   - Normal
@@ -2338,7 +2338,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100192
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1039:1
   - Normal
@@ -2350,7 +2350,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100193
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1039:1
   - Normal
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100194
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1039:1
   - Normal
@@ -2374,7 +2374,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100195
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1039:1
   - Normal
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1039:1
   - Normal
@@ -2398,7 +2398,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100197
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1040:1
   - Normal
@@ -2410,7 +2410,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100198
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1040:1
   - Normal
@@ -2422,7 +2422,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100199
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1040:1
   - Normal
@@ -2434,7 +2434,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100200
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1040:1
   - Normal
@@ -2446,7 +2446,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1040:1
   - Normal
@@ -2458,7 +2458,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 1
   - 100202
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1041:1
   - Normal
@@ -2470,7 +2470,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 2
   - 100203
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1041:1
   - Normal
@@ -2482,7 +2482,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 3
   - 100204
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1041:1
   - Normal
@@ -2494,7 +2494,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 4
   - 100205
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1041:1
   - Normal
@@ -2506,7 +2506,7 @@ MonoBehaviour:
   - 5D98ABFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1041:1
   - Normal
@@ -2518,7 +2518,7 @@ MonoBehaviour:
   - BA7A24FF
   - 1
   - 100207
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1042:1
   - Normal
@@ -2530,7 +2530,7 @@ MonoBehaviour:
   - BA7A24FF
   - 2
   - 100208
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1042:1
   - Normal
@@ -2542,7 +2542,7 @@ MonoBehaviour:
   - BA7A24FF
   - 3
   - 100209
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1042:1
   - Normal
@@ -2554,7 +2554,7 @@ MonoBehaviour:
   - BA7A24FF
   - 4
   - 100210
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1042:1
   - Normal
@@ -2566,7 +2566,7 @@ MonoBehaviour:
   - BA7A24FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1042:1
   - Normal
@@ -2578,7 +2578,7 @@ MonoBehaviour:
   - B54F4FFF
   - 1
   - 100212
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1043:1
   - Normal
@@ -2590,7 +2590,7 @@ MonoBehaviour:
   - B54F4FFF
   - 2
   - 100213
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1043:1
   - Normal
@@ -2602,7 +2602,7 @@ MonoBehaviour:
   - B54F4FFF
   - 3
   - 100214
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1043:1
   - Normal
@@ -2614,7 +2614,7 @@ MonoBehaviour:
   - B54F4FFF
   - 4
   - 100215
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1043:1
   - Normal
@@ -2626,7 +2626,7 @@ MonoBehaviour:
   - B54F4FFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1043:1
   - Normal
@@ -2638,7 +2638,7 @@ MonoBehaviour:
   - B54FA2FF
   - 1
   - 100217
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1044:1
   - Normal
@@ -2650,7 +2650,7 @@ MonoBehaviour:
   - B54FA2FF
   - 2
   - 100218
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1044:1
   - Normal
@@ -2662,7 +2662,7 @@ MonoBehaviour:
   - B54FA2FF
   - 3
   - 100219
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1044:1
   - Normal
@@ -2674,7 +2674,7 @@ MonoBehaviour:
   - B54FA2FF
   - 4
   - 100220
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1044:1
   - Normal
@@ -2686,7 +2686,7 @@ MonoBehaviour:
   - B54FA2FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1044:1
   - Normal
@@ -2698,7 +2698,7 @@ MonoBehaviour:
   - C3D559FF
   - 1
   - 100222
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 1045:1
   - Normal
@@ -2710,7 +2710,7 @@ MonoBehaviour:
   - C3D559FF
   - 2
   - 100223
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 1045:1
   - Normal
@@ -2722,7 +2722,7 @@ MonoBehaviour:
   - C3D559FF
   - 3
   - 100224
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 1045:1
   - Normal
@@ -2734,7 +2734,7 @@ MonoBehaviour:
   - C3D559FF
   - 4
   - 100225
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 1045:1
   - Normal
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   - C3D559FF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 1045:1
   - Normal
@@ -2758,7 +2758,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 1
   - 100227
-  - Coherer:1|Organics:1
+  - 1
   - 5~12
   - 
   - Normal
@@ -2770,7 +2770,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 2
   - 100228
-  - Coherer:1|Organics:1
+  - 1
   - 10~17
   - 
   - Normal
@@ -2782,7 +2782,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 3
   - 100229
-  - Coherer:1|Organics:1
+  - 1
   - 14~21
   - 
   - Normal
@@ -2794,7 +2794,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 4
   - 100230
-  - Coherer:1|Organics:1
+  - 1
   - 19~26
   - 
   - Normal
@@ -2806,7 +2806,7 @@ MonoBehaviour:
   - 58D6CAFF
   - 5
   - 
-  - Coherer:1|Organics:1
+  - 1
   - 23~30
   - 
   - Normal
