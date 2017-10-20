@@ -16,7 +16,7 @@ public class SuperArrayObj<T> : SuperArrayBase<T> where T : ConfigDataBase, new(
             if (_datas == null)
             {
                 _datas = new List<T>();
-                foreach (var id in dataList) _datas.Add(SuperConfig.Instance.GetConfigDataById<T>(id));
+                foreach (var id in dataList) _datas.Add(SuperConfig.Instance.GetConfigDataById<T>(ulong.Parse(id)));
             }
             return _datas;
         }

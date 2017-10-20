@@ -97,7 +97,7 @@ public class EasyConfig : IEnumerable
     /// <summary>
     /// 根据字符获取列表元素
     /// </summary>
-    public string[] GetDataList(string key)
+    public string[] GetDataArray(string key)
     {
         return contentDictionary[SuperTool.ConverSpace(key)].ToArray();
     }

@@ -16,7 +16,7 @@ public class SuperConfig : SingleObject<SuperConfig>
 {
     private readonly Dictionary<string, List<ConfigDataBase>> dataDic = new Dictionary<string, List<ConfigDataBase>>();
     private readonly List<ResourceRequest> resDatas = new List<ResourceRequest>();
-    private readonly List<XYZW<ConfigDataBase, PropertyInfo, string, ulong>> postponeList = new List<XYZW<ConfigDataBase, PropertyInfo, string, ulong>>();
+    private readonly List<XYZW<ConfigDataBase, PropertyInfo, string, string>> postponeList = new List<XYZW<ConfigDataBase, PropertyInfo, string, string>>();
 
     private float resProgress;
     public float ResProgress
@@ -81,7 +81,7 @@ public class SuperConfig : SingleObject<SuperConfig>
     {
         if (path == null) path = (string)GetSuperConfigInform("SuperConfigDefaultPathOfEasyConfig") ?? "DefaultPath";
         EasyConfig ec = EasyConfig.GetConfig(path);
-        return ec.GetDataList("Config");
+        return ec.GetDataArray("Config");
     }
 
     /// <summary>
@@ -161,13 +161,13 @@ public class SuperConfig : SingleObject<SuperConfig>
         resProgress = 0;
         foreach (ResourceRequest t in resDatas)
         {
-            if(t.asset == null) continue;
+            if (t.asset == null) continue;
             if (t.isDone)
             {
                 if (!dataDic.ContainsKey(t.asset.name))
                 {
-                    var dic = t.asset.GetType() == typeof (TextAsset) ? TxtAnalyze((TextAsset)t.asset) : ((ConfigData)t.asset).GetDataDic();
-                    if(dic!=null) DataConver(dic);
+                    var dic = t.asset.GetType() == typeof(TextAsset) ? TxtAnalyze((TextAsset)t.asset) : ((ConfigData)t.asset).GetDataDic();
+                    if (dic != null) DataConver(dic);
                 }
             }
             else
@@ -214,11 +214,11 @@ public class SuperConfig : SingleObject<SuperConfig>
         List<string[]> datas = new List<string[]>();//除开前两行的数据
         for (int i = 2; i < dataLine.Length; i++)
         {
-            if (dataLine[i].Trim()=="" || dataLine[i].Trim() == "\r") continue;
+            if (dataLine[i].Trim() == "" || dataLine[i].Trim() == "\r") continue;
             var tempArr = dataLine[i].Split('\t');
             for (int j = 0; j < tempArr.Length; j++)
             {
-                tempArr[j] = tempArr[j].Replace("\n","");
+                tempArr[j] = tempArr[j].Replace("\n", "");
             }
             datas.Add(tempArr);
         }
@@ -261,6 +261,13 @@ public class SuperConfig : SingleObject<SuperConfig>
                     {
                         parName[j] = "id";
                         parType[j] = "ulong";
+                        splitMak[j] = null;
+                    }
+                    //强制将key类型修正为string
+                    if (parName[j].ToLower() == "key")
+                    {
+                        parName[j] = "key";
+                        parType[j] = "string";
                         splitMak[j] = null;
                     }
                     try
@@ -310,7 +317,7 @@ public class SuperConfig : SingleObject<SuperConfig>
                                 }
                                 else
                                 {
-                                    AddPostpone(dataBase, pi, parType[j], ulong.Parse(data[j]));
+                                    AddPostpone(dataBase, pi, parType[j], data[j]);
                                     //这是一个对泛型方法的调用，虽然没用上，但是还是留在这里以做参考
                                     //MethodInfo serviceMethod = this.GetType().GetMethod("TryAdd");
                                     //var t = serviceMethod.MakeGenericMethod(Type.GetType(parType[j])).Invoke(this, new object[] { ulong.Parse(aData[j]), parType[j], pi.GetValue(dataBase, null) });
@@ -373,6 +380,7 @@ public class SuperConfig : SingleObject<SuperConfig>
             }
 
             if (dataBase.id == 0) dataBase.id = inIndex++;
+            if (string.IsNullOrEmpty(dataBase.key)) dataBase.key = dataBase.id.ToString();
             dataList.Add(dataBase);
             dataBase.OnLoadDone();
         }
@@ -403,14 +411,6 @@ public class SuperConfig : SingleObject<SuperConfig>
         return true;
     }
 
-    /// <summary>
-    /// 根据ID返回一个配置表对象
-    /// </summary>
-    public T GetConfigDataById<T>(string idStr) where T : ConfigDataBase
-    {
-        return GetConfigDataById<T>(ulong.Parse(idStr));
-    }
-
 
     /// <summary>
     /// 根据ID返回一个配置表对象
@@ -424,6 +424,43 @@ public class SuperConfig : SingleObject<SuperConfig>
         if (t == null) Debug.LogWarning("配置表不存在id→ " + temp + ":" + id);
         return t;
     }
+
+    /// <summary>
+    /// 根据KEY返回一个配置表对象
+    /// </summary>
+    public T GetConfigDataBykey<T>(string key) where T : ConfigDataBase
+    {
+        string temp = typeof(T).ToString();
+        if (!dataDic.ContainsKey(temp)) throw new ArgumentNullException("不存在的配置表：" + temp);
+        List<ConfigDataBase> tempList = dataDic[temp];
+        T t = tempList.Find(x => x.key == key) as T;
+        if (t == null) Debug.LogWarning("配置表不存在key→ " + temp + ":" + key);
+        return t;
+    }
+
+    /// <summary>
+    /// 判断一个配置中是否存在该key的数据
+    /// </summary>
+    public bool ExistsKey<T>(string key) where T : ConfigDataBase
+    {
+        string temp = typeof(T).ToString();
+        if (!dataDic.ContainsKey(temp)) return false;
+        var tempList = dataDic[temp];
+        return tempList.Exists(x => x.key == key);
+    }
+
+
+    /// <summary>
+    /// 判断一个配置中是否存在该id的数据
+    /// </summary>
+    public bool ExistsId<T>(ulong id) where T : ConfigDataBase
+    {
+        string temp = typeof(T).ToString();
+        if (!dataDic.ContainsKey(temp)) return false;
+        var tempList = dataDic[temp];
+        return tempList.Exists(x => x.id == id);
+    }
+
 
     /// <summary>
     /// 根据属性名称，查找配置表中第一个符合条件的对象
@@ -461,33 +498,15 @@ public class SuperConfig : SingleObject<SuperConfig>
     }
 
 
-    /// <summary>
-    /// 判断一个配置中是否存在该id的数据
-    /// </summary>
-    public bool Exists<T>(string idStr) where T : ConfigDataBase
-    {
-        return Exists<T>(ulong.Parse(idStr));
-    }
-
-
-    /// <summary>
-    /// 判断一个配置中是否存在该id的数据
-    /// </summary>
-    public bool Exists<T>(ulong id) where T : ConfigDataBase
-    {
-        string temp = typeof(T).ToString();
-        if (!dataDic.ContainsKey(temp)) return false;
-        var tempList = dataDic[temp];
-        return tempList.Exists(x => x.id == id);
-    }
 
 
     /// <summary>
     /// 配置表初始完成之前，某些对象是不能得到正确赋值的，所以把它们暂时存起来，在配置表初始完成后一并赋值
+    /// 注意它是用key来索引的
     /// </summary>
-    public void AddPostpone(ConfigDataBase cdb, PropertyInfo pi, string type, ulong id)
+    public void AddPostpone(ConfigDataBase cdb, PropertyInfo pi, string type, string key)
     {
-        var arg = new XYZW<ConfigDataBase, PropertyInfo, string, ulong>(cdb, pi, type, id);
+        var arg = new XYZW<ConfigDataBase, PropertyInfo, string, string>(cdb, pi, type, key);
         postponeList.Add(arg);
     }
 
@@ -500,7 +519,7 @@ public class SuperConfig : SingleObject<SuperConfig>
         {
             if (!dataDic.ContainsKey(arg.z)) throw new ArgumentNullException("不存在的配置表：" + arg.z);
             List<ConfigDataBase> tempList = dataDic[arg.z];
-            ConfigDataBase t = tempList.Find(x => x.id == arg.w);
+            ConfigDataBase t = tempList.Find(x => x.key == arg.w) ?? tempList.Find(x => x.id == ulong.Parse(arg.w));
             arg.y.SetValue(arg.x, t, null);
         }
         postponeList.Clear();
@@ -514,11 +533,12 @@ public class SuperConfig : SingleObject<SuperConfig>
 public abstract class ConfigDataBase
 {
 
+
     /// <summary>
     /// 主键，唯一
     /// </summary>
     public ulong id { get; set; }
-
+    public string key { get; set; }
 
     /// <summary>
     /// 根据ID返回一个配置表对象
@@ -527,12 +547,22 @@ public abstract class ConfigDataBase
     {
         return SuperConfig.Instance.GetConfigDataById<T>(id);
     }
+
     /// <summary>
     /// 根据ID返回一个配置表对象
     /// </summary>
-    public static T GetConfigDataById<T>(string idStr) where T : ConfigDataBase
+    public static T GetConfigDataById<T>(string id) where T : ConfigDataBase
     {
-        return GetConfigDataById<T>(ulong.Parse(idStr));
+        return SuperConfig.Instance.GetConfigDataById<T>(ulong.Parse(id));
+    }
+
+
+    /// <summary>
+    /// 根据KEY返回一个配置表对象
+    /// </summary>
+    public static T GetConfigDataByKey<T>(string key) where T : ConfigDataBase
+    {
+        return SuperConfig.Instance.GetConfigDataBykey<T>(key);
     }
 
     /// <summary>
@@ -558,17 +588,25 @@ public abstract class ConfigDataBase
     /// <summary>
     /// 判断一个配置中是否存在该id的数据
     /// </summary>
-    public static bool Exists<T>(ulong id) where T : ConfigDataBase
+    public static bool ExistsId<T>(ulong id) where T : ConfigDataBase
     {
-        return SuperConfig.Instance.Exists<T>(id);
+        return SuperConfig.Instance.ExistsId<T>(id);
     }
 
     /// <summary>
     /// 判断一个配置中是否存在该id的数据
     /// </summary>
-    public static bool Exists<T>(string idStr) where T : ConfigDataBase
+    public static bool ExistsId<T>(string id) where T : ConfigDataBase
     {
-        return Exists<T>(ulong.Parse(idStr));
+        return SuperConfig.Instance.ExistsId<T>(ulong.Parse(id));
+    }
+
+    /// <summary>
+    /// 判断一个配置中是否存在该id的数据
+    /// </summary>
+    public static bool ExistsKey<T>(string idStr) where T : ConfigDataBase
+    {
+        return ExistsKey<T>(idStr);
     }
 
     /// <summary>

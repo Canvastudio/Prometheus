@@ -1045,7 +1045,7 @@ public class SuperTool
         //PathInform pathsInform = Resources.Load<PathInform>(path);
         //if (pathsInform != null) return pathsInform.PathStrings.ToArray();
         EasyConfig ec = EasyConfig.GetConfig(path);
-        return ec.GetDataList(key);
+        return ec.GetDataArray(key);
     }
 
     /// <summary>
