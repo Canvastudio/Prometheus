@@ -218,7 +218,7 @@ public class SuperConfig : SingleObject<SuperConfig>
             var tempArr = dataLine[i].Split('\t');
             for (int j = 0; j < tempArr.Length; j++)
             {
-                tempArr[j] = tempArr[j].Replace("\n", "");
+                tempArr[j] = ReplaceQuote(tempArr[j]);
             }
             datas.Add(tempArr);
         }
@@ -253,7 +253,7 @@ public class SuperConfig : SingleObject<SuperConfig>
             ConfigDataBase dataBase = Activator.CreateInstance(Type.GetType(className)) as ConfigDataBase;
             for (int j = 0; j < data.Length; j++)
             {
-                data[j] = ReplaceQuote(data[j]);
+                //data[j] = ReplaceQuote(data[j]);
                 if (!string.IsNullOrEmpty(data[j]))
                 {
                     //强制将id类型修正为ulong
@@ -389,7 +389,7 @@ public class SuperConfig : SingleObject<SuperConfig>
 
 
     /// <summary>
-    /// 去掉开头和结尾的半角引号，顺便Trim
+    /// 去掉开头和结尾的半角引号，与\r\n，顺便Trim
     /// </summary>
     private static string ReplaceQuote(string value)
     {
@@ -397,6 +397,8 @@ public class SuperConfig : SingleObject<SuperConfig>
         if (value == "") return "";
         Regex reg = new Regex(@"^"".*""$");
         if (reg.IsMatch(value)) value = value.Substring(1, value.Length - 2);
+        Regex reg2 = new Regex(@"[\r\n]");
+        value = reg2.Replace(value, "");
         return value.Trim();
     }
 
