@@ -67,7 +67,7 @@ public class ChipInventory
 {
     public ChipConfig config;
 
-    public int power;
+    public float power;
 
     public int power_max;
 
@@ -83,11 +83,23 @@ public class ChipInventory
         config = ConfigDataBase.GetConfigDataById<ChipConfig>(id);
 
         var power_range = config.power.ToArray();
+
         power_min = power_range[0];
         power_max = power_range[1];
 
-        //power = Random.Range(power_min, power_max);
-        power = power_min;
+        
+        if(id == 100011)
+        {
+            power = 1;
+        }
+        else if (id == 100026)
+        {
+            power = 2;
+        }
+        else
+        {
+            power = Random.Range(power_min, power_max);
+        }
 
         int model_count = config.model.Count();
 

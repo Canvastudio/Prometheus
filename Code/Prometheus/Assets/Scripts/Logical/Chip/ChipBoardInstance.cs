@@ -2,34 +2,32 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHandler{
+public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHandler, IEndDragHandler{
 
-    public uint uid;
+    public bool isPowered = false;
 
     public ChipGrid chipGrid;
     public ChipInventory chipInventory;
-    public ChipSquare powerSquare;
 
     [SerializeField]
     List<BoardInstanceNode> itemsList;
+
+    [SerializeField]
+    UnityEngine.UI.Text pwr;
 
     public Vector3 lastLocalPos;
     private Vector3 temp_localpos;
     private Vector2 offset;
 
+  
+
     public int positiveIndex = int.MinValue;
     public int negativeIndex = int.MinValue;
-
-    /// <summary>
-    /// 9宫格中心所在的行列索引
-    /// </summary>
-    public Vector2 row_col;
 
     public bool hasPut = false;
 
     public void Init(ChipListItem chipItem)
     {
-        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnCheckPower);
         chipInventory = chipItem.chipInventory;
         Color color = SuperTool.CreateColor(chipInventory.config.color);
         chipItem.chipInventory.boardInstance = this;
@@ -47,17 +45,22 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
 
             else if (v == 3) negativeIndex = i;
         }
+
+        castPower = chipItem.chipInventory.power;
+        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnPowerGridRefresh);
     }
 
-    private void OnCheckPower()
+    private void OnPowerGridRefresh()
     {
-        powerSquare = null;
+        depth = int.MaxValue;
+        isPowered = false;
     }
-
+    
     public void PutBack()
     {
         transform.localPosition = temp_localpos;
     }
+
 
     private void OnLongPress()
     {
@@ -97,12 +100,7 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
         }
     }
 
-    public void OnDisable()
-    {
-        Messenger.RemoveListener(ChipBoardEvent.CheckPowerState, OnCheckPower);
-    }
-
-    public void GetNegativeRC(out int r, out int c)
+    public void GetOutPowerRC(out int r, out int c)
     {
         int positive_index = -1;
 
@@ -116,7 +114,32 @@ public class ChipBoardInstance : MonoBehaviour , IDragHandler, IBeginDragHandler
             }
         }
 
-        r = (int)row_col.x - 1 + positive_index / 3;
-        c = (int)row_col.y - 1 + positive_index % 3;
+        r = row - 1 + positive_index / 3;
+        c = col - 1 + positive_index % 3;
+    }
+
+    public void GetInPowerRC(out int r, out int c)
+    {
+        int positive_index = -1;
+
+        for (int i = 0; i < 9; ++i)
+        {
+            int v = chipInventory.model[i];
+
+            if (v == 2)
+            {
+                positive_index = i;
+            }
+        }
+
+        r = row - 1 + positive_index / 3;
+        c = col - 1 + positive_index % 3;
+    }
+
+    protected override void SetDepth(int depth)
+    {
+        base.SetDepth(depth);
+
+        pwr.text = depth.ToString();
     }
 }

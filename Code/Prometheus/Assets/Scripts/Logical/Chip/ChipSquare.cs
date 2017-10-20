@@ -9,6 +9,7 @@ public enum ChipSquareState
     Use,
     Positive,
     Negative,
+    Power,
 }
 
 public class ChipSquare : MonoBehaviour {
@@ -17,39 +18,19 @@ public class ChipSquare : MonoBehaviour {
     Image image;
 
     [SerializeField]
-    private int _power;
-    public int power
-    {
-        get
-        {
-            if (_chipGrid == ChipGrid.Power)
-            {
-                return _power;
-            }
-            else
-            {
-                return boardInstance.powerSquare.leftPower;
-            }
-        }
-        set
-        {
-            _power = value;
-        }
-    }
-
-    public int leftPower = int.MinValue;
-    public int assigned_power = int.MinValue;
-
-    [SerializeField]
     private ChipGrid _chipGrid = ChipGrid.None;
 
     public ChipBoardInstance boardInstance;
+    public BoardSupplyInstance supplyInstance;
+
     public int index;
     [SerializeField]
     private ChipSquareState _state = ChipSquareState.Free;
 
     public int row;
     public int col;
+
+    private int _temp;
 
     public static string[] chipSquareSpriteName = new string[]
     {
@@ -58,7 +39,7 @@ public class ChipSquare : MonoBehaviour {
         "blue_chipsquare",
         "red_chipsquare",
         "yellow_chipsquare",
-        "green_chipsquare",
+        "white_chipsquare",//"green_chipsquare",
     };
 
     public ChipGrid chipGrid
@@ -102,21 +83,15 @@ public class ChipSquare : MonoBehaviour {
         return chipSquareSpriteName[(int)type];
     }
 
-    public void InitChipSquare(ChipGrid chipGrid, int power)
+    public void InitChipSquare(ChipGrid chipGrid)
     {
         this.chipGrid = chipGrid;
 
         image.sprite = ChipBoard.Instance.spriteAtlas.GetSprite(ChipGridTypeToSpriteName(chipGrid));
-
-        if (chipGrid == ChipGrid.Power)
-        {
-            this.power = power;
-        }
     }
 
-    public void Empoly(ChipBoardInstance boardInstance, int index)
+    private void OnCheckPowerState()
     {
-        this.boardInstance = boardInstance;
-        this.index = index;
+
     }
 }

@@ -28,6 +28,7 @@ public class StageLoopState : IState
 
         StageCore.Instance.Player.inventory.AddChip(100011);
         StageCore.Instance.Player.inventory.AddChip(100026);
+        StageCore.Instance.Player.inventory.AddChip(100051);
 
         yield return 0;
 

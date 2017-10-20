@@ -71,7 +71,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
     }
 
-    int _id = int.MinValue;
+    int _id = 1000;
 
     private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();
 
@@ -208,9 +208,6 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         }
 
         id = Data[name].u.Peek().id;
-
-        if (id > 0)
-            Debug.LogError("Qx: id error");
 
         return res;
     }

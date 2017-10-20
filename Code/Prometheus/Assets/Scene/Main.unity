@@ -1417,7 +1417,9 @@ MonoBehaviour:
   listItem: {fileID: 824867705}
   boardInstance: {fileID: 114710001726412642, guid: 8b8a410560be6574b93292962d848f49,
     type: 2}
-  chipRoot: {fileID: 1533297349}
+  supplyInstance: {fileID: 114088262148648666, guid: b7c8f4bde2c76b3408228c04c783a926,
+    type: 2}
+  chipBoardRoot: {fileID: 1533297349}
   chipListRoot: {fileID: 1010451932}
   chipInstanceRoot: {fileID: 597194904}
   backgroud: {fileID: 496746717}
