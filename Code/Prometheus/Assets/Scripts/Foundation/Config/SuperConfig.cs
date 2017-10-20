@@ -423,7 +423,9 @@ public class SuperConfig : SingleObject<SuperConfig>
         if (!dataDic.ContainsKey(temp)) throw new ArgumentNullException("不存在的配置表：" + temp);
         List<ConfigDataBase> tempList = dataDic[temp];
         T t = tempList.Find(x => x.id == id) as T;
+#if UNITY_EDITOR
         if (t == null) Debug.LogWarning("配置表不存在id→ " + temp + ":" + id);
+#endif
         return t;
     }
 
@@ -436,7 +438,9 @@ public class SuperConfig : SingleObject<SuperConfig>
         if (!dataDic.ContainsKey(temp)) throw new ArgumentNullException("不存在的配置表：" + temp);
         List<ConfigDataBase> tempList = dataDic[temp];
         T t = tempList.Find(x => x.key == key) as T;
+#if UNITY_EDITOR
         if (t == null) Debug.LogWarning("配置表不存在key→ " + temp + ":" + key);
+#endif
         return t;
     }
 
@@ -499,14 +503,10 @@ public class SuperConfig : SingleObject<SuperConfig>
         return tempList;
     }
 
-
-
-
     /// <summary>
-    /// 配置表初始完成之前，某些对象是不能得到正确赋值的，所以把它们暂时存起来，在配置表初始完成后一并赋值
-    /// 注意它是用key来索引的
+    /// 配置表初始完成之前，某些对象是不能得到正确赋值的，所以把它们暂时存起来，在配置表初始完成后一并赋值，注意它是用key来索引的
     /// </summary>
-    public void AddPostpone(ConfigDataBase cdb, PropertyInfo pi, string type, string key)
+    private void AddPostpone(ConfigDataBase cdb, PropertyInfo pi, string type, string key)
     {
         var arg = new XYZW<ConfigDataBase, PropertyInfo, string, string>(cdb, pi, type, key);
         postponeList.Add(arg);

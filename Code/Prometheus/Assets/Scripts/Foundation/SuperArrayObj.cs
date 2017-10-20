@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 /// <summary>
 /// SuperArray 存储ConfigDataBase对象
@@ -16,7 +17,7 @@ public class SuperArrayObj<T> : SuperArrayBase<T> where T : ConfigDataBase, new(
             if (_datas == null)
             {
                 _datas = new List<T>();
-                foreach (var id in dataList) _datas.Add(SuperConfig.Instance.GetConfigDataById<T>(ulong.Parse(id)));
+                foreach (var key in dataList) _datas.Add(SuperConfig.Instance.GetConfigDataBykey<T>(key));
             }
             return _datas;
         }
