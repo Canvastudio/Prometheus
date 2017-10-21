@@ -8,8 +8,8 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
 
     public int uid;
     [SerializeField]
-    private bool _isPower;
-    public bool isPower
+    private int _isPower;
+    public int Power
     {
         get
         {
@@ -25,7 +25,7 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
         }
     }
 
-    protected virtual void OnSetPowerState(bool value)
+    protected virtual void OnSetPowerState(int value)
     {
 
     }
@@ -85,6 +85,7 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
     private void OnConstructPowerGrid()
     {
         depth = int.MaxValue;
+        _isPower = 0;
     }
 
     public bool Equals(BoardInstanceBase other)

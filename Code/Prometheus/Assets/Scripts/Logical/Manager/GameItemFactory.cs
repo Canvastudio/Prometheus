@@ -133,6 +133,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         FightComponet fightComponet = player.GetOrAddComponet<FightComponet>();
         player.fightComponet = fightComponet;
 
+        SkillPointsComponet skillPointsComponet = player.GetOrAddComponet<SkillPointsComponet>();
+        player.skillPointsComponet = skillPointsComponet;
+        skillPointsComponet.owner = player;
+
         StageCore.Instance.RegisterItem(player);
         player.typeId = uid;
         player.InitInfoUI();

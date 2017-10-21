@@ -143,11 +143,11 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         pwr.text = depth.ToString();
     }
 
-    protected override void OnSetPowerState(bool value)
+    protected override void OnSetPowerState(int value)
     {
         base.OnSetPowerState(value);
 
-        if (value)
+        if (value == 1)
         {
             pwr.color = Color.blue;
         }

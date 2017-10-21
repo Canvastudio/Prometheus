@@ -9,6 +9,7 @@ public class Player : LiveItem {
     public PlayerInitConfig config;
     public Inventory inventory = new Inventory();
     public FightComponet fightComponet;
+    public SkillPointsComponet skillPointsComponet;
     
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {

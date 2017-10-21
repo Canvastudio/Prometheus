@@ -79,7 +79,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     /// 
     /// </summary>
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
-
+    public Dictionary<ulong, int> _temp_listInstance = new Dictionary<ulong, int>();
     private void Start()
     {
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
@@ -189,6 +189,13 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;
 
+        _temp_listInstance.Clear();
+
+        foreach(var ins in listInstance)
+        {
+            _temp_listInstance.Add(ins.chipInventory.config.id, ins.Power);
+        }
+
         InitChipList();
     }
 
@@ -196,16 +203,47 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
+
+        CheckSkillPointAndProperty();
     }
 
     public void CheckSkillPointAndProperty()
     {
+        for (int i = 0; i < listInstance.Count; ++i)
+        {
+            var ins = listInstance[i];
 
+            int power;
+
+            if(!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out power))
+            {
+                power = 0;
+            }
+
+            int change_power = ins.Power - power;
+
+            if (change_power > 0)
+            {
+                var sp = ins.chipInventory.config.skillPoint;
+                int c = sp.Count();
+                {
+                    for (int m = 0; m < c; ++m)
+                    {
+                        ulong skill_id = (ulong)sp[m, 0];
+                        int count = sp[m, 1];
+                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * power);
+                    }
+                }
+
+            }
+        }
     }
 
     private void InitChipList()
     {
-        var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
+        ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
+
+       var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
 
         for (int i = 0; i < chipList.Count; ++i)
         {
@@ -431,7 +469,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                     {
                         pg.powerGridCastPower += instance.castPower;
                         list.RemoveAt(m);
-                        instance.isPower = true;
+                        instance.Power = 1;
                         List<BoardInstanceBase> list1;
                         if(pg.activeDic.TryGetValue(depth_list.Key, out list1))
                         {
