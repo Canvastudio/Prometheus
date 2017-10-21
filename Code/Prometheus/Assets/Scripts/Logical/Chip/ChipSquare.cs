@@ -30,6 +30,21 @@ public class ChipSquare : MonoBehaviour {
     public int row;
     public int col;
 
+    private bool _isActive;
+    public bool isActive
+    {
+        get
+        {
+            return _isActive;
+        }
+        set
+        {
+            gameObject.SetActive(value);
+            _isActive = value;
+        }
+    }
+
+
     private int _temp;
 
     public static string[] chipSquareSpriteName = new string[]

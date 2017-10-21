@@ -548,7 +548,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 733013760}
-  - component: {fileID: 733013761}
   - component: {fileID: 733013764}
   - component: {fileID: 733013763}
   - component: {fileID: 733013765}
@@ -577,29 +576,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 472}
   m_SizeDelta: {x: 650, y: 943.3}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &733013761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 733013759}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 6
-  m_StartCorner: 1
-  m_StartAxis: 0
-  m_CellSize: {x: 120, y: 120}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 1
-  m_ConstraintCount: 6
 --- !u!114 &733013763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,7 +1161,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1533297349}
-  - component: {fileID: 1163890064}
   m_Layer: 5
   m_Name: ChipBoardRoot
   m_TagString: Untagged
@@ -1193,30 +1168,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1163890064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114746755429132816, guid: c861e6f01ab338a48adee8e237c6bbc3,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1163890062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 60, y: 60}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 1
-  m_ConstraintCount: 11
 --- !u!1 &1230998635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,8 +1361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3221bc79d0febcc4f9f2339a2cb0b183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rowNum: 20
-  colNum: 11
+  rowNum: 3
+  colNum: 3
   chipSquare: {fileID: 114898044491075630, guid: 9f1bfbf3be0d6ac41b29282829fef4af,
     type: 2}
   listItem: {fileID: 824867705}
@@ -1429,6 +1380,12 @@ MonoBehaviour:
   closeBtn: {fileID: 839511604}
   itemWidth: 60
   camera: {fileID: 2105311307}
+  powerGridArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  powerGridUid: 0
   normalSpirte: {fileID: 21300000, guid: 17a70ef816075465ca7b89198a8ac5ba, type: 3}
   positiveSprite: {fileID: 21300000, guid: f6fbb2cbd12de4b0d982f3c014358902, type: 3}
   negativeSprite: {fileID: 21300000, guid: cdeef5d3e8dee434883d62232f90bede, type: 3}

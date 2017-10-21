@@ -27,6 +27,11 @@ public class Monster : LiveItem
     /// </summary>
     public ulong cid;
 
+    /// <summary>
+    /// 战斗组件
+    /// </summary>
+    public FightComponet fightComponet;
+
     public override void OnDiscoverd()
     {
         base.OnDiscoverd();

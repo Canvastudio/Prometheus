@@ -7,7 +7,28 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
 
 
     public int uid;
-    public bool isPower = false;
+    [SerializeField]
+    private bool _isPower;
+    public bool isPower
+    {
+        get
+        {
+            return _isPower;
+        }
+        set
+        {
+#if UNITY_EDITOR
+
+            OnSetPowerState(value);
+#endif
+            _isPower = value;
+        }
+    }
+
+    protected virtual void OnSetPowerState(bool value)
+    {
+
+    }
 
     public int row = int.MinValue;
     public int col = int.MinValue;
@@ -32,9 +53,14 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
     }
 
     /// <summary>
-    /// 和它连接的节点
+    /// 和负极它连接的节点
     /// </summary>
-    public List<BoardInstanceBase> connectInstance = new List<BoardInstanceBase>();
+    public List<BoardInstanceBase> negativeConnectInstance = new List<BoardInstanceBase>();
+
+    /// <summary>
+    /// 和正极极它连接的节点
+    /// </summary>
+    public List<BoardInstanceBase> positiveConnectInstance = new List<BoardInstanceBase>();
 
     /// <summary>
     /// 实例所属的电网
@@ -58,7 +84,6 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
 
     private void OnConstructPowerGrid()
     {
-        isPower = false;
         depth = int.MaxValue;
     }
 

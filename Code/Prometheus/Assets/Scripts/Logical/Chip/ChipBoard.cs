@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class ChipBoard : SingleGameObject<ChipBoard>
 {
 
-    [SerializeField]
-    int rowNum = 20;
-    [SerializeField]
-    int colNum = 11;
+
+    const int maxRowNum = 23;
+    const int maxColNum = 11;
+
+    public int rowNum = 3;
+    public int colNum = 3;
 
     [Space(5)]
     [SerializeField]
@@ -40,20 +42,17 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     CanvasGroup canvasGroup;
     [SerializeField]
     Button closeBtn;
-    [SerializeField]
-    float itemWidth = 60f;
+
+    float itemWidth = 50f;
 
     public Camera camera;
 
     private ChipDiskConfig config;
-    private ChipSquare[,] chipSquareArray = new ChipSquare[h, w];
+    private ChipSquare[,] chipSquareArray = new ChipSquare[maxRowNum, maxColNum ];
     private List<BoardSupplyInstance> powerSupplyList;
     [SerializeField]
-    private BoardPowerGrid[] powerGridArray = new BoardPowerGrid[4];
+    private List<BoardPowerGrid> powerGridArray = new List<BoardPowerGrid>(4);
     private List<BoardPowerGrid> powerGridSearchList = new List<BoardPowerGrid>(4);
-
-    const int w = 11;
-    const int h = 20;
 
     string itemName = "CI";
     string instanceName = "BI";
@@ -67,6 +66,14 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     public Sprite normalSpirte;
     public Sprite positiveSprite;
     public Sprite negativeSprite;
+
+    int midRowNum;
+    int midColNum;
+
+    /// <summary>
+    /// 芯片范围的4个值(r1,c1) 左上,(r2,c2)右下
+    /// </summary>
+    int r1, r2, c1, c2;
 
     /// <summary>
     /// 
@@ -91,10 +98,13 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         int power_id = 0;
         int power = 0;
         int pi = 0;
-        
-        for (int i = 0; i < rowNum; ++i)
+
+        midRowNum = maxRowNum / 2;
+        midColNum = maxColNum / 2;
+
+        for (int i = 0; i < maxRowNum; ++i)
         {
-            for (int m = 0; m < colNum; ++m)
+            for (int m = 0; m < maxColNum; ++m)
             {
                 ChipSquare chip = GameObject.Instantiate(chipSquare, chipBoardRoot);
 
@@ -112,19 +122,62 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                     supply.row = i;
                     supply.col = m;
                     supply.uid = 1 << power_id;
-                    powerSupplyList.Add(supply);
                     chip.state = ChipSquareState.Power;
                     chip.supplyInstance = supply;
                 }
 
                 chip.row = i;
                 chip.col = m;
+
+                chip.transform.localPosition = new Vector3(
+                    itemWidth * (m - midColNum),
+                    itemWidth * (midRowNum - i),
+                    0
+                    );
             }
 
             yield return 0;
         }
 
-        for (int i =0;i < powerSupplyList.Count; ++i)
+
+
+
+        CalculteChipBoardBound();
+    }
+
+    public void CalculteChipBoardBound()
+    {
+        powerSupplyList.Clear();
+
+        r1 = Mathf.Max(0, midRowNum - rowNum);
+        r2 = Mathf.Min(maxRowNum - 1, midRowNum + rowNum);
+        c1 = Mathf.Max(0, midColNum - colNum);
+        c2 = Mathf.Min(maxColNum - 1, midColNum + colNum);
+
+        for (int m = 0; m < maxRowNum; ++m)
+        {
+            for (int n = 0; n < maxColNum; ++n)
+            {
+                bool active = (m >= r1 && m <= r2) && (n >= c1 && n <= c2);
+                chipSquareArray[m, n].isActive = active;
+
+                if (chipSquareArray[m, n].supplyInstance != null)
+                {
+                    if (!active)
+                    {
+
+                        chipSquareArray[m, n].supplyInstance.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        powerSupplyList.Add(chipSquareArray[m, n].supplyInstance);
+                    }
+                }
+
+            }
+        }
+
+        for (int i = 0; i < powerSupplyList.Count; ++i)
         {
             var supply = powerSupplyList[i];
             supply.transform.localPosition = chipSquareArray[supply.row, supply.col].transform.localPosition;
@@ -143,6 +196,11 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
+    }
+
+    public void CheckSkillPointAndProperty()
+    {
+
     }
 
     private void InitChipList()
@@ -178,35 +236,59 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             return null;
         }
 
+        RefreshChipInstanceConnectInfo(instance);
+        listInstance.Add(instance);
+
+        ConstructPowerGrid();
+
+        return instance;
+    }
+
+    private void RefreshChipInstanceConnectInfo(ChipBoardInstance instance)
+    {
+        instance.negativeConnectInstance.Clear();
+        instance.positiveConnectInstance.Clear();
+
+        //寻找他的正极相连的负极极和电源
         int r, c;
         instance.GetInPowerRC(out r, out c);
-
         var chipSquares = FindOutPowerSquareAround(r, c);
-
         if (chipSquares.Count > 0)
         {
             for (int i = 0; i < chipSquares.Count; ++i)
             {
                 if (chipSquares[i].boardInstance != null)
                 {
-                    chipSquares[i].boardInstance.connectInstance.Add(instance);
-                    chipSquares[i].boardInstance.powerGrid.isDirty = true;
-                    instance.connectInstance.Add(chipSquares[i].boardInstance);
+                    chipSquares[i].boardInstance.negativeConnectInstance.Add(instance);
+                    instance.positiveConnectInstance.Add(chipSquares[i].boardInstance);
                 }
                 else
                 {
-                    instance.connectInstance.Add(chipSquares[i].supplyInstance);
-                    chipSquares[i].supplyInstance.powerGrid.isDirty = true;
-                    chipSquares[i].supplyInstance.connectInstance.Add(instance);
+                    instance.positiveConnectInstance.Add(chipSquares[i].supplyInstance);
+                    chipSquares[i].supplyInstance.negativeConnectInstance.Add(instance);
                 }
             }
         }
 
-        listInstance.Add(instance);
-
-        ConstructPowerGrid();
-
-        return instance;
+        //寻找他的负极相连的正极
+        instance.GetOutPowerRC(out r, out c);
+        chipSquares = FindInPowerSquareAround(r, c);
+        if (chipSquares.Count > 0)
+        {
+            for (int i = 0; i < chipSquares.Count; ++i)
+            {
+                if (chipSquares[i].boardInstance != null)
+                {
+                    chipSquares[i].boardInstance.positiveConnectInstance.Add(instance);
+                    instance.negativeConnectInstance.Add(chipSquares[i].boardInstance);
+                }
+                else
+                {
+                    instance.negativeConnectInstance.Add(chipSquares[i].supplyInstance);
+                    chipSquares[i].supplyInstance.positiveConnectInstance.Add(instance);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -219,6 +301,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         Debug.Log("构建电网开始： " + Time.realtimeSinceStartup);
 
         powerGridSearchList.Clear();
+        powerGridArray.Clear();
 
         List<BoardInstanceBase> connect_list = new List<BoardInstanceBase>(10);
 
@@ -230,15 +313,21 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         {
             var supply = powerSupplyList[i];
 
-            if (supply.connectInstance.Count > 0)
-            {
-                _boardPowerGrid = powerGridArray[i];
+                _boardPowerGrid = supply.GetOrAddComponet<BoardPowerGrid>();
 
-                _boardPowerGrid = new BoardPowerGrid(1 << i);
+                _boardPowerGrid.Clean();
+
+                _boardPowerGrid.id = i << i;
+
+                supply.powerGrid = _boardPowerGrid;
+
+                powerGridArray.Add(_boardPowerGrid);
 
                 _boardPowerGrid.AddSupply(supply);
 
-                _boardPowerGrid.searchList.AddRange(supply.connectInstance);
+            if (supply.negativeConnectInstance.Count > 0)
+            {
+                _boardPowerGrid.searchList.AddRange(supply.negativeConnectInstance);
 
                 supply.depth = 0;
 
@@ -277,7 +366,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                         child_node.depth = depth;
                         child_node.powerGrid = _boardPowerGrid;
                         unactive_list.Add(child_node);
-                        _boardPowerGrid.searchList.AddRange(child_node.connectInstance);
+
+                        _boardPowerGrid.searchList.AddRange(child_node.negativeConnectInstance);
                     }
                     else if (child_node.powerGrid.id == _boardPowerGrid.id)
                     {
@@ -298,18 +388,16 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                             connect_list.Add(snode);
                         }
 
-                        child_node.powerGrid.searchList.Clear();
-
                         foreach (var pair in child_node.powerGrid.unactiveDic)
                         {
                             _boardPowerGrid.unactiveDic[pair.Key].AddRange(pair.Value);
                         }
 
-                        child_node.powerGrid.unactiveDic.Clear();
-
                         _boardPowerGrid.AddSupply(child_node.powerGrid.supplyList);
 
-                        child_node.powerGrid.supplyList.Clear();
+                        powerGridArray.Remove(child_node.powerGrid);
+
+                        child_node.powerGrid.Clean();
 
                         child_node.powerGrid = _boardPowerGrid;
                     }
@@ -320,6 +408,51 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                     powerGridSearchList.Remove(_boardPowerGrid);
                 }
             }
+        }
+
+        bool power_leak = false;
+
+        for (int i = 0; i < powerGridArray.Count; ++i)
+        {
+            var power_grid = powerGridArray[i];
+
+            foreach(var depth_list in power_grid.unactiveDic)
+            {
+                if (power_leak) break;
+
+                var list = depth_list.Value;
+                list.Sort(InstanceComparison);
+                list.Reverse();
+                for(int m = list.Count -1; m >=0;--m)
+                {
+                    var instance = list[m];
+                    var pg = instance.powerGrid;
+                    if (pg.powerGridTotalPower >= pg.powerGridCastPower + instance.castPower)
+                    {
+                        pg.powerGridCastPower += instance.castPower;
+                        list.RemoveAt(m);
+                        instance.isPower = true;
+                        List<BoardInstanceBase> list1;
+                        if(pg.activeDic.TryGetValue(depth_list.Key, out list1))
+                        {
+                            list.Add(instance);
+                        }
+                        else
+                        {
+                            list1 = new List<BoardInstanceBase>();
+                            list1.Add(instance);
+                            pg.activeDic.Add(depth_list.Key, list1);
+                        }
+                    }
+                    else
+                    {
+                        power_leak = true;
+                        break;
+                    }
+                }
+                
+            }
+            
         }
 
         Debug.Log("构建电网结束： " + Time.realtimeSinceStartup);
@@ -337,9 +470,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         var models = RemoveRedundant(model, out rn, out cn, out mr, out mc);
 
         //仔细想想这个和字符串匹配一样 可以做很多的算法优化啊...
-        for (int r = 0; r <= h - 3; ++r)
+        for (int r = r1; r <= r2; ++r)
         {
-            for (int c = 0; c <= w - 3; ++c)
+            for (int c = c1; c <= c2; ++c)
             {
                 if (!MatrixPut(r, c, rn, cn, models, instance))
                 {
@@ -385,37 +518,21 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             instance.col = c + 1;
 
 
-            for (int i = 0; i< instance.connectInstance.Count; ++i)
+            for (int i = 0; i< instance.positiveConnectInstance.Count; ++i)
             {
-                var ins = instance.connectInstance[i];
+                var ins = instance.positiveConnectInstance[i];
 
-                ins.connectInstance.Remove(instance);
+                ins.negativeConnectInstance.Remove(instance);
             }
 
-            instance.connectInstance.Clear();
-
-            instance.GetInPowerRC(out r, out c);
-
-            var chipSquares = FindOutPowerSquareAround(r, c);
-
-            if (chipSquares.Count > 0)
+            for (int i = 0; i < instance.negativeConnectInstance.Count; ++i)
             {
-                for (int i = 0; i < chipSquares.Count; ++i)
-                {
-                    if (chipSquares[i].boardInstance != null)
-                    {
-                        chipSquares[i].boardInstance.connectInstance.Add(instance);
-                        chipSquares[i].boardInstance.powerGrid.isDirty = true;
-                        instance.connectInstance.Add(chipSquares[i].boardInstance);
-                    }
-                    else
-                    {
-                        instance.connectInstance.Add(chipSquares[i].supplyInstance);
-                        chipSquares[i].supplyInstance.powerGrid.isDirty = true;
-                        chipSquares[i].supplyInstance.connectInstance.Add(instance);
-                    }
-                }
+                var ins = instance.negativeConnectInstance[i];
+
+                ins.positiveConnectInstance.Remove(instance);
             }
+
+            RefreshChipInstanceConnectInfo(instance);
 
             ConstructPowerGrid();
             return true;
@@ -429,7 +546,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     private bool ChipSquarePutable(int r, int c)
     {
         //保证目标sqaure的索引在正确的范围
-        if (r < 0 || r >= rowNum || c < 0 || c >= colNum) return false;
+        if (r < r1 || r > r2 || c < 0 || c > r2) return false;
 
         bool putable = chipSquareArray[r, c].state == ChipSquareState.Free
             && chipSquareArray[r, c].chipGrid != ChipGrid.None
@@ -440,8 +557,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
     private void ConvertVector2ToNodeRC(Vector2 vec2, out int r, out int c)
     {
-        float topBound = rowNum / 2f * itemWidth;
-        float rightBound = colNum / 2f * -itemWidth;
+        float topBound = (midRowNum + 0.5f) * itemWidth;
+        float rightBound = (midColNum + 0.5f) * -itemWidth;
 
         r = Mathf.FloorToInt((topBound - vec2.y) / itemWidth);
         c = Mathf.FloorToInt((vec2.x - rightBound) / itemWidth);
@@ -549,13 +666,27 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         for (int i = 0; i < rn; ++i)
         {
+            if (b == false) break;
+
             for (int m = 0; m < cn; ++m)
             {
+                if (r + i < r1 || r + i > r2)
+                {
+                    b = false;
+                    break;
+                }
+                if (c + m < c1 || c + i > c2)
+                {
+                    b = false;
+                    break;
+                }
+
                 if (modelsList[i * cn + m] > 0)
                 {
                     if (!ChipSquarePutable(r + i, c + m))
                     {
                         b = false;
+                        break;
                     }
 
                     if (m > 0 && i < rn - 1)
@@ -565,6 +696,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                             if (!ChipSquarePutable(r + i, c + m - 1) && !ChipSquarePutable(r + i + 1, c + m))
                             {
                                 b = false;
+                                break;
                             }
                         }
 
@@ -625,6 +757,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             return false;
         }
 
+        ChipGrid require_square = instance.chipInventory.config.chipGridReqire;
+        bool square_check = (require_square != ChipGrid.Normal);
+        bool all_meet = true;
 
         for (int i = 0; i < rn; ++i)
         {
@@ -650,11 +785,18 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                     {
                         chipSquare.state = ChipSquareState.Negative;
                     }
+
+                    if (square_check)
+                    {
+                        all_meet = chipSquare.chipGrid == require_square;
+                        square_check = all_meet;
+                    }
                 }
             }
         }
 
         instance.hasPut = true;
+        instance.chipGridMeet = all_meet;
 
         return true;
     }
@@ -685,9 +827,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         else return 0;
     });
 
-    public List<ChipSquare> FindPositiveSquareAround(int r, int c)
+    public List<ChipSquare> FindInPowerSquareAround(int r, int c)
     {
-        var list = FindAround(r, c);
+        var list = FindFourDirectionAround(r, c);
 
         for (int i = list.Count - 1; i >= 0; --i)
         {
@@ -710,7 +852,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
     public List<ChipSquare> FindOutPowerSquareAround(int r, int c)
     {
-        var list = FindAround(r, c);
+        var list = FindFourDirectionAround(r, c);
 
         for (int i = list.Count - 1; i >= 0; --i)
         {
@@ -738,7 +880,28 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         {
             for (int p = -1; p <= 1; ++p)
             {
-                if (r + q >= 0 && r + q < rowNum && c + p >= 0 && c + p < colNum)
+                if (r + q >= r1 && r + q <= r2 && c + p >= c1 && c + p < c2)
+                {
+                    list.Add(chipSquareArray[r + q, c + p]);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public List<ChipSquare> FindFourDirectionAround(int r, int c)
+    {
+        List<ChipSquare> list = new List<ChipSquare>(4);
+
+        for (int q = -1; q <= 1; ++q)
+        {
+            for (int p = -1; p <= 1; ++p)
+            {
+                if (q != 0 && p != 0) continue;
+                if (q == 0 && p == 0) continue;
+
+                if (r + q >= r1 && r + q <= r2 && c + p >= c1 && c + p <= c2)
                 {
                     list.Add(chipSquareArray[r + q, c + p]);
                 }

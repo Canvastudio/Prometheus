@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Player : LiveItem {
 
+    public ulong typeId = 1;
     public PlayerInitConfig config;
     public Inventory inventory = new Inventory();
-
+    public FightComponet fightComponet;
+    
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
         property.SetFloatProperty(GameProperty.motorized, motorized)

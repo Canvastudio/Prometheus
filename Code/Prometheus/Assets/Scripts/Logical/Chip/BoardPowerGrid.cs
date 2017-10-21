@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[System.Serializable]
-public class BoardPowerGrid {
+public class BoardPowerGrid : MonoBehaviour{
 
     public int id;
-
-    /// <summary>
-    /// 是否在刷新的时候需要去刷新它的数据
-    /// </summary>
-    public bool isDirty = false;
 
     /// <summary>
     /// 一个电网包含的电源，也就是这个网状啊结构遍历的起点
@@ -33,11 +27,6 @@ public class BoardPowerGrid {
     /// </summary>
     public List<BoardInstanceBase> searchList = new List<BoardInstanceBase>();
 
-    public BoardPowerGrid(int id)
-    {
-        this.id = id;
-    }
-
     public void AddSupply(BoardInstanceBase supply)
     {
         powerGridTotalPower += supply.powerSupply;
@@ -50,23 +39,61 @@ public class BoardPowerGrid {
         {
             powerGridTotalPower += supply.powerSupply;
             supplyList.Add(supply);
+            supply.powerGrid = this;
         }
     }
 
     /// <summary>
     /// 电网总共能提供的电量
     /// </summary>
-    public float powerGridTotalPower =0;
+    [SerializeField]
+    private float _powerGridTotalPower = 0;
+    public float powerGridTotalPower
+    {
+        get { return _powerGridTotalPower; }
+        set
+        {
+            remainingDirty = true;
+            _powerGridTotalPower = value;
+        }
+    }
+
 
     /// <summary>
     /// 当前电网总共消耗的电量
     /// </summary>
-    public float powerGridCastPower = 0;
+    [SerializeField]
+    private float _powerGridCastPower = 0;
+    public float powerGridCastPower
+    {
+        get { return _powerGridCastPower; }
+        set
+        {
+            remainingDirty = true;
+            _powerGridCastPower = value;
+        }
+    }
 
 
+    public bool remainingDirty = false;
 
     private void OnPowerGridRefresh()
     {
         powerGridCastPower = 0;
+    }
+
+    void LateUpdate()
+    {
+        if (remainingDirty) remainingDirty = false;
+    }
+
+    public void Clean()
+    {
+        supplyList.Clear();
+        activeDic.Clear();
+        unactiveDic.Clear();
+        searchList.Clear();
+        _powerGridCastPower = 0;
+        _powerGridTotalPower = 0;
     }
 }

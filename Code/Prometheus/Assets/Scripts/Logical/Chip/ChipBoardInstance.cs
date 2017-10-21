@@ -19,7 +19,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
     private Vector3 temp_localpos;
     private Vector2 offset;
 
-  
+    public bool chipGridMeet = false;
 
     public int positiveIndex = int.MinValue;
     public int negativeIndex = int.MinValue;
@@ -141,5 +141,19 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         base.SetDepth(depth);
 
         pwr.text = depth.ToString();
+    }
+
+    protected override void OnSetPowerState(bool value)
+    {
+        base.OnSetPowerState(value);
+
+        if (value)
+        {
+            pwr.color = Color.blue;
+        }
+        else
+        {
+            pwr.color = Color.red;
+        }
     }
 }

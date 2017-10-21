@@ -80,6 +80,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         }
 
+        monster.fightComponet = fightComponet;
+
         StageCore.Instance.RegisterItem(monster);
 
         monster.pwr = pwr;
@@ -128,8 +130,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         //BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
-        StageCore.Instance.RegisterItem(player);
+        FightComponet fightComponet = player.GetOrAddComponet<FightComponet>();
+        player.fightComponet = fightComponet;
 
+        StageCore.Instance.RegisterItem(player);
+        player.typeId = uid;
         player.InitInfoUI();
 
         return player;
