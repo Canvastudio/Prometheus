@@ -374,7 +374,7 @@ public class SuperConfig : SingleObject<SuperConfig>
                     }
                     catch (Exception)
                     {
-                        throw new ArgumentException("配置表动态赋值出错：<" + className + ">   " + parName[j] + "=" + data[j]);
+                        throw new ArgumentException("配置表动态赋值出错：<" + className + "> (" + parType[j] + (splitMak == null ? "" : "[]") + ")" + parName[j] + "=" + data[j]);
                     }
                 }
             }
@@ -395,10 +395,10 @@ public class SuperConfig : SingleObject<SuperConfig>
     {
         if (value == null) return null;
         if (value == "") return "";
-        Regex reg = new Regex(@"^"".*""$");
-        if (reg.IsMatch(value)) value = value.Substring(1, value.Length - 2);
         Regex reg2 = new Regex(@"[\r\n]");
         value = reg2.Replace(value, "");
+        Regex reg = new Regex(@"^"".*""$");
+        if (reg.IsMatch(value)) value = value.Substring(1, value.Length - 2);
         return value.Trim();
     }
 
