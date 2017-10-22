@@ -16,17 +16,10 @@ public class SkillPoint {
     public ulong[] skillIds;
     public int[] updateLimit;
 
-    private ulong skillId;
+    public ulong skillId;
     private int _count;
     public int last_count;
-    private SkillPointSkillType _skillType;
-    public SkillPointSkillType skillType
-    {
-        get
-        {
-            return _skillType;
-        }
-    }
+
     public int count
     {
         get { return _count; }
@@ -49,41 +42,21 @@ public class SkillPoint {
 #endif
     }
 
-    public void GetSkillConfig(out ActiveSkillsConfig asc, out PassiveSkillsConfig psc, out SummonSkillsConfig ssc)
+    public ulong GetNewSkillId()
     {
         last_count = _count;
 
-        asc = null;
-        psc = null;
-        ssc = null;
-
-        for (int i = updateLimit.Length; i >= 0; --i)
+        for (int i = updateLimit.Length - 1; i >= 0; --i)
         {
             if (updateLimit[i] <= _count)
             {
                 skillId = skillIds[i];
 
-                if (ConfigDataBase.ExistsId<ActiveSkillsConfig>(skillId))
-                {
-                    asc = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skillId);
-                    _skillType = SkillPointSkillType.Active;
-                }
-                else if (ConfigDataBase.ExistsId<PassiveSkillsConfig>(skillId))
-                {
-                    psc = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skillId);
-                    _skillType = SkillPointSkillType.Passive;
-                }
-                else if (ConfigDataBase.ExistsId<PassiveSkillsConfig>(skillId))
-                {
-                    ssc = ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(skillId);
-                    _skillType = SkillPointSkillType.Summon;
-                }
-
-                return;
+                 return skillId;
             }
         }
 
-        _skillType = SkillPointSkillType.None;
+        return 0;
     }
 
     

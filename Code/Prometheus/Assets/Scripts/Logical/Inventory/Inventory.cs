@@ -28,6 +28,19 @@ public class Inventory {
         }
     }
 
+    public int GetStuffCount(ulong id)
+    {
+        StuffInventory stuffInventory;
+        if (stuffDic.TryGetValue(id, out stuffInventory))
+        {
+            return stuffInventory.count;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public void AddChip(ulong id)
     {
         chipList.Add(new ChipInventory(id));

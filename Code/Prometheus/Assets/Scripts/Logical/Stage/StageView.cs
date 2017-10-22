@@ -11,25 +11,37 @@ public class StageView : SingleGameObject<StageView> {
 
     private int lastRow = 0;
     private int lastColumn = 0;
+
+    [Space(5)]
     [SerializeField]
     Brick _brickPrefab;
+    [SerializeField]
+    SkillListItem _skillListItemPrefab;
+
+    [Space(5)]
     public Transform liveItemRoot;
     public Transform brickRoot;
     public Transform moveRoot;
+    public Transform skillListRoot;
+
     [SerializeField]
     public SpriteAtlas brickAtlas;
     public int viewBrickRow = 9;
     public float brickWidth = 120;
     public int column_per_row = 6;
     public string brickName = "brick";
+    public string skillListItemName = "SLIN";
     public Camera show_camera;
     public RectTransform viewArea;
+
+    private List<SkillListItem> skillItemList = new List<SkillListItem>(10);
 
     protected override void Init()
     {
         base.Init();
 
         ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
+        ObjPool<SkillListItem>.Instance.InitOrRecyclePool(skillListItemName, _skillListItemPrefab);
     }
 
     #region Add Brick
@@ -116,6 +128,44 @@ public class StageView : SingleGameObject<StageView> {
         BrickCore.Instance.CheckNeedCreawteMoudel();
 
         Messenger.Invoke(SA.MapMoveDown);
+    }
+
+    public void AddSkillIntoSkillList(ulong uid)
+    {
+#if UNITY_EDITOR
+        foreach(var item in skillItemList)
+        {
+            if (item.skill_id == uid)
+            {
+                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + uid.ToString());
+            }
+        }
+#endif
+
+        if (uid > 0)
+        {
+            int _id;
+            var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
+            list_item.id = _id;
+            list_item.SetInfo(uid);
+            list_item.SetParentAndNormalize(skillListRoot);
+            skillItemList.Add(list_item);
+        }
+    }
+
+    public void RemoveSkillFromSkillList(ulong uid)
+    {
+        for (int i = 0; i < skillItemList.Count; ++i)
+        {
+            if (skillItemList[i].skill_id == uid)
+            {
+                ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
+                skillItemList.RemoveAt(i);
+                return;
+            }
+        }
+
+        Debug.LogError("青鑫：尝试在技能列表里移除一个不存在的技能");
     }
 
 }

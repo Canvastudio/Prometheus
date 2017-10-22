@@ -21,6 +21,26 @@ public class Player : LiveItem {
         return this;
     }
 
+    public Player RefreshSkillPointStateToSkill()
+    {
+        for (int i =0; i < skillPointsComponet.pointList.Count; ++i)
+        {
+            var skill_point = skillPointsComponet.pointList[i];
+
+            if (skill_point.last_count != skill_point.count)
+            {
+                if (skill_point.skillId > 0)
+                {
+                    StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
+                }
+
+                StageView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
+            }
+        }
+
+        return this;
+    }
+
     public override IEnumerator MeleeAttackTarget<T>(T target)
     {
         var e = base.MeleeAttackTarget(target);

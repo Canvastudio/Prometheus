@@ -347,6 +347,7 @@ public static class SA
     public const string StageTimeCast = "STC";
     public const string MapMoveDown = "MMD";
     public const string MonsterDead = "MSD";
+    public const string StuffCountChange = "SCC";
 }
 
 public static class ST

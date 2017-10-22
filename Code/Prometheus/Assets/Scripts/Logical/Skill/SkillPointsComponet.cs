@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SkillPointsComponet : MonoBehaviour {
 
-    public FightComponet fightComponet;
     public List<SkillPoint> pointList = new List<SkillPoint>();
 
     public void ChangeSkillPointCount(ulong pointId, int count)
@@ -24,22 +23,5 @@ public class SkillPointsComponet : MonoBehaviour {
         skillPoint.ChangeSkillPoint(count);
         pointList.Add(skillPoint);
         
-    }
-
-    public void SkillPointToSkill()
-    {
-        ActiveSkillsConfig asc;
-        PassiveSkillsConfig psc;
-        SummonSkillsConfig ssc;
-
-        for (int i = 0; i < pointList.Count; ++i)
-        {
-            var p1 = pointList[i];
-
-            if (p1.last_count - p1.count != 0)
-            {
-                
-            }
-        }
     }
 }

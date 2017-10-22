@@ -38,4 +38,11 @@ public static class GameExtend  {
     }
 
     public static WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
+    public static void SetParentAndNormalize(this Component com, Transform parent)
+    {
+        com.gameObject.SetActive(true);
+        com.transform.SetParent(parent);
+        com.transform.localScale = Vector3.one;
+    }
 }

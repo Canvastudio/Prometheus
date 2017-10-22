@@ -205,6 +205,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         canvasGroup.blocksRaycasts = false;
 
         CheckSkillPointAndProperty();
+        StageCore.Instance.Player.RefreshSkillPointStateToSkill();
     }
 
     public void CheckSkillPointAndProperty()
