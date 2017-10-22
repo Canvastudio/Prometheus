@@ -15,14 +15,10 @@ public class SkillPoint {
     public ulong id;
     public ulong[] skillIds;
     public int[] updateLimit;
-    public bool isDirty
-    {
-        get { return _temp_count == _count; }
-    }
 
     private ulong skillId;
     private int _count;
-    private int _temp_count;
+    public int last_count;
     private SkillPointSkillType _skillType;
     public SkillPointSkillType skillType
     {
@@ -55,7 +51,7 @@ public class SkillPoint {
 
     public void GetSkillConfig(out ActiveSkillsConfig asc, out PassiveSkillsConfig psc, out SummonSkillsConfig ssc)
     {
-        _temp_count = _count;
+        last_count = _count;
 
         asc = null;
         psc = null;

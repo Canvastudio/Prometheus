@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightComponet :MonoBehaviour, ITimeDrive {
+public class FightComponet :MonoBehaviour {
 
     /// <summary>
     /// ref主动技能配置表
