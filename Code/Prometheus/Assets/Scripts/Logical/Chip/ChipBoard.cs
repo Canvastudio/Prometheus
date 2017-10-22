@@ -222,7 +222,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
             int change_power = ins.Power - power;
 
-            if (change_power > 0)
+            if (change_power != 0)
             {
                 var sp = ins.chipInventory.config.skillPoint;
                 int c = sp.Count();
@@ -231,7 +231,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                     {
                         ulong skill_id = (ulong)sp[m, 0];
                         int count = sp[m, 1];
-                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * power);
+                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
                     }
                 }
 

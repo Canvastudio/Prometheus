@@ -10,7 +10,7 @@ public enum SkillPointSkillType
     Summon,
 }
 
-public class SkillPoint : MonoBehaviour {
+public class SkillPoint {
 
     public ulong id;
     public ulong[] skillIds;
