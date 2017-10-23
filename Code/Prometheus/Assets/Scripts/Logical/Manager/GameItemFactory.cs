@@ -103,12 +103,15 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         monster.cid = id;
         monster.lv = lv;
 
-
+        ulong AI_Id = config.ai[pwr];
+        monster.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
             monster.OnDiscoverd();
         }
+
+        monster.Init();
 
         return monster;
     }

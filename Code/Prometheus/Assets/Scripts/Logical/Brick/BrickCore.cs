@@ -324,7 +324,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public List<Brick> GetStandableBricks()
     {
-        var v_bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.VISIBLE, ST.Brick));
+        var v_bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.VISIBLE, ST.BRICK));
 
         for (int i = v_bricks.Count - 1; i >= 0; --i)
         {
@@ -370,6 +370,24 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public List<Monster> GetVisableMonsters()
     {
-        return StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.VISIBLE, ST.ENEMY, ST.Monster));
+        return StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.VISIBLE, ST.ENEMY, ST.MONSTER));
+    }
+
+    public List<Node> GetNearbyNode(int r, int c, int distance)
+    {
+        List<Node> result = new List<Node>(distance * distance + (distance + 1) * (distance + 1));
+
+        for (int i = -distance; i <= distance; ++i)
+        {
+            for (int m = -distance; m <= distance; ++i)
+            {
+                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance)
+                {
+                    result.Add(GetNode(r + i, c + m));
+                }
+            }
+        }
+
+        return result;
     }
 }

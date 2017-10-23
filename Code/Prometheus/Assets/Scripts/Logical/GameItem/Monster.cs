@@ -32,19 +32,80 @@ public class Monster : LiveItem
     /// </summary>
     public AIConfig AIConfig;
 
+    private bool block_other = false;
+
+    public int discover_howl;
+    public int dead_howl;
+
     /// <summary>
     /// 战斗组件
     /// </summary>
     public FightComponet fightComponet;
 
+    private int player_distance = 0;
+
+    public void Init()
+    {
+        Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
+    }
+
+    void OnDisable()
+    {
+        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
+    }
+   
+    public void CheckDistance()
+    {
+        player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
+
+        if (!isDiscovered && player_distance <= AIConfig.warning)
+        {
+            OnDiscoverd();
+        }
+
+        if (!block_other && player_distance <= 1)
+        {
+            BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+            block_other = true;
+        }
+    }
+
     public override void OnDiscoverd()
     {
         base.OnDiscoverd();
 
+        StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
+        StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
+
         if (standBrick != null)
         {
-            Debug.Log("发现: " + gameObject.name);
-            BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+            if (player_distance <= 1)
+            {
+                Debug.Log("发现: " + gameObject.name);
+                BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+                block_other = true;
+            }
+        }
+
+        var noise = AIConfig.noise.ToArray();
+        discover_howl = noise[0];
+        dead_howl = noise[1];
+
+        if (discover_howl > 0)
+        {
+            var nearby_list = BrickCore.Instance.GetNearbyNode(standBrick.row, standBrick.column, discover_howl);
+
+            foreach(var n in nearby_list)
+            {
+                Brick brick = (n.behavirour as Brick);
+
+                if (brick.brickType == BrickType.MONSTER
+                    && brick.item.isDiscovered == false)
+                {
+                    brick.item.OnDiscoverd();
+                }
+
+            }
         }
     }
 
@@ -62,11 +123,22 @@ public class Monster : LiveItem
         Messenger<Monster>.Invoke(SA.MonsterDead, this);
 
         base.OnDead();
-    }
 
+        if (dead_howl > 0)
+        {
+            var nearby_list = BrickCore.Instance.GetNearbyNode(standBrick.row, standBrick.column, dead_howl);
 
-    private void OnDisable()
-    {
+            foreach (var n in nearby_list)
+            {
+                Brick brick = (n.behavirour as Brick);
 
+                if (brick.brickType == BrickType.MONSTER
+                    && brick.item.isDiscovered == false)
+                {
+                    brick.item.OnDiscoverd();
+                }
+
+            }
+        }
     }
 }
