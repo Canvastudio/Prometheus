@@ -35,7 +35,7 @@ public class StageCore : SingleObject<StageCore> {
     /// <summary>
     /// 当前到了第几回合
     /// </summary>
-    public int totalRound;
+    public float totalTime;
 
     public bool isLooping = false;
 
@@ -54,6 +54,11 @@ public class StageCore : SingleObject<StageCore> {
     /// </summary>
     public StageRecording records;
 
+    /// <summary>
+    /// 玩家是处于动作中
+    /// </summary>
+    public bool playerDoing = false;
+
     protected override void Init()
     {
         base.Init();
@@ -65,6 +70,8 @@ public class StageCore : SingleObject<StageCore> {
 
         //监听一些重要事件
         Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
+
+        CoroCore.Instance.StartCoro(CheckTurnTime());
     }
 
     public void RegisterPlayer(Player player)
@@ -157,7 +164,7 @@ public class StageCore : SingleObject<StageCore> {
                 StageView.Instance.CancelPahtNode();
 
                 //如果没有处于自动状态，则等待并处理玩家点击事件
-                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick);
+                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<SkillListItem>(SA.PlayerClickSkill);
 
                 if (waitMsg.result.msg == SA.PlayerClickBrick)
                 {
@@ -248,16 +255,16 @@ public class StageCore : SingleObject<StageCore> {
                         }
                     }
                 }
-            }
+                else if (waitMsg.result.msg == SA.PlayerClickSkill)
+                {
+                    ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
 
-            Debug.Log("关卡action1： 玩家执行完毕");
+                    Debug.Log("使用技能id: " + skill_id);
+                }
+            }
 
             //等待玩家动作结束信号
             yield return AllActionFinish;
-
-            Debug.Log("根据消耗时间移动地图");
-
-            totalRound += 1;
         }
     }
 
@@ -265,9 +272,7 @@ public class StageCore : SingleObject<StageCore> {
     {
         while (!Instance.Player.moveComponent.MoveEnd())
         {
-            yield return StageCore.Instance.Player.moveComponent.MoveToNext(0.3f);
-
-            Debug.Log("Move GO!");
+            yield return StageCore.Instance.Player.moveComponent.MoveToNext();
         }
 
         //TODO: 触发非空砖块
@@ -321,20 +326,34 @@ public class StageCore : SingleObject<StageCore> {
         yield return 0;
     }
 
-    public void AddTurnTime(float time)
+     
+    public void TimeCast(float time)
     {
-        Debug.Log("时间增加: " + time);
-
         turnTime += time;
 
-        Messenger<float>.Invoke(SA.StageTimeCast, time);
+        totalTime += time;
+
+        Debug.Log("增加时间: " + time.ToString());
     }
 
-    public void AddTurnTimeAndMoveDown(float time)
+    public IEnumerator CheckTurnTime()
     {
-        turnTime += time;
+        while (true)
+        {
+            if (turnTime > 0)
+            {
+                turnTime = Mathf.Max(0, turnTime - Time.deltaTime);
+                TimeCastSoMoveDown(Time.deltaTime);
+                Messenger<float>.Invoke(SA.StageTimeCast, Time.deltaTime);
+            }
+
+            yield return 0;
+        }
+    }
+
+    public void TimeCastSoMoveDown(float time)
+    {
         StageView.Instance.MoveDownMap(time);
-        Messenger<float>.Invoke(SA.StageTimeCast, time);
     }
 }
 
@@ -343,6 +362,7 @@ public class StageCore : SingleObject<StageCore> {
 public static class SA
 {
     public const string PlayerClickBrick = "PCB";
+    public const string PlayerClickSkill = "PCS";
     public const string RefreshGameItemPos = "RGIP";
     public const string StageTimeCast = "STC";
     public const string MapMoveDown = "MMD";

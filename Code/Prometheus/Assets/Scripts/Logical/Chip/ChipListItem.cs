@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler  {
 
+    public int id;
+
     [SerializeField]
     List<Image> itemsList;
     [SerializeField]

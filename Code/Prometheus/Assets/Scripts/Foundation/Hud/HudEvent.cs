@@ -30,12 +30,13 @@ public class HudEvent : EventTrigger {
     private Button button;
 
 	void Awake() {
-	
-		button = this.GetComponent<Button>();
 
-		if(button != null) {
-			button.onClick.AddListener(OnClick);
-		}
+        if (button == null)
+        {
+            button = this.GetOrAddComponet<Button>();
+        }
+
+		button.onClick.AddListener(OnClick);
 
         orignalVec = transform.lossyScale;
         scaleVec = orignalVec * 1.1f;
@@ -51,8 +52,22 @@ public class HudEvent : EventTrigger {
 		return hudEvent;
 
 	}
-    
-	private void OnClick() {
+
+    public static HudEvent Get(Button btn)
+    {
+        var go = btn.gameObject;
+
+        HudEvent hudEvent = go.GetComponent<HudEvent>();
+
+        if (hudEvent == null) hudEvent = go.AddComponent<HudEvent>();
+
+        hudEvent.button = btn;
+
+        return hudEvent;
+
+    }
+
+    private void OnClick() {
 
         if (isLongPressTriggerd) return;
 

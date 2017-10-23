@@ -26,9 +26,7 @@ public class StageLoopState : IState
         //生成玩家
         BrickCore.Instance.CreatePlayer(1);
 
-        StageCore.Instance.Player.inventory.AddChip(100011);
-        StageCore.Instance.Player.inventory.AddChip(100026);
-        StageCore.Instance.Player.inventory.AddChip(100051);
+        StageCore.Instance.Player.inventory.AddChip(100001);
 
         yield return 0;
 

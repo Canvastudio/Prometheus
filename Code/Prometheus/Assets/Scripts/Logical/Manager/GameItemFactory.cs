@@ -7,9 +7,41 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     GameObject monster_1;
     GameObject player_1;
 
+    private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<string> skill)
+    {
+        int skill_Count = 0;
+
+        if (skill != null)
+        {
+            skill_Count = skill.Count();
+
+            for (int i = 0; i < skill_Count; ++i)
+            {
+                string type = skill[i, 0];
+                string skill_Id = skill[i, 1];
+
+                switch (type)
+                {
+                    case "p":
+                        PassiveSkillsConfig pconfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_Id);
+                        fightComponet.passiveSkillConfigs.Add(pconfig);
+                        break;
+                    case "a":
+                        ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_Id);
+                        fightComponet.activeSkillConfigs.Add(aconfig);
+                        break;
+                    case "s":
+                        SummonSkillsConfig sconfig = ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(skill_Id);
+                        fightComponet.summonSkillConfigs.Add(sconfig);
+                        break;
+                }
+            }
+        }
+    }
+
     public Monster CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
-        #region 基础属性
+
 
         if (monster_1 == null) monster_1 = Resources.Load("Prefab/Monster") as GameObject;
 
@@ -41,52 +73,37 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         monster.InitInfoUI();
 
-        #endregion
-        //添加战斗组件
-        #region 战斗组件
+
         FightComponet fightComponet = monster.GetOrAddComponet<FightComponet>();
 
-        int skill_Count = 0;
+        AddSkillToFightComponet(fightComponet, config.skill_normal);
 
-        if (config.skill_normal != null)
+        if (pwr >= 1)
         {
-            skill_Count = config.skill_normal.Count();
-
-
-            for (int i = 0; i < skill_Count; ++i)
-            {
-                string type = config.skill_normal[i, 0];
-                string skill_Id = config.skill_normal[i, 1];
-
-                switch (type)
-                {
-                    case "p":
-                        PassiveSkillsConfig pconfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_Id);
-                        fightComponet.passiveSkillConfigs.Add(pconfig);
-                        break;
-                    case "a":
-                        ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_Id);
-                        fightComponet.activeSkillConfigs.Add(aconfig);
-                        break;
-                    case "s":
-                        SummonSkillsConfig sconfig = ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(skill_Id);
-                        fightComponet.summonSkillConfigs.Add(sconfig);
-                        break;
-                }
-            }
-
-            fightComponet.SortAcitveSkill();
-            #endregion
-
+            AddSkillToFightComponet(fightComponet, config.skill_rare);
         }
 
-        monster.fightComponet = fightComponet;
+        if (pwr >= 2)
+        {
+            AddSkillToFightComponet(fightComponet, config.skill_elite);
+        }
 
+        if (pwr >= 3)
+        {
+            AddSkillToFightComponet(fightComponet, config.skill_boss);
+        }
+
+        fightComponet.SortAcitveSkill();
+
+        monster.fightComponet = fightComponet;
+        
         StageCore.Instance.RegisterItem(monster);
 
         monster.pwr = pwr;
         monster.cid = id;
         monster.lv = lv;
+
+
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {

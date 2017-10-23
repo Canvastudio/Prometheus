@@ -11,7 +11,8 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     [SerializeField]
     List<BoardInstanceNode> itemsList;
-
+    [SerializeField]
+    UnityEngine.UI.Button button;
     [SerializeField]
     UnityEngine.UI.Text pwr;
 
@@ -61,10 +62,14 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         transform.localPosition = temp_localpos;
     }
 
+    private void Awake()
+    {
+        HudEvent.Get(button.gameObject).onLongPress = OnLongPress;
+    }
 
     private void OnLongPress()
     {
-
+        ChipBoard.Instance.selectChip = this;
     }
 
     public void OnDrag(PointerEventData eventData)

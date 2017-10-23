@@ -5,25 +5,6 @@ using UnityEngine;
 
 public class FightComponet :MonoBehaviour {
 
-    /// <summary>
-    /// ref主动技能配置表
-    /// </summary>
-    public List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
-
-    /// <summary>
-    /// ref被动技能配置表
-    /// </summary>
-    public List<PassiveSkillsConfig> passiveSkillConfigs = new List<PassiveSkillsConfig>();
-
-    /// <summary>
-    /// ref召唤技能配置表
-    /// </summary>
-    public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
-
-    public MonoBehaviour ownerObject;
-
-    private List<ActiveSkillState> activeSort = new List<ActiveSkillState>();
-
     private class ActiveSkillState : IComparer<ActiveSkillState>
     {
         public ActiveSkillsConfig config;
@@ -101,7 +82,40 @@ public class FightComponet :MonoBehaviour {
         }
     }
 
-#region active skill region
+    public float time = 0;
+
+    /// <summary>
+    /// ref主动技能配置表
+    /// </summary>
+    public List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
+
+    /// <summary>
+    /// ref被动技能配置表
+    /// </summary>
+    public List<PassiveSkillsConfig> passiveSkillConfigs = new List<PassiveSkillsConfig>();
+
+    /// <summary>
+    /// ref召唤技能配置表
+    /// </summary>
+    public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
+
+    private List<ActiveSkillState> activeSort = new List<ActiveSkillState>();
+
+    private LiveItem _ownerObject;
+    public LiveItem ownerObject
+    {
+        get
+        {
+            if (_ownerObject == null)
+            {
+                _ownerObject = gameObject.GetComponent<LiveItem>();
+            }
+
+            return _ownerObject;
+        }
+    }
+
+
     public void SortAcitveSkill()
     {
         activeSort.Clear();
@@ -113,7 +127,29 @@ public class FightComponet :MonoBehaviour {
 
         activeSort.Sort();
     }
-#endregion
+
+    public void OnEnable()
+    {
+        Messenger<float>.AddListener(SA.StageTimeCast, ChangeTime);
+    }
+
+    public void OnDisable()
+    {
+        Messenger<float>.RemoveListener(SA.StageTimeCast, ChangeTime);
+    }
+    public void ChangeTime(float _time)
+    {
+        if (ownerObject.isDiscovered)
+        {
+            time += _time;
+
+            if (time >= 1)
+            {
+                OnTurn();
+                time -= 1;
+            }
+        }
+    }
 
     public void OnTurn()
     {
@@ -131,14 +167,15 @@ public class FightComponet :MonoBehaviour {
 
             if (activeSort[0].ready == 1)
             {
-
+                activeSort[0].activeTime += 1;
+                DoActiveSkill(activeSort[0].config);
             }
         }
     }
 
     public void DoActiveSkill(ActiveSkillsConfig config)
     {
-
+        Debug.Log("怪物" + gameObject.name + "释放技能: id: " + config.id);
     }
 }
 

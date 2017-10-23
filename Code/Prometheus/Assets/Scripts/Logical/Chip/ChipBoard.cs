@@ -42,6 +42,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     CanvasGroup canvasGroup;
     [SerializeField]
     Button closeBtn;
+    [SerializeField]
+    Button deleteBtn;
 
     float itemWidth = 50f;
 
@@ -67,6 +69,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     public Sprite positiveSprite;
     public Sprite negativeSprite;
 
+    [Space(5)]
+    public ChipBoardInstance selectChip;
+
     int midRowNum;
     int midColNum;
 
@@ -79,10 +84,12 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     /// 
     /// </summary>
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
-    public Dictionary<ulong, int> _temp_listInstance = new Dictionary<ulong, int>();
+    public Dictionary<ulong, ChipBoardInstance> _temp_listInstance = new Dictionary<ulong, ChipBoardInstance>();
     private void Start()
     {
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
+        HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
+
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
     }
@@ -193,7 +200,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         foreach(var ins in listInstance)
         {
-            _temp_listInstance.Add(ins.chipInventory.config.id, ins.Power);
+            _temp_listInstance.Add(ins.chipInventory.config.id, ins);
         }
 
         InitChipList();
@@ -208,17 +215,53 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         StageCore.Instance.Player.RefreshSkillPointStateToSkill();
     }
 
+    public void DeleteSelectChip()
+    {
+        if (selectChip != null)
+        {
+            ObjPool<ChipBoardInstance>.Instance.RecycleObj(instanceName, selectChip.uid);
+
+            int row = selectChip.row;
+            int col = selectChip.col;
+
+            for (int r = -1; r <= 1; ++r)
+            {
+                for (int c = -1; c <= 1; ++c)
+                {
+                    if (selectChip.chipInventory.model[(r+1)*3+c+1] > 0)
+                    {
+                        chipSquareArray[row + r, col + c].state = ChipSquareState.Free;
+                    }
+                }
+            }
+
+            for (int i =0; i <  listInstance.Count; ++i)
+            {
+                if (listInstance[i].uid == selectChip.uid)
+                {
+                    listInstance.RemoveAt(i);
+                }
+            }
+        }
+    }
+
     public void CheckSkillPointAndProperty()
     {
         for (int i = 0; i < listInstance.Count; ++i)
         {
             var ins = listInstance[i];
 
+            ChipBoardInstance chip;
             int power;
 
-            if(!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out power))
+            if(!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out chip))
             {
                 power = 0;
+            }
+            else
+            {
+                power = chip.Power;
+                _temp_listInstance.Remove(ins.chipInventory.config.id);
             }
 
             int change_power = ins.Power - power;
@@ -235,23 +278,47 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                         StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
                     }
                 }
+            }
+        }
 
+        foreach(var pair in _temp_listInstance)
+        {
+            ulong id = pair.Key;
+            int power = pair.Value.Power;
+
+            int change_power = -power;
+
+            if (change_power != 0)
+            {
+                var sp = pair.Value.chipInventory.config.skillPoint;
+                int c = sp.Count();
+                {
+                    for (int m = 0; m < c; ++m)
+                    {
+                        ulong skill_id = (ulong)sp[m, 0];
+                        int count = sp[m, 1];
+                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
+                    }
+                }
             }
         }
     }
 
     private void InitChipList()
     {
+        int id;
+
         ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
 
        var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
 
         for (int i = 0; i < chipList.Count; ++i)
         {
-            var chip = ObjPool<ChipListItem>.Instance.GetObjFromPool(itemName);
+            var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
             chip.transform.SetParent(chipListRoot);
             chip.transform.localScale = Vector3.one;
             chip.gameObject.SetActive(true);
+            chip.id = id;
             StartCoroutine(chip.InitItem(chipList[i]));
         }
     }
@@ -279,6 +346,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         listInstance.Add(instance);
 
         ConstructPowerGrid();
+
+        ObjPool<ChipListItem>.Instance.RecycleObj(itemName, item.id);
 
         return instance;
     }

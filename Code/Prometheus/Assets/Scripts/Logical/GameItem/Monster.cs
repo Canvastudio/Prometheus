@@ -28,6 +28,11 @@ public class Monster : LiveItem
     public ulong cid;
 
     /// <summary>
+    /// 行为逻辑配置表
+    /// </summary>
+    public AIConfig AIConfig;
+
+    /// <summary>
     /// 战斗组件
     /// </summary>
     public FightComponet fightComponet;

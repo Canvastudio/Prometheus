@@ -24,8 +24,11 @@ public class StageView : SingleGameObject<StageView> {
     public Transform moveRoot;
     public Transform skillListRoot;
 
-    [SerializeField]
+    [Space(5)]
     public SpriteAtlas brickAtlas;
+    public SpriteAtlas skillAtals;
+
+    [Space(5)]
     public int viewBrickRow = 9;
     public float brickWidth = 120;
     public int column_per_row = 6;
@@ -114,14 +117,11 @@ public class StageView : SingleGameObject<StageView> {
 
     public void MoveDownMap(float distance)
     {
-        Debug.Log("move down: " + distance);
-        //return;
-
-        if (StageCore.Instance.turnTime >= 4)
+        if (StageCore.Instance.totalTime >= 4)
         {
             LeanTween.moveLocalY(
                 moveRoot.gameObject,
-                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), 0.3f)
+                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance)
                 .setOnComplete(BrickCore.Instance.CheckNeedRecycelBrick);
         }
 

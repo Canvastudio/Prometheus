@@ -44,12 +44,14 @@ public class MoveComponet : MonoBehaviour {
 
             _brick = brick;
 
-            StageView.Instance.MoveDownMap(1);
+            float cast_time = 1f;
+
+            StageCore.Instance.TimeCast(cast_time);
 
             descr = LeanTween.moveLocal(
                 this.gameObject, 
-                transform.parent.InverseTransformPoint(brick.transform.position), 
-                0.3f)
+                transform.parent.InverseTransformPoint(brick.transform.position),
+                cast_time)
                 .setOnComplete(OnMoveFinish);
 
             while (!move_Finish)
@@ -61,10 +63,10 @@ public class MoveComponet : MonoBehaviour {
         Debug.Log("Go 移动完成！");
     }
 
-    public IEnumerator MoveToNext(float time)
+    public IEnumerator MoveToNext()
     {
         Brick brick = _path[_pathIndex].behavirour as Brick;
-
+        float time = 1;
         if (!IsNextBlock())
         {
             yield return MoveTo(brick, time);
@@ -82,7 +84,7 @@ public class MoveComponet : MonoBehaviour {
 
     public IEnumerator Open(Brick brick, float time)
     {
-        StageView.Instance.MoveDownMap(1);
+        StageCore.Instance.TimeCast(1);
 
         BrickCore.Instance.OpenBrick(brick);
 
@@ -97,7 +99,7 @@ public class MoveComponet : MonoBehaviour {
 
         _brick = brick;
 
-        StageView.Instance.MoveDownMap(1);
+        StageCore.Instance.TimeCast(time);
 
         LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time).setOnComplete(OnMoveFinish);
 
@@ -118,13 +120,11 @@ public class MoveComponet : MonoBehaviour {
         //BrickCore.Instance.OpenNearbyBrick(
         //    StageCore.Instance.Player.standBrick.pathNode.x,
         //    StageCore.Instance.Player.standBrick.pathNode.z);
-
-        CastMoveTime();
     }
 
     public void CastMoveTime()
     {
-        StageCore.Instance.AddTurnTime(1);
+        StageCore.Instance.TimeCast(1);
     }
 
     public bool IsNextBlock()

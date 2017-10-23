@@ -13,12 +13,13 @@ public class SkillListItem : DragableScrollItem
 
     public void Start()
     {
-        HudEvent.Get(button.gameObject).onLongPress = OnLongPress;
+        HudEvent.Get(button.gameObject).onClick = OnClick;
     }
 
     public void SetInfo(ulong id)
     {
         skill_id = id;
+        button.image.sprite = HelpFunction.GetSkillIcon(id, StageView.Instance.skillAtals);
     }
 
     public void OnLongPress()
@@ -26,5 +27,8 @@ public class SkillListItem : DragableScrollItem
 
     }
 
+    public void OnClick()
+    {
 
+    }
 }

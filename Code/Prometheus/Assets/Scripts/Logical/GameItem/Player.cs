@@ -49,7 +49,7 @@ public class Player : LiveItem {
         var atk_Speed = property[GameProperty.atkSpeed];
         var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
         
-        StageCore.Instance.AddTurnTimeAndMoveDown(timeSpend);
+        StageCore.Instance.TimeCast(timeSpend);
 
         return e;
     }
