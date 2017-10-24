@@ -185,7 +185,10 @@ public abstract class LiveItem : GameItemBase
         LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
 
         yield return waitForSeconds;
+    }
 
+    public virtual void TakeDamage(float damage)
+    {
         cur_hp = cur_hp - damage;
     }
 

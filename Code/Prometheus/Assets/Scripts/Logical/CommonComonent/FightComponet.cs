@@ -101,6 +101,11 @@ public class FightComponet :MonoBehaviour {
 
     private List<ActiveSkillState> activeSort = new List<ActiveSkillState>();
 
+    /// <summary>
+    /// 是否激活使用技能
+    /// </summary>
+    public bool skillActive = false;
+
     private LiveItem _ownerObject;
     public LiveItem ownerObject
     {
@@ -139,7 +144,7 @@ public class FightComponet :MonoBehaviour {
     }
     public void ChangeTime(float _time)
     {
-        if (ownerObject.isDiscovered)
+        if (ownerObject.isDiscovered && skillActive)
         {
             time += _time;
 
@@ -173,9 +178,37 @@ public class FightComponet :MonoBehaviour {
         }
     }
 
-    public void DoActiveSkill(ActiveSkillsConfig config)
+    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
         Debug.Log("怪物" + gameObject.name + "释放技能: id: " + config.id);
+
+        return null;
+    }
+
+    public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)
+    {
+        foreach(var config in configs)
+        {
+            yield return DoActiveSkill(config);
+        }
+    }
+
+    public IEnumerator DoActiveSkill(List<ulong> ids)
+    {
+        foreach (var id in ids)
+        {
+            var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+            yield return DoActiveSkill(config);
+        }
+    }
+
+    public IEnumerator DoActiveSkill(ulong[] ids)
+    {
+        foreach (var id in ids)
+        {
+            var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+            yield return DoActiveSkill(config);
+        }
     }
 }
 

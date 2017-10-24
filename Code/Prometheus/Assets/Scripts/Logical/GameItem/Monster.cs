@@ -44,6 +44,8 @@ public class Monster : LiveItem
 
     private int player_distance = 0;
 
+
+
     public void Init()
     {
         Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
@@ -63,10 +65,18 @@ public class Monster : LiveItem
             OnDiscoverd();
         }
 
-        if (!block_other && player_distance <= 1)
+        if (player_distance <= 1)
         {
-            BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
-            block_other = true;
+            if (!block_other)
+            {
+                BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+                block_other = true;
+            }
+
+            if (AIConfig.dangerous_levels == DangerousLevels.Neutral)
+            {
+                fightComponet.skillActive = true;
+            }
         }
     }
 
@@ -107,6 +117,15 @@ public class Monster : LiveItem
 
             }
         }
+
+
+        if (AIConfig.dangerous_levels == DangerousLevels.Hostility)
+        {
+            fightComponet.skillActive = true;
+        }
+
+        var skill_list = AIConfig.forceSkills.ToArray(0);
+        StartCoroutine(fightComponet.DoActiveSkill(skill_list));
     }
 
     public override void OnDead()
@@ -140,5 +159,15 @@ public class Monster : LiveItem
 
             }
         }
+
+        var skill_list = AIConfig.forceSkills.ToArray(1);
+        StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+
+        fightComponet.skillActive = true;
     }
 }

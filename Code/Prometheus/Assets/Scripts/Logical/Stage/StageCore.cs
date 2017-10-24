@@ -333,8 +333,6 @@ public class StageCore : SingleObject<StageCore> {
         turnTime += time;
 
         totalTime += time;
-
-        Debug.Log("增加时间: " + time.ToString());
     }
 
     public IEnumerator CheckTurnTime()
