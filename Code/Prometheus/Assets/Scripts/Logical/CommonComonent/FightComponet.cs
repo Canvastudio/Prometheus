@@ -178,13 +178,15 @@ public class FightComponet :MonoBehaviour {
         }
     }
 
+    List<GameItemBase> target_list = new List<GameItemBase>(10);
+
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
-        Debug.Log(gameObject.name + "释放技能: id: " + config.id);
+        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         Debug.Log("伤害公式: " + config.damage);
 
         //1.确定目标
-        List<GameItemBase> target_list = new List<GameItemBase>();
+        target_list.Clear();
 
         switch (config.targetType)
         {
@@ -202,9 +204,109 @@ public class FightComponet :MonoBehaviour {
                 }
                 break;
             case TargetType.Monster:
+
                 yield return SelectMonster(config);
+
                 break;
         }
+    }
+
+    public float CalculateDamageValue(ActiveSkillsConfig config)
+    {
+        Stack<float> stack = new Stack<float>();
+
+        long[] damage_values = config.damage.ToArray();
+        float[] fv = new float[2];
+
+        for (int i = 0; i < damage_values.Length; ++i)
+        {
+            SuperTool.GetValue(damage_values[0], ref fv);
+        
+            if (fv[1] == 1)
+            {
+                var property = (GameProperty)fv[0];
+
+                if (property == GameProperty.Eql)
+                {
+                    if (stack.Count != 0)
+                    {
+                        Debug.LogError("逆波兰遇到等号的时候stack的长度不为1");
+                        return stack.Pop();
+                    }
+                }
+                else if (property == GameProperty.Plus)
+                {
+                    if (stack.Count < 2)
+                    {
+                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
+                        float v1 = stack.Pop();
+                        float v2 = stack.Pop();
+
+                        stack.Push(v1 + v2);
+                    }
+                }
+                else if (property == GameProperty.Sub)
+                {
+                    if (stack.Count < 2)
+                    {
+                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
+                        float v1 = stack.Pop();
+                        float v2 = stack.Pop();
+
+                        stack.Push(v1 - v2);
+                    }
+                }
+                else if (property == GameProperty.Sub)
+                {
+                    if (stack.Count < 2)
+                    {
+                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
+                        float v1 = stack.Pop();
+                        float v2 = stack.Pop();
+
+                        stack.Push(v1 - v2);
+                    }
+                }
+                else if (property == GameProperty.Mul)
+                {
+                    if (stack.Count < 2)
+                    {
+                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
+                        float v1 = stack.Pop();
+                        float v2 = stack.Pop();
+
+                        stack.Push(v1 * v2);
+                    }
+                }
+                else if (property == GameProperty.Mul)
+                {
+                    if (stack.Count < 2)
+                    {
+                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
+                        float v1 = stack.Pop();
+                        float v2 = stack.Pop();
+
+                        stack.Push(v1 / v2);
+                    }
+                }
+                else
+                {
+                    stack.Push((ownerObject as LiveItem).property.GetFloatProperty(property);
+                }
+            }
+            else if (fv[1] == 2)
+            {
+                stack.Push(fv[0]);
+            }
+            else if (fv[1] == 3)
+            {
+                stack.Push(-fv[0]);
+            }
+        }
+
+        Debug.Log("逆波兰没有出口.");
+
+        return 0;
     }
 
 

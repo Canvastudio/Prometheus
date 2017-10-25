@@ -1068,21 +1068,21 @@ public class SuperTool
     /// 将一个从配置表读取的long翻译为指定意义。它返回一个数组，第一个元素是值（float）；
     /// 第二个元素如果为0代表这是一个数值，但如果为1代表这是一个对自己释放的属性枚举（其实是int），如果为2代表是对目标释放的属性
     /// </summary>
-    public float[] GetValue(long v)
+    public static void GetValue(long v, ref float[] res)
     {
         var t = BitConverter.GetBytes(v);
-        float[] res = new float[2];//元素0是值; 元素1为0代表数值，为1代表是对自己的属性枚举，2代表是对目标的属性
+        //元素0是值; 元素1为0代表数值，为1代表是对自己的属性枚举，2代表是对目标的属性
         //表示这个是一个枚举(1)还是正数(2)或者负数(3)
         if (t[t.Length - 3] == 1)
         {
             res[0] = BitConverter.ToInt32(t, 0);
             res[1] = t[t.Length - 4] == 1 ? 1 : 2;
-            return res;
+            return;
         }
         int f = 1;
         if (t[t.Length - 3] == 3) f = -1;
         f = (int)(f * Math.Pow(10, t[t.Length - 4]));
         res[0] = (float)BitConverter.ToInt32(t, 0) / f;
-        return res;
+        return;
     }
 }
