@@ -181,11 +181,54 @@ public class FightComponet :MonoBehaviour {
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
         Debug.Log(gameObject.name + "释放技能: id: " + config.id);
+        Debug.Log("伤害公式: " + config.damage);
 
         //1.确定目标
         List<GameItemBase> target_list = new List<GameItemBase>();
 
+        switch (config.targetType)
+        {
+            case TargetType.Self:
+                target_list.Add(ownerObject);
+                break;
+            case TargetType.Help:
+                if (ownerObject.enslave)
+                {
+                    target_list.Add(StageCore.Instance.Player);
+                }
+                else if (ownerObject is Player)
+                {
+                    target_list.Add(StageCore.Instance.Player);
+                }
+                break;
+            case TargetType.Monster:
+                yield return SelectMonster(config);
+                break;
+        }
+    }
 
+
+    public IEnumerator SelectMonster(ActiveSkillsConfig config)
+    {
+        var list = StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.MONSTER, ST.VISIBLE, ST.DISCOVER));
+
+        int rang_min = config.carry.ToArray()[0];
+        int rang_max = config.carry.ToArray()[1];
+
+        for(int i = list.Count - 1; i >= 0; ++i)
+        {
+            int distance = list[i].standBrick.pathNode.Distance(ownerObject.standBrick.pathNode);
+
+            if (distance < rang_min || distance > rang_max)
+            {
+                list.RemoveAt(i);
+            }
+        }
+
+        if (ownerObject is Monster)
+        {
+            list.Remove(ownerObject as Monster);
+        }
 
         return null;
     }

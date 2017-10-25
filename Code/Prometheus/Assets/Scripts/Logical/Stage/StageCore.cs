@@ -260,6 +260,8 @@ public class StageCore : SingleObject<StageCore> {
                     ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
 
                     Debug.Log("使用技能id: " + skill_id);
+
+                    yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
                 }
             }
 

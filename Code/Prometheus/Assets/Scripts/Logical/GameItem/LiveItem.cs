@@ -135,6 +135,11 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    /// <summary>
+    /// 是否被玩家奴役
+    /// </summary>
+    public bool enslave = false;
+
     public virtual void InitInfoUI()
     {
         if (hp_value != null)

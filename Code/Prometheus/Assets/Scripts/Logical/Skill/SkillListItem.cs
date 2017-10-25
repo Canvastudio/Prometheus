@@ -29,6 +29,6 @@ public class SkillListItem : DragableScrollItem
 
     public void OnClick()
     {
-
+        Messenger<SkillListItem>.Invoke(SA.PlayerClickSkill, this);
     }
 }
