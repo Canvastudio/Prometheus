@@ -32,6 +32,11 @@ public class Monster : LiveItem
     /// </summary>
     public AIConfig AIConfig;
 
+    /// <summary>
+    /// 是否被玩家奴役
+    /// </summary>
+    public bool enslave = false;
+
     private bool block_other = false;
 
     public int discover_howl;
@@ -43,8 +48,6 @@ public class Monster : LiveItem
     public FightComponet fightComponet;
 
     private int player_distance = 0;
-
-
 
     public void Init()
     {

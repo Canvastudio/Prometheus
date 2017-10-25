@@ -180,7 +180,12 @@ public class FightComponet :MonoBehaviour {
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
-        Debug.Log("怪物" + gameObject.name + "释放技能: id: " + config.id);
+        Debug.Log(gameObject.name + "释放技能: id: " + config.id);
+
+        //1.确定目标
+        List<GameItemBase> target_list = new List<GameItemBase>();
+
+
 
         return null;
     }
