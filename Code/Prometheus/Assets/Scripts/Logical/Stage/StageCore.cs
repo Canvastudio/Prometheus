@@ -74,11 +74,6 @@ public class StageCore : SingleObject<StageCore> {
         CoroCore.Instance.StartCoro(CheckTurnTime());
     }
 
-    public void RegisterPlayer(Player player)
-    {
-        Player = player;
-    }
-
     public void RegisterItem(GameItemBase gameItemBase)
     {
         tagMgr.AddEntity(gameItemBase
@@ -92,8 +87,6 @@ public class StageCore : SingleObject<StageCore> {
         {
             tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.ENEMY, ST.UNDISCOVER));
         }
-
-        gameItemBase.itemId = allItems.Count;
 
         allItems.Add(gameItemBase);
     }
@@ -377,11 +370,12 @@ public static class ST
     public const string BRICK = "Brick";//类型名
     public const string MONSTER = "Monster"; //类型名
     public const string PLAYER = "Player"; //类型名
+    public const string OBSTACLE = "Obstacle";
 
     public const string ENEMY = "EY";
-    public const string VISIBLE = "VE";
     public const string DISCOVER = "DR";
     public const string UNDISCOVER = "UDR";
+    public const string FRIEND = "FD";
 }
 
 

@@ -3,9 +3,11 @@
 public class Treasure : GameItemBase, IReactive {
 
     public BoxConfig config;
+
     public int distance;
 
     BoxDropConfig cur_drop;
+
     SuperArrayValue<string> drop_desc;
 
     public void Reactive()
@@ -23,7 +25,7 @@ public class Treasure : GameItemBase, IReactive {
         switch (drop_desc.ToArray(3)[wi])
         {
             case "Stuff":
-                StageCore.Instance.Player.inventory.AddStuff(id, num);
+                StageCore.Instance.Player.inventory.ChangeStuffCount(id, num);
                 break;
             case "Chip":
                 StageCore.Instance.Player.inventory.AddChip(id);
@@ -61,5 +63,12 @@ public class Treasure : GameItemBase, IReactive {
                 drop_desc = cur_drop.level4;
                 break;
         }
+    }
+
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        GameObject.Destroy(this.gameObject);
     }
 }

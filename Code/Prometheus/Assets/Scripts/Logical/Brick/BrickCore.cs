@@ -166,7 +166,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
                     if ("o" == prefix)
                     {
-                        _brick = StageView.Instance.CreateBrick(moduel_id, level_Id, BrickType.OBSTACLE);
+                        _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateObstacle();
                     }
                     else
                     {
@@ -324,7 +324,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public List<Brick> GetStandableBricks()
     {
-        var v_bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.VISIBLE, ST.BRICK));
+        var v_bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.BRICK));
 
         for (int i = v_bricks.Count - 1; i >= 0; --i)
         {
@@ -370,7 +370,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
     public List<Monster> GetVisableMonsters()
     {
-        return StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.VISIBLE, ST.ENEMY, ST.MONSTER));
+        return StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.ENEMY, ST.MONSTER));
     }
 
     public List<Node> GetNearbyNode(int r, int c, int distance)

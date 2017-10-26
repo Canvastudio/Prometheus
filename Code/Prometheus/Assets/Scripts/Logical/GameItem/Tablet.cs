@@ -161,5 +161,12 @@ public class Tablet : GameItemBase {
     {
         round = 0;
     }
+
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        GameObject.Destroy(this.gameObject);
+    }
 }
 

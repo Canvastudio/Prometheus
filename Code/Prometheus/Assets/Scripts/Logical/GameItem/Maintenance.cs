@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Maintenance : GameItemBase {
+public class Maintenance : GameItemBase{
 
-	// Use this for initialization
-	void Start () {
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        GameObject.Destroy(this.gameObject);
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

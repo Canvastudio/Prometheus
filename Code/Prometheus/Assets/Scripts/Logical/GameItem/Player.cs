@@ -62,4 +62,9 @@ public class Player : LiveItem {
         brick.brickExplored = BrickExplored.EXPLORED;
     }
 
+    public override void Recycle()
+    {
+        base.Recycle();
+    }
+
 }

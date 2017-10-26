@@ -16,4 +16,11 @@ public class Supply : GameItemBase, IReactive {
 
         GameObject.Destroy(this.gameObject);
     }
+
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        GameObject.Destroy(this.gameObject);
+    }
 }

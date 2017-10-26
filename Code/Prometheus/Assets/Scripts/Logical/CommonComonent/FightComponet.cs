@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightComponet :MonoBehaviour {
+public class FightComponet : MonoBehaviour {
 
     private class ActiveSkillState : IComparer<ActiveSkillState>
     {
@@ -125,7 +125,7 @@ public class FightComponet :MonoBehaviour {
     {
         activeSort.Clear();
 
-        foreach(var active_Skill in activeSkillConfigs)
+        foreach (var active_Skill in activeSkillConfigs)
         {
             activeSort.Add(new ActiveSkillState() { config = active_Skill });
         }
@@ -177,40 +177,6 @@ public class FightComponet :MonoBehaviour {
             }
         }
     }
-
-    List<GameItemBase> target_list = new List<GameItemBase>(10);
-
-    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
-    {
-        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
-        Debug.Log("伤害公式: " + config.damage);
-
-        //1.确定目标
-        target_list.Clear();
-
-        switch (config.targetType)
-        {
-            case TargetType.Self:
-                target_list.Add(ownerObject);
-                break;
-            case TargetType.Help:
-                if (ownerObject.enslave)
-                {
-                    target_list.Add(StageCore.Instance.Player);
-                }
-                else if (ownerObject is Player)
-                {
-                    target_list.Add(StageCore.Instance.Player);
-                }
-                break;
-            case TargetType.Monster:
-
-                yield return SelectMonster(config);
-
-                break;
-        }
-    }
-
     public float CalculateDamageValue(ActiveSkillsConfig config)
     {
         Stack<float> stack = new Stack<float>();
@@ -221,7 +187,7 @@ public class FightComponet :MonoBehaviour {
         for (int i = 0; i < damage_values.Length; ++i)
         {
             SuperTool.GetValue(damage_values[0], ref fv);
-        
+
             if (fv[1] == 1)
             {
                 var property = (GameProperty)fv[0];
@@ -291,7 +257,7 @@ public class FightComponet :MonoBehaviour {
                 }
                 else
                 {
-                    stack.Push((ownerObject as LiveItem).property.GetFloatProperty(property);
+                    stack.Push((ownerObject as LiveItem).property.GetFloatProperty(property));
                 }
             }
             else if (fv[1] == 2)
@@ -309,30 +275,102 @@ public class FightComponet :MonoBehaviour {
         return 0;
     }
 
+    List<GameItemBase> target_list = new List<GameItemBase>(10);
 
-    public IEnumerator SelectMonster(ActiveSkillsConfig config)
+    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
-        var list = StageCore.Instance.tagMgr.GetEntity<Monster>(ETag.GetETag(ST.MONSTER, ST.VISIBLE, ST.DISCOVER));
+        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
+        Debug.Log("伤害公式: " + config.damage);
 
-        int rang_min = config.carry.ToArray()[0];
-        int rang_max = config.carry.ToArray()[1];
+        yield return SelectTarget(config);
+    }
 
-        for(int i = list.Count - 1; i >= 0; ++i)
+    public IEnumerator SelectTarget(ActiveSkillsConfig config)
+    {
+        //1.确定目标
+        target_list.Clear();
+
+        var st = config.selectType;
+        var tt = config.targetType;
+
+        if (st == SelectType.One)
         {
-            int distance = list[i].standBrick.pathNode.Distance(ownerObject.standBrick.pathNode);
-
-            if (distance < rang_min || distance > rang_max)
+            switch (tt)
             {
-                list.RemoveAt(i);
+                case TargetType.Enemy:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.ENEMY, ST.DISCOVER));
+                    break;
+                case TargetType.Self:
+                    target_list.Add(StageCore.Instance.Player);
+                    break;
+                case TargetType.Help:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
+                    break;
+                case TargetType.HideMonster:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
+                    break;
+                case TargetType.LightBlock:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
+
+                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                    {
+                        Brick brick = target_list[i] as Brick;
+
+                        if (brick.realBrickType == BrickType.OBSTACLE)
+                        {
+                            target_list.RemoveAt(i);
+                        }
+                    }
+                    break;
+                case TargetType.EmptyBlock:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
+
+                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                    {
+                        Brick brick = target_list[i] as Brick;
+
+                        if (brick.realBrickType != BrickType.EMPTY)
+                        {
+                            target_list.RemoveAt(i);
+                        }
+                    }
+                    break;
+                case TargetType.DarkBlock:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.UNDISCOVER, ST.BRICK));
+                    break;
+                case TargetType.ObstructBlock:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
+                    break;
+                case TargetType.Fort:
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
+                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                    {
+                        Obstacle ob = target_list[i] as Obstacle;
+
+                        if (ob.occupy)
+                        {
+                            target_list.RemoveAt(i);
+                        }
+                    }
+                    break;
+                case TargetType.Satellite:
+                    target_list.Add(ownerObject);
+                    break;
             }
         }
 
-        if (ownerObject is Monster)
+        if (st == SelectType.One)
         {
-            list.Remove(ownerObject as Monster);
+            yield return LightAndWaitSelect();
         }
+        
 
-        return null;
+
+    }
+
+    private IEnumerator LightAndWaitSelect()
+    {
+        yield return 0;
     }
 
     public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)

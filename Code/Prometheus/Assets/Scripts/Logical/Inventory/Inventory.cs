@@ -10,7 +10,7 @@ public class Inventory {
     [SerializeField]
     List<ChipInventory> chipList = new List<ChipInventory>();
 
-    public void AddStuff(ulong id, int count)
+    public void ChangeStuffCount(ulong id, int count)
     {
         Debug.Log("获得stuff: " + id.ToString() + " " + count.ToString());
         StuffInventory stuffInventory;
@@ -26,6 +26,8 @@ public class Inventory {
                 count = count
             });
         }
+
+        Messenger.Invoke(SA.StuffCountChange);
     }
 
     public int GetStuffCount(ulong id)

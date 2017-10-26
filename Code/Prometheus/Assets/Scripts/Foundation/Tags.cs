@@ -184,8 +184,20 @@ public class EntitysTag<E> where E : ITagable
     /// <returns></returns>
     public List<M> GetEntity<M>(params ETag[] tags) where M : E
     {
-        List<E> entitys;
         List<M> res = new List<M>(3);
+
+        return GetEntity<M>(ref res, tags);
+    }
+
+    /// <summary>
+    /// 换回指定类型的对象，而不是返回基本类型，需要调用时确保类型正确
+    /// </summary>
+    /// <typeparam name="M"></typeparam>
+    /// <param name="tags"></param>
+    /// <returns></returns>
+    public List<M> GetEntity<M>(ref List<M> res, params ETag[] tags) where M : E
+    {
+        List<E> entitys;
 
         for (int n = 0; n < tags.Length; ++n)
         {

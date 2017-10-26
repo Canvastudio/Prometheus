@@ -21,7 +21,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public ulong moduel_id = 0;
     public ulong level_id = 0;
 
-#region BrickInfo
+    #region BrickInfo
     public BrickType brickType
     {
         get
@@ -105,7 +105,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         get
         {
-            return _column; 
+            return _column;
         }
     }
     [SerializeField]
@@ -122,16 +122,18 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
 
     public Node pathNode
-	{
-		get { return _pathNode; }
-	}
+    {
+        get { return _pathNode; }
+    }
 
     [SerializeField]
-	private Node _pathNode;
+    private Node _pathNode;
 
-    
-    public void OnEnable()
+
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
     }
@@ -161,7 +163,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
         else
         {
-            if (brickType == BrickType.UNKNOWN) 
+            if (brickType == BrickType.UNKNOWN)
             {
                 if (brickBlock == 0)
                 {
@@ -185,22 +187,22 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         Messenger<Brick>.Invoke(SA.PlayerClickBrick.ToString(), this);
     }
-    
+
     public void OnLongPress()
     {
         Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
     }
 
-    public void Init(int row, int column, BrickType type)
+    public void Init(int row, int column)
     {
         _row = row;
         _column = column;
-  
-        if (type == BrickType.OBSTACLE)
-        {
-            picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
-        }
-        else
+
+        //if (type == BrickType.OBSTACLE)
+        //{
+        //    picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_OBSTACLE_UNREACHABLE);
+        //}
+        //else
         {
             picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_REACHABLE);
         }
@@ -218,14 +220,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             z = column
         };
 
-        brickType = type;
-
-        StageCore.Instance.RegisterItem(this);
+        brickType = BrickType.EMPTY;
 
         CancelAsPathNode();
     }
 
-#region Add Item
+    #region Add Item
     /// <summary>
     /// 在当前网格放置一个全新的怪物,由于Grid的刷新问题，要等到下一帧才能获得正确位置，如果有问题会改成
     /// 手动来设置，而不使用自带的组件来管理位置
@@ -298,6 +298,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickType = BrickType.PLAYER;
         return this;
     }
+
+    public Brick CreateObstacle()
+    {
+        GameItemFactory.Instance.CreateObstacle(this);
+        brickType = BrickType.OBSTACLE;
+        return this;
+    }
     #endregion
 
     public void SetAsPathNode()
@@ -329,11 +336,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
     }
 
-    public void Recycle()
+    public override void Recycle()
     {
+        base.Recycle();
+
         if (item != null)
         {
-            GameObject.Destroy(item.gameObject);
+            item.Recycle();
             item = null;
         }
 
@@ -341,8 +350,18 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         blockMask.gameObject.SetActive(false);
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;
-        ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, uid);
+        ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
+
+        Debug.Log("回收砖块: row: " + row + " col: " + column);
     }
+
+    protected override void OnExitFromArea()
+    {
+        base.OnExitFromArea();
+
+        Recycle();
+    }
+
 
     /// <summary>
     /// 清除上面的item

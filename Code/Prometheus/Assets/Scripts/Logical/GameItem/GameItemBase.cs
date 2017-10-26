@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameItemBase : MonoBehaviour, ITagable {
+public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public int itemId = 0;
 
@@ -53,41 +53,73 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     }
 
+    protected virtual void OnEnable()
+    {
+
+    }
+
     public virtual void OnDiscoverd()
     {
         isDiscovered = true;
+
         CheckViewArea();
     }
 
+    /// <summary>
+    /// 检查是否在区域内
+    /// </summary>
+    /// <returns></returns>
     public bool CheckViewArea()
     {
-        bool visible = false;
+        bool in_area = false;
 
-        if (isDiscovered)
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+
+        in_area = RectTransformUtility.RectangleContainsScreenPoint(
+            StageView.Instance.viewArea,
+            screen_Pos,
+            StageView.Instance.show_camera);
+
+        if (in_area)
         {
-            var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
-
-            visible = RectTransformUtility.RectangleContainsScreenPoint(
-                StageView.Instance.viewArea,
-                screen_Pos,
-                StageView.Instance.show_camera);
-
-            if (visible != inViewArea)
+            if (inViewArea == false)
             {
-                inViewArea = visible;
-                StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.VISIBLE), inViewArea);
-
+                OnEnterIntoArea();
+            }
+        }
+        else
+        {
+            if (inViewArea == true)
+            {
+                OnExitFromArea();
             }
         }
 
-        return visible;
+        inViewArea = in_area;
+
+        return in_area;
+    }
+
+    protected virtual void OnEnterIntoArea()
+    {
+        StageCore.Instance.RegisterItem(this);
+    }
+
+    protected virtual void OnExitFromArea()
+    {
+        StageCore.Instance.UnRegisterItem(this);
     }
 
     // 当对象已启用并处于活动状态时调用此函数
     private void Awake()
     {
         Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.AddListener(SA.MapMoveDown, OnMapMoveDown);
+        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
+    }
+
+    public virtual void Recycle()
+    {
+        ResetValues();
     }
 
     public void RefreshPosistion()
@@ -100,14 +132,26 @@ public class GameItemBase : MonoBehaviour, ITagable {
         CheckViewArea();
     }
 
-    protected virtual void OnMapMoveDown()
+    protected virtual void PlayerMoveEnd()
     {
         CheckViewArea();
+    }
+
+    private void OnDisable()
+    {
+        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     private void OnDestroy()
     {
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.RemoveListener(SA.MapMoveDown, OnMapMoveDown);
+        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
+    }
+
+    public virtual void ResetValues()
+    {
+        isDiscovered = false;
+        inViewArea = false;
     }
 }

@@ -76,6 +76,8 @@ public class Monster : LiveItem
                 fightComponet.skillActive = true;
             }
         }
+
+        //ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
     public override void OnDiscoverd()
@@ -89,9 +91,12 @@ public class Monster : LiveItem
         {
             if (player_distance <= 1)
             {
-                Debug.Log("发现: " + gameObject.name);
-                BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
-                block_other = true;
+                if (!block_other)
+                {
+                    Debug.Log("发现: " + gameObject.name);
+                    BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
+                    block_other = true;
+                }
             }
         }
 
@@ -112,7 +117,6 @@ public class Monster : LiveItem
                 {
                     brick.item.OnDiscoverd();
                 }
-
             }
         }
 
@@ -122,8 +126,11 @@ public class Monster : LiveItem
             fightComponet.skillActive = true;
         }
 
-        var skill_list = AIConfig.forceSkills.ToArray(0);
-        StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+        if (AIConfig.forceSkills != null)
+        {
+            var skill_list = AIConfig.forceSkills.ToArray(0);
+            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+        }
     }
 
     public override void OnDead()
@@ -157,9 +164,11 @@ public class Monster : LiveItem
 
             }
         }
-
-        var skill_list = AIConfig.forceSkills.ToArray(1);
-        StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+        if (AIConfig.forceSkills != null)
+        {
+            var skill_list = AIConfig.forceSkills.ToArray(1);
+            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+        }
     }
 
     public override void TakeDamage(float damage)
@@ -167,5 +176,12 @@ public class Monster : LiveItem
         base.TakeDamage(damage);
 
         fightComponet.skillActive = true;
+    }
+
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 }

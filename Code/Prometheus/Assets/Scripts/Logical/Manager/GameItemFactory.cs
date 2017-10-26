@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class GameItemFactory : SingleObject<GameItemFactory>
 {
-    GameObject monster_1;
     GameObject player_1;
+
+    public string monster_pool = "MPI";
+    public string obstacle_pool = "OBE";
+
+    protected override void Init()
+    {
+        base.Init();
+        var monster_go = Resources.Load("Prefab/Monster") as GameObject;
+        var monster = monster_go.GetComponent<Monster>();
+
+        var obstacle_go = Resources.Load("Prefab/Obstacle") as GameObject;
+        var obstacle = obstacle_go.GetComponent<Obstacle>();
+
+        ObjPool<Monster>.Instance.InitOrRecyclePool(monster_pool, monster, 6);
+        ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
+    }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<string> skill)
     {
@@ -41,17 +56,21 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Monster CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
+        int tid;
 
+        var monster = ObjPool<Monster>.Instance.GetObjFromPoolWithID(out tid, monster_pool);
 
-        if (monster_1 == null) monster_1 = Resources.Load("Prefab/Monster") as GameObject;
+        monster.itemId = tid;
 
-        var go = GameObject.Instantiate(monster_1, StageView.Instance.liveItemRoot) as GameObject;
+        var go = monster.gameObject;
+
+        go.SetActive(true);
+
+        go.transform.SetParent(StageView.Instance.liveItemRoot);
 
         go.transform.localScale = Vector3.one;
 
         go.transform.position = bornBrick.transform.position;
-
-        Monster monster = go.GetComponent<Monster>();
 
         monster.standBrick = bornBrick;
 
@@ -97,13 +116,12 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         monster.fightComponet = fightComponet;
         
-        StageCore.Instance.RegisterItem(monster);
-
         monster.pwr = pwr;
         monster.cid = id;
         monster.lv = lv;
 
         ulong AI_Id = config.ai[pwr];
+
         monster.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
@@ -156,9 +174,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         SkillPointsComponet skillPointsComponet = player.GetOrAddComponet<SkillPointsComponet>();
         player.skillPointsComponet = skillPointsComponet;
 
-        StageCore.Instance.RegisterItem(player);
         player.typeId = uid;
         player.InitInfoUI();
+
+        StageCore.Instance.RegisterItem(player);
 
         return player;
     }
@@ -177,8 +196,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
-        StageCore.Instance.RegisterItem(supply);
-
         return supply;
     }
 
@@ -196,7 +213,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         //supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
-        StageCore.Instance.RegisterItem(Maintence);
 
         return Maintence;
     }
@@ -214,8 +230,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         tablet.standBrick = bornBrick;
 
         tablet.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
-
-        StageCore.Instance.RegisterItem(tablet);
 
         return tablet;
     }
@@ -239,8 +253,23 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ///宝箱比较复杂，需要去初始化一些东西
         treasure.Init();
 
-        StageCore.Instance.RegisterItem(treasure);
-
         return treasure;
+    }
+
+    public Obstacle CreateObstacle(Brick bornBrick)
+    {
+        int tid;
+
+        var item = ObjPool<Obstacle>.Instance.GetObjFromPoolWithID(out tid, obstacle_pool);
+
+        item.itemId = tid;
+
+        item.transform.position = bornBrick.transform.position;
+
+        item.transform.SetParentAndNormalize(StageView.Instance.NonliveItemRoot);
+
+        item.standBrick = bornBrick;
+
+        return item;
     }
 }

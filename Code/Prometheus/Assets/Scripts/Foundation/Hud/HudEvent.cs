@@ -71,7 +71,7 @@ public class HudEvent : EventTrigger {
 
         if (isLongPressTriggerd) return;
 
-        Debug.Log("HueEvent: Click: " + gameObject.name);
+        //Debug.Log("HueEvent: Click: " + gameObject.name);
 
         CommonEvent();
         //SoundManager.Instance.Play("button2", 0.1f);

@@ -20,6 +20,7 @@ public class StageView : SingleGameObject<StageView> {
 
     [Space(5)]
     public Transform liveItemRoot;
+    public Transform NonliveItemRoot;
     public Transform brickRoot;
     public Transform moveRoot;
     public Transform skillListRoot;
@@ -47,8 +48,7 @@ public class StageView : SingleGameObject<StageView> {
         ObjPool<SkillListItem>.Instance.InitOrRecyclePool(skillListItemName, _skillListItemPrefab);
     }
 
-    #region Add Brick
-    public Brick CreateBrick(ulong select_Moduel, ulong select_level, BrickType type = BrickType.EMPTY, int row = -1, int col = -1)
+    public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
         if (col == -1)
         {
@@ -72,14 +72,14 @@ public class StageView : SingleGameObject<StageView> {
         _brick.transform.SetParent(brickRoot);
         _brick.transform.localScale = Vector3.one;
         _brick.gameObject.SetActive(true);
-        _brick.uid = uid;
+        _brick.itemId = uid;
         _brick.moduel_id = select_Moduel;
         _brick.level_id = select_level;
         float offset = (750 - brickWidth * column_per_row) / 2f;
         ((RectTransform)_brick.transform).anchoredPosition = new Vector2(offset + brickWidth * col + brickWidth / 2f, brickWidth * row + brickWidth / 2f);
         _brick.transform.SetAsFirstSibling();
 
-        _brick.Init(row, col,  type);
+        _brick.Init(row, col);
 
 #if UNITY_EDITOR
         _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.realBrickType.ToString();
@@ -87,7 +87,6 @@ public class StageView : SingleGameObject<StageView> {
 
         return _brick;
     }
-    #endregion
 
     List<Brick> pathBrick = new List<Brick>(20);
 
@@ -121,8 +120,7 @@ public class StageView : SingleGameObject<StageView> {
         {
             LeanTween.moveLocalY(
                 moveRoot.gameObject,
-                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance)
-                .setOnComplete(BrickCore.Instance.CheckNeedRecycelBrick);
+                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance);
         }
 
         BrickCore.Instance.CheckNeedCreawteMoudel();
@@ -168,4 +166,8 @@ public class StageView : SingleGameObject<StageView> {
         Debug.LogError("青鑫：尝试在技能列表里移除一个不存在的技能");
     }
 
+    public IEnumerator LightTargetWaitSelect(List<GameItemBase> list)
+    {
+        yield return 0;
+    }
 }

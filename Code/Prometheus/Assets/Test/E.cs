@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E : MonoBehaviour {
-
+public class E : MonoBehaviour
+{
     public Camera c;
-    public Canvas ca;
     public RectTransform rt;
-    float a = 1;
+    public UnityEngine.UI.Image i;
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         bool inViewArea = false;
 
-        int i = 10000;
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(c, transform.position);
 
-        while (--i > 0)
+        inViewArea = RectTransformUtility.RectangleContainsScreenPoint(rt
+            ,
+            screen_Pos,
+            c);
+
+        if (inViewArea)
         {
-            var screen_Pos = RectTransformUtility.WorldToScreenPoint(c, transform.position);
-
-            inViewArea = RectTransformUtility.RectangleContainsScreenPoint(rt
-                ,
-                screen_Pos,
-                c);
-
-            //a *= -1;
-
-            //transform.Translate(Vector3.one * a);
+            i.color = Color.white;
         }
+        else
+        {
+            i.color = Color.red;
+        }
+
     }
 }
