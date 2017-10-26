@@ -139,8 +139,20 @@ public abstract class LiveItem : GameItemBase
     /// <summary>
     /// 是否被玩家奴役
     /// </summary>
-    public bool enslave = false;
-
+    [SerializeField]
+    private bool _enslave;
+    public bool enslave
+    {
+        get
+        {
+            return _enslave;
+        }
+        set
+        {
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
+            _enslave = value;
+        }
+    }
     public virtual void InitInfoUI()
     {
         if (hp_value != null)
@@ -199,8 +211,6 @@ public abstract class LiveItem : GameItemBase
     {
         cur_hp = cur_hp - damage;
     }
-
-
 }
 
 

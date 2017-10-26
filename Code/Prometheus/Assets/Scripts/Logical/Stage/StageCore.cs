@@ -284,10 +284,11 @@ public class StageCore : SingleObject<StageCore> {
         var player_Speed = Player.property.GetFloatProperty(GameProperty.speed);
         var monster_Speed = monster.property.GetFloatProperty(GameProperty.speed);
 
-        if (player_Speed >= monster_Speed)
+        if (player_Speed >= monster_Speed || monster.enslave)
         {
             yield return Player.MeleeAttackTarget(monster);
-            if (monster != null && monster.isAlive)
+
+            if (monster != null && monster.isAlive && !monster.enslave)
             {
                 yield return monster.MeleeAttackTarget(Player);
             }
@@ -300,6 +301,7 @@ public class StageCore : SingleObject<StageCore> {
         else
         {
             yield return monster.MeleeAttackTarget(Player);
+
             if (Player != null && Player.isAlive)
             {
                 yield return Player.MeleeAttackTarget(monster);

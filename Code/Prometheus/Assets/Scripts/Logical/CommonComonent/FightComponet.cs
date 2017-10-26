@@ -180,11 +180,9 @@ public class FightComponet : MonoBehaviour {
             }
         }
     }
-    public float CalculageRPN(ActiveSkillsConfig config, out GameProperty valueType)
+    public float CalculageRPN(long[] damage_values, GameItemBase rpn_target, out GameProperty valueType)
     {
         Stack<float> stack = new Stack<float>();
-
-        long[] damage_values = config.damage.ToArray();
 
         float[] fv = new float[2];
 
@@ -196,10 +194,15 @@ public class FightComponet : MonoBehaviour {
         {
             SuperTool.GetValue(damage_values[0], ref fv);
 
-            if (fv[1] == 1)
-            {
-                var property = (GameProperty)fv[0];
 
+            var property = (GameProperty)fv[0];
+
+            if (fv[1] == 0)
+            {
+                stack.Push(fv[0]);
+            }
+            else
+            {
                 if (property == GameProperty.Eql)
                 {
                     if (stack.Count != 0)
@@ -265,16 +268,19 @@ public class FightComponet : MonoBehaviour {
                 }
                 else
                 {
-                    stack.Push((ownerObject as LiveItem).property.GetFloatProperty(property));
+                    LiveItem target = null;
+
+                    if (fv[1] == 1)
+                    {
+                        target = ownerObject as LiveItem;
+                    }
+                    else
+                    {
+                        target = rpn_target as LiveItem;
+                    }
+
+                    stack.Push(target.property.GetFloatProperty(property));
                 }
-            }
-            else if (fv[1] == 2)
-            {
-                stack.Push(fv[0]);
-            }
-            else if (fv[1] == 3)
-            {
-                stack.Push(-fv[0]);
             }
         }
 
@@ -443,7 +449,22 @@ public class FightComponet : MonoBehaviour {
                     }
                     break;
                 case SpecialEffect.Property:
+                    GameProperty property;
 
+                    long[] rpn_values = config.activeSkillArgs[i].rpn.ToArray();
+
+                    foreach (var item in apply_list)
+                    {
+                        var value = CalculageRPN(rpn_values, item, out property);
+
+                        (item as LiveItem).property.SetFloatProperty(property, value);
+                    }
+
+                    break;
+                case SpecialEffect.Transfiguration:
+                    //TODO
+                    break;
+                case SpecialEffect.Enslave:
                     break;
             }
         }

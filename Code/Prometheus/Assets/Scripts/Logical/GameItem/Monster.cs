@@ -38,8 +38,6 @@ public class Monster : LiveItem
 
     public int dead_howl;
 
-
-
     /// <summary>
     /// 战斗组件
     /// </summary>
