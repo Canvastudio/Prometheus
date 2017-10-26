@@ -180,14 +180,19 @@ public class FightComponet : MonoBehaviour {
             }
         }
     }
-    public float CalculateDamageValue(ActiveSkillsConfig config)
+    public float CalculageRPN(ActiveSkillsConfig config, out GameProperty valueType)
     {
         Stack<float> stack = new Stack<float>();
 
         long[] damage_values = config.damage.ToArray();
+
         float[] fv = new float[2];
 
-        for (int i = 0; i < damage_values.Length; ++i)
+        SuperTool.GetValue(damage_values[damage_values.Length - 1], ref fv);
+
+        valueType = (GameProperty)fv[0];
+
+        for (int i = 0; i < damage_values.Length - 1; ++i)
         {
             SuperTool.GetValue(damage_values[0], ref fv);
 
@@ -409,13 +414,39 @@ public class FightComponet : MonoBehaviour {
             Debug.Log("技能找不到符合条件的目标..");
         }
 
+        if (config.beforeSpecialEffect != null)
+        {
+            var effects = config.beforeSpecialEffect.ToArray();
+            ApplyEffect(config, effects, apply_list);
+        }
+
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
 
-        if (config.specialEffects != null)
+
+        if (config.afterSpecialEffect != null)
         {
 
         }
+    }
 
+    private void ApplyEffect(ActiveSkillsConfig config, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    {
+        for (int i = 0; i < effects.Length; ++i)
+        {
+            switch (effects[i])
+            {
+                case SpecialEffect.AddState:
+                    ulong state_id = config.activeSkillArgs[i].u[0];
+                    foreach(var item in apply_list)
+                    {
+                        var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
+                    }
+                    break;
+                case SpecialEffect.Property:
+
+                    break;
+            }
+        }
     }
 
     private IEnumerator LightAndWaitSelect()

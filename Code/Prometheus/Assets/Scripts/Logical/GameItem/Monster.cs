@@ -38,7 +38,7 @@ public class Monster : LiveItem
 
     public int dead_howl;
 
-    public List<StateConfig> state_list = new List<StateConfig>();
+
 
     /// <summary>
     /// 战斗组件

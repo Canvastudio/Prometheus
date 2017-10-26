@@ -12,6 +12,8 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public bool inViewArea = false;
 
+    private List<StateConfig> state_list = new List<StateConfig>();
+
     /// <summary>
     /// 当前依附的砖块
     /// </summary>
@@ -135,6 +137,12 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     protected virtual void PlayerMoveEnd()
     {
         CheckViewArea();
+    }
+
+
+    public void AddState(StateConfig stateConfig)
+    {
+
     }
 
     private void OnDisable()

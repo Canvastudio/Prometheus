@@ -18,6 +18,17 @@ public static class GameExtend  {
         }
     }
 
+    public static T GetValueFromeDic<T>(this Dictionary<string, T> dic, string key)
+    {
+        T result;
+        if (dic.TryGetValue(key, out result))
+        {
+            return result;
+        }
+        else return default(T);
+        
+    }
+
     public static RectTransform Rt(this GameObject go)
     {
         return ((RectTransform)go.transform);
