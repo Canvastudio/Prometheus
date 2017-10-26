@@ -27,7 +27,7 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         this.chipInventory = chipInventory;
         chipInventory.listItem = this;
-        yield return GameExtend.waitForEndOfFrame;
+        yield return GameGlobalVariable.waitForEndOfFrame;
 
         HudEvent.Get(btn).onLongPress = OnLongPress;
         HudEvent.Get(btn).onClick = OnClick;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FightComponet : MonoBehaviour {
 
@@ -83,6 +84,8 @@ public class FightComponet : MonoBehaviour {
     }
 
     public float time = 0;
+
+    public bool hitTarget = false;
 
     /// <summary>
     /// ref主动技能配置表
@@ -276,6 +279,7 @@ public class FightComponet : MonoBehaviour {
     }
 
     List<GameItemBase> target_list = new List<GameItemBase>(10);
+    List<GameItemBase> apply_list = new List<GameItemBase>(10);
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
@@ -289,6 +293,7 @@ public class FightComponet : MonoBehaviour {
     {
         //1.确定目标
         target_list.Clear();
+        apply_list.Clear();
 
         var st = config.selectType;
         var tt = config.targetType;
@@ -359,12 +364,52 @@ public class FightComponet : MonoBehaviour {
             }
         }
 
-        if (st == SelectType.One)
+        if (target_list.Count > 0)
         {
-            yield return LightAndWaitSelect();
-        }
-        
+            if (st == SelectType.One)
+            {
+                yield return LightAndWaitSelect();
+            }
+            else if (st == SelectType.Direct)
+            {
 
+            }
+            else if (st == SelectType.RA)
+            {
+                int count = config.selectArg;
+
+                while (count > 0 && target_list.Count > 0)
+                {
+                    int i = Random.Range(0, count);
+
+                    apply_list.Add(target_list[i]);
+
+                    target_list.RemoveAt(i);
+
+                    count -= 1;
+                }
+
+            }
+            else if (st == SelectType.RB)
+            {
+                int count = config.selectArg;
+                while (count > 0 && target_list.Count > 0)
+                {
+                    int i = Random.Range(0, count);
+
+                    apply_list.Add(target_list[i]);
+
+                    count -= 1;
+                }
+
+            }
+        }
+        else
+        {
+            Debug.Log("技能找不到符合条件的目标..");
+        }
+
+        yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
 
     }
 
@@ -383,7 +428,7 @@ public class FightComponet : MonoBehaviour {
 
     public IEnumerator DoActiveSkill(List<ulong> ids)
     {
-        foreach (var id in ids)
+         foreach (var id in ids)
         {
             var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
             yield return DoActiveSkill(config);

@@ -170,4 +170,11 @@ public class StageView : SingleGameObject<StageView> {
     {
         yield return 0;
     }
+
+    public IEnumerator ShowEffectAndWaitHit(FightComponet fightComponet, ActiveSkillsConfig config)
+    {
+        yield return GameGlobalVariable.wait0_3s;
+
+        fightComponet.hitTarget = true;
+    }
 }

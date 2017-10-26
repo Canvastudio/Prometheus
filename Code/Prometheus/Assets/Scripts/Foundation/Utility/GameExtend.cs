@@ -37,7 +37,7 @@ public static class GameExtend  {
         return System.Convert.ToInt32(e);
     }
 
-    public static WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+ 
 
     public static void SetParentAndNormalize(this Component com, Transform parent)
     {
@@ -46,3 +46,11 @@ public static class GameExtend  {
         com.transform.localScale = Vector3.one;
     }
 }
+
+public class GameGlobalVariable 
+{
+    public static WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
+    public static WaitForSeconds wait0_3s = new WaitForSeconds(0.3f);
+}
+
