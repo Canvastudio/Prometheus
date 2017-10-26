@@ -35,7 +35,10 @@ public class Monster : LiveItem
     private bool block_other = false;
 
     public int discover_howl;
+
     public int dead_howl;
+
+    public List<StateConfig> state_list = new List<StateConfig>();
 
     /// <summary>
     /// 战斗组件

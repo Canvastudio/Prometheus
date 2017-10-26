@@ -411,6 +411,11 @@ public class FightComponet : MonoBehaviour {
 
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
 
+        if (config.specialEffects != null)
+        {
+
+        }
+
     }
 
     private IEnumerator LightAndWaitSelect()
