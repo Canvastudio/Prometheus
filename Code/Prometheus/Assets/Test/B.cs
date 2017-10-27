@@ -8,7 +8,7 @@ public class B : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CoroCore.Instance.StartCoro(Aciton());
+        CoroCore.Instance.ExStartCoroutine(Aciton());
 	}
 	
 	// Update is called once per frame

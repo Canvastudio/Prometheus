@@ -13,6 +13,6 @@ public class GameManager : MonoBehaviour {
     {
         SuperTimer.Instance.CreatAndBound(this, 30, true);
 
-        CoroCore.Instance.StartCoro(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
+        CoroCore.Instance.ExStartCoroutine(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
     }
 }

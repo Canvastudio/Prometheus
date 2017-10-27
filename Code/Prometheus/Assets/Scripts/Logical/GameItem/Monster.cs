@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class Monster : LiveItem
 {
+
+    public MonsterType monsterType;
     /// <summary>
     /// 策划属性配置表
     /// </summary>
@@ -81,7 +83,7 @@ public class Monster : LiveItem
         //ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
-    public override void OnDiscoverd()
+    public override IEnumerator OnDiscoverd()
     {
         base.OnDiscoverd();
 
@@ -116,7 +118,7 @@ public class Monster : LiveItem
                 if (brick.brickType == BrickType.MONSTER
                     && brick.item.isDiscovered == false)
                 {
-                    brick.item.OnDiscoverd();
+                    yield return brick.item.OnDiscoverd();
                 }
             }
         }
@@ -134,7 +136,7 @@ public class Monster : LiveItem
         }
     }
 
-    public override void OnDead()
+    public override IEnumerator OnDead()
     {
         if (standBrick != null)
         {
@@ -147,8 +149,6 @@ public class Monster : LiveItem
 
         Messenger<Monster>.Invoke(SA.MonsterDead, this);
 
-        base.OnDead();
-
         if (dead_howl > 0)
         {
             var nearby_list = BrickCore.Instance.GetNearbyNode(standBrick.row, standBrick.column, dead_howl);
@@ -160,23 +160,35 @@ public class Monster : LiveItem
                 if (brick.brickType == BrickType.MONSTER
                     && brick.item.isDiscovered == false)
                 {
-                    brick.item.OnDiscoverd();
+                    yield return brick.OnDiscoverd();
                 }
 
             }
         }
+
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(1);
-            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+            yield return fightComponet.DoActiveSkill(skill_list);
         }
+
+        base.OnDead();
+
+        ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
-    public override void TakeDamage(float damage)
+    public override IEnumerator TakeDamage(float damage)
     {
-        base.TakeDamage(damage);
+        IEnumerator ie = base.TakeDamage(damage);
+
+        if (ie != null)
+        {
+            yield return ie;
+        }
 
         fightComponet.skillActive = true;
+
+
     }
 
     public override void Recycle()

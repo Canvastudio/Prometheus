@@ -54,7 +54,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
     }
 
-    public Monster CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
+    public IEnumerator CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
         int tid;
 
@@ -126,12 +126,12 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
-            monster.OnDiscoverd();
+            yield return monster.OnDiscoverd();
         }
 
-        monster.Init();
+        bornBrick.item = monster;
 
-        return monster;
+        monster.Init();
     }
 
     /// <summary>

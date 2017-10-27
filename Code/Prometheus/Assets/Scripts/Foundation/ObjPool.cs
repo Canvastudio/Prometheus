@@ -60,6 +60,12 @@ class UNode<T>
     public int capacity;
 }
 
+public class ObjPoolId
+{
+    public static int _id = int.MinValue;
+}
+
+
 public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
     public Transform transform;
@@ -71,8 +77,6 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
     }
 
-    int _id = 1000;
-
     private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();
 
     //如果对象池存在就回收所有的对象，如果不存在则创建
@@ -82,7 +86,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             float t1 = Time.realtimeSinceStartup;
 
-            CoroCore.Instance.StartCoro(InitData(name, source, count, Instantiate));
+            CoroCore.Instance.ExStartCoroutine(InitData(name, source, count, Instantiate));
 
             Debug.Log("Qx: Ini Pool: " + name + ", cast: " + (Time.realtimeSinceStartup - t1).ToString());
         }
@@ -128,7 +132,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 o = source;
             }
 
-            n.uu.Push(new Obj<T>(o, _id++));
+            n.uu.Push(new Obj<T>(o, ObjPoolId._id++));
 
             ++m;
 
@@ -157,7 +161,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
             if (autoCreatePool)
             {
-                CoroCore.Instance.StartCoro(InitData(name, source));
+                CoroCore.Instance.ExStartCoroutine(InitData(name, source));
             }
             else
             {
@@ -169,7 +173,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             var o = Data[name].uu.Pop();
 
-            o.id = _id++;
+            o.id = ObjPoolId._id++;
 
             res = o.obj;
 
@@ -178,12 +182,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 if (Data[name].instantiate)
                 {
                     res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj<T>(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj<T>(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
                 }
             }
 
@@ -196,12 +200,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj<T>(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj<T>(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
             }
 
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -223,7 +227,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
             if (autoCreatePool)
             {
-                CoroCore.Instance.StartCoro(InitData(name, source));
+                CoroCore.Instance.ExStartCoroutine(InitData(name, source));
             }
             else
             {
@@ -243,12 +247,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 {
                     if (Data[name].source != null)
                         res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj<T>(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj<T>(res, _id++));
+                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
                 }
             }
 
@@ -259,12 +263,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj<T>(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj<T>(res, _id++));
+                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
             }
      
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -350,7 +354,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                     o = Data[name].source;
                 }
 
-                Data[name].uu.Push(new Obj<T>(o, _id++));
+                Data[name].uu.Push(new Obj<T>(o, ObjPoolId._id++));
             }
         }
     }
@@ -389,7 +393,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             DiscardPool(names[i]);
         }
 
-        _id = int.MinValue;
+        ObjPoolId._id = int.MinValue;
     }
 
     public override void ResetData()

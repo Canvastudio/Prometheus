@@ -86,7 +86,7 @@ public class MoveComponet : MonoBehaviour {
     {
         StageCore.Instance.TimeCast(1);
 
-        BrickCore.Instance.OpenBrick(brick);
+        yield return BrickCore.Instance.OpenBrick(brick);
 
         yield return new WaitForSeconds(time);
 

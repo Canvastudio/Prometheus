@@ -24,14 +24,14 @@ public class StateMachineBase<T> : SingleObject<T> where T : new()
     public IEnumerator SwitchGameState(IState nextState)
     {
         _gameState = nextState;
-        yield return CoroCore.Instance.StartCoroutine(nextState.DoState());
+        yield return CoroCore.Instance.ExStartCoroutine(nextState.DoState());
     }
 
     public IEnumerator GetNextState()
     {
         IState next_State = _gameState.GetNextState();
         _gameState = next_State;
-        yield return CoroCore.Instance.StartCoroutine(_gameState.DoState());
+        yield return CoroCore.Instance.ExStartCoroutine(_gameState.DoState());
     }
 
     public IState GetStateByName(string name)
@@ -54,7 +54,7 @@ public class StateMachineBase<T> : SingleObject<T> where T : new()
 
         while (_gameState != null)
         {
-            yield return CoroCore.Instance.StartCoroutine(_gameState.DoState());
+            yield return CoroCore.Instance.ExStartCoroutine(_gameState.DoState());
 
             _gameState = _gameState.GetNextState();
         }
@@ -71,7 +71,7 @@ public class StateMachineBase<T> : SingleObject<T> where T : new()
         {
             while (_gameState != null)
             {
-                yield return CoroCore.Instance.StartCoroutine(_gameState.DoState());
+                yield return CoroCore.Instance.ExStartCoroutine(_gameState.DoState());
                 _gameState = _gameState.GetNextState();
             }
         }

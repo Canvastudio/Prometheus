@@ -56,6 +56,18 @@ public static class GameExtend  {
         com.transform.SetParent(parent);
         com.transform.localScale = Vector3.one;
     }
+
+    public static Coroutine ExStartCoroutine(this MonoBehaviour mono, IEnumerator routine)
+    {
+        if (routine != null)
+        {
+            return mono.StartCoroutine(routine);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 
 public class GameGlobalVariable 

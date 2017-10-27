@@ -40,7 +40,7 @@ public class Tablet : GameItemBase {
             if (round > activeRound)
             {
                 round -= activeRound;
-                TakeEffect();
+                StartCoroutine(TakeEffect());
             }
         }
         else
@@ -49,7 +49,7 @@ public class Tablet : GameItemBase {
         }
     }
 
-    public void TakeEffect()
+    public IEnumerator TakeEffect()
     {
         Debug.Log("石碑发动: " + gameObject.name + ", type: " + config.totemType.ToString());
 
@@ -67,7 +67,7 @@ public class Tablet : GameItemBase {
     
                 if (m.Count < int_arg1)
                 {
-                    BrickCore.Instance.CreateWhiteMonsterOnRandomStandableBrick();
+                    yield return BrickCore.Instance.CreateWhiteMonsterOnRandomStandableBrick();
                 }
                 break;
             case TotemType.Resurgence:
@@ -103,7 +103,7 @@ public class Tablet : GameItemBase {
         }
     }
 
-    public override void OnDiscoverd()
+    public override IEnumerator OnDiscoverd()
     {
         base.OnDiscoverd();
 
@@ -135,6 +135,8 @@ public class Tablet : GameItemBase {
                 CheckFunc = VisableMonsterMoreArg;
                 break;
         }
+
+        return null;
     }
 
 

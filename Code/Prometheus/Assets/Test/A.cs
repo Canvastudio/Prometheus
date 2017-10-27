@@ -11,13 +11,12 @@ public class A : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-
         //yield return StartCoroutine(CA());
         //SuperTimer.Instance.CoroutineStart(CA(), this);
         coroutine = TCoroCore.Instance.StartCoro(CA());
 
         Debug.Log("end");
+
     }
     
     
