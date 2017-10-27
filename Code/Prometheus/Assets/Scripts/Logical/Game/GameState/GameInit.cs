@@ -15,7 +15,7 @@ public class GameInit : IState
 
     public IEnumerator DoState()
     {
-        yield return CoroCore.Instance.StartCoroutine(SuperConfig.Instance.LoadAsync());
+        yield return CoroCore.Instance.ExStartCoroutine(SuperConfig.Instance.LoadAsync());
     }
 
     public IState GetNextState()

@@ -138,11 +138,18 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
     }
 
-    public override void OnDiscoverd()
+    public override IEnumerator OnDiscoverd()
     {
         base.OnDiscoverd();
 
         brickExplored = BrickExplored.EXPLORED;
+
+        isDiscovered = true;
+
+        if (!item.isDiscovered)
+        {
+            yield return item.OnDiscoverd();
+        }
     }
 
     public void RefreshWalkableAndBlockState()
@@ -226,20 +233,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
 
     #region Add Item
-    /// <summary>
-    /// 在当前网格放置一个全新的怪物,由于Grid的刷新问题，要等到下一帧才能获得正确位置，如果有问题会改成
-    /// 手动来设置，而不使用自带的组件来管理位置
-    /// </summary>
-    /// <param name="power"></param>
-    /// <param name="id"></param>
-    /// <param name="lv"></param>
-    public Brick CreateMonter(int power, ulong uid, int lv)
+    public IEnumerator CreateMonter(int power, ulong uid, int lv)
     {
         //创建数据
-        item = GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
+        yield return GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
 
         brickType = BrickType.MONSTER;
-        return this;
     }
 
     public Brick CreateMonter()

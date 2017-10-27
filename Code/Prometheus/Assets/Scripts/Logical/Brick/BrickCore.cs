@@ -32,7 +32,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         base.Init();
     }
 
-    public void CreatePrimitiveStage()
+    public IEnumerator CreatePrimitiveStage()
     {
         //初始生成的行数
         int max_Distance = StageView.Instance.viewBrickRow;
@@ -41,14 +41,16 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         while (_row < max_Distance)
         {
-            _row += CreateBrickModuel(_row);
+            yield return CreateBrickModuel(_row);
         }
     }
 
     public void CheckNeedCreawteMoudel()
     {
-        if (_row - (-StageView.Instance.moveRoot.localPosition.y) / StageView.Instance.brickWidth < (StageView.Instance.viewBrickRow ))
-            _row += CreateBrickModuel(_row);
+        if (_row - (-StageView.Instance.moveRoot.localPosition.y) / StageView.Instance.brickWidth < (StageView.Instance.viewBrickRow))
+        {
+            CreateBrickModuel(_row);
+        }
     }
 
     public void CheckNeedRecycelBrick()
@@ -96,7 +98,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
 	}
 
-    public int CreateBrickModuel(int distance)
+    public IEnumerator CreateBrickModuel(int distance)
     {
         var map_Data = MapConfig.GetConfigDataList<MapConfig>();
 
@@ -220,7 +222,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
                                 int lv_max = next_Map.enemy_level[1];
                                 int lv = Random.Range(lv_min, lv_max + 1);
 
-                                _brick = _brick.CreateMonter(int.Parse(monster_Desc[1]), enemy_Id, lv);
+                                yield return _brick.CreateMonter(int.Parse(monster_Desc[1]), enemy_Id, lv);
                             }
                         }
                         else
@@ -235,7 +237,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         }
 
-        return moduel_RowCount;
+        _row += moduel_RowCount;
     }
 
     public void OpenNearbyBrick(int row, int column, bool explored_self = true)
@@ -264,15 +266,15 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
     }
 
-    public void OpenBrick(Brick _brick)
+    public IEnumerator OpenBrick(Brick _brick)
     {
         if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
         {
-            _brick.OnDiscoverd();
+            yield return _brick.OnDiscoverd();
 
             if (_brick.item != null)
             {
-                _brick.item.OnDiscoverd();
+               yield return _brick.item.OnDiscoverd();
             }
         }
     }
@@ -361,11 +363,11 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         brick1.CreateMonter(pwr, uid, lv);
     }
 
-    public void CreateWhiteMonsterOnRandomStandableBrick()
+    public IEnumerator CreateWhiteMonsterOnRandomStandableBrick()
     {
         Brick brick1 = GetRandomStandableBrick();
 
-        brick1.CreateMonter();
+        yield return brick1.CreateMonter();
     }
 
     public List<Monster> GetVisableMonsters()
@@ -384,6 +386,24 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
                 if (Mathf.Abs(i) + Mathf.Abs(m) <= distance)
                 {
                     result.Add(GetNode(r + i, c + m));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public List<Brick> GetNearbyBrick(int r, int c, int distance)
+    {
+        List<Brick> result = new List<Brick>(distance * distance + (distance + 1) * (distance + 1));
+
+        for (int i = -distance; i <= distance; ++i)
+        {
+            for (int m = -distance; m <= distance; ++i)
+            {
+                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance)
+                {
+                    result.Add(GetNode(r + i, c + m).behavirour as Brick);
                 }
             }
         }

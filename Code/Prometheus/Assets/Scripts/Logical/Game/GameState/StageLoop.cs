@@ -21,7 +21,7 @@ public class StageLoopState : IState
         yield return ChipBoard.Instance.InitBoard(1);
 
         //生成地图，怪物
-        BrickCore.Instance.CreatePrimitiveStage();
+        yield return BrickCore.Instance.CreatePrimitiveStage();
 
         //生成玩家
         BrickCore.Instance.CreatePlayer(1);

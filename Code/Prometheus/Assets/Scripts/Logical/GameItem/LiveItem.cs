@@ -55,8 +55,6 @@ public abstract class LiveItem : GameItemBase
                 if (value <= 0)
                 {
                     value = 0;
-
-                    OnDead();
                 }
 
                 property.SetFloatProperty(GameProperty.nhp, value);
@@ -177,11 +175,13 @@ public abstract class LiveItem : GameItemBase
         cur_hp = Mathf.Min(fmax_hp, cur_hp);
     }
 
-    public virtual void OnDead()
+    public virtual IEnumerator OnDead()
     {
         standBrick.CleanItem();
 
         StageCore.Instance.UnRegisterItem(this);
+
+        return null;
 
         //GameObject.Destroy(gameObject);
     }
@@ -194,7 +194,8 @@ public abstract class LiveItem : GameItemBase
         {
             var damage = melee;
 
-            yield return StartCoroutine(target.MeleeAttackByOther(this, damage));
+            yield return this.ExStartCoroutine
+                (target.MeleeAttackByOther(this, damage));
         }
     }
 
@@ -204,12 +205,17 @@ public abstract class LiveItem : GameItemBase
 
         yield return waitForSeconds;
 
-        TakeDamage(damage);
+        yield return TakeDamage(damage);
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual IEnumerator TakeDamage(float damage)
     {
         cur_hp = cur_hp - damage;
+
+        if (cur_hp == 0)
+        {
+            yield return OnDead();
+        }
     }
 }
 

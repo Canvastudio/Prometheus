@@ -423,7 +423,7 @@ public class FightComponet : MonoBehaviour {
         if (config.beforeSpecialEffect != null)
         {
             var effects = config.beforeSpecialEffect.ToArray();
-            ApplyEffect(config, effects, apply_list);
+            yield return ApplyEffect(config, effects, apply_list);
         }
 
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
@@ -435,7 +435,7 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    private void ApplyEffect(ActiveSkillsConfig config, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    private IEnumerator ApplyEffect(ActiveSkillsConfig config, SpecialEffect[] effects, List<GameItemBase> apply_list)
     {
         for (int i = 0; i < effects.Length; ++i)
         {
@@ -446,6 +446,7 @@ public class FightComponet : MonoBehaviour {
                     foreach(var item in apply_list)
                     {
                         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
+                        item.AddState(state_config);
                     }
                     break;
                 case SpecialEffect.Property:
@@ -465,11 +466,88 @@ public class FightComponet : MonoBehaviour {
                     //TODO
                     break;
                 case SpecialEffect.Enslave:
+                    foreach (var item in apply_list)
+                    {
+                        (item as LiveItem).enslave = true;
+                    }
+                        break;
+                case SpecialEffect.OpenBlockWithNear:
+                    int range = (int)config.activeSkillArgs[i].f[0];
+                    Brick stand_brick = ownerObject.standBrick;
+                    foreach (var item in apply_list)
+                    {
+                        Brick brick = item as Brick;
+
+                        yield return brick.OnDiscoverd();
+
+                        var brick_list = BrickCore.Instance.GetNearbyBrick(brick.row, brick.column, range);
+
+                        foreach (var nearby_brick in brick_list)
+                        {
+                            yield return nearby_brick.OnDiscoverd();
+                        }
+                    }
+                    break;
+                case SpecialEffect.HalfCostReturn:
+                    EffectCondition condition = config.activeSkillArgs[i].ec[0];
+                    foreach (var item in apply_list)
+                    {
+                        if (CheckEffectCondition(condition, item, config))
+                        {
+
+                        }
+                    }
                     break;
             }
         }
     }
 
+    private bool CheckEffectCondition(EffectCondition condition, GameItemBase item, ActiveSkillsConfig config)
+    {
+        switch (condition)
+        {
+            case EffectCondition.HasMonster:
+                if (item is Monster)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case EffectCondition.NoMonster:
+                if (item is Monster)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            case EffectCondition.Empty:
+                if ((item as Brick).item == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case EffectCondition.DamageTypeCartridge:
+                return config.damageType == DamageType.Cartridge;
+            case EffectCondition.DamageTypeLaser:
+                return config.damageType == DamageType.Laser;
+            case EffectCondition.MonsterTypeIron:
+                return (item is Monster && (item as Monster).monsterType == MonsterType.Iron);
+            case EffectCondition.MonsterTypeOrganisms:
+                return (item is Monster && (item as Monster).monsterType == MonsterType.Organisms);
+            case EffectCondition.None:
+                return true;
+            default:
+                return false;
+        }
+    }
+    
     private IEnumerator LightAndWaitSelect()
     {
         yield return 0;

@@ -35,7 +35,7 @@ public class ETag : IEqualityComparer<ETag>
             {
                 eTag = new ETag(name, uid);
                 dictionary[name] = eTag;
-                uid *= 2;
+                uid += 1;
             }
 
             result[i] = eTag;
@@ -93,7 +93,10 @@ public class EntitysTag<E> where E : ITagable
                 curTagMap.Add(tag, entityList);
             }
 
-            entityList.Add(entity);
+            if (!entityList.Contains(entity))
+            {
+                entityList.Add(entity);
+            }
 
             if (entity.Etag == null)
             {

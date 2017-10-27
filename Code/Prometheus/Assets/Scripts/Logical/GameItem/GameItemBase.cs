@@ -6,8 +6,6 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public int itemId = 0;
 
-    public ulong featur = 0;
-
     public bool isDiscovered = false;
 
     public bool inViewArea = false;
@@ -60,11 +58,13 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     }
 
-    public virtual void OnDiscoverd()
+    public virtual IEnumerator OnDiscoverd()
     {
         isDiscovered = true;
 
         CheckViewArea();
+
+        return null;
     }
 
     /// <summary>
@@ -161,5 +161,10 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     {
         isDiscovered = false;
         inViewArea = false;
+    }
+
+    public override bool Equals(object other)
+    {
+        return (other as GameItemBase).itemId == itemId;
     }
 }

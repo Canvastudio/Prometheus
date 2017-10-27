@@ -71,7 +71,7 @@ public class StageCore : SingleObject<StageCore> {
         //监听一些重要事件
         Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
 
-        CoroCore.Instance.StartCoro(CheckTurnTime());
+        CoroCore.Instance.ExStartCoroutine(CheckTurnTime());
     }
 
     public void RegisterItem(GameItemBase gameItemBase)
@@ -317,7 +317,7 @@ public class StageCore : SingleObject<StageCore> {
     public IEnumerator StopLoop()
     {
         //停止逻辑循环
-        CoroCore.Instance.StopCoro("RunLoop");
+        CoroCore.Instance.ExStartCoroutine(RunLoop());
         //重置标志
         isLooping = false;
 
