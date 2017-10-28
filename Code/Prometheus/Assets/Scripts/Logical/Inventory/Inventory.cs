@@ -10,6 +10,8 @@ public class Inventory {
     [SerializeField]
     List<ChipInventory> chipList = new List<ChipInventory>();
 
+    ulong[] ids = new ulong[]{ 1001, 1002, 1003, 1004 };
+
     public void ChangeStuffCount(ulong id, int count)
     {
         Debug.Log("获得stuff: " + id.ToString() + " " + count.ToString());
@@ -30,6 +32,17 @@ public class Inventory {
         Messenger.Invoke(SA.StuffCountChange);
     }
 
+    public ulong StuffToId(Stuff stuff)
+    {
+        return ids[(int)stuff];
+    }
+
+    public void ChangeStuffCount(Stuff stuff, int count)
+    {
+        var id = StuffToId(stuff);
+        ChangeStuffCount(id, count);
+    }
+
     public int GetStuffCount(ulong id)
     {
         StuffInventory stuffInventory;
@@ -41,6 +54,12 @@ public class Inventory {
         {
             return 0;
         }
+    }
+
+    public int GetStuffCount(Stuff stuff)
+    {
+        var id = StuffToId(stuff);
+        return GetStuffCount(id);
     }
 
     public void AddChip(ulong id)

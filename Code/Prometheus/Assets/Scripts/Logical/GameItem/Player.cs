@@ -10,11 +10,10 @@ public class Player : LiveItem {
     public Inventory inventory = new Inventory();
     public FightComponet fightComponet;
     public SkillPointsComponet skillPointsComponet;
-    
+
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
-        property.SetFloatProperty(GameProperty.motorized, motorized)
-
+        baseProperty.SetFloatProperty(GameProperty.motorized, motorized)
             .SetFloatProperty(GameProperty.atkSpeed, atkSpeed)
             .SetFloatProperty(GameProperty.reloadSpeed, reloadSpeed);
 
@@ -31,6 +30,7 @@ public class Player : LiveItem {
             {
                 if (skill_point.skillId > 0)
                 {
+                    fightComponet.RemoveSkill(skill_point.skillId);
                     StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
                 }
 
@@ -46,7 +46,7 @@ public class Player : LiveItem {
         var e = base.MeleeAttackTarget(target);
 
         var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-        var atk_Speed = property[GameProperty.atkSpeed];
+        var atk_Speed = GetFinalProperty(GameProperty.atkSpeed);
         var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
         
         StageCore.Instance.TimeCast(timeSpend);

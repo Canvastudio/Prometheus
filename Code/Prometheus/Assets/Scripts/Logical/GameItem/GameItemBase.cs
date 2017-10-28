@@ -10,7 +10,15 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public bool inViewArea = false;
 
-    private List<StateConfig> state_list = new List<StateConfig>();
+    /// <summary>
+    /// 状态Buff
+    /// </summary>
+    private List<StateConfig> buff_list = new List<StateConfig>();
+
+    /// <summary>
+    /// 状态deBuff
+    /// </summary>
+    private List<StateConfig> debuff_list = new List<StateConfig>();
 
     /// <summary>
     /// 当前依附的砖块
@@ -140,7 +148,12 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     }
 
 
-    public void AddState(StateConfig stateConfig)
+    public void AddBuff(StateConfig stateConfig)
+    {
+
+    }
+
+    public void RemoveBuff(int count, bool isBuff)
     {
 
     }

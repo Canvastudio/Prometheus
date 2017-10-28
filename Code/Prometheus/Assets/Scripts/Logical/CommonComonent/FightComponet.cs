@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum SkillType
+{
+    Active,
+    Passive,
+    Summon,
+    Invalid,
+}
+
 public class FightComponet : MonoBehaviour {
 
     private class ActiveSkillState : IComparer<ActiveSkillState>
@@ -123,6 +131,59 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
+    public void AddSkill(ulong id)
+    {
+        switch (IdToSkillType(id))
+        {
+            case SkillType.Active:
+                StageView.Instance.AddSkillIntoSkillList(id);
+                activeSkillConfigs.Add(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
+                break;
+            case SkillType.Passive:
+                passiveSkillConfigs.Add(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
+                break;
+            case SkillType.Summon:
+                summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
+                break;
+        }
+        
+    }
+
+    public void RemoveSkill(ulong id)
+    {
+        switch (IdToSkillType(id))
+        {
+            case SkillType.Active:
+                StageView.Instance.RemoveSkillFromSkillList(id);
+                activeSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
+                break;
+            case SkillType.Passive:
+                passiveSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
+                break;
+            case SkillType.Summon:
+                summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
+                break;
+        }
+    }
+
+    public SkillType IdToSkillType(ulong id)
+    {
+        ulong i = id / 1000000;
+        if (i == 1)
+        {
+            return SkillType.Active;
+        }
+        else if (i == 2)
+        {
+            return SkillType.Passive;
+        }
+        else if (i == 3)
+        {
+            return SkillType.Summon;
+        }
+
+        return SkillType.Invalid;
+    }
 
     public void SortAcitveSkill()
     {
@@ -180,6 +241,8 @@ public class FightComponet : MonoBehaviour {
             }
         }
     }
+
+
     public float CalculageRPN(long[] damage_values, GameItemBase rpn_target, out GameProperty valueType)
     {
         Stack<float> stack = new Stack<float>();
@@ -279,7 +342,7 @@ public class FightComponet : MonoBehaviour {
                         target = rpn_target as LiveItem;
                     }
 
-                    stack.Push(target.property.GetFloatProperty(property));
+                    stack.Push(target.GetFinalProperty(property));
                 }
             }
         }
@@ -420,10 +483,21 @@ public class FightComponet : MonoBehaviour {
             Debug.Log("技能找不到符合条件的目标..");
         }
 
+        if (ownerObject is Player)
+        {
+            var stuff = config.stuffCost.stuffs.ToArray();
+            var count = config.stuffCost.values.ToArray();
+            Player player = ownerObject as Player;
+            for (int n = 0; n< stuff.Length; ++n)
+            {
+                player.inventory.ChangeStuffCount(stuff[n], -count[n]);
+            }
+        }
+
         if (config.beforeSpecialEffect != null)
         {
             var effects = config.beforeSpecialEffect.ToArray();
-            yield return ApplyEffect(config, effects, apply_list);
+            yield return ApplyEffect(config, config.beforeArgs, effects, apply_list);
         }
 
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
@@ -437,30 +511,35 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    private IEnumerator ApplyEffect(ActiveSkillsConfig config, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
     {
+        Brick brick = null;
+        EffectCondition condition = EffectCondition.None;
+        ulong state_id = 0;
+        int remove_count = 0;
+
         for (int i = 0; i < effects.Length; ++i)
         {
             switch (effects[i])
             {
                 case SpecialEffect.AddState:
-                    ulong state_id = config.activeSkillArgs[i].u[0];
-                    foreach(var item in apply_list)
+                    state_id = args[i].u[0];
+                    foreach (var item in apply_list)
                     {
                         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                        item.AddState(state_config);
+                        item.AddBuff(state_config);
                     }
                     break;
                 case SpecialEffect.Property:
                     GameProperty property;
 
-                    long[] rpn_values = config.activeSkillArgs[i].rpn.ToArray();
+                    long[] rpn_values = args[i].rpn.ToArray();
 
                     foreach (var item in apply_list)
                     {
                         var value = CalculageRPN(rpn_values, item, out property);
 
-                        (item as LiveItem).property.SetFloatProperty(property, value);
+                        (item as LiveItem).SetProperty(property, value);
                     }
 
                     break;
@@ -472,13 +551,13 @@ public class FightComponet : MonoBehaviour {
                     {
                         (item as LiveItem).enslave = true;
                     }
-                        break;
+                    break;
                 case SpecialEffect.OpenBlockWithNear:
-                    int range = (int)config.activeSkillArgs[i].f[0];
+                    int range = (int)args[i].f[0];
                     Brick stand_brick = ownerObject.standBrick;
                     foreach (var item in apply_list)
                     {
-                        Brick brick = item as Brick;
+                        brick = item as Brick;
 
                         yield return brick.OnDiscoverd();
 
@@ -491,14 +570,67 @@ public class FightComponet : MonoBehaviour {
                     }
                     break;
                 case SpecialEffect.HalfCostReturn:
-                    EffectCondition condition = config.activeSkillArgs[i].ec[0];
+                    condition = args[i].ec[0];
                     foreach (var item in apply_list)
                     {
                         if (CheckEffectCondition(condition, item, config))
                         {
-
+                            if (ownerObject is Player)
+                            {
+                                var stuff = config.stuffCost.stuffs.ToArray();
+                                var count = config.stuffCost.values.ToArray();
+                                Player player = ownerObject as Player;
+                                for (int n = 0; n < stuff.Length; ++n)
+                                {
+                                    player.inventory.ChangeStuffCount(stuff[n], Mathf.FloorToInt(.5f * count[n]));
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError("返还消耗的目标不是玩家.");
+                            }
                         }
                     }
+                    break;
+                case SpecialEffect.TransferSelf:
+                    brick = apply_list[0] as Brick;
+                    condition = args[i].ec[0];
+                    if (ownerObject is Player)
+                    {
+                        if (CheckEffectCondition(condition, brick, config))
+                        {
+                            yield return (ownerObject as Player).moveComponent.Transfer(brick);
+                        }
+                        else
+                        {
+                            Debug.LogError("传送自己的对象不是玩家.");
+                        }
+                    }
+                    break;
+                case SpecialEffect.TransferTarget:
+                    brick = apply_list[0] as Brick;
+                    yield return (ownerObject as LiveItem).moveComponent.Transfer(brick);
+                    break;
+                case SpecialEffect.OffensiveDisperse:
+                    remove_count = (int)args[i].f[0];
+                    foreach (var item in apply_list)
+                    {
+                        item.RemoveBuff(remove_count, true);
+                    }
+                    break;
+                case SpecialEffect.AddStateToSelf:
+                    state_id = args[i].u[0];
+                    ownerObject.AddBuff(ConfigDataBase.GetConfigDataById<StateConfig>(state_id));
+                    break;
+                case SpecialEffect.Disperse:
+                    remove_count = (int)args[i].f[0];
+                    foreach (var item in apply_list)
+                    {
+                        item.RemoveBuff(remove_count, false);
+                    }
+                    break;
+                case SpecialEffect.PositionExchange:
+                    yield return MoveComponet.ExchangePosition(ownerObject.moveComponent, (apply_list[0] as Monster).moveComponent);
                     break;
             }
         }
@@ -527,7 +659,7 @@ public class FightComponet : MonoBehaviour {
                     return true;
                 }
             case EffectCondition.Empty:
-                if ((item as Brick).item == null)
+                if ((item as Brick).item == null && (item as Brick).realBrickType == BrickType.EMPTY)
                 {
                     return true;
                 }

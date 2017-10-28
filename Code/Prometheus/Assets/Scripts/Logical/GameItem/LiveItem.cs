@@ -44,7 +44,7 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_cur_hp.HasValue) _cur_hp = property.GetFloatProperty(GameProperty.nhp);
+            if (!_cur_hp.HasValue) _cur_hp = baseProperty.GetFloatProperty(GameProperty.nhp);
 
             return _cur_hp.Value;
         }
@@ -57,7 +57,7 @@ public abstract class LiveItem : GameItemBase
                     value = 0;
                 }
 
-                property.SetFloatProperty(GameProperty.nhp, value);
+                baseProperty.SetFloatProperty(GameProperty.nhp, value);
 
                 _cur_hp = value;
 
@@ -76,7 +76,7 @@ public abstract class LiveItem : GameItemBase
         get
         {
             if (!_fmax_hp.HasValue)
-                _fmax_hp = property.GetFloatProperty(GameProperty.mhp) * (1 + property.GetFloatProperty(GameProperty.mhp_percent));
+                _fmax_hp = baseProperty.GetFloatProperty(GameProperty.mhp) * (1 + baseProperty.GetFloatProperty(GameProperty.mhp_percent));
 
             return _fmax_hp.Value;
         }
@@ -89,7 +89,7 @@ public abstract class LiveItem : GameItemBase
         get
         {
             if (!_max_hp.HasValue)
-                _max_hp = property.GetFloatProperty(GameProperty.mhp);
+                _max_hp = baseProperty.GetFloatProperty(GameProperty.mhp);
 
             return _max_hp.Value;
         }
@@ -100,7 +100,7 @@ public abstract class LiveItem : GameItemBase
                 Debug.LogError("max hp 的值可以小于等于0？");
             }
 
-            property.SetFloatProperty(GameProperty.mhp, value);
+            baseProperty.SetFloatProperty(GameProperty.mhp, value);
 
             _max_hp = value;
 
@@ -117,13 +117,13 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_melee.HasValue) _melee = property.GetFloatProperty(GameProperty.melee);
+            if (!_melee.HasValue) _melee = baseProperty.GetFloatProperty(GameProperty.melee);
 
             return _melee.Value;
         }
         set
         {
-            property.SetFloatProperty(GameProperty.melee, value);
+            baseProperty.SetFloatProperty(GameProperty.melee, value);
 
             _melee = value;
 
@@ -167,7 +167,22 @@ public abstract class LiveItem : GameItemBase
     /// <summary>
     /// 基础属性，血量，速度等
     /// </summary>
-    public LiveBasePropertys property = new LiveBasePropertys();
+    public LiveBasePropertys baseProperty = new LiveBasePropertys();
+
+    /// <summary>
+    /// 得到最终的属性，会算上被动和芯片的加成
+    /// </summary>
+    /// <param name="property"></param>
+    /// <returns></returns>
+    public float GetFinalProperty(GameProperty property)
+    {
+        return 0;
+    }
+
+    public void SetProperty(GameProperty property, float value)
+    {
+
+    }
 
     public void AddHpPercent(float percent)
     {

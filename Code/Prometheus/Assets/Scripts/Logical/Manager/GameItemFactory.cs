@@ -82,7 +82,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        monster.property.InitBaseProperty(
+        monster.baseProperty.InitBaseProperty(
             lv_Property.mhp * propertys[pwr, 0],
             lv_Property.speed * propertys[pwr, 1],
             lv_Property.melee * propertys[pwr, 2],
@@ -156,7 +156,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         
         player.config = config;
 
-        player.property.InitBaseProperty(
+        player.baseProperty.InitBaseProperty(
             config.mhp,
             config.speed,
             config.melee,

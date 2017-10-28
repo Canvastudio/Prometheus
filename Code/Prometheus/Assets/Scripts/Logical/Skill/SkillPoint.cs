@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SkillPointSkillType
-{
-    None,
-    Active,
-    Passive,
-    Summon,
-}
-
 public class SkillPoint {
 
     public ulong id;

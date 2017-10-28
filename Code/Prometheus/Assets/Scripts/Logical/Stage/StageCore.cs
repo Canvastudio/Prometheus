@@ -281,8 +281,8 @@ public class StageCore : SingleObject<StageCore> {
     {
         var monster = brick1.item as Monster;
 
-        var player_Speed = Player.property.GetFloatProperty(GameProperty.speed);
-        var monster_Speed = monster.property.GetFloatProperty(GameProperty.speed);
+        var player_Speed = Player.baseProperty.GetFloatProperty(GameProperty.speed);
+        var monster_Speed = monster.baseProperty.GetFloatProperty(GameProperty.speed);
 
         if (player_Speed >= monster_Speed || monster.enslave)
         {

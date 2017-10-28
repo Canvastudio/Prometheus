@@ -122,6 +122,24 @@ public class MoveComponet : MonoBehaviour {
         //    StageCore.Instance.Player.standBrick.pathNode.z);
     }
 
+    public IEnumerator Transfer(Brick brick)
+    {
+        if (brick.realBrickType == BrickType.EMPTY 
+            || brick.realBrickType == BrickType.SUPPLY
+            || brick.realBrickType == BrickType.TREASURE)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            owner.standBrick = brick;
+
+            owner.transform.localPosition = brick.transform.localPosition;
+        }
+        else
+        {
+    
+        }
+    }
+
     public void CastMoveTime()
     {
         StageCore.Instance.TimeCast(1);
@@ -137,6 +155,17 @@ public class MoveComponet : MonoBehaviour {
     public bool MoveEnd()
     {
         return PathFinish;
+    }
+
+    public static IEnumerator ExchangePosition(MoveComponet a, MoveComponet b)
+    {
+        Brick temp = a.owner.standBrick;
+        a.owner.standBrick = b.owner.standBrick;
+        a.owner.transform.localPosition = b.owner.transform.localPosition;
+        b.owner.standBrick = temp;
+        b.owner.transform.localPosition = temp.transform.localPosition;
+
+        return null;
     }
 
 }

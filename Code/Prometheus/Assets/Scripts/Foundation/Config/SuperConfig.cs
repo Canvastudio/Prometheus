@@ -616,4 +616,8 @@ public abstract class ConfigDataBase
     /// </summary>
     public virtual void OnLoadDone() { }
 
+    public override bool Equals(object obj)
+    {
+        return id == (obj as ConfigDataBase).id;
+    }
 }
