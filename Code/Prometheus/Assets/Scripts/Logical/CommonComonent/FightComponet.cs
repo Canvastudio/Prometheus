@@ -428,10 +428,12 @@ public class FightComponet : MonoBehaviour {
 
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
 
-
-        if (config.afterSpecialEffect != null)
+        if (hitTarget)
         {
+            if (config.afterSpecialEffect != null)
+            {
 
+            }
         }
     }
 
