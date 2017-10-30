@@ -98,17 +98,17 @@ public class FightComponet : MonoBehaviour {
     /// <summary>
     /// ref主动技能配置表
     /// </summary>
-    public List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
+    private List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
 
     /// <summary>
     /// ref被动技能配置表
     /// </summary>
-    public List<PassiveSkillsConfig> passiveSkillConfigs = new List<PassiveSkillsConfig>();
+    private List<PassiveSkillsConfig> passiveSkillConfigs = new List<PassiveSkillsConfig>();
 
     /// <summary>
     /// ref召唤技能配置表
     /// </summary>
-    public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
+    private List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
 
     private List<ActiveSkillState> activeSort = new List<ActiveSkillState>();
 
@@ -206,6 +206,7 @@ public class FightComponet : MonoBehaviour {
     {
         Messenger<float>.RemoveListener(SA.StageTimeCast, ChangeTime);
     }
+
     public void ChangeTime(float _time)
     {
         if (ownerObject.isDiscovered && skillActive)
@@ -506,9 +507,74 @@ public class FightComponet : MonoBehaviour {
         {
             if (config.afterSpecialEffect != null)
             {
-
+                var effects = config.afterSpecialEffect.ToArray();
+                yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
             }
         }
+    }
+
+    private void AddPassiveSkillEffect(PassiveSkillsConfig config)
+    {
+        var type_array = config.passiveType.ToArray();
+        for (int i = 0; i < type_array.Length; ++i)
+        {
+            switch(type_array[i])
+            {
+                case PassiveType.Just:
+                    AddJustPassive(config);
+                    break;
+            }
+        }
+    }
+
+    private void RemovePassiveSkillEffect(PassiveSkillsConfig config)
+    {
+        var type_array = config.passiveType.ToArray();
+        for (int i = 0; i < type_array.Length; ++i)
+        {
+            switch (type_array[i])
+            {
+                case PassiveType.Just:
+                    RemoveJustPassive(config);
+                    break;
+            }
+        }
+    }
+
+    Dictionary<ulong, long[]> just_rpn = new Dictionary<ulong, long[]>();
+
+    private void AddJustPassive(PassiveSkillsConfig config)
+    {
+        just_rpn.Add(config.id, config.passiveSkillArgs[0].rpn.ToArray());
+    }
+
+    private void RemoveJustPassive(PassiveSkillsConfig config)
+    {
+        just_rpn.Remove(config.id);
+    }
+
+    public void ApplyJustProperty()
+    {
+        GameProperty property;
+
+        foreach (var rpn in just_rpn)
+        {
+            float value = CalculageRPN(rpn.Value, ownerObject, out property);
+
+            if (property == GameProperty.Nothing)
+            {
+                Debug.LogError("Just 技能 的 目标属性为空");
+            }
+            else
+            {
+                ownerObject.Addtive_Property.SetFloatProperty(property, value);
+            }
+        }
+    }
+
+    public void RemovejustProperty()
+    {
+
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)

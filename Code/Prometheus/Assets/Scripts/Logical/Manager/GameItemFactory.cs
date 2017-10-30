@@ -35,21 +35,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 string type = skill[i, 0];
                 string skill_Id = skill[i, 1];
 
-                switch (type)
-                {
-                    case "p":
-                        PassiveSkillsConfig pconfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_Id);
-                        fightComponet.passiveSkillConfigs.Add(pconfig);
-                        break;
-                    case "a":
-                        ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_Id);
-                        fightComponet.activeSkillConfigs.Add(aconfig);
-                        break;
-                    case "s":
-                        SummonSkillsConfig sconfig = ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(skill_Id);
-                        fightComponet.summonSkillConfigs.Add(sconfig);
-                        break;
-                }
+                var ulong_id = ulong.Parse(skill_Id);
+
+                fightComponet.AddSkill(ulong_id);
             }
         }
     }
@@ -82,7 +70,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        monster.baseProperty.InitBaseProperty(
+        monster.Property.InitBaseProperty(
             lv_Property.mhp * propertys[pwr, 0],
             lv_Property.speed * propertys[pwr, 1],
             lv_Property.melee * propertys[pwr, 2],
@@ -156,7 +144,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         
         player.config = config;
 
-        player.baseProperty.InitBaseProperty(
+        player.Property.InitBaseProperty(
             config.mhp,
             config.speed,
             config.melee,

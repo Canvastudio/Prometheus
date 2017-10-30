@@ -59,6 +59,11 @@ public class StageCore : SingleObject<StageCore> {
     /// </summary>
     public bool playerDoing = false;
 
+    /// <summary>
+    /// 是否符合被动里面的just状态
+    /// </summary>
+    private bool inJustState = false;
+
     protected override void Init()
     {
         base.Init();
@@ -277,12 +282,26 @@ public class StageCore : SingleObject<StageCore> {
         StageView.Instance.CancelPahtNode();
     }
     
+    private void SetJust(bool just)
+    {
+        if (just == inJustState) return;
+
+        if (just)
+        {
+            Player.fightComponet.ApplyJustProperty();
+        }
+        else
+        {
+            Player.fightComponet.RemovejustProperty();
+        }
+    }
+
     IEnumerator PlayerMeleeAction(Brick brick1)
     {
         var monster = brick1.item as Monster;
 
-        var player_Speed = Player.baseProperty.GetFloatProperty(GameProperty.speed);
-        var monster_Speed = monster.baseProperty.GetFloatProperty(GameProperty.speed);
+        var player_Speed = Player.Property.GetFloatProperty(GameProperty.speed);
+        var monster_Speed = monster.Property.GetFloatProperty(GameProperty.speed);
 
         if (player_Speed >= monster_Speed || monster.enslave)
         {
