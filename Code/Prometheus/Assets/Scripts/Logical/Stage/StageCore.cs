@@ -64,6 +64,18 @@ public class StageCore : SingleObject<StageCore> {
     /// </summary>
     private bool inJustState = false;
 
+    /// <summary>
+    /// 最后一个翻开的怪物
+    /// </summary>
+    private Monster lastDiscoverMonster = null;
+    public bool JustdiscoverMonster = false;
+
+    public void SetDiscoverMonster(Monster monster)
+    {
+        lastDiscoverMonster = monster;
+        JustdiscoverMonster = true;
+    }
+
     protected override void Init()
     {
         base.Init();
@@ -280,25 +292,22 @@ public class StageCore : SingleObject<StageCore> {
 
         //autoMove = false;
         StageView.Instance.CancelPahtNode();
+
+        JustdiscoverMonster = false;
     }
     
-    private void SetJust(bool just)
-    {
-        if (just == inJustState) return;
-
-        if (just)
-        {
-            Player.fightComponet.ApplyJustProperty();
-        }
-        else
-        {
-            Player.fightComponet.RemovejustProperty();
-        }
-    }
-
     IEnumerator PlayerMeleeAction(Brick brick1)
     {
+
+        bool just = false;
+
         var monster = brick1.item as Monster;
+
+        if (monster.itemId == lastDiscoverMonster.itemId && JustdiscoverMonster)
+        {
+            Player.fightComponet.ApplyJustProperty();
+            just = true;
+        }
 
         var player_Speed = Player.Property.GetFloatProperty(GameProperty.speed);
         var monster_Speed = monster.Property.GetFloatProperty(GameProperty.speed);
@@ -331,6 +340,13 @@ public class StageCore : SingleObject<StageCore> {
                 yield return monster.MeleeAttackTarget(Player);
             }
         }
+
+        if (just)
+        {
+            Player.fightComponet.RemovejustProperty();
+        }
+
+        JustdiscoverMonster = false;
     }
 
     public IEnumerator StopLoop()
@@ -369,6 +385,19 @@ public class StageCore : SingleObject<StageCore> {
     public void TimeCastSoMoveDown(float time)
     {
         StageView.Instance.MoveDownMap(time);
+    }
+
+    public void  GetMonsterInRange(Brick stand_brick, int range, ref List<Monster> list)
+    {
+        tagMgr.GetEntity(ref list, ETag.GetETag(ST.DISCOVER, ST.MONSTER));
+
+        for (int i = list.Count - 1; i >= 0; --i)
+        {
+            if (list[i].standBrick.pathNode.Distance(stand_brick.pathNode) > range)
+            {
+                list.RemoveAt(i);
+            }
+        }
     }
 }
 

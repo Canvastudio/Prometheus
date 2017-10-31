@@ -89,8 +89,6 @@ public class MoveComponet : MonoBehaviour {
         yield return BrickCore.Instance.OpenBrick(brick);
 
         yield return new WaitForSeconds(time);
-
-        CastMoveTime();
     }
 
     public IEnumerator MoveTo(Brick brick, float time)
@@ -138,11 +136,6 @@ public class MoveComponet : MonoBehaviour {
         {
     
         }
-    }
-
-    public void CastMoveTime()
-    {
-        StageCore.Instance.TimeCast(1);
     }
 
     public bool IsNextBlock()

@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class B : MonoBehaviour {
 
+    public class BB
+    {
+        public string bbbb = "1";
+    }
+
     Dictionary<string, float> d = new Dictionary<string, float>();
 
+    System.Action<BB> action;
 	// Use this for initialization
 	void Start () {
-        CoroCore.Instance.ExStartCoroutine(Aciton());
+
+        BB bB = new BB();
+        bB.bbbb = "2";
+        AAA(bB);
 	}
-	
+
+
+    void AAA(BB aa)
+    {
+        action = (BB x) => { Debug.Log(aa.bbbb); };
+    }
+
 	// Update is called once per frame
 	void Update () {
-		
 
+        action.Invoke(null);
 	}
 
     public int v = 0;

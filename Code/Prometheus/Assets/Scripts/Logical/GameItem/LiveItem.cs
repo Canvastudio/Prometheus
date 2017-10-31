@@ -6,6 +6,42 @@ using UnityEngine.UI;
 
 public abstract class LiveItem : GameItemBase
 {
+    /// <summary>
+    /// 状态Buff
+    /// </summary>
+    private List<StateConfig> buff_list = new List<StateConfig>();
+
+    /// <summary>
+    /// 受伤结算得状态
+    /// </summary>
+    private List<StateEffectIns> defend_buff = new List<StateEffectIns>();
+
+    /// <summary>
+    /// 状态deBuff
+    /// </summary>
+    private List<StateConfig> debuff_list = new List<StateConfig>();
+
+    /// <summary>
+    /// 光环给予的buff
+    /// </summary>
+    private List<StateConfig> halo_list = new List<StateConfig>();
+
+    private bool silent = false;
+
+
+    public bool Silent
+    {
+        get
+        {
+            return silent;
+        }
+
+        set
+        {
+            silent = value;
+        }
+    }
+
     public bool isAlive
     {
         get
@@ -151,6 +187,8 @@ public abstract class LiveItem : GameItemBase
             _enslave = value;
         }
     }
+
+
     public virtual void InitInfoUI()
     {
         if (hp_value != null)
@@ -169,26 +207,16 @@ public abstract class LiveItem : GameItemBase
     /// </summary>
     public LiveBasePropertys Property = new LiveBasePropertys();
 
-    public LiveBasePropertys Addtive_Property = new LiveBasePropertys();
-    /// <summary>
-    /// 得到最终的属性，会算上被动和芯片的加成
-    /// </summary>
-    /// <param name="property"></param>
-    /// <returns></returns>
-    public float GetFinalProperty(GameProperty property)
-    {
-        return 0;
-    }
-
-    public void SetProperty(GameProperty property, float value)
-    {
-
-    }
-
     public void AddHpPercent(float percent)
     {
         cur_hp += fmax_hp * percent;
         cur_hp = Mathf.Min(fmax_hp, cur_hp);
+    }
+
+    public void AddHp(float hp)
+    {
+        float new_hp = cur_hp + hp;
+        cur_hp = Mathf.Min(fmax_hp, new_hp);
     }
 
     public virtual IEnumerator OnDead()
@@ -210,28 +238,71 @@ public abstract class LiveItem : GameItemBase
         {
             var damage = melee;
 
+            Damage damageInfo = new Damage(damage, this, DamageType.Physical);
+
             yield return this.ExStartCoroutine
-                (target.MeleeAttackByOther(this, damage));
+                (target.MeleeAttackByOther(this, damageInfo));
         }
     }
 
-    public virtual IEnumerator MeleeAttackByOther<T>(T other, float damage) where T : LiveItem
+    public virtual IEnumerator MeleeAttackByOther<T>(T other, Damage damageInfo) where T : LiveItem
     {
         LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
 
         yield return waitForSeconds;
 
-        yield return TakeDamage(damage);
+        yield return TakeDamage(damageInfo);
     }
 
-    public virtual IEnumerator TakeDamage(float damage)
+    public virtual IEnumerator TakeDamage(Damage damageInfo)
     {
-        cur_hp = cur_hp - damage;
+        cur_hp = cur_hp - damageInfo.damage;
 
         if (cur_hp == 0)
         {
             yield return OnDead();
         }
+    }
+
+    public void AddStateBuff(StateConfig config, bool passive = false)
+    {
+        var effects = config.stateEffects.ToArray();
+
+        for (int i = 0; i < effects.Length; ++i)
+        {
+            switch (effects[i])
+            {
+                case StateEffect.DamageAbsorb:
+                    DamageAbsorb absorb = new DamageAbsorb(this, config, i, passive);
+                    defend_buff.Add(absorb);
+                    break;
+            }
+        }
+    }
+
+    public void RemoveStateBuff(StateConfig config)
+    {
+
+    }
+
+    public void RemoveStateBuff(int count, bool isBuff)
+    {
+
+    }
+
+    public void AddHaloBuff(StateConfig config)
+    {
+
+    }
+
+    public void RemoveHaloBuff(StateConfig config)
+    {
+
+    }
+
+    public void RemoveDefendState(StateEffectIns defendState)
+    {
+        defend_buff.Remove(defendState);
     }
 }
 

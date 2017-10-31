@@ -89,6 +89,7 @@ public class Monster : LiveItem
 
         StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
         StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
+        StageCore.Instance.SetDiscoverMonster(this);
 
         if (standBrick != null)
         {
@@ -177,9 +178,9 @@ public class Monster : LiveItem
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
-    public override IEnumerator TakeDamage(float damage)
+    public override IEnumerator TakeDamage(Damage damageInfo)
     {
-        IEnumerator ie = base.TakeDamage(damage);
+        IEnumerator ie = base.TakeDamage(damageInfo);
 
         if (ie != null)
         {

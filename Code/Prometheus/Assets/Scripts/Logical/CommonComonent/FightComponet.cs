@@ -140,7 +140,9 @@ public class FightComponet : MonoBehaviour {
                 activeSkillConfigs.Add(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
                 break;
             case SkillType.Passive:
+                var config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id);
                 passiveSkillConfigs.Add(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
+                OnAddPassive(config);
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -159,6 +161,7 @@ public class FightComponet : MonoBehaviour {
                 break;
             case SkillType.Passive:
                 passiveSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
+   
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -166,7 +169,7 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    public SkillType IdToSkillType(ulong id)
+    public static SkillType IdToSkillType(ulong id)
     {
         ulong i = id / 1000000;
         if (i == 1)
@@ -244,7 +247,7 @@ public class FightComponet : MonoBehaviour {
     }
 
 
-    public float CalculageRPN(long[] damage_values, GameItemBase rpn_target, out GameProperty valueType)
+    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType)
     {
         Stack<float> stack = new Stack<float>();
 
@@ -271,7 +274,6 @@ public class FightComponet : MonoBehaviour {
                 {
                     if (stack.Count != 0)
                     {
-                        Debug.LogError("逆波兰遇到等号的时候stack的长度不为1");
                         return stack.Pop();
                     }
                 }
@@ -336,14 +338,14 @@ public class FightComponet : MonoBehaviour {
 
                     if (fv[1] == 1)
                     {
-                        target = ownerObject as LiveItem;
+                        target = rpn_source as LiveItem;
                     }
                     else
                     {
                         target = rpn_target as LiveItem;
                     }
 
-                    stack.Push(target.GetFinalProperty(property));
+                    stack.Push(target.Property.GetFloatProperty(property));
                 }
             }
         }
@@ -493,6 +495,9 @@ public class FightComponet : MonoBehaviour {
             {
                 player.inventory.ChangeStuffCount(stuff[n], -count[n]);
             }
+
+            //使用技能之后就不符合just的状态了
+            StageCore.Instance.JustdiscoverMonster = false;
         }
 
         if (config.beforeSpecialEffect != null)
@@ -513,68 +518,44 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    private void AddPassiveSkillEffect(PassiveSkillsConfig config)
+    List<JustPassive> just_rpn = new List<JustPassive>();
+    List<HaloPassive> halos = new List<HaloPassive>();
+
+    public void OnAddPassive(PassiveSkillsConfig config)
     {
-        var type_array = config.passiveType.ToArray();
-        for (int i = 0; i < type_array.Length; ++i)
+        var types = config.passiveType.ToArray();
+
+        for (int i = 0; i < types.Length; ++i)
         {
-            switch(type_array[i])
+            switch (types[i])
             {
                 case PassiveType.Just:
-                    AddJustPassive(config);
+                    JustPassive jp = new JustPassive(config, i, this);
+                    just_rpn.Add(jp);
+                    break;
+                case PassiveType.Halo:
+                    HaloPassive hp = new HaloPassive(config, i, this);
+                    halos.Add(hp);
                     break;
             }
         }
-    }
 
-    private void RemovePassiveSkillEffect(PassiveSkillsConfig config)
-    {
-        var type_array = config.passiveType.ToArray();
-        for (int i = 0; i < type_array.Length; ++i)
-        {
-            switch (type_array[i])
-            {
-                case PassiveType.Just:
-                    RemoveJustPassive(config);
-                    break;
-            }
-        }
-    }
-
-    Dictionary<ulong, long[]> just_rpn = new Dictionary<ulong, long[]>();
-
-    private void AddJustPassive(PassiveSkillsConfig config)
-    {
-        just_rpn.Add(config.id, config.passiveSkillArgs[0].rpn.ToArray());
-    }
-
-    private void RemoveJustPassive(PassiveSkillsConfig config)
-    {
-        just_rpn.Remove(config.id);
     }
 
     public void ApplyJustProperty()
     {
-        GameProperty property;
-
-        foreach (var rpn in just_rpn)
+        foreach(var jp in just_rpn)
         {
-            float value = CalculageRPN(rpn.Value, ownerObject, out property);
-
-            if (property == GameProperty.Nothing)
-            {
-                Debug.LogError("Just 技能 的 目标属性为空");
-            }
-            else
-            {
-                ownerObject.Addtive_Property.SetFloatProperty(property, value);
-            }
+            jp.Apply();
         }
     }
 
     public void RemovejustProperty()
     {
-
+        foreach (var jp in just_rpn)
+        {
+            jp.Remove();
+        }
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
@@ -593,19 +574,19 @@ public class FightComponet : MonoBehaviour {
                     foreach (var item in apply_list)
                     {
                         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                        item.AddBuff(state_config);
+                        (item as LiveItem).AddStateBuff(state_config);
                     }
                     break;
                 case SpecialEffect.Property:
                     GameProperty property;
 
-                    long[] rpn_values = args[i].rpn.ToArray();
+                    long[] rpn_values = args[i].rpn.ToArray(0);
 
                     foreach (var item in apply_list)
                     {
-                        var value = CalculageRPN(rpn_values, item, out property);
+                        var value = CalculageRPN(rpn_values, ownerObject, item, out property);
 
-                        (item as LiveItem).SetProperty(property, value);
+                        (item as LiveItem).Property.SetFloatProperty(property, value);
                     }
 
                     break;
@@ -639,7 +620,7 @@ public class FightComponet : MonoBehaviour {
                     condition = args[i].ec[0];
                     foreach (var item in apply_list)
                     {
-                        if (CheckEffectCondition(condition, item, config))
+                        if (CheckEffectCondition(condition, item, config.damageType))
                         {
                             if (ownerObject is Player)
                             {
@@ -663,7 +644,7 @@ public class FightComponet : MonoBehaviour {
                     condition = args[i].ec[0];
                     if (ownerObject is Player)
                     {
-                        if (CheckEffectCondition(condition, brick, config))
+                        if (CheckEffectCondition(condition, brick, config.damageType))
                         {
                             yield return (ownerObject as Player).moveComponent.Transfer(brick);
                         }
@@ -681,18 +662,18 @@ public class FightComponet : MonoBehaviour {
                     remove_count = (int)args[i].f[0];
                     foreach (var item in apply_list)
                     {
-                        item.RemoveBuff(remove_count, true);
+                        (item as LiveItem).RemoveStateBuff(remove_count, true);
                     }
                     break;
                 case SpecialEffect.AddStateToSelf:
                     state_id = args[i].u[0];
-                    ownerObject.AddBuff(ConfigDataBase.GetConfigDataById<StateConfig>(state_id));
+                    ownerObject.AddStateBuff(ConfigDataBase.GetConfigDataById<StateConfig>(state_id));
                     break;
                 case SpecialEffect.Disperse:
                     remove_count = (int)args[i].f[0];
                     foreach (var item in apply_list)
                     {
-                        item.RemoveBuff(remove_count, false);
+                        (item as LiveItem).RemoveStateBuff(remove_count, false);
                     }
                     break;
                 case SpecialEffect.PositionExchange:
@@ -702,7 +683,7 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    private bool CheckEffectCondition(EffectCondition condition, GameItemBase item, ActiveSkillsConfig config)
+    public static bool CheckEffectCondition(EffectCondition condition, GameItemBase item, DamageType damageType)
     {
         switch (condition)
         {
@@ -734,9 +715,9 @@ public class FightComponet : MonoBehaviour {
                     return false;
                 }
             case EffectCondition.DamageTypeCartridge:
-                return config.damageType == DamageType.Cartridge;
+                return damageType == DamageType.Cartridge;
             case EffectCondition.DamageTypeLaser:
-                return config.damageType == DamageType.Laser;
+                return damageType == DamageType.Laser;
             case EffectCondition.MonsterTypeIron:
                 return (item is Monster && (item as Monster).monsterType == MonsterType.Iron);
             case EffectCondition.MonsterTypeOrganisms:

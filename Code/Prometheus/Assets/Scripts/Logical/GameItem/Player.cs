@@ -46,7 +46,7 @@ public class Player : LiveItem {
         var e = base.MeleeAttackTarget(target);
 
         var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-        var atk_Speed = GetFinalProperty(GameProperty.atkSpeed);
+        var atk_Speed = Property.GetFloatProperty(GameProperty.atkSpeed);
         var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
         
         StageCore.Instance.TimeCast(timeSpend);

@@ -22,7 +22,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
     }
 
-    private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<string> skill)
+    private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)
     {
         int skill_Count = 0;
 
@@ -30,12 +30,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         {
             skill_Count = skill.Count();
 
+            var skills = skill.ToArray();
+
             for (int i = 0; i < skill_Count; ++i)
             {
-                string type = skill[i, 0];
-                string skill_Id = skill[i, 1];
-
-                var ulong_id = ulong.Parse(skill_Id);
+                var ulong_id = skills[i];
 
                 fightComponet.AddSkill(ulong_id);
             }

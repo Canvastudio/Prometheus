@@ -85,6 +85,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     /// </summary>
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
     public Dictionary<ulong, ChipBoardInstance> _temp_listInstance = new Dictionary<ulong, ChipBoardInstance>();
+
     private void Start()
     {
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
@@ -93,8 +94,6 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
     }
-
-
 
     public IEnumerator InitBoard(ulong play_id)
     {
@@ -145,9 +144,6 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
             yield return 0;
         }
-
-
-
 
         CalculteChipBoardBound();
     }
