@@ -305,7 +305,6 @@ public class StageCore : SingleObject<StageCore> {
 
         if (monster.itemId == lastDiscoverMonster.itemId && JustdiscoverMonster)
         {
-            Player.fightComponet.ApplyJustProperty();
             just = true;
         }
 
@@ -343,7 +342,7 @@ public class StageCore : SingleObject<StageCore> {
 
         if (just)
         {
-            Player.fightComponet.RemovejustProperty();
+
         }
 
         JustdiscoverMonster = false;

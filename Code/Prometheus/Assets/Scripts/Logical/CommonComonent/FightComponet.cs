@@ -517,25 +517,6 @@ public class FightComponet : MonoBehaviour {
         }
     }
 
-    List<JustPassive> just_rpn = new List<JustPassive>();
-    List<HaloPassive> halos = new List<HaloPassive>();
-
-    public void ApplyJustProperty()
-    {
-        foreach(var jp in just_rpn)
-        {
-            jp.Apply();
-        }
-    }
-
-    public void RemovejustProperty()
-    {
-        foreach (var jp in just_rpn)
-        {
-            jp.Remove();
-        }
-    }
-
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
     {
         Brick brick = null;

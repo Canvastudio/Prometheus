@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTransfer : DamageState
+public class DamageTransfer : StateIns
 {
     /// <summary>
     /// 能转移多少次
@@ -13,12 +13,12 @@ public class DamageTransfer : DamageState
     List<Monster> list = new List<Monster>(8);
 
     public DamageTransfer(LiveItem owner, StateConfig config, int index, bool passive) 
-        : base(owner, config,index,passive)
+        : base(owner, config, index, passive)
     {
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
         condition = config.stateArgs[index].ec[0];
         range = Mathf.FloorToInt(config.stateArgs[index].f[1]);
-        stateType = StateEffectType.TakenDamage;
+        stateType = StateEffectType.OnTakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)

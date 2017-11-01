@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JustPassive : PassiveBase
+public class JustPassive 
 {
     private Dictionary<GameProperty, float> changes = new Dictionary<GameProperty, float>();
 
-    public JustPassive(PassiveSkillsConfig config, int index, FightComponet fightComponet) : base(config, index, fightComponet)
+    public JustPassive(PassiveSkillsConfig config, int index, FightComponet fightComponet)
     {
 
     }
 
-    public override void Apply()
+    public void Apply()
     {
         //if (changes.Count == 0)
         //{
@@ -53,15 +53,15 @@ public class JustPassive : PassiveBase
         //}
     }
 
-    public override void Remove()
+    public void Remove()
     {
-        foreach (var change in changes)
-        {
-            float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(change.Key);
+        //foreach (var change in changes)
+        //{
+        //    float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(change.Key);
 
-            float value = origin_value - change.Value;
+        //    float value = origin_value - change.Value;
 
-            fightComponet.ownerObject.Property.SetFloatProperty(change.Key, value);
-        }
+        //    fightComponet.ownerObject.Property.SetFloatProperty(change.Key, value);
+        //}
     }
 }

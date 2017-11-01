@@ -14,7 +14,7 @@ public abstract class LiveItem : GameItemBase
     /// <summary>
     /// 受伤结算得状态
     /// </summary>
-    private List<DamageState> defend_buff = new List<DamageState>();
+    private List<StateIns> defend_buff = new List<StateIns>();
 
     /// <summary>
     /// 状态deBuff
@@ -300,7 +300,7 @@ public abstract class LiveItem : GameItemBase
 
     }
 
-    public void RemoveDefendState(DamageState defendState)
+    public void RemoveDefendState(StateIns defendState)
     {
         defend_buff.Remove(defendState);
     }

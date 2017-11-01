@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageStore : DamageState
+public class DamageStore : StateIns
 {
 
     /// <summary>
@@ -20,12 +20,12 @@ public class DamageStore : DamageState
     EffectCondition condition;
 
     public DamageStore(LiveItem owner, StateConfig config, int index, bool passive) 
-        : base (owner, config, index, passive)
+        : base(owner, config, index, passive)
     {
         store_times = Mathf.FloorToInt(config.stateArgs[index].f[0]);
         multiply = config.stateArgs[index].f[1];
         condition = config.stateArgs[index].ec[0];
-        stateType = StateEffectType.TakenDamage;
+        stateType = StateEffectType.OnTakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)

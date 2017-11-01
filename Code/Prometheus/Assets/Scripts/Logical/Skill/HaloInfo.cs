@@ -7,13 +7,17 @@ using UnityEngine;
 /// </summary>
 public class HaloInfo  {
 
-    public PassiveSkillsConfig config;
-    public int range = 0;
-    public bool forEmemy = false;
-    public DamageState[] effectIns;
+    /// <summary>
+    /// 影响到的目标,包括自己
+    /// </summary>
+    List<LiveItem> effect_target = new List<LiveItem>(5);
 
-    public HaloInfo(PassiveSkillsConfig config, LiveItem owner)
+    float range = 0;
+    bool enemy = false;
+
+    public HaloInfo(SkillArg arg)
     {
 
     }
+
 }

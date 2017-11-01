@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageRebound : DamageState
+public class DamageRebound : StateIns
 {
     EffectCondition condition;
     float percent = 0;
@@ -12,7 +12,7 @@ public class DamageRebound : DamageState
     {
         condition = config.stateArgs[index].ec[0];
         percent = config.stateArgs[index].f[0];
-        stateType = StateEffectType.TakenDamage;
+        stateType = StateEffectType.OnTakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)
