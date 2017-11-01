@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTransfer : StateEffectIns
+public class DamageTransfer : DamageState
 {
     /// <summary>
     /// 能转移多少次
@@ -18,7 +18,7 @@ public class DamageTransfer : StateEffectIns
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
         condition = config.stateArgs[index].ec[0];
         range = Mathf.FloorToInt(config.stateArgs[index].f[1]);
-        stateType = StateEffectType.DamageRelate;
+        stateType = StateEffectType.TakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)
@@ -44,7 +44,7 @@ public class DamageTransfer : StateEffectIns
             {
                 int index = Random.Range(0, list.Count);
 
-                Damage di = new Damage(damageInfo.damage, owner, damageInfo.damageType, true);
+                Damage di = new Damage(damageInfo.damage, owner, list[index], damageInfo.damageType, true);
 
                 list[index].TakeDamage(di);
 

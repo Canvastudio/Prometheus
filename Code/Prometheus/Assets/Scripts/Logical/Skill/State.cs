@@ -5,11 +5,15 @@ using System;
 
 public enum StateEffectType
 {
-    DamageRelate,
+    TakenDamage,
+    AttackRelate,
     Invalid,
 }
 
-public abstract class StateEffectIns : IEquatable<StateEffectIns>
+/// <summary>
+/// 结算类的状态，比如伤害结算的减少伤害的， 攻击结算的造成暴击的
+/// </summary>
+public abstract class DamageState : IEquatable<DamageState>
 {
     public StateEffectType stateType = StateEffectType.Invalid;
     public StateConfig stateConfig;
@@ -25,7 +29,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         set { if (value) OnOutData(); out_data = value; }
     }
 
-    public StateEffectIns(LiveItem owner, StateConfig config, int index, bool passive)
+    public DamageState(LiveItem owner, StateConfig config, int index, bool passive)
     {
         this.owner = owner;
         this.stateConfig = config;
@@ -33,7 +37,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         this.passive = passive;
     }
 
-    protected virtual IEnumerator Apply(Damage damageInfo) { return null; }
+    protected abstract IEnumerator Apply(Damage damageInfo);
 
     public virtual void OnOutData()
     {
@@ -44,7 +48,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         owner = null;
     }
 
-    public bool Equals(StateEffectIns other)
+    public bool Equals(DamageState other)
     {
         return (stateConfig.id == other.stateConfig.id)
             && (index == other.index);
@@ -58,7 +62,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         {
             switch (stateType)
             {
-                case StateEffectType.DamageRelate:
+                case StateEffectType.TakenDamage:
                     ie = Apply(param as Damage);
                     break;
             }
@@ -70,10 +74,10 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         }
     }
 
-    public static void GenerateStateEffects(StateConfig config, LiveItem owner, bool passive, out StateEffectIns[] effectIns)
+    public static void GenerateStateEffects(StateConfig config, LiveItem owner, bool passive, out DamageState[] effectIns)
     {
         var effects = config.stateEffects.ToArray();
-        effectIns = new StateEffectIns[effects.Length];
+        effectIns = new DamageState[effects.Length];
 
         for (int i = 0; i < effects.Length; ++i)
         {

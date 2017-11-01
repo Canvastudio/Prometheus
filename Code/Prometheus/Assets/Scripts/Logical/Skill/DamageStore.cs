@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageStore : StateEffectIns
+public class DamageStore : DamageState
 {
 
     /// <summary>
@@ -25,7 +25,7 @@ public class DamageStore : StateEffectIns
         store_times = Mathf.FloorToInt(config.stateArgs[index].f[0]);
         multiply = config.stateArgs[index].f[1];
         condition = config.stateArgs[index].ec[0];
-        stateType = StateEffectType.DamageRelate;
+        stateType = StateEffectType.TakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)

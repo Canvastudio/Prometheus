@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageAbsorb : StateEffectIns
+public class DamageAbsorb : DamageState
 {
     EffectCondition condition;
     float absorb_damage;
@@ -13,7 +13,7 @@ public class DamageAbsorb : StateEffectIns
         condition = config.stateArgs[index].ec[0];
         GameProperty property;
         absorb_damage = passive ? -1f : FightComponet.CalculageRPN(config.stateArgs[index].rpn.ToArray(0), null, null, out property);
-        stateType = StateEffectType.DamageRelate;
+        stateType = StateEffectType.TakenDamage;
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
     }
 

@@ -14,7 +14,7 @@ public abstract class LiveItem : GameItemBase
     /// <summary>
     /// 受伤结算得状态
     /// </summary>
-    private List<StateEffectIns> defend_buff = new List<StateEffectIns>();
+    private List<DamageState> defend_buff = new List<DamageState>();
 
     /// <summary>
     /// 状态deBuff
@@ -238,7 +238,7 @@ public abstract class LiveItem : GameItemBase
         {
             var damage = melee;
 
-            Damage damageInfo = new Damage(damage, this, DamageType.Physical);
+            Damage damageInfo = new Damage(damage, this, target, DamageType.Physical);
 
             yield return this.ExStartCoroutine
                 (target.MeleeAttackByOther(this, damageInfo));
@@ -300,7 +300,7 @@ public abstract class LiveItem : GameItemBase
 
     }
 
-    public void RemoveDefendState(StateEffectIns defendState)
+    public void RemoveDefendState(DamageState defendState)
     {
         defend_buff.Remove(defendState);
     }

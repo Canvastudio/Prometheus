@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageRebound : StateEffectIns
+public class DamageRebound : DamageState
 {
     EffectCondition condition;
     float percent = 0;
@@ -12,7 +12,7 @@ public class DamageRebound : StateEffectIns
     {
         condition = config.stateArgs[index].ec[0];
         percent = config.stateArgs[index].f[0];
-        stateType = StateEffectType.DamageRelate;
+        stateType = StateEffectType.TakenDamage;
     }
 
     protected override IEnumerator Apply(Damage damageInfo)
@@ -25,7 +25,7 @@ public class DamageRebound : StateEffectIns
                 float rebound_damage = damage * percent;
                 damageInfo.damage = damage * (1 - percent);
 
-                Damage di = new Damage(rebound_damage, owner, damageInfo.damageType, false, true);
+                Damage di = new Damage(rebound_damage, owner, damageInfo.damageSource, damageInfo.damageType, false, true);
                 damageInfo.damageSource.TakeDamage(di);
             }
         }
