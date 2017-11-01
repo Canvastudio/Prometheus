@@ -140,7 +140,7 @@ public class StageView : SingleGameObject<StageView> {
         }
 #endif
 
-        if (uid > 0)
+        if (uid > 0 &&  FightComponet.IdToSkillType(uid) == SkillType.Active)
         {
             int _id;
             var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
@@ -153,17 +153,18 @@ public class StageView : SingleGameObject<StageView> {
 
     public void RemoveSkillFromSkillList(ulong uid)
     {
-        for (int i = 0; i < skillItemList.Count; ++i)
+        if (FightComponet.IdToSkillType(uid) == SkillType.Active)
         {
-            if (skillItemList[i].skill_id == uid)
+            for (int i = 0; i < skillItemList.Count; ++i)
             {
-                ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
-                skillItemList.RemoveAt(i);
-                return;
+                if (skillItemList[i].skill_id == uid)
+                {
+                    ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
+                    skillItemList.RemoveAt(i);
+                    return;
+                }
             }
         }
-
-        Debug.LogError("青鑫：尝试在技能列表里移除一个不存在的技能");
     }
 
     public IEnumerator LightTargetWaitSelect(List<GameItemBase> list)
