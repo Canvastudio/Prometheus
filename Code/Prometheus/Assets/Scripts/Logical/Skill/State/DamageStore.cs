@@ -28,8 +28,9 @@ public class DamageStore : StateIns
         stateType = StateEffectType.OnTakenDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         if (!out_data && FightComponet.CheckEffectCondition(condition, owner, damageInfo.damageType))
         {
             store_times -= 1;
@@ -53,8 +54,6 @@ public class DamageStore : StateIns
 
             damageInfo.damage = 0;
         }
-
-        return null;
     }
 
     public override void OnOutData()

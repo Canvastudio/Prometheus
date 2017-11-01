@@ -17,8 +17,9 @@ public class DamageAbsorb : StateIns
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         damageInfo.damage = damageInfo.damage - absorb_damage;
 
         if (!passive)
@@ -33,9 +34,5 @@ public class DamageAbsorb : StateIns
         {
             out_data = true;
         }
-        
-
-        return null;
-
     }
 }

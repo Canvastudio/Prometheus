@@ -16,8 +16,9 @@ public class Critical : StateIns
         stateType = StateEffectType.OnGenerateDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         float f = Random.Range(0f, 1f);
         if (probability >= f)
         {
@@ -26,7 +27,5 @@ public class Critical : StateIns
                 damageInfo.damage = damageInfo.damage * multiply;
             }
         }
-
-        return null; ;
     }
 }

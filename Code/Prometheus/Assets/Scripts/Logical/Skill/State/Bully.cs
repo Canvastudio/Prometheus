@@ -16,8 +16,10 @@ public class Bully : StateIns
         stateType = StateEffectType.OnGenerateDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
+
         float f = damageInfo.damageTarget.cur_hp / damageInfo.damageTarget.fmax_hp;
         if (threshold < f)
         {
@@ -26,7 +28,5 @@ public class Bully : StateIns
                 damageInfo.damage = damageInfo.damage * (1 + extra);
             }
         }
-
-        return null;
     }
 }

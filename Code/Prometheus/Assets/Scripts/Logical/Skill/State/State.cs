@@ -7,6 +7,7 @@ public enum StateEffectType
 {
     OnTakenDamage,
     OnGenerateDamage,
+    PropertyChange,
     Invalid,
 }
 
@@ -29,6 +30,11 @@ public abstract class StateIns : IEquatable<StateIns>
         set { if (value) OnOutData(); out_data = value; }
     }
 
+    /// <summary>
+    /// 存在了多久
+    /// </summary>
+    public int exist_time = 0;
+
     public StateIns(LiveItem owner, StateConfig config, int index, bool passive)
     {
         this.owner = owner;
@@ -37,7 +43,7 @@ public abstract class StateIns : IEquatable<StateIns>
         this.passive = passive;
     }
 
-    protected abstract IEnumerator Apply(Damage damageInfo);
+    protected abstract void Apply(object param);
 
     public virtual void OnOutData()
     {
@@ -54,23 +60,11 @@ public abstract class StateIns : IEquatable<StateIns>
             && (index == other.index);
     }
 
-    public IEnumerator ApplyState(object param)
+    public void ApplyState(object param)
     {
-        IEnumerator ie = null;
-
         if (!owner.Silent)
         {
-            switch (stateType)
-            {
-                case StateEffectType.OnTakenDamage:
-                    ie = Apply(param as Damage);
-                    break;
-            }
-
-            if (ie != null)
-            {
-                yield return ie;
-            }
+            Apply(param as Damage);
         }
     }
 

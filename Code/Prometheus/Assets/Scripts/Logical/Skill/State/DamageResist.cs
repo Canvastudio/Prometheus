@@ -18,8 +18,9 @@ public class DamageResist : StateIns
         stateType = StateEffectType.OnTakenDamage;
     }
 
-    protected override IEnumerator Apply (Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         float f = Random.Range(0f, 1f);
         if (probability >= f)
         {
@@ -28,7 +29,5 @@ public class DamageResist : StateIns
                 damageInfo.damage = damageInfo.damage * (1 - damage_decrease);
             }
         }
-
-        return null;
     }
 }

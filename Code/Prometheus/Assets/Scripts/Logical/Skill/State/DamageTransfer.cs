@@ -21,8 +21,9 @@ public class DamageTransfer : StateIns
         stateType = StateEffectType.OnTakenDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         if (!damageInfo.isTransfer && FightComponet.CheckEffectCondition(condition, owner, damageInfo.damageType))
         {
             if (!passive) { times -= 1; }
@@ -57,7 +58,5 @@ public class DamageTransfer : StateIns
                 out_data = true;
             }
         }
-
-        return null;
     }
 }

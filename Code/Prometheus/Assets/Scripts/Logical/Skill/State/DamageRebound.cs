@@ -15,8 +15,9 @@ public class DamageRebound : StateIns
         stateType = StateEffectType.OnTakenDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         if (!out_data)
         {
             if (FightComponet.CheckEffectCondition(condition, owner, damageInfo.damageType))
@@ -29,7 +30,5 @@ public class DamageRebound : StateIns
                 damageInfo.damageSource.TakeDamage(di);
             }
         }
-
-        return null;
     }
 }

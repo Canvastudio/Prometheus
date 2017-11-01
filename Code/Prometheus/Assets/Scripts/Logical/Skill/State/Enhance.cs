@@ -7,6 +7,8 @@ public class Enhance : StateIns
     float threshold = 1;
     EffectCondition condition;
     float extra = 0;
+
+
     public Enhance(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
     {
         threshold = stateConfig.stateArgs[index].f[0];
@@ -15,8 +17,9 @@ public class Enhance : StateIns
         stateType = StateEffectType.OnGenerateDamage;
     }
 
-    protected override IEnumerator Apply(Damage damageInfo)
+    protected override void Apply(object _damageInfo)
     {
+        var damageInfo = _damageInfo as Damage;
         float f = damageInfo.damageTarget.cur_hp / damageInfo.damageTarget.fmax_hp;
         if (threshold > f)
         {
@@ -25,7 +28,5 @@ public class Enhance : StateIns
                 damageInfo.damage = damageInfo.damage * (1 + extra);
             }
         }
-
-        return null;
     }
 }
