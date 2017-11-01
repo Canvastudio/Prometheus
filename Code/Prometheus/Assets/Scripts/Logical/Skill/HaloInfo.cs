@@ -14,8 +14,6 @@ public class HaloInfo  {
 
     public HaloInfo(PassiveSkillsConfig config, LiveItem owner)
     {
-        this.config = config;
-        StateConfig stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(config.passiveSkillArgs[0].u[0]);
-        DamageState.GenerateStateEffects(stateConfig, owner, true, out effectIns);
+
     }
 }

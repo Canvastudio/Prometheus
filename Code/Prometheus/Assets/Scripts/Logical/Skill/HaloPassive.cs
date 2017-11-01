@@ -13,9 +13,9 @@ public class HaloPassive : PassiveBase
 
     public HaloPassive(PassiveSkillsConfig config, int index, FightComponet fightComponet) : base(config, index, fightComponet)
     {
-        range = Mathf.FloorToInt(config.passiveSkillArgs[index].f[0]);
-        enemy = config.passiveSkillArgs[index].b[0];
-        StateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(config.passiveSkillArgs[index].u[0]);
+        //range = Mathf.FloorToInt(config.passiveSkillArgs[index].f[0]);
+        //enemy = config.passiveSkillArgs[index].b[0];
+        //StateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(config.passiveSkillArgs[index].u[0]);
     }
 
     private void CheckScopeAndAddState(float a)

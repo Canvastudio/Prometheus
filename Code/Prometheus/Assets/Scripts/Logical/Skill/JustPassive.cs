@@ -13,44 +13,44 @@ public class JustPassive : PassiveBase
 
     public override void Apply()
     {
-        if (changes.Count == 0)
-        {
-            GameProperty property;
+        //if (changes.Count == 0)
+        //{
+        //    GameProperty property;
 
-            if (passiveConfig != null)
-            {
-                var types = passiveConfig.passiveType.ToArray();
+        //    if (passiveConfig != null)
+        //    {
+        //        var types = passiveConfig.passiveType.ToArray();
 
-                if (types[index] == PassiveType.Just)
-                {
-                    var value = FightComponet.CalculageRPN(
-                        passiveConfig.passiveSkillArgs[index].rpn.ToArray(0),
-                        fightComponet.ownerObject, null,
-                        out property);
+        //        if (types[index] == PassiveType.Just)
+        //        {
+        //            var value = FightComponet.CalculageRPN(
+        //                passiveConfig.passiveSkillArgs[index].rpn.ToArray(0),
+        //                fightComponet.ownerObject, null,
+        //                out property);
 
 
-                    float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(property);
+        //            float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(property);
 
-                    float change = value - origin_value;
+        //            float change = value - origin_value;
 
-                    fightComponet.ownerObject.Property.SetFloatProperty(property, value);
+        //            fightComponet.ownerObject.Property.SetFloatProperty(property, value);
 
-                    changes.Add(property, change);
-                }
-            }
+        //            changes.Add(property, change);
+        //        }
+        //    }
 
-        }
-        else
-        {
-            foreach (var change in changes)
-            {
-                float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(change.Key);
+        //}
+        //else
+        //{
+        //    foreach (var change in changes)
+        //    {
+        //        float origin_value = fightComponet.ownerObject.Property.GetFloatProperty(change.Key);
 
-                float value = origin_value + change.Value;
+        //        float value = origin_value + change.Value;
 
-                fightComponet.ownerObject.Property.SetFloatProperty(change.Key, value);
-            }
-        }
+        //        fightComponet.ownerObject.Property.SetFloatProperty(change.Key, value);
+        //    }
+        //}
     }
 
     public override void Remove()

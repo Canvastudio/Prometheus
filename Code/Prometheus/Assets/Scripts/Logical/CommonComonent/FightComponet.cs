@@ -142,7 +142,6 @@ public class FightComponet : MonoBehaviour {
             case SkillType.Passive:
                 var config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id);
                 passiveSkillConfigs.Add(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
-                OnAddPassive(config);
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -520,27 +519,6 @@ public class FightComponet : MonoBehaviour {
 
     List<JustPassive> just_rpn = new List<JustPassive>();
     List<HaloPassive> halos = new List<HaloPassive>();
-
-    public void OnAddPassive(PassiveSkillsConfig config)
-    {
-        var types = config.passiveType.ToArray();
-
-        for (int i = 0; i < types.Length; ++i)
-        {
-            switch (types[i])
-            {
-                case PassiveType.Just:
-                    JustPassive jp = new JustPassive(config, i, this);
-                    just_rpn.Add(jp);
-                    break;
-                case PassiveType.Halo:
-                    HaloPassive hp = new HaloPassive(config, i, this);
-                    halos.Add(hp);
-                    break;
-            }
-        }
-
-    }
 
     public void ApplyJustProperty()
     {
