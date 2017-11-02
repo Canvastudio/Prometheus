@@ -555,7 +555,7 @@ public class FightComponet : MonoBehaviour {
                 case SpecialEffect.Enslave:
                     foreach (var item in apply_list)
                     {
-                        (item as LiveItem).enslave = true;
+                        (item as Monster).enslave = true;
                     }
                     break;
                 case SpecialEffect.OpenBlockWithNear:
