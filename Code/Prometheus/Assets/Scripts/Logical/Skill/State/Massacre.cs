@@ -20,9 +20,32 @@ public class Massacre : StateIns
         max_extra = stateConfig.stateArgs[index].f[1];
 
 
-        Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
 
         stateType = StateEffectType.OnGenerateDamage;
+    }
+
+    public override void Active()
+    {
+        base.Active();
+
+        Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
+        Messenger<ActiveSkillsConfig>.AddListener(SA.PlayerUseSkill, OnPlayUseSkill);
+    }
+
+    public override void Deactive()
+    {
+        base.Deactive();
+
+        Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
+        Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+    }
+
+    private void OnPlayUseSkill(ActiveSkillsConfig config)
+    {
+        if (FightComponet.CheckEffectCondition(condition2, null, config.damageType))
+        {
+            total_extra = 0;
+        }
     }
 
     private void OnMonsterDead(Damage damage)

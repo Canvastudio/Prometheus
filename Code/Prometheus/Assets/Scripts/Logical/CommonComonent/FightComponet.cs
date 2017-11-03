@@ -362,11 +362,6 @@ public class FightComponet : MonoBehaviour {
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         Debug.Log("伤害公式: " + config.damage);
 
-        yield return SelectTarget(config);
-    }
-
-    public IEnumerator SelectTarget(ActiveSkillsConfig config)
-    {
         //1.确定目标
         target_list.Clear();
         apply_list.Clear();
@@ -490,7 +485,7 @@ public class FightComponet : MonoBehaviour {
             var stuff = config.stuffCost.stuffs.ToArray();
             var count = config.stuffCost.values.ToArray();
             Player player = ownerObject as Player;
-            for (int n = 0; n< stuff.Length; ++n)
+            for (int n = 0; n < stuff.Length; ++n)
             {
                 player.inventory.ChangeStuffCount(stuff[n], -count[n]);
             }
@@ -509,12 +504,41 @@ public class FightComponet : MonoBehaviour {
 
         if (hitTarget)
         {
+            GameProperty property;
+
+            foreach (var target in apply_list)
+            {
+                if (config.damage != null)
+                {
+                    var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
+
+                    Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
+
+                    foreach (var ins in ownerObject.state_list)
+                    {
+                        if (ins.stateType == StateEffectType.OnGenerateDamage)
+                        {
+                            ins.ApplyState(damageInfo);
+                        }
+                    }
+
+                (target as LiveItem).TakeDamage(damageInfo);
+                }
+            }
+
             if (config.afterSpecialEffect != null)
             {
                 var effects = config.afterSpecialEffect.ToArray();
                 yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
             }
         }
+
+        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
+    }
+
+    public void ApplyDamageAddtion(Damage damage)
+    {
+
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
@@ -677,6 +701,8 @@ public class FightComponet : MonoBehaviour {
                 return damageType == DamageType.Cartridge;
             case EffectCondition.DamageTypeLaser:
                 return damageType == DamageType.Laser;
+            case EffectCondition.DamageTypeMelee:
+                return damageType == DamageType.Physical;
             case EffectCondition.MonsterTypeIron:
                 return (item is Monster && (item as Monster).monsterType == MonsterType.Iron);
             case EffectCondition.MonsterTypeOrganisms:

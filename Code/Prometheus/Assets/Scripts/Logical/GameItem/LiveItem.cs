@@ -6,25 +6,7 @@ using UnityEngine.UI;
 
 public abstract class LiveItem : GameItemBase
 {
-    /// <summary>
-    /// 状态Buff
-    /// </summary>
-    private List<StateConfig> buff_list = new List<StateConfig>();
-
-    /// <summary>
-    /// 受伤结算得状态
-    /// </summary>
-    private List<StateIns> defend_buff = new List<StateIns>();
-
-    /// <summary>
-    /// 状态deBuff
-    /// </summary>
-    private List<StateConfig> debuff_list = new List<StateConfig>();
-
-    /// <summary>
-    /// 光环给予的buff
-    /// </summary>
-    private List<StateConfig> halo_list = new List<StateConfig>();
+    public List<StateIns> state_list = new List<StateIns>(15); 
 
     private bool silent = false;
 
@@ -244,11 +226,23 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator TakeDamage(Damage damageInfo)
     {
+        foreach (var ins in state_list)
+        {
+            if (ins.stateType == StateEffectType.OnTakenDamage)
+            {
+                ins.ApplyState(damageInfo);
+            }
+        }
+
         cur_hp = cur_hp - damageInfo.damage;
 
         if (cur_hp == 0)
         {
             yield return OnDead(damageInfo);
+        }
+        else
+        {
+            Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
         }
     }
 
@@ -262,7 +256,6 @@ public abstract class LiveItem : GameItemBase
             {
                 case StateEffect.DamageAbsorb:
                     DamageAbsorb absorb = new DamageAbsorb(this, config, i, passive);
-                    defend_buff.Add(absorb);
                     break;
             }
         }
@@ -290,7 +283,7 @@ public abstract class LiveItem : GameItemBase
 
     public void RemoveDefendState(StateIns defendState)
     {
-        defend_buff.Remove(defendState);
+
     }
 }
 

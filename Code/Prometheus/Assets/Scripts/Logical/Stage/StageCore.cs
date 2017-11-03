@@ -412,6 +412,9 @@ public static class SA
     public const string MonsterDead = "MSD";
     public const string StuffCountChange = "SCC";
     public const string PlayerMoveEnd = "PME";
+    public const string PlayerMoveStep = "PMS";
+    public const string PlayerUseSkill = "PUS";
+    public const string ItemTakeDamage = "ITD";
 }
 
 public static class ST

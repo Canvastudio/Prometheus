@@ -57,7 +57,7 @@ public abstract class StateIns : IEquatable<StateIns>
     /// <summary>
     /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
     /// </summary>
-    public void Active()
+    public virtual void Active()
     {
         active = true;
 
@@ -67,7 +67,7 @@ public abstract class StateIns : IEquatable<StateIns>
         }
     }
 
-    public void Deactive()
+    public virtual void Deactive()
     {
         active = false;
 
@@ -85,7 +85,7 @@ public abstract class StateIns : IEquatable<StateIns>
         }
     }
 
-    private void OnTimeChange(float time)
+    protected virtual void OnTimeChange(float time)
     {
         exist_time += time;
 

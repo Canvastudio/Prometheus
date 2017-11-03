@@ -105,6 +105,8 @@ public class MoveComponet : MonoBehaviour {
         {
             yield return 0;
         }
+
+        Messenger<Brick>.Invoke(SA.PlayerMoveStep, brick);
     }
 
     public void OnMoveFinish()
