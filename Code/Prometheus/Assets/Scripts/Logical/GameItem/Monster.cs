@@ -47,6 +47,36 @@ public class Monster : LiveItem
 
     private int player_distance = 0;
 
+    /// <summary>
+    /// 是否被玩家奴役
+    /// </summary>
+    [SerializeField]
+    private bool _enslave;
+    public bool enslave
+    {
+        get
+        {
+            return _enslave;
+        }
+        set
+        {
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
+
+            if (enslave)
+            {
+                side = 1;
+            }
+            else
+            {
+                side = 0;
+            }
+
+            _enslave = value;
+        }
+    }
+
+    public DangerousLevels dangerousLevels;
+
     public void Init()
     {
         Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
@@ -74,7 +104,7 @@ public class Monster : LiveItem
                 block_other = true;
             }
 
-            if (AIConfig.dangerous_levels == DangerousLevels.Neutral)
+            if (dangerousLevels == DangerousLevels.Neutral)
             {
                 fightComponet.skillActive = true;
             }
@@ -125,7 +155,7 @@ public class Monster : LiveItem
         }
 
 
-        if (AIConfig.dangerous_levels == DangerousLevels.Hostility)
+        if (dangerousLevels == DangerousLevels.Hostility)
         {
             fightComponet.skillActive = true;
         }
@@ -137,7 +167,7 @@ public class Monster : LiveItem
         }
     }
 
-    public override IEnumerator OnDead()
+    public override IEnumerator OnDead(Damage damageInfo)
     {
         if (standBrick != null)
         {
@@ -148,7 +178,7 @@ public class Monster : LiveItem
             Debug.LogError("怪物阵亡时发现: standbrick 为空");
         }
 
-        Messenger<Monster>.Invoke(SA.MonsterDead, this);
+        Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
 
         if (dead_howl > 0)
         {
@@ -173,7 +203,7 @@ public class Monster : LiveItem
             yield return fightComponet.DoActiveSkill(skill_list);
         }
 
-        base.OnDead();
+        base.OnDead(damageInfo);
 
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }

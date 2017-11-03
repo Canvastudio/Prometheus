@@ -86,7 +86,7 @@ public class StageCore : SingleObject<StageCore> {
         AllActionFinish = new WaitUntil(() => isMonsterActionFilish);
 
         //监听一些重要事件
-        Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
+        Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
 
         CoroCore.Instance.ExStartCoroutine(CheckTurnTime());
     }
@@ -114,11 +114,12 @@ public class StageCore : SingleObject<StageCore> {
         tagMgr.RemoveEntity(gameItem);
     }
 
-    public void OnMonsterDead(Monster monster)
+    public void OnMonsterDead(Damage damageInfo)
     {
         if (records.lastDeadMonster == null)
             records.lastDeadMonster = new StageRecording.DeadMonsterRecord();
 
+        var monster = damageInfo.damageTarget as Monster;
         records.lastDeadMonster.brick = monster.standBrick;
         records.lastDeadMonster.lv = monster.lv;
         records.lastDeadMonster.pwr = monster.pwr;
@@ -298,7 +299,6 @@ public class StageCore : SingleObject<StageCore> {
     
     IEnumerator PlayerMeleeAction(Brick brick1)
     {
-
         bool just = false;
 
         var monster = brick1.item as Monster;

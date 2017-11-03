@@ -110,6 +110,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ulong AI_Id = config.ai[pwr];
 
         monster.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
+        monster.dangerousLevels = monster.AIConfig.dangerous_levels;
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
@@ -165,6 +166,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         player.InitInfoUI();
 
         StageCore.Instance.RegisterItem(player);
+
+        player.side = 1;
 
         return player;
     }

@@ -8,6 +8,15 @@ public enum StateEffectType
     OnTakenDamage,
     OnGenerateDamage,
     PropertyChange,
+    JustPropertyChange,
+    /// <summary>
+    /// 自然消失的时候起效果
+    /// </summary>
+    Countdown, 
+    /// <summary>
+    /// 杀死目标的时候有额外效果
+    /// </summary>
+    KillTarget,
     Invalid,
 }
 
@@ -30,10 +39,12 @@ public abstract class StateIns : IEquatable<StateIns>
         set { if (value) OnOutData(); out_data = value; }
     }
 
+    public bool active = false;
+
     /// <summary>
     /// 存在了多久
     /// </summary>
-    public int exist_time = 0;
+    public float exist_time = 0;
 
     public StateIns(LiveItem owner, StateConfig config, int index, bool passive)
     {
@@ -43,13 +54,55 @@ public abstract class StateIns : IEquatable<StateIns>
         this.passive = passive;
     }
 
+    /// <summary>
+    /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
+    /// </summary>
+    public void Active()
+    {
+        active = true;
+
+        if (!passive)
+        {
+            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
+        }
+    }
+
+    public void Deactive()
+    {
+        active = false;
+
+        if (!passive)
+        {
+            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+        }
+    }
+
+    ~StateIns()
+    {
+        if (!passive)
+        {
+            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+        }
+    }
+
+    private void OnTimeChange(float time)
+    {
+        exist_time += time;
+
+        if (exist_time >= stateConfig.
+            time)
+        {
+            out_data = true;
+        }
+    }
+
     protected abstract void Apply(object param);
 
     public virtual void OnOutData()
     {
         stateConfig = null;
 
-        owner.RemoveDefendState(this);
+        owner.RemoveStateIns(this);
 
         owner = null;
     }
@@ -62,7 +115,7 @@ public abstract class StateIns : IEquatable<StateIns>
 
     public void ApplyState(object param)
     {
-        if (!owner.Silent)
+        if (!owner.Silent || out_data || active == false)
         {
             Apply(param as Damage);
         }

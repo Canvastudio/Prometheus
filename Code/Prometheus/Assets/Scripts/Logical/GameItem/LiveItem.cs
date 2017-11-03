@@ -28,6 +28,11 @@ public abstract class LiveItem : GameItemBase
 
     private bool silent = false;
 
+    /// <summary>
+    /// 在哪边, 0是敌对，1是玩家这边
+    /// </summary>
+    public int side = 0;
+
 
     public bool Silent
     {
@@ -170,25 +175,6 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    /// <summary>
-    /// 是否被玩家奴役
-    /// </summary>
-    [SerializeField]
-    private bool _enslave;
-    public bool enslave
-    {
-        get
-        {
-            return _enslave;
-        }
-        set
-        {
-            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
-            _enslave = value;
-        }
-    }
-
-
     public virtual void InitInfoUI()
     {
         if (hp_value != null)
@@ -219,8 +205,10 @@ public abstract class LiveItem : GameItemBase
         cur_hp = Mathf.Min(fmax_hp, new_hp);
     }
 
-    public virtual IEnumerator OnDead()
+    public virtual IEnumerator OnDead(Damage damageInfo)
     {
+        
+
         standBrick.CleanItem();
 
         StageCore.Instance.UnRegisterItem(this);
@@ -260,7 +248,7 @@ public abstract class LiveItem : GameItemBase
 
         if (cur_hp == 0)
         {
-            yield return OnDead();
+            yield return OnDead(damageInfo);
         }
     }
 
@@ -280,7 +268,7 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    public void RemoveStateBuff(StateConfig config)
+    public void RemoveStateIns(StateIns ins)
     {
 
     }
