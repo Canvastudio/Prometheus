@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Alarm : StateIns
+public class Alarm : StateEffectIns
 {
     int range = 0;
 

@@ -1,5 +1,5 @@
 ﻿
-public class Just : StateIns
+public class Just : StateEffectIns
 {
     public Just(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
     {

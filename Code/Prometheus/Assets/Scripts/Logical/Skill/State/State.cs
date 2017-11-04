@@ -7,8 +7,10 @@ public enum StateEffectType
 {
     OnTakenDamage,
     OnGenerateDamage,
+    OnDeadth,
     PropertyChange,
     JustPropertyChange,
+    RangeSkillCost,
     /// <summary>
     /// 自然消失的时候起效果
     /// </summary>
@@ -18,20 +20,27 @@ public enum StateEffectType
     /// </summary>
     KillTarget,
     Invalid,
+    /// <summary>
+    /// 无法被选择
+    /// </summary>
+    SelectImmune,
+    /// <summary>
+    /// 如果有非last状态的怪物存在，那么就不受伤害
+    /// </summary>
+    Last,
 }
 
-/// <summary>
-/// 结算类的状态，比如伤害结算的减少伤害的， 攻击结算的造成暴击的
-/// </summary>
-public abstract class StateIns : IEquatable<StateIns>
+
+public class StateIns
 {
-    public StateEffectType stateType = StateEffectType.Invalid;
+    static int _id = 0;
+
+    public int id;
+    public StateEffectIns[] stateEffects;
     public StateConfig stateConfig;
-
-    public int index;
-    protected bool passive;
-    public LiveItem owner;
-
+    public bool passive;
+    public bool active;
+    public float exist_time;
     private bool _out_data = false;
     public bool out_data
     {
@@ -39,19 +48,73 @@ public abstract class StateIns : IEquatable<StateIns>
         set { if (value) OnOutData(); out_data = value; }
     }
 
-    public bool active = false;
-
-    /// <summary>
-    /// 存在了多久
-    /// </summary>
-    public float exist_time = 0;
-
-    public StateIns(LiveItem owner, StateConfig config, int index, bool passive)
+    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive)
     {
-        this.owner = owner;
-        this.stateConfig = config;
-        this.index = index;
-        this.passive = passive;
+        int effect_count = stateConfig.stateEffects.Count();
+
+        stateEffects = new StateEffectIns[effect_count];
+
+        for (int i = 0; i < effect_count; ++i)
+        {
+            stateEffects[i] = StateEffectIns.GenerateStateEffects(stateConfig, i, owner, passive);
+        }
+
+        id = ++_id;
+    }
+
+    public void ActiveIns()
+    {
+        foreach(var effect in stateEffects)
+        {
+            effect.Active();
+        }
+
+        if (!passive)
+        {
+            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
+        }
+    }
+
+    public void DeactiveIns()
+    {
+        foreach (var effect in stateEffects)
+        {
+            effect.Deactive();
+        }
+
+
+        if (!passive)
+        {
+            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+        }
+    }
+    
+    private void OnOutData()
+    {
+        foreach (var effect in stateEffects)
+        {
+            effect.out_data = true;
+        }
+    }
+
+    public void Silent(bool silent)
+    {
+        if (!passive) return;
+
+        if (silent)
+        {
+            foreach(var effect in stateEffects)
+            {
+                effect.Deactive();
+            }
+        }
+        else
+        {
+            foreach (var effect in stateEffects)
+            {
+                effect.Active();
+            }
+        }
     }
 
     /// <summary>
@@ -77,14 +140,6 @@ public abstract class StateIns : IEquatable<StateIns>
         }
     }
 
-    ~StateIns()
-    {
-        if (!passive)
-        {
-            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
-        }
-    }
-
     protected virtual void OnTimeChange(float time)
     {
         exist_time += time;
@@ -94,6 +149,71 @@ public abstract class StateIns : IEquatable<StateIns>
         {
             out_data = true;
         }
+        else
+        {
+            foreach (var effect in stateEffects)
+            {
+                effect.OnTimeChange(time);
+            }
+        }
+    }
+
+    public override bool Equals(object obj)
+    {
+        return stateConfig.id == (obj as StateIns).stateConfig.id;
+    }
+}
+
+/// <summary>
+/// 结算类的状态的具体效果，比如伤害结算的减少伤害的， 攻击结算的造成暴击的
+/// </summary>
+public abstract class StateEffectIns : IEquatable<StateEffectIns>
+{
+    public StateEffectType stateType = StateEffectType.Invalid;
+    public StateConfig stateConfig;
+
+    public int index;
+    protected bool passive;
+    public LiveItem owner;
+
+    private bool _out_data = false;
+    public bool out_data
+    {
+        get { return _out_data; }
+        set { if (value) OnOutData(); out_data = value; }
+    }
+
+    public bool active = false;
+
+    /// <summary>
+    /// 存在了多久
+    /// </summary>
+    public float exist_time = 0;
+
+    public StateEffectIns(LiveItem owner, StateConfig config, int index, bool passive)
+    {
+        this.owner = owner;
+        this.stateConfig = config;
+        this.index = index;
+        this.passive = passive;
+    }
+
+    /// <summary>
+    /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
+    /// </summary>
+    public virtual void Active()
+    {
+        active = true;
+    }
+
+    public virtual void Deactive()
+    {
+        active = false;
+    }
+
+    public virtual void OnTimeChange(float time)
+    {
+
     }
 
     protected abstract void Apply(object param);
@@ -101,13 +221,10 @@ public abstract class StateIns : IEquatable<StateIns>
     public virtual void OnOutData()
     {
         stateConfig = null;
-
-        owner.RemoveStateIns(this);
-
         owner = null;
     }
 
-    public bool Equals(StateIns other)
+    public bool Equals(StateEffectIns other)
     {
         return (stateConfig.id == other.stateConfig.id)
             && (index == other.index);
@@ -117,13 +234,23 @@ public abstract class StateIns : IEquatable<StateIns>
     {
         if (!owner.Silent || out_data || active == false)
         {
-            Apply(param as Damage);
+            //if (stateType == StateEffectType.OnGenerateDamage
+            //    || stateType == StateEffectType.OnTakenDamage)
+            //{
+            //    Apply(param as Damage);
+            //}
+            //else if (stateType == StateEffectType.RangeSkillCost)
+            //{
+            //    Apply(param as RangeSkillCost);
+            //}
+
+            Apply(param);
         }
     }
 
-    public static StateIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive)
+    public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive)
     {
-        StateIns ins;
+        StateEffectIns ins;
 
         switch (config.stateEffects[i])
         {

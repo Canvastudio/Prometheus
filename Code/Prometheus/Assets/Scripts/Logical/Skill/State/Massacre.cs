@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Massacre : StateIns
+public class Massacre : StateEffectIns
 {
     EffectCondition condition1;
     EffectCondition condition2;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bully : StateIns
+public class Bully : StateEffectIns
 {
     float threshold = 1;
     EffectCondition condition;

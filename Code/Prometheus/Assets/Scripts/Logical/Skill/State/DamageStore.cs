@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageStore : StateIns
+public class DamageStore : StateEffectIns
 {
 
     /// <summary>

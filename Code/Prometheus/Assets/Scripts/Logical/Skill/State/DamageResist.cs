@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageResist : StateIns
+public class DamageResist : StateEffectIns
 {
     float probability = 0;
     EffectCondition condition;

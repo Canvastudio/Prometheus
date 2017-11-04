@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTransfer : StateIns
+public class DamageTransfer : StateEffectIns
 {
     /// <summary>
     /// 能转移多少次

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageAbsorb : StateIns
+public class DamageAbsorb : StateEffectIns
 {
     EffectCondition condition;
     float absorb_damage;

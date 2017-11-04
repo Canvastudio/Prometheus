@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Angry : StateIns
+public class Angry : StateEffectIns
 {
     EffectCondition condition;
 
@@ -40,7 +40,7 @@ public class Angry : StateIns
 
     private void OnDamage(Damage damage)
     {
-        if (active && FightComponet.CheckEffectCondition(condition, null, damage.damageType))
+        if (active && damage.damageTarget.itemId == owner.itemId && FightComponet.CheckEffectCondition(condition, null, damage.damageType))
         {
             total_extra0 += extra0;
             total_extra1 += extra1;

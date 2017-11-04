@@ -115,6 +115,8 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
+        StageCore.Instance.discover_monster += 1;
+
         base.OnDiscoverd();
 
         StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
@@ -167,8 +169,19 @@ public class Monster : LiveItem
         }
     }
 
+    protected override void OnExitFromArea()
+    {
+        base.OnExitFromArea();
+
+        if (isDiscovered && cur_hp > 0)
+        {
+            StageCore.Instance.discover_monster -= 1;
+        }
+    }
     public override IEnumerator OnDead(Damage damageInfo)
     {
+        StageCore.Instance.discover_monster -= 1;
+
         if (standBrick != null)
         {
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);

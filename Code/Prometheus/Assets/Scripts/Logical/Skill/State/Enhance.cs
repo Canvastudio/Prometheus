@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enhance : StateIns
+public class Enhance : StateEffectIns
 {
     float threshold = 1;
     EffectCondition condition;

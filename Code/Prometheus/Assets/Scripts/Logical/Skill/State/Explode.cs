@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explode : StateIns
+public class Explode : StateEffectIns
 {
     public Explode(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
     {

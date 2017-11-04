@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageRebound : StateIns
+public class DamageRebound : StateEffectIns
 {
     EffectCondition condition;
     float percent = 0;

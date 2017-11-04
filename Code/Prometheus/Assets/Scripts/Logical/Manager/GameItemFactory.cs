@@ -99,8 +99,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             AddSkillToFightComponet(fightComponet, config.skill_boss);
         }
 
-        fightComponet.SortAcitveSkill();
-
         monster.fightComponet = fightComponet;
         
         monster.pwr = pwr;

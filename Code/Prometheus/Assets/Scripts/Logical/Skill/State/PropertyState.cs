@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PropertyState : StateIns {
+public class PropertyState : StateEffectIns
+{
 
     protected Dictionary<GameProperty, float> changes = new Dictionary<GameProperty, float>();
 
@@ -20,8 +21,10 @@ public class PropertyState : StateIns {
         stateType = StateEffectType.PropertyChange;
     }
 
-    public void Remove()
+    public override void Deactive()
     {
+        base.Deactive();
+
         foreach (var change in changes)
         {
             if (change.Key != GameProperty.nhp)
@@ -35,8 +38,10 @@ public class PropertyState : StateIns {
         }
     }
 
-    protected override void Apply(object param)
+    public override void Active()
     {
+        base.Active();
+
         GameProperty property;
 
         if (stateConfig != null)
@@ -68,5 +73,10 @@ public class PropertyState : StateIns {
                 }
             }
         }
+    }
+
+    protected override void Apply(object param)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -107,7 +107,9 @@ public class StageCore : SingleObject<StageCore> {
 
         allItems.Add(gameItemBase);
     }
-    
+
+    public int discover_monster = 0;
+
     public void UnRegisterItem(GameItemBase gameItem)
     {
         allItems.Remove(gameItem);
@@ -268,11 +270,14 @@ public class StageCore : SingleObject<StageCore> {
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
                 {
-                    ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
+                    if (!Player.isDisarm)
+                    {
+                        ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
 
-                    Debug.Log("使用技能id: " + skill_id);
+                        Debug.Log("使用技能id: " + skill_id);
 
-                    yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
+                        yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
+                    }
                 }
             }
 
@@ -428,6 +433,7 @@ public static class ST
     public const string DISCOVER = "DR";
     public const string UNDISCOVER = "UDR";
     public const string FRIEND = "FD";
+    public const string LAST = "LT";
 }
 
 

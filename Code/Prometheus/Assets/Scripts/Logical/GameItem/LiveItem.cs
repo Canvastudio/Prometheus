@@ -6,7 +6,37 @@ using UnityEngine.UI;
 
 public abstract class LiveItem : GameItemBase
 {
-    public List<StateIns> state_list = new List<StateIns>(15); 
+    public bool isSleep = false;
+    public bool isFreeze = false;
+    private bool _isDisarm = false;
+    public bool isDisarm
+    {
+        get { return _isDisarm; }
+        set
+        {
+            if (_isDisarm == value) return;
+
+            _isDisarm = value;
+        }
+    }
+
+    private bool _isSilent = false;
+    public bool isSilent
+    {
+        get { return _isSilent; }
+        set
+        {
+            if (_isSilent == value) return;
+
+            foreach(var state in state_list)
+            {
+                state.Silent(value);
+            }
+            
+        }
+    }
+
+    public List<StateIns> state_list = new List<StateIns>(8); 
 
     private bool silent = false;
 
@@ -189,8 +219,6 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator OnDead(Damage damageInfo)
     {
-        
-
         standBrick.CleanItem();
 
         StageCore.Instance.UnRegisterItem(this);
@@ -226,15 +254,35 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator TakeDamage(Damage damageInfo)
     {
-        foreach (var ins in state_list)
+        foreach (var state in state_list)
         {
-            if (ins.stateType == StateEffectType.OnTakenDamage)
+            foreach (var ins in state.stateEffects)
             {
-                ins.ApplyState(damageInfo);
+                if (ins.stateType == StateEffectType.OnTakenDamage)
+                {
+                    ins.ApplyState(damageInfo);
+                }
+
+                if (ins.stateType == StateEffectType.Last)
+                {
+                    var last_count = StageCore.Instance.tagMgr.GetEntity(ETag.GetETag(ST.LAST)).Count;
+
+                    if (last_count <= StageCore.Instance.discover_monster)
+                    {
+                        damageInfo.damage = 0;
+                    }
+                }
             }
         }
 
         cur_hp = cur_hp - damageInfo.damage;
+
+        if (damageInfo.attach_state > 0)
+        {
+            var config = StateConfig.GetConfigDataById<StateConfig>(damageInfo.attach_state);
+            StateIns ins = new StateIns(config, this, false);
+            AddStateIns(ins);
+        }
 
         if (cur_hp == 0)
         {
@@ -242,46 +290,49 @@ public abstract class LiveItem : GameItemBase
         }
         else
         {
+
             Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
         }
     }
 
-    public void AddStateBuff(StateConfig config, bool passive = false)
+    public void AddStateIns(StateIns ins)
     {
-        var effects = config.stateEffects.ToArray();
+        int max = ins.stateConfig.max;
 
-        for (int i = 0; i < effects.Length; ++i)
+        state_list.Add(ins);
+        ins.ActiveIns();
+
+        for (int i = state_list.Count - 1; i >= 0; ++i)
         {
-            switch (effects[i])
+            if (state_list[i].stateConfig.id == ins.stateConfig.id)
             {
-                case StateEffect.DamageAbsorb:
-                    DamageAbsorb absorb = new DamageAbsorb(this, config, i, passive);
-                    break;
+                --max;
+
+                if (max < 0)
+                {
+                    state_list[i].DeactiveIns();
+                    state_list.RemoveAt(i);
+                }
             }
         }
     }
 
     public void RemoveStateIns(StateIns ins)
     {
+        ins.DeactiveIns();
+        ins.stateEffects = null;
 
+        for (int i = state_list.Count - 1; i >= 0; ++i)
+        {
+            if (state_list[i].stateConfig.id == ins.stateConfig.id)
+            {
+                state_list.RemoveAt(i);
+            }
+        }
     }
+
 
     public void RemoveStateBuff(int count, bool isBuff)
-    {
-
-    }
-
-    public void AddHaloBuff(StateConfig config)
-    {
-
-    }
-
-    public void RemoveHaloBuff(StateConfig config)
-    {
-
-    }
-
-    public void RemoveDefendState(StateIns defendState)
     {
 
     }

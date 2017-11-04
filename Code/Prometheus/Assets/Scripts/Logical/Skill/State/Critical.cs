@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Critical : StateIns
+public class Critical : StateEffectIns
 {
     float probability = 0;
     float multiply = 1;

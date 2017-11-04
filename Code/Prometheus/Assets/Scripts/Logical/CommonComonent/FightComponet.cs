@@ -12,85 +12,8 @@ public enum SkillType
     Invalid,
 }
 
-public class FightComponet : MonoBehaviour {
-
-    private class ActiveSkillState : IComparer<ActiveSkillState>
-    {
-        public ActiveSkillsConfig config;
-
-        /// <summary>
-        /// 已经释放的次数，同样的cooldown技能，当都处于可以释放时，优先释放time小的技能。
-        /// </summary>
-        public int activeTime = 0;
-
-        /// <summary>
-        /// 回合数，会一直增加到等于cooldown，并在可以释放时释放activeskll
-        /// </summary>
-        public int turn
-        {
-            get
-            {
-                return _turn;
-            }
-            set
-            {
-                _turn = Math.Min((int)config.coolDown, value);
-            }
-        }
-
-        private int _turn;
-
-        /// <summary>
-        /// 1-》可以释放，0-》还不可以释放
-        /// </summary>
-        public int ready
-        {
-            get
-            {
-                if (turn == config.coolDown) return 1;
-                else return 0;
-            }
-        }
-
-        public int Compare(ActiveSkillState x, ActiveSkillState y)
-        {
-            if (x.ready > y.ready)
-            {
-                return 1;
-            }
-            else if (x.ready < y.ready)
-            {
-                return -1;
-            }
-            else
-            {
-                if (x.config.coolDown > y.config.coolDown)
-                {
-                    return 1;
-                }
-                else if (x.config.coolDown < y.config.coolDown)
-                {
-                    return -1;
-                }
-                else
-                {
-                    if (x.activeTime < y.activeTime)
-                    {
-                        return 1;
-                    }
-                    else if (x.activeTime > y.activeTime)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
-            }
-        }
-    }
-
+public class FightComponet : MonoBehaviour
+{
     public float time = 0;
 
     public bool hitTarget = false;
@@ -109,8 +32,6 @@ public class FightComponet : MonoBehaviour {
     /// ref召唤技能配置表
     /// </summary>
     private List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
-
-    private List<ActiveSkillState> activeSort = new List<ActiveSkillState>();
 
     /// <summary>
     /// 是否激活使用技能
@@ -147,7 +68,7 @@ public class FightComponet : MonoBehaviour {
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
                 break;
         }
-        
+
     }
 
     public void RemoveSkill(ulong id)
@@ -160,7 +81,7 @@ public class FightComponet : MonoBehaviour {
                 break;
             case SkillType.Passive:
                 passiveSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
-   
+
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -186,65 +107,6 @@ public class FightComponet : MonoBehaviour {
 
         return SkillType.Invalid;
     }
-
-    public void SortAcitveSkill()
-    {
-        activeSort.Clear();
-
-        foreach (var active_Skill in activeSkillConfigs)
-        {
-            activeSort.Add(new ActiveSkillState() { config = active_Skill });
-        }
-
-        activeSort.Sort();
-    }
-
-    public void OnEnable()
-    {
-        Messenger<float>.AddListener(SA.StageTimeCast, ChangeTime);
-    }
-
-    public void OnDisable()
-    {
-        Messenger<float>.RemoveListener(SA.StageTimeCast, ChangeTime);
-    }
-
-    public void ChangeTime(float _time)
-    {
-        if (ownerObject.isDiscovered && skillActive)
-        {
-            time += _time;
-
-            if (time >= 1)
-            {
-                OnTurn();
-                time -= 1;
-            }
-        }
-    }
-
-    public void OnTurn()
-    {
-        //检查主动技能是否可以释放
-        if (activeSort.Count > 0)
-        {
-            //1.所有的activeSort中的元素的turn += 1;
-            foreach (var skill in activeSort)
-            {
-                skill.turn += 1;
-            }
-
-            //2.排序找到第一个，如果可以释放则释放
-            activeSort.Sort();
-
-            if (activeSort[0].ready == 1)
-            {
-                activeSort[0].activeTime += 1;
-                DoActiveSkill(activeSort[0].config);
-            }
-        }
-    }
-
 
     public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType)
     {
@@ -439,6 +301,29 @@ public class FightComponet : MonoBehaviour {
         {
             if (st == SelectType.One)
             {
+                if (tt == TargetType.Enemy || tt == TargetType.Help)
+                {
+                    for (int i = target_list.Count - 1; i >= 0; --i)
+                    {
+                        LiveItem live = target_list[i] as LiveItem;
+
+                        foreach (var state in live.state_list)
+                        {
+                            if (state.active)
+                            {
+                                foreach (var effect in state.stateEffects)
+                                {
+                                    if (effect.stateType == StateEffectType.SelectImmune)
+                                    {
+                                        target_list.RemoveAt(i);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 yield return LightAndWaitSelect();
             }
             else if (st == SelectType.Direct)
@@ -485,6 +370,7 @@ public class FightComponet : MonoBehaviour {
             var stuff = config.stuffCost.stuffs.ToArray();
             var count = config.stuffCost.values.ToArray();
             Player player = ownerObject as Player;
+
             for (int n = 0; n < stuff.Length; ++n)
             {
                 player.inventory.ChangeStuffCount(stuff[n], -count[n]);
@@ -500,12 +386,33 @@ public class FightComponet : MonoBehaviour {
             yield return ApplyEffect(config, config.beforeArgs, effects, apply_list);
         }
 
+
+        long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray(0);
+
+        GameProperty property;
+
+        float time_cost = CalculageRPN(rpn, ownerObject, null, out property);
+        RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
+
+        foreach (var state in ownerObject.state_list)
+        {
+            foreach (var effect in state.stateEffects)
+            {
+                if (effect.stateType == StateEffectType.RangeSkillCost)
+                {
+                    effect.ApplyState(rangeSkillCost);
+                }
+            }
+        }
+
+        time_cost = rangeSkillCost.cost;
+
+        StageCore.Instance.TimeCast(time_cost);
+
         yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
 
         if (hitTarget)
         {
-            GameProperty property;
-
             foreach (var target in apply_list)
             {
                 if (config.damage != null)
@@ -514,11 +421,14 @@ public class FightComponet : MonoBehaviour {
 
                     Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
 
-                    foreach (var ins in ownerObject.state_list)
+                    foreach (var state in ownerObject.state_list)
                     {
-                        if (ins.stateType == StateEffectType.OnGenerateDamage)
+                        foreach (var ins in state.stateEffects)
                         {
-                            ins.ApplyState(damageInfo);
+                            if (ins.stateType == StateEffectType.OnGenerateDamage)
+                            {
+                                ins.ApplyState(damageInfo);
+                            }
                         }
                     }
 
@@ -534,11 +444,6 @@ public class FightComponet : MonoBehaviour {
         }
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
-    }
-
-    public void ApplyDamageAddtion(Damage damage)
-    {
-
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
@@ -557,7 +462,7 @@ public class FightComponet : MonoBehaviour {
                     foreach (var item in apply_list)
                     {
                         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                        (item as LiveItem).AddStateBuff(state_config);
+                        (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false));
                     }
                     break;
                 case SpecialEffect.Property:
@@ -650,7 +555,7 @@ public class FightComponet : MonoBehaviour {
                     break;
                 case SpecialEffect.AddStateToSelf:
                     state_id = args[i].u[0];
-                    ownerObject.AddStateBuff(ConfigDataBase.GetConfigDataById<StateConfig>(state_id));
+                    ownerObject.AddStateIns(new StateIns(ConfigDataBase.GetConfigDataById<StateConfig>(state_id), ownerObject, false));
                     break;
                 case SpecialEffect.Disperse:
                     remove_count = (int)args[i].f[0];
@@ -665,6 +570,7 @@ public class FightComponet : MonoBehaviour {
             }
         }
     }
+
 
     public static bool CheckEffectCondition(EffectCondition condition, GameItemBase item, DamageType damageType)
     {
@@ -713,7 +619,7 @@ public class FightComponet : MonoBehaviour {
                 return false;
         }
     }
-    
+
     private IEnumerator LightAndWaitSelect()
     {
         yield return 0;
@@ -721,7 +627,7 @@ public class FightComponet : MonoBehaviour {
 
     public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)
     {
-        foreach(var config in configs)
+        foreach (var config in configs)
         {
             yield return DoActiveSkill(config);
         }
@@ -729,7 +635,7 @@ public class FightComponet : MonoBehaviour {
 
     public IEnumerator DoActiveSkill(List<ulong> ids)
     {
-         foreach (var id in ids)
+        foreach (var id in ids)
         {
             var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
             yield return DoActiveSkill(config);

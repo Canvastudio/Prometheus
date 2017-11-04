@@ -15,11 +15,14 @@ public class B : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        BB bB = new BB();
-        bB.bbbb = "2";
-        AAA(bB);
+
 	}
 
+    void GGGG(object g)
+    {
+        float gg = (float)g;
+
+    }
 
     void AAA(BB aa)
     {

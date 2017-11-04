@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Assault : StateIns
+﻿public class Assault : StateEffectIns
 {
     EffectCondition condition;
     float extra = 0;

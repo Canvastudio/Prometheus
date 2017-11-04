@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PassiveSkillIns  {
 
-    public StateIns[] stateIns;
+    public StateEffectIns[] stateIns;
     public HaloInfo haloInfo;
     public LiveItem owner;
 
@@ -20,11 +20,11 @@ public class PassiveSkillIns  {
         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(passive_config.bindState);
 
         int state_count = state_config.stateEffects.Count();
-        stateIns = new StateIns[state_count];
+        stateIns = new StateEffectIns[state_count];
 
         for (int i = 0; i < state_config.stateEffects.Count(); ++i)
         {
-            stateIns[i] = StateIns.GenerateStateEffects(state_config, i, owner, true);
+            stateIns[i] = StateEffectIns.GenerateStateEffects(state_config, i, owner, true);
         }
     }
 }

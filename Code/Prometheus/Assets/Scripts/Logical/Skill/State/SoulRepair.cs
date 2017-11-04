@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoulRepair : StateIns
+public class SoulRepair : StateEffectIns
 {
     EffectCondition condition;
     float restoration = 0;

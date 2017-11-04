@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageBoost : StateIns
+public class DamageBoost : StateEffectIns
 {
     EffectCondition condition;
     float extra = 0;
@@ -41,7 +41,7 @@ public class DamageBoost : StateIns
         }
     }
 
-    protected override void OnTimeChange(float time)
+    public override void OnTimeChange(float time)
     {
         base.OnTimeChange(time);
 
