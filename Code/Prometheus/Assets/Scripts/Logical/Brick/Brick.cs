@@ -118,6 +118,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     /// </summary>
     public GameItemBase item;
 
+    public List<HaloInfo> halo_list = new List<HaloInfo>(4);
     #endregion
 
 

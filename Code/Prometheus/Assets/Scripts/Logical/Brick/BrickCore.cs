@@ -410,4 +410,9 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         return result;
     }
+
+    public List<Brick> GetNearbyBrick(Brick brick, int distance)
+    {
+        return GetNearbyBrick(brick.row, brick.column, distance);
+    }
 }

@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public abstract class LiveItem : GameItemBase
 {
+    /// <summary>
+    /// 自己拥有的光环，不包括别人影响自己的
+    /// </summary>
+    public List<HaloInfo> halo_list = new List<HaloInfo>(2);
+
     public bool isSleep = false;
     public bool isFreeze = false;
     private bool _isDisarm = false;
@@ -320,6 +325,7 @@ public abstract class LiveItem : GameItemBase
     public void RemoveStateIns(StateIns ins)
     {
         ins.DeactiveIns();
+
         ins.stateEffects = null;
 
         for (int i = state_list.Count - 1; i >= 0; ++i)
@@ -330,7 +336,6 @@ public abstract class LiveItem : GameItemBase
             }
         }
     }
-
 
     public void RemoveStateBuff(int count, bool isBuff)
     {

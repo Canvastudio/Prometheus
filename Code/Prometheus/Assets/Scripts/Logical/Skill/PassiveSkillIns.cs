@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class PassiveSkillIns  {
 
-    public StateEffectIns[] stateIns;
+    public StateIns stateIns;
     public HaloInfo haloInfo;
     public LiveItem owner;
+    public StateConfig stateConfig;
 
-    public PassiveSkillIns(ulong skill_id)
+    public PassiveSkillIns(ulong skill_id, LiveItem owner)
     {
         var passive_config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_id);
 
-        if (passive_config.stateType == StateType.Halo)
-        {
-            haloInfo = new HaloInfo(passive_config.stateArg);
-        }
-
         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(passive_config.bindState);
 
-        int state_count = state_config.stateEffects.Count();
-        stateIns = new StateEffectIns[state_count];
+        stateIns = new StateIns(state_config, owner, true);
 
-        for (int i = 0; i < state_config.stateEffects.Count(); ++i)
+        if (passive_config.stateType == StateType.Halo)
         {
-            stateIns[i] = StateEffectIns.GenerateStateEffects(state_config, i, owner, true);
+            int range = Mathf.FloorToInt(passive_config.stateArg.f[0]);
+            int side = 0;
+            if (passive_config.stateArg.b[0])
+            {
+                if (owner.side == 0)
+                {
+                    side = 1;
+                }
+                else
+                {
+                    side = 0;
+                }
+            }
+
+            haloInfo = new HaloInfo(range, side, owner, this);
         }
     }
 }
