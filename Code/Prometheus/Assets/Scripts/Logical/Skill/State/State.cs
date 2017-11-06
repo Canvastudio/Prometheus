@@ -198,6 +198,10 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     public virtual void OnOutData()
     {
         stateConfig = null;
+        if (active)
+        {
+            Deactive();
+        }
         owner = null;
     }
 

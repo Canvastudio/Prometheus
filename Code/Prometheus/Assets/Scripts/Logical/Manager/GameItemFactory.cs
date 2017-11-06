@@ -80,7 +80,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         monster.InitInfoUI();
 
 
-        FightComponet fightComponet = monster.GetOrAddComponet<FightComponet>();
+        FightComponet fightComponet = monster.GetOrAddComponet<MonsterFightComponet>();
 
         AddSkillToFightComponet(fightComponet, config.skill_normal);
 
@@ -100,7 +100,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         monster.fightComponet = fightComponet;
-        
+
+
+
         monster.pwr = pwr;
         monster.cid = id;
         monster.lv = lv;
@@ -116,6 +118,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         bornBrick.item = monster;
+
+        fightComponet.Active();
 
         monster.Init();
     }
@@ -164,6 +168,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         player.InitInfoUI();
 
         StageCore.Instance.RegisterItem(player);
+
+        fightComponet.Active();
 
         player.side = 1;
 

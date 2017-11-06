@@ -10,6 +10,28 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public bool inViewArea = false;
 
+    private int action = 0;
+
+    public void OnActionBegin()
+    {
+        if (action == 0)
+        {
+            StageCore.Instance.action_item += 1;
+        }
+
+        action += 1;
+    }
+
+    public void OnActionEnd()
+    {
+        action -= 1;
+            
+        if (action == 0)
+        {
+            StageCore.Instance.action_item -= 1;
+        }
+    }
+
 
 
     /// <summary>

@@ -14,6 +14,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     public int rowNum = 3;
     public int colNum = 3;
 
+    int originHalfRowNum = 3;
+    int originHalfColNum = 3;
+
     [Space(5)]
     [SerializeField]
     ChipSquare chipSquare;
@@ -144,7 +147,12 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             yield return 0;
         }
 
+        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
+        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
+
         CalculteChipBoardBound();
+
+        
     }
 
     public void CalculteChipBoardBound()

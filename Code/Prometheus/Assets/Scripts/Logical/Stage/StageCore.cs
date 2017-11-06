@@ -15,7 +15,7 @@ public class StageCore : SingleObject<StageCore> {
 
     ulong monsterId = 0;
 
-    bool isMonsterActionFilish = true;
+    public int action_item = 0;
 
     bool inputConfrim;
 
@@ -83,7 +83,7 @@ public class StageCore : SingleObject<StageCore> {
         tagMgr = new EntitysTag<GameItemBase>();
         records = new StageRecording();
 
-        AllActionFinish = new WaitUntil(() => isMonsterActionFilish);
+        AllActionFinish = new WaitUntil(() => action_item == 0);
 
         //监听一些重要事件
         Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);

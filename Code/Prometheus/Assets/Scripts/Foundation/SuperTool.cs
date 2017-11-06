@@ -1079,10 +1079,11 @@ public class SuperTool
             res[1] = t[t.Length - 4] == 1 ? 1 : 2;
             return;
         }
+
         int f = 1;
         if (t[t.Length - 3] == 3) f = -1;
         f = (int)(f * Math.Pow(10, t[t.Length - 4]));
         res[0] = (float)BitConverter.ToInt32(t, 0) / f;
-        return;
+        res[1] = 0;
     }
 }

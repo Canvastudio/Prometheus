@@ -53,6 +53,8 @@ public class Tablet : GameItemBase {
     {
         Debug.Log("石碑发动: " + gameObject.name + ", type: " + config.totemType.ToString());
 
+        OnActionBegin();
+
         switch (config.totemType)
         {
             case TotemType.Protect:
@@ -101,6 +103,8 @@ public class Tablet : GameItemBase {
 
                 break;
         }
+
+        OnActionEnd();
     }
 
     public override IEnumerator OnDiscoverd()

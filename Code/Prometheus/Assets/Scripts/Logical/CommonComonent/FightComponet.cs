@@ -24,9 +24,9 @@ public class FightComponet : MonoBehaviour
     private List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
 
     /// <summary>
-    /// ref被动技能配置表
+    /// 被动技能实例
     /// </summary>
-    private List<PassiveSkillsConfig> passiveSkillConfigs = new List<PassiveSkillsConfig>();
+    private List<PassiveSkillIns> passiveInsList = new List<PassiveSkillIns>();
 
     /// <summary>
     /// ref召唤技能配置表
@@ -37,6 +37,8 @@ public class FightComponet : MonoBehaviour
     /// 是否激活使用技能
     /// </summary>
     public bool skillActive = false;
+
+    protected bool active = false;
 
     private LiveItem _ownerObject;
     public LiveItem ownerObject
@@ -52,7 +54,29 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public void AddSkill(ulong id)
+    public virtual void Active()
+    {
+        if (!active)
+        {
+            foreach(var ins in passiveInsList)
+            {
+                ins.Active();
+            }
+        }
+    }
+
+    public virtual void Deactive()
+    {
+        if (active)
+        {
+            foreach (var ins in passiveInsList)
+            {
+                ins.Deactive();
+            }
+        }
+    }
+
+    public virtual void AddSkill(ulong id)
     {
         switch (IdToSkillType(id))
         {
@@ -61,7 +85,11 @@ public class FightComponet : MonoBehaviour
                 break;
             case SkillType.Passive:
                 var config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id);
-                passiveSkillConfigs.Add(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
+                PassiveSkillIns passiveSkillIns = new PassiveSkillIns(id, ownerObject);
+                if (active)
+                {
+                    passiveSkillIns.Active();
+                }
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -69,18 +97,24 @@ public class FightComponet : MonoBehaviour
         }
 
     }
-
-    public void RemoveSkill(ulong id)
+    
+    public virtual void RemoveSkill(ulong id)
     {
         switch (IdToSkillType(id))
         {
             case SkillType.Active:
-                StageView.Instance.RemoveSkillFromSkillList(id);
                 activeSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
                 break;
             case SkillType.Passive:
-                passiveSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id));
-
+                for(int i = 0; i < passiveInsList.Count; ++i)
+                {
+                     if (passiveInsList[i].stateConfig.id == id)
+                    {
+                        passiveInsList[i].Deactive();
+                        passiveInsList.RemoveAt(i);
+                        break;
+                    }
+                }
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
@@ -107,7 +141,7 @@ public class FightComponet : MonoBehaviour
         return SkillType.Invalid;
     }
 
-    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType)
+    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType, ActiveSkillsConfig skillsConfig = null)
     {
         Stack<float> stack = new Stack<float>();
 
@@ -119,7 +153,7 @@ public class FightComponet : MonoBehaviour
 
         for (int i = 0; i < damage_values.Length - 1; ++i)
         {
-            SuperTool.GetValue(damage_values[0], ref fv);
+            SuperTool.GetValue(damage_values[i], ref fv);
 
 
             var property = (GameProperty)fv[0];
@@ -142,55 +176,52 @@ public class FightComponet : MonoBehaviour
                     if (stack.Count < 2)
                     {
                         Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                        float v1 = stack.Pop();
-                        float v2 = stack.Pop();
-
-                        stack.Push(v1 + v2);
                     }
+                    float v1 = stack.Pop();
+                    float v2 = stack.Pop();
+
+                    stack.Push(v1 + v2);
+
                 }
                 else if (property == GameProperty.Sub)
                 {
                     if (stack.Count < 2)
                     {
                         Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                        float v1 = stack.Pop();
-                        float v2 = stack.Pop();
-
-                        stack.Push(v1 - v2);
                     }
-                }
-                else if (property == GameProperty.Sub)
-                {
-                    if (stack.Count < 2)
-                    {
-                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                        float v1 = stack.Pop();
-                        float v2 = stack.Pop();
+                    float v1 = stack.Pop();
+                    float v2 = stack.Pop();
 
-                        stack.Push(v1 - v2);
-                    }
+                    stack.Push(v2 - v1);
+
                 }
                 else if (property == GameProperty.Mul)
                 {
                     if (stack.Count < 2)
                     {
                         Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                        float v1 = stack.Pop();
-                        float v2 = stack.Pop();
-
-                        stack.Push(v1 * v2);
                     }
+                    float v1 = stack.Pop();
+                    float v2 = stack.Pop();
+
+                    stack.Push(v1 * v2);
+
                 }
-                else if (property == GameProperty.Mul)
+                else if (property == GameProperty.Div)
                 {
                     if (stack.Count < 2)
                     {
                         Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                        float v1 = stack.Pop();
-                        float v2 = stack.Pop();
-
-                        stack.Push(v1 / v2);
                     }
+                    float v1 = stack.Pop();
+                    float v2 = stack.Pop();
+
+                    stack.Push(v2/ v1);
+
+                }
+                else if (property == GameProperty.skillTime)
+                {
+                    stack.Push(skillsConfig.costTime);
                 }
                 else
                 {
@@ -222,6 +253,8 @@ public class FightComponet : MonoBehaviour
     {
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         Debug.Log("伤害公式: " + config.damage);
+
+        ownerObject.OnActionBegin();
 
         //1.确定目标
         target_list.Clear();
@@ -386,11 +419,11 @@ public class FightComponet : MonoBehaviour
         }
 
 
-        long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray(0);
+        long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
 
         GameProperty property;
 
-        float time_cost = CalculageRPN(rpn, ownerObject, null, out property);
+        float time_cost = CalculageRPN(rpn, ownerObject, null, out property, config);
         RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
 
         foreach (var state in ownerObject.state_list)
@@ -443,6 +476,8 @@ public class FightComponet : MonoBehaviour
         }
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
+
+        ownerObject.OnActionEnd();
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)

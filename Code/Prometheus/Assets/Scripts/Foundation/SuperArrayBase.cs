@@ -96,7 +96,10 @@ public abstract class SuperArrayBase<T> : IEnumerable
 
     protected int[] GetToArrIndexes(params int[] index)
     {
-        if (index.Length != maxDepth - 1) throw new ArgumentOutOfRangeException("SuperArray数组转换深度不合法");
+        if (index.Length != maxDepth - 1)
+        {
+            throw new ArgumentOutOfRangeException("SuperArray数组转换深度不合法");
+        }
         string tempStr = indexStr;
         try
         {
