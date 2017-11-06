@@ -1,40 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class ConfigTest : MonoBehaviour {
+public class ConfigTest : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         //SuperConfig.Instance.Load(SuperTool.GetConfigData("DefaultPath.txt", "Config"));
         SuperTimer.Instance.CreatAndBound(this);
         //SuperTimer.Instance.CoroutineStart(Check(),this);
-        //SuperConfig.Instance.Load();
-
-	    //var t = new SuperArrayValue<long>("2199023255553,1103806595087,2199023255652", ",");
-	    //Debug.Log(t[0]);
-
-	    string t = "\"2199023255553,1103806595087,2199023255652,1103806595073,1103806595087,2199023255653,1103806595073,1103806595076,1103806595074,2199023255602,1103806595075\"";
-
-	    Debug.Log(ReplaceQuote(t));
-	    //ReplaceQuote("");
+        SuperConfig.Instance.Load();
+        //RpnTestShow("1103806595091,2203318222859,1103806595076,1103806595073,1103806595072");
+        //Debug.Log(SkillArg.GetConfigDataByKey<SkillArg>("主动技能效果参数2").rpn.ToArray(0)[1]);
+        var t = ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(1000003);
+        Debug.Log(t.stuffCost.values);
 
 
 
-	    //Debug.Log(ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(1000007).activeSkillArgs[0].u[0]);
+    }
 
-	    //Debug.Log(ChipDiskConfig.GetConfigDataById<ChipDiskConfig>(1).chipGridMatrix[0,0]);
-
-	    //Debug.Log((ChipConfig.GetConfigDataById<ChipConfig>(100226).propertyAddition.gamePropertys[0]).GetType() == typeof (GameProperty));
-
-	    //var t = new SuperArrayValue<Stuff>("Coherer;Organics", ";");
-	}
+    private void RpnTestShow(string str)
+    {
+        string[] datas = str.Split(',');
+        foreach (var data in datas)
+        {
+            StringBuilder sb=new StringBuilder();
+            float[] res = new float[2];
+            SuperTool.GetValue(long.Parse(data), ref res);
+            if (res[1] == 0)
+            {
+                sb.Append(res[0]);
+            }
+            else if (res[1] == 1)
+            {
+                sb.Append("s~"+(GameProperty)res[0]);
+            }
+            else if (res[1] == 2)
+            {
+                sb.Append("t~"+(GameProperty)res[0]);
+            }
+            Debug.Log(sb);
+        }
+    }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
 
     private IEnumerator Check()
     {
@@ -42,7 +59,7 @@ public class ConfigTest : MonoBehaviour {
         Debug.Log(ModuleConfig.GetConfigDataById<ModuleConfig>(1000001));
     }
 
-    private  string ReplaceQuote(string value)
+    private string ReplaceQuote(string value)
     {
         if (value == null) return null;
         if (value == "") return "";
@@ -52,6 +69,7 @@ public class ConfigTest : MonoBehaviour {
         value = reg2.Replace(value, "");
         return value.Trim();
     }
+
 
 
 }
