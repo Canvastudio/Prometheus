@@ -157,7 +157,7 @@ public class SuperConfig : SingleObject<SuperConfig>
     /// </summary>
     private bool CheckRes(object obj)
     {
-        IsDone = true;
+        bool tempDone = true;
         resProgress = 0;
         foreach (ResourceRequest t in resDatas)
         {
@@ -172,13 +172,14 @@ public class SuperConfig : SingleObject<SuperConfig>
             }
             else
             {
-                IsDone = false;
+                tempDone = false;
             }
             resProgress += t.progress;
         }
         resProgress = resProgress / resDatas.Count;
-        if (IsDone) return true;
-        return false;
+        if (!tempDone) return false;
+        IsDone = true;
+        return true;
     }
 
     /// <summary>
@@ -525,6 +526,7 @@ public class SuperConfig : SingleObject<SuperConfig>
             arg.y.SetValue(arg.x, t, null);
         }
         postponeList.Clear();
+
     }
 }
 
