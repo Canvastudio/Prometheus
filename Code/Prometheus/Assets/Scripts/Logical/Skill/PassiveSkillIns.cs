@@ -15,8 +15,6 @@ public class PassiveSkillIns  {
 
         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(passive_config.bindState);
 
-        stateIns = new StateIns(state_config, owner, true);
-
         if (passive_config.stateType == StateType.Halo)
         {
             int range = Mathf.FloorToInt(passive_config.stateArg.f[0]);
@@ -35,5 +33,21 @@ public class PassiveSkillIns  {
 
             haloInfo = new HaloInfo(range, side, owner, this);
         }
+   
+        stateIns = new StateIns(state_config, owner, true);
+    }
+
+    public void Active()
+    {
+        stateIns.ActiveIns();
+
+        if (haloInfo != null) haloInfo.Active();
+    }
+
+    public void Deactive()
+    {
+        stateIns.DeactiveIns();
+
+        if (haloInfo != null) haloInfo.Deactive();
     }
 }

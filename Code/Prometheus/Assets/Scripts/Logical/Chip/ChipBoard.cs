@@ -654,7 +654,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         bool putable = chipSquareArray[r, c].state == ChipSquareState.Free
             && chipSquareArray[r, c].chipGrid != ChipGrid.None
-            && chipSquareArray[r, c].chipGrid != ChipGrid.Power;
+            && chipSquareArray[r, c].chipGrid != ChipGrid.Power
+            && chipSquareArray[r,c].isActive;
 
         return putable;
     }
@@ -774,16 +775,16 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
             for (int m = 0; m < cn; ++m)
             {
-                if (r + i < r1 || r + i > r2)
-                {
-                    b = false;
-                    break;
-                }
-                if (c + m < c1 || c + i > c2)
-                {
-                    b = false;
-                    break;
-                }
+                //if (r + i < r1 || r + i > r2)
+                //{
+                //    b = false;
+                //    break;
+                //}
+                //if (c + m < c1 || c + i > c2)
+                //{
+                //    b = false;
+                //    break;
+                //}
 
                 if (modelsList[i * cn + m] > 0)
                 {

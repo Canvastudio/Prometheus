@@ -57,7 +57,6 @@ public class FightComponet : MonoBehaviour
         switch (IdToSkillType(id))
         {
             case SkillType.Active:
-                StageView.Instance.AddSkillIntoSkillList(id);
                 activeSkillConfigs.Add(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
                 break;
             case SkillType.Passive:
@@ -236,19 +235,19 @@ public class FightComponet : MonoBehaviour
             switch (tt)
             {
                 case TargetType.Enemy:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.ENEMY, ST.DISCOVER));
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.ENEMY, ST.DISCOVER));
                     break;
                 case TargetType.Self:
                     target_list.Add(StageCore.Instance.Player);
                     break;
                 case TargetType.Help:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
                     break;
                 case TargetType.HideMonster:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
                     break;
                 case TargetType.LightBlock:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
                     for (int i = target_list.Count - 1; i >= 0; ++i)
                     {

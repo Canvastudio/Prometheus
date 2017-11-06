@@ -401,7 +401,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         {
             for (int m = -distance; m <= distance; ++i)
             {
-                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance)
+                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance && (m == 0 && i == 0))
                 {
                     result.Add(GetNode(r + i, c + m).behavirour as Brick);
                 }

@@ -117,29 +117,6 @@ public class StateIns
         }
     }
 
-    /// <summary>
-    /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
-    /// </summary>
-    public virtual void Active()
-    {
-        active = true;
-
-        if (!passive)
-        {
-            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
-        }
-    }
-
-    public virtual void Deactive()
-    {
-        active = false;
-
-        if (!passive)
-        {
-            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
-        }
-    }
-
     protected virtual void OnTimeChange(float time)
     {
         exist_time += time;

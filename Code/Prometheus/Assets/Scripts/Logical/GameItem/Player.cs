@@ -28,21 +28,18 @@ public class Player : LiveItem {
 
             if (skill_point.last_count != skill_point.count)
             {
+                if (skill_point.skillId > 0)
+                {
+                    fightComponet.RemoveSkill(skill_point.skillId);
+                    StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
+                }
+
                 ulong new_skillId = skill_point.GetNewSkillId();
 
-                if (new_skillId != skill_point.skillId)
+                if (new_skillId > 0)
                 {
-                    if (skill_point.skillId > 0)
-                    {
-                        fightComponet.RemoveSkill(skill_point.skillId);
-                        StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
-                    }
-
-                    if (new_skillId > 0)
-                    {
-                        fightComponet.AddSkill(new_skillId);
-                        StageView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
-                    }
+                    fightComponet.AddSkill(new_skillId);
+                    StageView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
                 }
             }
         }

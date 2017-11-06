@@ -116,9 +116,86 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     /// <summary>
     /// 当前格子得怪物，为空表示没有怪物
     /// </summary>
-    public GameItemBase item;
+    [SerializeField]
+    private GameItemBase _item;
+    public GameItemBase item
+    {
+        get
+        {
+            return _item;
+        }
+        set
+        {
+            if (_item == value) return;
 
-    public List<HaloInfo> halo_list = new List<HaloInfo>(4);
+            if (_item == null)
+            {
+                if (value is LiveItem)
+                {
+                    LiveItem live = (value as LiveItem);
+
+                    foreach (var halo in halo_dic.Keys)
+                    {
+                        if (live.side == halo.side)
+                        {
+                            StateIns state = new StateIns(halo.passive.stateConfig, live, true);
+                            live.AddStateIns(state);
+
+                            halo_dic[halo] = state;
+                        }
+                    }
+                }
+            }
+            else if (value == null)
+            {
+                if (_item is LiveItem)
+                {
+                    LiveItem live = (_item as LiveItem);
+
+                    foreach (var halo in halo_dic.Keys)
+                    {
+                        if (live.side == halo.side)
+                        {
+                            live.RemoveStateIns(halo_dic[halo]);
+                            halo_dic[halo] = null;
+                        }
+                    }
+                }
+            }
+            else if (_item is LiveItem && value is LiveItem)
+            {
+                LiveItem live = (_item as LiveItem);
+
+                foreach (var halo in halo_dic.Keys)
+                {
+                    if (live.side == halo.side)
+                    {
+                        live.RemoveStateIns(halo_dic[halo]);
+                        halo_dic[halo] = null;
+                    }
+                }
+
+                live = value as LiveItem;
+
+                foreach (var halo in halo_dic.Keys)
+                {
+                    if (live.side == halo.side)
+                    {
+                        StateIns state = new StateIns(halo.passive.stateConfig, live, true);
+                        live.AddStateIns(state);
+
+                        halo_dic[halo] = state;
+                    }
+                }
+
+            }
+        }
+    }
+
+    /// <summary>
+    /// 当前item对于每一个光环所拥有的状态实例
+    /// </summary>
+    public Dictionary<HaloInfo, StateIns> halo_dic = new Dictionary<HaloInfo, StateIns>();
     #endregion
 
 
