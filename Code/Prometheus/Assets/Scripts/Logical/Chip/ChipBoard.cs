@@ -103,7 +103,6 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         powerSupplyList = new List<BoardSupplyInstance>(powerList.Length);
         int power_id = 0;
         int power = 0;
-        int pi = 0;
 
         midRowNum = maxRowNum / 2;
         midColNum = maxColNum / 2;
