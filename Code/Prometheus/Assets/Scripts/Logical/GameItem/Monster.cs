@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Monster : LiveItem
 {
-
     public MonsterType monsterType;
     /// <summary>
     /// 策划属性配置表
@@ -39,11 +38,6 @@ public class Monster : LiveItem
     public int discover_howl;
 
     public int dead_howl;
-
-    /// <summary>
-    /// 战斗组件
-    /// </summary>
-    public FightComponet fightComponet;
 
     private int player_distance = 0;
 
@@ -91,12 +85,15 @@ public class Monster : LiveItem
     {
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 
-        if (!isDiscovered && player_distance <= AIConfig.warning)
+        if (AIConfig.warning > 0)
         {
-            OnDiscoverd();
+            if (!isDiscovered && player_distance <= AIConfig.warning)
+            {
+                standBrick.OnDiscoverd();
+            }
         }
 
-        if (player_distance <= 1)
+        if (player_distance < 1)
         {
             if (!block_other)
             {
@@ -115,6 +112,15 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
+
+        if (!Silent)
+        {
+            if (fightComponet != null)
+            {
+                fightComponet.ActivePassive();
+            }
+        }
+
         StageCore.Instance.discover_monster += 1;
 
         base.OnDiscoverd();
@@ -155,7 +161,6 @@ public class Monster : LiveItem
                 }
             }
         }
-
 
         if (dangerousLevels == DangerousLevels.Hostility)
         {

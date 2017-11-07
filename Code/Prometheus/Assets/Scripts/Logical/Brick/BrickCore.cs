@@ -19,20 +19,21 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
     int _row = 0;
 
     /// <summary>
-    /// 还存在的最下一层
-    /// </summary>
-    int o_row = 0;
-    /// <summary>
     /// 保存了砖块数据
     /// </summary>
     BrickData data = new BrickData();
+
+    public void RemoveRowIndata(Brick brick)
+    {
+        data.Remove(brick);
+    }
 
     protected override void Init()
     {
         base.Init();
     }
 
-    public IEnumerator CreatePrimitiveStage()
+    public void CreatePrimitiveStage()
     {
         //初始生成的行数
         int max_Distance = StageView.Instance.viewBrickRow;
@@ -41,36 +42,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
 
         while (_row < max_Distance)
         {
-            yield return CreateBrickModuel(_row);
-        }
-    }
-
-    public void CheckNeedCreawteMoudel()
-    {
-        if (_row - (-StageView.Instance.moveRoot.localPosition.y) / StageView.Instance.brickWidth < (StageView.Instance.viewBrickRow))
-        {
-            CreateBrickModuel(_row);
-        }
-    }
-
-    public void CheckNeedRecycelBrick()
-    {
-        Brick brick = GetNode(o_row, 0).behavirour as Brick;
-
-        if (brick.CheckIfRecycle())
-        {
-            RecycleRowBrick(o_row);
-            o_row += 1;
-        }
-    }
-   
-    public void RecycleRowBrick(int row)
-    {
-        for (int i = 0; i < 6; ++i)
-        {
-            Brick brick = GetNode(o_row, i).behavirour as Brick;
-
-            brick.Recycle();
+            CreateBrickModuel();
         }
     }
 
@@ -98,9 +70,21 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
         }
 	}
 
-    public IEnumerator CreateBrickModuel(int distance)
+    List<MapConfig> map_Data;
+
+    public void BrickRowRecycle(int brick_row)
     {
-        var map_Data = MapConfig.GetConfigDataList<MapConfig>();
+       if (_row - brick_row < StageView.Instance.viewBrickRow)
+        {
+            CreateBrickModuel();
+        }
+    }
+
+    public int CreateBrickModuel()
+    {
+        int distance = _row;
+
+        map_Data = MapConfig.GetConfigDataList<MapConfig>();
 
         MapConfig next_Map = null;
 
@@ -222,22 +206,35 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
                                 int lv_max = next_Map.enemy_level[1];
                                 int lv = Random.Range(lv_min, lv_max + 1);
 
-                                yield return _brick.CreateMonter(int.Parse(monster_Desc[1]), enemy_Id, lv);
+                                _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
                             }
                         }
                         else
                         {
                             Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
                         }
+
+
                     }
                 }
-                    
+
+                if (row == moduel_RowCount - 1)
+                {
+                    _brick.last_row = true;
+                }
+                else
+                {
+                    _brick.last_row = false;
+                }
+
                 data.PushBrick( real_Row, col, _brick);
             }
 
         }
 
         _row += moduel_RowCount;
+
+        return moduel_RowCount;
     }
 
     public void OpenNearbyBrick(int row, int column, bool explored_self = true)
@@ -360,7 +357,7 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
     {
         Brick brick1 = GetRandomStandableBrick();
 
-        brick1.CreateMonter(pwr, uid, lv);
+        brick1.CreateMonster(pwr, uid, lv);
     }
 
     public IEnumerator CreateWhiteMonsterOnRandomStandableBrick()

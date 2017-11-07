@@ -38,7 +38,7 @@ public class FightComponet : MonoBehaviour
     /// </summary>
     public bool skillActive = false;
 
-    protected bool active = false;
+    protected bool activePassive = false;
 
     private LiveItem _ownerObject;
     public LiveItem ownerObject
@@ -54,9 +54,22 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public virtual void Active()
+    /// <summary>
+    /// 激活主动技能
+    /// </summary>
+    public virtual void ActiveSkill()
     {
-        if (!active)
+
+    }
+
+    public virtual void DeactiveSkill()
+    {
+
+    }
+
+    public virtual void ActivePassive()
+    {
+        if (!activePassive)
         {
             foreach(var ins in passiveInsList)
             {
@@ -65,9 +78,9 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public virtual void Deactive()
+    public virtual void DeactivePassive()
     {
-        if (active)
+        if (activePassive)
         {
             foreach (var ins in passiveInsList)
             {
@@ -86,7 +99,7 @@ public class FightComponet : MonoBehaviour
             case SkillType.Passive:
                 var config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id);
                 PassiveSkillIns passiveSkillIns = new PassiveSkillIns(id, ownerObject);
-                if (active)
+                if (activePassive)
                 {
                     passiveSkillIns.Active();
                 }

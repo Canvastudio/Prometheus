@@ -4,6 +4,27 @@ using UnityEngine;
 
 public class MonsterFightComponet : FightComponet {
 
+    static System.Comparison<MonsterActiveSkillIns> comparison = (MonsterActiveSkillIns a, MonsterActiveSkillIns b) =>
+    {
+        if (a.cooldown > b.cooldown)
+        {
+            return 1;
+        }
+        else if (a.cooldown < b.cooldown)
+        {
+            return -1;
+        }
+        else if (a.time < b.time)
+        {
+            return 1;
+        }
+        else if (a.time > b.time)
+        {
+            return -1;
+        }
+        else return 0;
+    };
+
     List<MonsterActiveSkillIns> activeInsList = new List<MonsterActiveSkillIns>(2);
 
     public override void AddSkill(ulong id)
@@ -17,6 +38,13 @@ public class MonsterFightComponet : FightComponet {
                 activeInsList.Add(ins);
                 break;
         }
+
+        ReorderSkill();
+    }
+
+    public void ReorderSkill()
+    {
+        activeInsList.Sort(comparison);
     }
 
     public override void RemoveSkill(ulong id)
@@ -38,16 +66,28 @@ public class MonsterFightComponet : FightComponet {
         }
     }
 
-    public override void Active()
+    public override void ActiveSkill()
     {
-        base.Active();
+        base.ActivePassive();
 
-        if (!active)
+        if (!activePassive)
         {
             foreach (var ins in activeInsList)
             {
                 ins.Active();
                 Messenger<float>.AddListener(SA.StageTimeCast, OnTimeCast);
+            }
+        }
+    }
+
+    public override void DeactiveSkill()
+    {
+        if (activePassive)
+        {
+            foreach (var ins in activeInsList)
+            {
+                ins.Deactive();
+                Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
             }
         }
     }
@@ -61,20 +101,16 @@ public class MonsterFightComponet : FightComponet {
             if(!one_ready && ins.OnTimeCast(time))
             {
                 StartCoroutine(DoActiveSkill(ins.config));
+                ins.time = StageCore.Instance.totalTime;
             }
+        }
+
+        if (one_ready)
+        {
+            ReorderSkill();
         }
     }
 
-    public override void Deactive()
-    {
-        if (active)
-        {
-            foreach (var ins in activeInsList)
-            {
-                ins.Deactive();
-                Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
-            }
-        }
-    }
+
 
 }

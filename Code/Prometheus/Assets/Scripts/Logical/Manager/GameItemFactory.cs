@@ -41,7 +41,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
     }
 
-    public IEnumerator CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
+    public void CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
         int tid;
 
@@ -114,12 +114,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
-            yield return monster.OnDiscoverd();
+            CoroCore.Instance.StartCoroutine(monster.OnDiscoverd());
         }
 
         bornBrick.item = monster;
-
-        fightComponet.Active();
 
         monster.Init();
     }
@@ -169,7 +167,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         StageCore.Instance.RegisterItem(player);
 
-        fightComponet.Active();
+        fightComponet.ActivePassive();
 
         player.side = 1;
 

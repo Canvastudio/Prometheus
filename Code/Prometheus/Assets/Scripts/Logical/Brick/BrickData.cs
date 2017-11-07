@@ -25,6 +25,11 @@ public class BrickData {
 		return bricks[row - _lowestRow][column];
 	}
 
+    public void Remove(Brick brick)
+    {
+        bricks.RemoveAt(brick.row + _lowestRow);
+    }
+
     public void CleanAllBrickPathNodeGH()
     {
         foreach(var brick_row in bricks)

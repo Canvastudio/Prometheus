@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 222637041449783584}
   - component: {fileID: 114950792208918696}
   - component: {fileID: 114643995411329278}
-  - component: {fileID: 114234651107447434}
+  - component: {fileID: 114710525963314858}
   m_Layer: 5
   m_Name: Monster
   m_TagString: Untagged
@@ -131,18 +131,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 9999
---- !u!114 &114234651107447434
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1714161537929942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a9ac4839a38cb41b078777d4f6b88e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerObject: {fileID: 0}
 --- !u!114 &114256706010169302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,12 +202,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ee56d9f6b90a148bf860c379e17c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemId: 0
   isDiscovered: 0
+  inViewArea: 0
   _stanbBrick: {fileID: 0}
+  fightComponet: {fileID: 0}
+  isSleep: 0
+  isFreeze: 0
+  side: 0
   _moveComponet: {fileID: 0}
   hp_value: {fileID: 114615181243584750}
   atk_value: {fileID: 114022638677778802}
-  uid: 0
+  monsterType: 0
+  pwr: 0
+  lv: 0
+  cid: 0
+  discover_howl: 0
+  dead_howl: 0
+  _enslave: 0
+  dangerousLevels: 0
 --- !u!114 &114649518682344294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,6 +248,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114710525963314858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714161537929942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0512c6b315699f8448d4105c6b33cf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  hitTarget: 0
+  skillActive: 0
 --- !u!114 &114950792208918696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,7 +326,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388565309908402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -35, y: -43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224330799521594290}
@@ -348,7 +363,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1646001730432134}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -35, y: 43, z: 0}
   m_LocalScale: {x: 1.0005001, y: 1.0005001, z: 1.0005001}
   m_Children:
   - {fileID: 224546553023481806}
@@ -385,7 +400,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714161537929942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -309, y: -465, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224369080706740076}

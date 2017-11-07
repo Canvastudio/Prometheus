@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageCore : SingleObject<StageCore> {
+public class StageCore : SingleGameObject<StageCore> {
 
     List<GameItemBase> allItems = new List<GameItemBase>();
 
@@ -13,11 +13,7 @@ public class StageCore : SingleObject<StageCore> {
 
     public Player Player;
 
-    ulong monsterId = 0;
-
     public int action_item = 0;
-
-    bool inputConfrim;
 
     WaitUntil AllActionFinish;
 
@@ -165,8 +161,6 @@ public class StageCore : SingleObject<StageCore> {
 
         while (isLooping)
         {
-            inputConfrim = false;
-
             //如果执行队列还有东西，那么自动执行
             if (activeQueue.Count > 0)
             {
@@ -270,15 +264,13 @@ public class StageCore : SingleObject<StageCore> {
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
                 {
-                    if (!Player.isDisarm)
-                    {
-                        ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
+                    ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
 
-                        Debug.Log("使用技能id: " + skill_id);
+                    Debug.Log("使用技能id: " + skill_id);
 
-                        yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
-                    }
+                    yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
                 }
+
             }
 
             //等待玩家动作结束信号

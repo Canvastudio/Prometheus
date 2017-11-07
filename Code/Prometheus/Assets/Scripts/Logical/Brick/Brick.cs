@@ -17,6 +17,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     [SerializeField]
     Image blockMask;
 
+    public bool last_row;
+
     public int uid;
     public ulong moduel_id = 0;
     public ulong level_id = 0;
@@ -189,6 +191,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 }
 
             }
+
+            _item = value;
         }
     }
 
@@ -311,10 +315,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
 
     #region Add Item
-    public IEnumerator CreateMonter(int power, ulong uid, int lv)
+    public void CreateMonster(int power, ulong uid, int lv)
     {
         //创建数据
-        yield return GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
+        GameItemFactory.Instance.CreateMonster(power, uid, lv, this);
 
         brickType = BrickType.MONSTER;
     }
@@ -332,7 +336,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         var enemy_Index = UnityEngine.Random.Range(0, enemys.Length);
         var enemy_Id = enemys[enemy_Index];
 
-        CreateMonter(1, enemy_Id, lv);
+        CreateMonster(1, enemy_Id, lv);
 
         return this;
     }
@@ -430,6 +434,14 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
 
         Debug.Log("回收砖块: row: " + row + " col: " + column);
+
+
+
+        if (column == 0 && last_row)
+        {
+            BrickCore.Instance.BrickRowRecycle(row);
+            BrickCore.Instance.RemoveRowIndata(this);
+        }
     }
 
     protected override void OnExitFromArea()

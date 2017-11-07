@@ -6,63 +6,107 @@ using UnityEngine.UI;
 
 public abstract class LiveItem : GameItemBase
 {
+    private bool _silent = false;
+    public bool Silent
+    {
+        get { return _silent; }
+        set
+        {
+            if (_silent == value) return;
+            _silent = value;
+
+            if (fightComponet != null)
+            {
+                if (_silent && isDiscovered)
+                {
+                    fightComponet.ActivePassive();
+                }
+                else
+                {
+                    fightComponet.DeactivePassive();
+                }
+            }
+        }
+    }
+
+    private bool _freeze = false;
+    public bool Freeze
+    {
+        get { return _freeze; }
+        set
+        {
+            if (_freeze == value) return;
+            _freeze = value;
+
+            RefreshActiveSkillEnable();
+        }
+    }
+
+    private void RefreshActiveSkillEnable()
+    {
+        if (fightComponet != null)
+        {
+            bool b = (!Disarm && !Sleep && !Freeze);
+
+            if (activeSkillCanUsed != b)
+            {
+                if (fightComponet != null)
+                {
+                    if (activeSkillCanUsed)
+                    {
+                        fightComponet.ActiveSkill();
+                    }
+                    else
+                    {
+                        fightComponet.DeactiveSkill();
+                    }
+                }
+
+                activeSkillCanUsed = b;
+            }
+        }
+    }
+
+    private bool _sleep = false;
+    public bool Sleep
+    {
+        get { return _sleep; }
+        set
+        {
+            if (_sleep == value) return;
+            _sleep = value;
+
+            RefreshActiveSkillEnable();
+        }
+    }
+
+    private bool _disarm = false;
+    public bool Disarm
+    {
+        get { return _disarm; }
+        set
+        {
+            if (_disarm == value) return;
+            _disarm = value;
+
+            RefreshActiveSkillEnable();
+        }
+    }
+
+    public bool activeSkillCanUsed = false;
+
+    public FightComponet fightComponet;
     /// <summary>
     /// 自己拥有的光环，不包括别人影响自己的
     /// </summary>
     public List<HaloInfo> halo_list = new List<HaloInfo>(2);
 
-    public bool isSleep = false;
-    public bool isFreeze = false;
-    private bool _isDisarm = false;
-    public bool isDisarm
-    {
-        get { return _isDisarm; }
-        set
-        {
-            if (_isDisarm == value) return;
-
-            _isDisarm = value;
-        }
-    }
-
-    private bool _isSilent = false;
-    public bool isSilent
-    {
-        get { return _isSilent; }
-        set
-        {
-            if (_isSilent == value) return;
-
-            foreach(var state in state_list)
-            {
-                state.Silent(value);
-            }
-            
-        }
-    }
-
     public List<StateIns> state_list = new List<StateIns>(8); 
-
-    private bool silent = false;
 
     /// <summary>
     /// 在哪边, 0是敌对，1是玩家这边
     /// </summary>
     public int side = 0;
-
-
-    public bool Silent
-    {
-        get
-        {
-            return silent;
-        }
-
-        set
-        {
-            silent = value;
-        }
-    }
 
     public bool isAlive
     {

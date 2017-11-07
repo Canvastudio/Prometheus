@@ -123,8 +123,6 @@ public class StageView : SingleGameObject<StageView> {
                 moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance);
         }
 
-        BrickCore.Instance.CheckNeedCreawteMoudel();
-
         Messenger.Invoke(SA.MapMoveDown);
     }
 
