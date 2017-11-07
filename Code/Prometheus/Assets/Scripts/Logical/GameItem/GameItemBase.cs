@@ -77,7 +77,8 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     protected virtual void OnEnable()
     {
-
+        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     public virtual IEnumerator OnDiscoverd()
@@ -134,16 +135,12 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
         StageCore.Instance.UnRegisterItem(this);
     }
 
-    // 当对象已启用并处于活动状态时调用此函数
-    private void Awake()
-    {
-        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
-    }
-
     public virtual void Recycle()
     {
         ResetValues();
+
+        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     public void RefreshPosistion()
@@ -159,13 +156,6 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     protected virtual void PlayerMoveEnd()
     {
         CheckViewArea();
-    }
-
-
-    private void OnDisable()
-    {
-        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     private void OnDestroy()

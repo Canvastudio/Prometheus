@@ -433,11 +433,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickExplored = BrickExplored.UNEXPLORED;
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
 
-        Debug.Log("回收砖块: row: " + row + " col: " + column);
+        //Debug.Log("回收砖块: row: " + row + " col: " + column);
 
 
 
-        if (column == 0 && last_row)
+        if (column == 0)
         {
             BrickCore.Instance.BrickRowRecycle(row);
             BrickCore.Instance.RemoveRowIndata(this);

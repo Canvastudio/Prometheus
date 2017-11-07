@@ -27,7 +27,8 @@ public class BrickData {
 
     public void Remove(Brick brick)
     {
-        bricks.RemoveAt(brick.row + _lowestRow);
+        bricks.RemoveAt(0);
+        _lowestRow++;
     }
 
     public void CleanAllBrickPathNodeGH()

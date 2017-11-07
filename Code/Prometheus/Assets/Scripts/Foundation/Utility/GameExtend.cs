@@ -55,6 +55,7 @@ public static class GameExtend  {
         com.gameObject.SetActive(true);
         com.transform.SetParent(parent);
         com.transform.localScale = Vector3.one;
+        com.transform.localPosition = Vector3.zero;
     }
 
     public static Coroutine ExStartCoroutine(this MonoBehaviour mono, IEnumerator routine)

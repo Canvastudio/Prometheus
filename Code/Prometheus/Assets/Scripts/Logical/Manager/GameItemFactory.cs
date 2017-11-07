@@ -178,7 +178,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Supply"), bornBrick.transform) as GameObject;
 
-        go.transform.localScale = Vector3.one;
+        go.transform.SetParentAndNormalize(bornBrick.transform);
 
         go.transform.SetSiblingIndex(2);
 
@@ -195,7 +195,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Maintenance"), bornBrick.transform) as GameObject;
 
-        go.transform.localScale = Vector3.one;
+        go.transform.SetParentAndNormalize(bornBrick.transform);
 
         go.transform.SetSiblingIndex(2);
 
@@ -213,7 +213,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Tablet"), bornBrick.transform) as GameObject;
 
-        go.transform.localScale = Vector3.one;
+        go.transform.SetParentAndNormalize(bornBrick.transform);
 
         go.transform.SetSiblingIndex(2);
 
@@ -230,7 +230,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         var go = GameObject.Instantiate(Resources.Load("Prefab/Treasure"), bornBrick.transform) as GameObject;
 
-        go.transform.localScale = Vector3.one;
+        go.transform.SetParentAndNormalize(bornBrick.transform);
 
         go.transform.SetSiblingIndex(2);
 
@@ -258,10 +258,12 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.transform.position = bornBrick.transform.position;
 
-        item.transform.SetParentAndNormalize(StageView.Instance.NonliveItemRoot);
-
+        item.transform.SetParent(StageView.Instance.NonliveItemRoot);
+        item.transform.localScale = Vector3.one;
         item.standBrick = bornBrick;
 
+        item.transform.position = bornBrick.transform.position;
+        item.gameObject.SetActive(true);
         return item;
     }
 }
