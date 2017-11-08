@@ -25,6 +25,7 @@ public class MonsterFightComponet : FightComponet {
         else return 0;
     };
 
+    [SerializeField]
     List<MonsterActiveSkillIns> activeInsList = new List<MonsterActiveSkillIns>(2);
 
     public override void AddSkill(ulong id)

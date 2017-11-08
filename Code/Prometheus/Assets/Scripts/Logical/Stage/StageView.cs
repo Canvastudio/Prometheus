@@ -116,14 +116,17 @@ public class StageView : SingleGameObject<StageView> {
 
     public void MoveDownMap(float distance)
     {
-        if (StageCore.Instance.totalTime >= 4)
+        if (GameManager.Instance.MapScroll)
         {
-            LeanTween.moveLocalY(
-                moveRoot.gameObject,
-                moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance);
-        }
+            if (StageCore.Instance.totalTime >= 4)
+            {
+                LeanTween.moveLocalY(
+                    moveRoot.gameObject,
+                    moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance);
+            }
 
-        Messenger.Invoke(SA.MapMoveDown);
+            Messenger.Invoke(SA.MapMoveDown);
+        }
     }
 
     public void AddSkillIntoSkillList(ulong uid)

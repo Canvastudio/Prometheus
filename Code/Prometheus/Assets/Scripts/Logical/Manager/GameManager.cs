@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : SingleGameObject<GameManager> {
 
-    private void Awake()
+    public bool MapScroll = true;
+
+    protected override void Init()
     {
+        base.Init();
+
         DontDestroyOnLoad(this);
     }
 

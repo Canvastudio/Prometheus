@@ -373,7 +373,12 @@ public class FightComponet : MonoBehaviour
             }
             else if (st == SelectType.Direct)
             {
+                foreach(var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
+                {
+                    target_list.Add(b);
+                }
 
+                yield return LightAndWaitSelect();
             }
             else if (st == SelectType.RA)
             {
@@ -667,9 +672,21 @@ public class FightComponet : MonoBehaviour
         }
     }
 
+    private WaitForMsg waitForClick = new WaitForMsg();
+
     private IEnumerator LightAndWaitSelect()
     {
-        yield return 0;
+
+        yield return waitForClick.BeginWaiting<Brick>(SA.PlayerClickBrick);
+
+        if (waitForClick.result.msg == SA.PlayerClickBrick)
+        {
+            foreach(var item in target_list)
+            {
+
+            }
+        }
+        
     }
 
     public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)

@@ -13,9 +13,9 @@ public class B : MonoBehaviour {
 
     System.Action<BB> action;
 	// Use this for initialization
-	void Start () {
+	IEnumerator Start () {
 
-
+        yield return StartCoroutine(www());
 	}
 
     void GGGG(object g)
@@ -24,6 +24,10 @@ public class B : MonoBehaviour {
 
     }
 
+    IEnumerator www()
+    {
+        yield return new WaitForSeconds(5);
+    }
     void AAA(BB aa)
     {
         action = (BB x) => { Debug.Log(aa.bbbb); };

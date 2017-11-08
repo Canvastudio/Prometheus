@@ -84,23 +84,24 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         AddSkillToFightComponet(fightComponet, config.skill_normal);
 
-        if (pwr >= 1)
+        if (pwr == 1)
         {
             AddSkillToFightComponet(fightComponet, config.skill_rare);
         }
 
-        if (pwr >= 2)
+        if (pwr == 2)
         {
             AddSkillToFightComponet(fightComponet, config.skill_elite);
         }
 
-        if (pwr >= 3)
+        if (pwr == 3)
         {
             AddSkillToFightComponet(fightComponet, config.skill_boss);
         }
 
         monster.fightComponet = fightComponet;
 
+        monster.monsterType = config.monsterType;
 
 
         monster.pwr = pwr;
