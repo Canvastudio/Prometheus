@@ -6,22 +6,30 @@ public class ArtMover : MonoBehaviour {
 
 	public Vector3 endPos;
 
+	public bool isStart = false;
+
 	public Transform tran;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public ArtFxBase fxbase = null;
+
+	protected void OnEnd() {
+
+		isStart = false;
+		FxPool.Recover(this.gameObject);
+
+		if (fxbase != null)
+			fxbase.OnEnd();
+
 	}
 
-	public void DetectEnd() {
-	
+	public virtual void SetPos(List<Vector3> _plist){
+	}
 
-	
+	public void OnDrawGizmos() {
+
+		tran = this.transform;
+		fxbase = this.GetComponent<ArtFxBase>();
+
 	}
 
 }

@@ -11,7 +11,7 @@ public class FmodSound : MonoBehaviour {
 
 	public void OnEnable() {
 
-		FMODUnity.RuntimeManager.PlayOneShot(event_name);
+		SoundCore.PlayOneShot(event_name);
 	
 	}
 

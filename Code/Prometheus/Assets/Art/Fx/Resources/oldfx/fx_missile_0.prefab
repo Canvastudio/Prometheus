@@ -54,14 +54,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b918b13b4deb4cc08de9b5123dd5239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plist: []
+  endPos: {x: 0, y: 0, z: 0}
+  isStart: 0
   tran: {fileID: 4107428180515004}
+  fxbase: {fileID: 0}
+  plist: []
   m_time: 0
   total_time: 3
   bezierA: 0
   k: 0
   n: 4
-  isStart: 0
 --- !u!114 &114138640809251096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76,6 +78,9 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
   tran: {fileID: 0}
+  total_time: 2
+  m_time: 0
+  fxend: 
   mover: {fileID: 114022836231135140}
 --- !u!198 &198453898385806492
 ParticleSystem:

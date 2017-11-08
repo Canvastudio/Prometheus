@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArtLineMover : MonoBehaviour {
+public class ArtLineMover : ArtMover {
 
 	public List<Vector3> plist = new List<Vector3>(2);
-	public Transform tran;
 	public float m_time;
 	public float total_time = 3;
-
 	public float velocity = 1.3f;
 
 	public int k;
@@ -22,16 +20,6 @@ public class ArtLineMover : MonoBehaviour {
 	public float move_len;
 	public float cur_len;
 
-	public bool isStart = false;
-
-	public Callback OnHit = null;
-
-	public ArtFxBase fxbase = null;
-
-	// Use this for initialization
-	void Start () {
-		tran = this.transform;
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,7 +38,7 @@ public class ArtLineMover : MonoBehaviour {
 		
 	}
 
-	public void SetPos(List<Vector3> _plist) {
+	public override void SetPos(List<Vector3> _plist) {
 
 		plist.Clear();
 		plist = _plist;
@@ -96,22 +84,6 @@ public class ArtLineMover : MonoBehaviour {
 		move_len += Vector3.Distance(start_pos, next_pos);
 		tran.rotation = ArtMath.LookAtZ(dir);
 	
-	}
-
-	private void OnEnd() {
-	
-		isStart = false;
-		FxPool.Recover(this.gameObject);
-
-		if (fxbase != null)
-			fxbase.OnEnd();
-	
-	}
-
-	public void OnDrawGizmos() {
-
-		fxbase = this.GetComponent<ArtFxBase>();
-
 	}
 
 }

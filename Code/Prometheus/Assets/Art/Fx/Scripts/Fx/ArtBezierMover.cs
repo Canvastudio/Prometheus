@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArtBezierMover : MonoBehaviour {
+public class ArtBezierMover : ArtMover {
 
 	public List<Vector3> plist = new List<Vector3>(4);
-	public Transform tran;
 	public float m_time;
 	public float total_time = 3;
 	public float bezierA;
@@ -17,14 +16,6 @@ public class ArtBezierMover : MonoBehaviour {
 	private Vector3 before_pos;
 	private Vector3 dir;
 
-	public bool isStart = false;
-
-	public Callback OnHit = null;
-
-	// Use this for initialization
-	void Start () {
-		tran = this.transform;
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -56,7 +47,7 @@ public class ArtBezierMover : MonoBehaviour {
 
 	}
 
-	public void SetP(List<Vector3> _plist) {
+	public override void SetPos(List<Vector3> _plist) {
 	
 		plist.Clear();
 		plist.Add(_plist[0]);
@@ -79,14 +70,12 @@ public class ArtBezierMover : MonoBehaviour {
 
 		if (Vector3.Distance(tran.position, plist[3]) < 0.1f) {
 
-			isStart = false;
-			this.gameObject.SetActive(false);
-
-			if (OnHit != null)
-				OnHit();
+			OnEnd();
 
 		}
 	
 	}
+
+
 
 }

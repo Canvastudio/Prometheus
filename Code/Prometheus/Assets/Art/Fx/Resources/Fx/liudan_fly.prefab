@@ -258,7 +258,7 @@ MonoBehaviour:
   tran: {fileID: 4746907049031410}
   total_time: 100
   m_time: 0
-  fxend: fx_explosive_1
+  fxend: liudan_hit
   mover: {fileID: 114882258630948892}
 --- !u!114 &114882258630948892
 MonoBehaviour:
@@ -271,8 +271,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058a795d997ca4efeaa4d537c4d61a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plist: []
+  endPos: {x: 0, y: 0, z: 0}
+  isStart: 0
   tran: {fileID: 4746907049031410}
+  fxbase: {fileID: 114705464075928130}
+  plist: []
   m_time: 0
   total_time: 3
   velocity: 3
@@ -280,8 +283,6 @@ MonoBehaviour:
   n: 4
   move_len: 0
   cur_len: 0
-  isStart: 0
-  fxbase: {fileID: 114705464075928130}
 --- !u!198 &198011455610573222
 ParticleSystem:
   m_ObjectHideFlags: 1
