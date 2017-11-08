@@ -16,6 +16,8 @@ public class ArtBezierMover : ArtMover {
 	private Vector3 before_pos;
 	private Vector3 dir;
 
+	//public List<Vector3> buffer = new List<Vector3>(100);
+
 	
 	// Update is called once per frame
 	void Update () {
