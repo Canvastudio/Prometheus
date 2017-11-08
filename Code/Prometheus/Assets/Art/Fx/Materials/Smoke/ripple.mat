@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: fx_s_ray_0_mat
-  m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: ripple
+  m_Shader: {fileID: 4800000, guid: 1be9b4a63e5cc46358d7fcdba084ffaa, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,9 +39,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5ecf3a858c70240ee9e55249e3d92f67, type: 3}
+        m_Texture: {fileID: 2800000, guid: 50ebc027ec9ab485fb13ceaa3d1b1334, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: -3.989262, y: 0}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}

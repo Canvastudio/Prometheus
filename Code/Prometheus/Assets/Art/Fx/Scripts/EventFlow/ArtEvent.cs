@@ -8,5 +8,6 @@ public class ArtEvent  {
 	public float time;
 	public string fxname;
 	public bool ishit = false;
+	public bool isendpos = false;
 
 }

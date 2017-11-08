@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArtTestSkill : MonoBehaviour {
 
-	public List<Transform> tranlist;
+	public List<Transform> tranlist = new List<Transform>(2);
 
 	public string skill_name = "liudan";
 
@@ -28,6 +28,23 @@ public class ArtTestSkill : MonoBehaviour {
 		"shengmingchouqu",
 		"zhongzidan",
 		"ganraodan",
+		"shenwei",
+		"shikongzhuanyi",
+		"siwangbiaoji",
+		"chongdong",
+		"pianzhuantuceng",
+		"tongkujiyi",
+		"jisutianzhuang",
+		"paotai",
+		"fuyoua1xing",
+		"fuyoua2xing",
+		"baojing",
+		"zibao",
+		"dingshizhadan",
+		"elingchenmo",
+		"xiulijiqiren",
+		"bingzao",
+		"shanghaimianyi",
 	
 	};
 
@@ -71,5 +88,13 @@ public class ArtTestSkill : MonoBehaviour {
 
 
 		
+	}
+
+
+	public void OnDrawGizmos() {
+
+		tranlist[0] = transform.GetChild(0);
+		tranlist[1] = transform.GetChild(1);
+
 	}
 }
