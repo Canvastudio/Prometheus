@@ -61,9 +61,9 @@ public class ArtMath {
 	
 	}
 
-	private static Vector3 RndBezierPos(Vector3 orign) {
+	private static Vector3 RndBezierPos(Vector3 orign, float len) {
 
-		return orign + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+		return orign + new Vector3(Random.Range(-len, len), Random.Range(-len, len), 0);
 
 	}
 
@@ -71,9 +71,11 @@ public class ArtMath {
 
 	public static List<Vector3> Bezier3Pos(Vector3 start, Vector3 end) {
 	
+		float len = Vector3.Distance(start, end);
+
 		vecList[0] = start;
-		vecList[1] = RndBezierPos(start);
-		vecList[2] = RndBezierPos(end);
+		vecList[1] = RndBezierPos(start, len * 3);
+		vecList[2] = RndBezierPos(vecList[1], len/3);
 		vecList[3] = end;
 
 		return vecList;

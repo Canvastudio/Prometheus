@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &43450527
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &293833450
 Transform:
   m_ObjectHideFlags: 0
@@ -551,11 +551,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4107428180515004, guid: 59fc06024c15c413c81c3ee352529e46, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.836
+      value: 2.08
       objectReference: {fileID: 0}
     - target: {fileID: 4107428180515004, guid: 59fc06024c15c413c81c3ee352529e46, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.103
+      value: 6.99
       objectReference: {fileID: 0}
     - target: {fileID: 4107428180515004, guid: 59fc06024c15c413c81c3ee352529e46, type: 2}
       propertyPath: m_LocalPosition.z
@@ -622,11 +622,6 @@ Prefab:
     - target: {fileID: 4573428340137510, guid: 9af0e5cb4c66a4828b21fd9f1e0dda89, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114412823190583304, guid: 9af0e5cb4c66a4828b21fd9f1e0dda89,
-        type: 2}
-      propertyPath: destroy_time
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9af0e5cb4c66a4828b21fd9f1e0dda89, type: 2}
@@ -1268,11 +1263,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4800565384266750, guid: bd22d7376a27c4a80abe63a3d24069be, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.37
+      value: -1.101
       objectReference: {fileID: 0}
     - target: {fileID: 4800565384266750, guid: bd22d7376a27c4a80abe63a3d24069be, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.39
+      value: 8.104
       objectReference: {fileID: 0}
     - target: {fileID: 4800565384266750, guid: bd22d7376a27c4a80abe63a3d24069be, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1297,11 +1292,6 @@ Prefab:
     - target: {fileID: 4800565384266750, guid: bd22d7376a27c4a80abe63a3d24069be, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 96850302850893996, guid: bd22d7376a27c4a80abe63a3d24069be,
-        type: 2}
-      propertyPath: m_Time
-      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd22d7376a27c4a80abe63a3d24069be, type: 2}

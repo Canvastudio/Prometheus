@@ -36,7 +36,9 @@ public class FxPool {
 	public static void Recover(GameObject obj) {
 	
 		obj.SetActive(false);
-		objpool.Add(obj);
+
+		if(!objpool.Contains(obj))
+			objpool.Add(obj);
 	
 	}
 
