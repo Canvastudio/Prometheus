@@ -5,17 +5,19 @@ using UnityEngine;
 public class ArtEventFlow : MonoBehaviour {
 
 	public List<ArtEvent> eventlist;
-	public ArtEvent cur_event = null;
-
-	public int k = 0;
-	public int n = 0;
-	public bool isstart = false;
 	public float destroy_time = 2.0f;
 
-	public float m_time = 0;
-	public Vector3 start_pos;
-	public Vector3 end_pos;
-	public Callback callback;
+	private ArtEvent cur_event = null;
+
+	private int k = 0;
+	private int n = 0;
+	private bool isstart = false;
+
+
+	private float m_time = 0;
+	private Vector3 start_pos;
+	private Vector3 end_pos;
+	private Callback callback;
 
 	public void Init(Vector3 _start_pos, Vector3 _end_pos, Callback _callback){
 	
