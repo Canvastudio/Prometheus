@@ -35,7 +35,7 @@ public class ArtBezierMover : ArtMover {
 		cur_pos.z = 0;
 
 		before_pos = tran.position;
-		tran.position = Vector3.Lerp(tran.position, cur_pos, Time.deltaTime * 2);
+		tran.position = Vector3.Lerp(tran.position, cur_pos, Time.deltaTime * 10);
 
 		dir = tran.position - before_pos;
 		tran.rotation = ArtMath.LookAtZ(dir);
