@@ -53,19 +53,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventlist:
   - time: 0
-    fxname: fx_ready_0
+    fxname: liudan_ready
     ishit: 0
   - time: 0.2
-    fxname: fx_missile_1
+    fxname: liudan_fly
     ishit: 1
-  cur_event:
-    time: 0
-    fxname: 
-    ishit: 0
-  k: 0
-  n: 0
-  isstart: 0
   destroy_time: 2
-  m_time: 0
-  start_pos: {x: 0, y: 0, z: 0}
-  end_pos: {x: 0, y: 0, z: 0}

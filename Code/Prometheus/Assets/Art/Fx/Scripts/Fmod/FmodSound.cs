@@ -1,16 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
 
 public class FmodSound : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public string path = "event:/Skill/";
+
+	public string event_name = "";
+
+	public void OnEnable() {
+
+		FMODUnity.RuntimeManager.PlayOneShot(event_name);
 	
-	// Update is called once per frame
-	void Update () {
-		
 	}
+
+	public void OnDrawGizmos() {
+
+		event_name = path + this.gameObject.name;
+
+	}
+
 }
