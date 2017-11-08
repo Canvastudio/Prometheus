@@ -262,6 +262,7 @@ public class FightComponet : MonoBehaviour
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
 
+    
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
@@ -482,7 +483,7 @@ public class FightComponet : MonoBehaviour
                         }
                     }
 
-                (target as LiveItem).TakeDamage(damageInfo);
+                    StartCoroutine((target as LiveItem).TakeDamage(damageInfo));
                 }
             }
 
@@ -496,6 +497,11 @@ public class FightComponet : MonoBehaviour
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
 
         ownerObject.OnActionEnd();
+
+        if (use_fxlock)
+        {
+            ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
+        }
     }
 
     private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
@@ -674,19 +680,44 @@ public class FightComponet : MonoBehaviour
 
     private WaitForMsg waitForClick = new WaitForMsg();
 
+    bool use_fxlock = false;
+
     private IEnumerator LightAndWaitSelect()
     {
+        foreach (var item in target_list)
+        {
+            use_fxlock = true;
+            var p = ObjPool<ParticleSystem>.Instance.GetObjFromPool(FxCore.Instance.str_fxlock);
+            p.transform.position = item.transform.position;
+            p.gameObject.SetActive(true);
+            p.Play();
+        }
+
 
         yield return waitForClick.BeginWaiting<Brick>(SA.PlayerClickBrick);
 
         if (waitForClick.result.msg == SA.PlayerClickBrick)
         {
+            Brick brick = waitForClick.result.para as Brick;
+            
             foreach(var item in target_list)
             {
-
+                if (item is Brick)
+                {
+                    if (item.Equals(brick))
+                    {
+                        apply_list.Add(item);
+                    }
+                }
+                else
+                {
+                    if (item.standBrick.Equals(brick))
+                    {
+                        apply_list.Add(item);
+                    }
+                }
             }
         }
-        
     }
 
     public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)

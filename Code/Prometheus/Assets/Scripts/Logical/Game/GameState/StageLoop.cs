@@ -20,6 +20,8 @@ public class StageLoopState : IState
     {
         yield return ChipBoard.Instance.InitBoard(1);
 
+        yield return FxCore.Instance.PreLoadStageFx();
+
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
 

@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: 539252927}
   - component: {fileID: 539252926}
   - component: {fileID: 539252928}
+  - component: {fileID: 539252929}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -380,6 +381,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   v: 0
+--- !u!210 &539252929
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 539252924}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &564262036
 GameObject:
   m_ObjectHideFlags: 0
