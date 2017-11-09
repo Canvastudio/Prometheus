@@ -182,6 +182,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         player.Side = LiveItemSide.SIDE1;
 
+        player.isDiscovered = true;
+
         return player;
     }
 

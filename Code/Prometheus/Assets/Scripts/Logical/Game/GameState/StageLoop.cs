@@ -29,11 +29,14 @@ public class StageLoopState : IState
         BrickCore.Instance.CreatePlayer(1);
 
         StageCore.Instance.Player.inventory.AddChip(100001);
+        StageCore.Instance.Player.inventory.AddChip(100131);
 
         yield return 0;
 
         //刷新下位置
         Messenger.Invoke(SA.RefreshGameItemPos);
+
+        StageView.Instance.upUI.Init();
 
         //开始执行关卡内部的逻辑循环
         yield return StageCore.Instance.RunLoop();

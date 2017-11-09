@@ -39,6 +39,9 @@ public class StageView : SingleGameObject<StageView> {
     public Camera show_camera;
     public RectTransform viewArea;
 
+    [Space(5)]
+    public UpUIView upUI;
+
     private List<SkillListItem> skillItemList = new List<SkillListItem>(10);
 
     protected override void Init()

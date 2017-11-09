@@ -79,7 +79,7 @@ public class Inventory {
 
         foreach(var chip in chipList)
         {
-            if (chip.listItem == null)
+            if (chip.boardInstance == null)
             {
                 list.Add(chip);
             }

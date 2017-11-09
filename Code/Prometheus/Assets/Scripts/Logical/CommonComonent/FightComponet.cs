@@ -75,6 +75,8 @@ public class FightComponet : MonoBehaviour
             {
                 ins.Active();
             }
+
+            activePassive = true;
         }
     }
 
@@ -142,11 +144,11 @@ public class FightComponet : MonoBehaviour
         {
             return SkillType.Active;
         }
-        else if (i == 2)
+        else if (i == 3)
         {
             return SkillType.Passive;
         }
-        else if (i == 3)
+        else if (i == 2)
         {
             return SkillType.Summon;
         }
@@ -290,7 +292,23 @@ public class FightComponet : MonoBehaviour
                     target_list.Add(ownerObject);
                     break;
                 case TargetType.Help:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
+                    if (ownerObject.Side == LiveItemSide.SIDE0)
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                    }
+                    else
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                    }
+
+                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                    {
+                        if (target_list[i].itemId == ownerObject.itemId)
+                        {
+                            target_list.RemoveAt(i);
+                        }
+                    }
+
                     break;
                 case TargetType.HideMonster:
                     StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
@@ -442,6 +460,8 @@ public class FightComponet : MonoBehaviour
 
         yield return FindAndConfrimTarget(config);
 
+        if (target_list.Count <= 0) yield break;
+
         if (ownerObject is Player)
         {
             var stuff = config.stuffCost.stuffs.ToArray();
@@ -486,39 +506,38 @@ public class FightComponet : MonoBehaviour
 
         StageCore.Instance.TimeCast(time_cost);
 
-        yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
+        yield return ArtSkill.DoSkill(config.name, ownerObject.transform.position, apply_list[0].transform.position);
 
-        if (hitTarget)
+
+        foreach (var target in apply_list)
         {
-            foreach (var target in apply_list)
+            if (config.damage != null)
             {
-                if (config.damage != null)
+                var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
+
+                Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
+
+                foreach (var state in ownerObject.state_list)
                 {
-                    var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-
-                    Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
-
-                    foreach (var state in ownerObject.state_list)
+                    foreach (var ins in state.stateEffects)
                     {
-                        foreach (var ins in state.stateEffects)
+                        if (ins.stateType == StateEffectType.OnGenerateDamage)
                         {
-                            if (ins.stateType == StateEffectType.OnGenerateDamage)
-                            {
-                                ins.ApplyState(damageInfo);
-                            }
+                            ins.ApplyState(damageInfo);
                         }
                     }
-
-                    StartCoroutine((target as LiveItem).TakeDamage(damageInfo));
                 }
-            }
 
-            if (config.afterSpecialEffect != null)
-            {
-                var effects = config.afterSpecialEffect.ToArray();
-                yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
+                (target as LiveItem).TakeDamage(damageInfo);
             }
         }
+
+        if (config.afterSpecialEffect != null)
+        {
+            var effects = config.afterSpecialEffect.ToArray();
+            yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
+        }
+        
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
 

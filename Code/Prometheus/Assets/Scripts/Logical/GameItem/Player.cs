@@ -59,6 +59,13 @@ public class Player : LiveItem {
         return e;
     }
 
+    public override void TakeDamage(Damage damageInfo)
+    {
+        base.TakeDamage(damageInfo);
+
+        Messenger.Invoke(SA.PlayHpChange);
+    }
+
     protected override void OnSetStandBrick(Brick brick)
     {
         base.OnSetStandBrick(brick);
@@ -70,6 +77,20 @@ public class Player : LiveItem {
     public override void Recycle()
     {
         base.Recycle();
+    }
+
+    public override void AddStateIns(StateIns ins)
+    {
+        base.AddStateIns(ins);
+
+        Messenger<StateIns>.Invoke(SA.PlayerAddState, ins);
+    }
+
+    public override void RemoveStateIns(StateIns ins)
+    {
+        base.RemoveStateIns(ins);
+
+        Messenger<StateIns>.Invoke(SA.PlayerRemoveState, ins);
     }
 
 }

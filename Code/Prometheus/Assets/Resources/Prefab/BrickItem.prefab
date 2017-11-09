@@ -163,6 +163,7 @@ MonoBehaviour:
   itemId: 0
   isDiscovered: 0
   inViewArea: 0
+  icon: {fileID: 0}
   _stanbBrick: {fileID: 0}
   picture: {fileID: 114800356097376612}
   brickBtn: {fileID: 114136464832444728}
@@ -330,7 +331,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 118, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224622888436783226
 RectTransform:
@@ -357,7 +358,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988139489212700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.25, z: 0}
+  m_LocalPosition: {x: 0, y: 2.2499962, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224279626533024216}

@@ -100,6 +100,11 @@ public class HaloInfo  {
 
     public void Active()
     {
+        if (effect_bricks == null)
+        {
+            ApplyStateToBrick();
+        }
+        else
         if (!active)
         {
             foreach (var brick in effect_bricks)

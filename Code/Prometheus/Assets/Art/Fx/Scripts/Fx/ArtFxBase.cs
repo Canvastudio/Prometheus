@@ -15,6 +15,31 @@ public class ArtFxBase : MonoBehaviour {
 
 	public string fxend = "";
 
+    public IEnumerator Show(Vector3 _starPos, Vector3 _endPos)
+    {
+        startPos = _starPos;
+        endPos = _endPos;
+
+        tran = this.transform;
+        tran.position = startPos;
+
+        m_time = 0;
+
+
+        while (true)
+        {
+            m_time += Time.deltaTime;
+
+            if (m_time > total_time + 100)
+            {
+                yield return OnCoroEnd();
+                yield break;
+            }
+
+            yield return 0;
+        }
+    }
+
 	public virtual void Init(Vector3 _starPos, Vector3 _endPos, Callback _OnHit = null) {
 	
 		startPos = _starPos;
@@ -28,8 +53,12 @@ public class ArtFxBase : MonoBehaviour {
 	
 	}
 
+    bool init = false;
+
 	void Update() {
-	
+
+        if (!init) return;
+
 		m_time += Time.deltaTime;
 
 		if (m_time > total_time)
@@ -48,9 +77,20 @@ public class ArtFxBase : MonoBehaviour {
 			OnHit();
 	
 		FxPool.Recover(this.gameObject);
-
-
-
 	}
+
+    public IEnumerator OnCoroEnd()
+    {
+
+        GameObject obj = FxPool.Get(FxEnum.Fx, fxend);
+
+        if (obj != null)
+            yield return obj.GetComponent<ArtFxBase>().Show(this.tran.position, this.tran.position);
+
+        if (OnHit != null)
+            OnHit();
+
+        FxPool.Recover(this.gameObject);
+    }
 
 }
