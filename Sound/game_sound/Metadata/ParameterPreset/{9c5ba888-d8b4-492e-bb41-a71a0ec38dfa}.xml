@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{9c5ba888-d8b4-492e-bb41-a71a0ec38dfa}">
+        <property name="name">
+            <value>laserStop</value>
+        </property>
+        <relationship name="folder">
+            <destination>{17fde57b-a0c4-4a7a-b0d5-ccdc0fc04521}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{c3fa1348-922f-4465-beea-53cbc023c0f0}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{c3fa1348-922f-4465-beea-53cbc023c0f0}">
+        <property name="initialValue">
+            <value>1</value>
+        </property>
+    </object>
+</objects>
