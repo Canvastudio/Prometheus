@@ -138,7 +138,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
                     foreach (var halo in halo_dic.Keys)
                     {
-                        if (live.side == halo.side)
+                        if (live.Side == halo.Side)
                         {
                             StateIns state = new StateIns(halo.passive.stateConfig, live, true);
                             live.AddStateIns(state);
@@ -156,7 +156,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
                     foreach (var halo in halo_dic.Keys)
                     {
-                        if (live.side == halo.side)
+                        if (live.Side == halo.Side)
                         {
                             live.RemoveStateIns(halo_dic[halo]);
                             halo_dic[halo] = null;
@@ -170,7 +170,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
                 foreach (var halo in halo_dic.Keys)
                 {
-                    if (live.side == halo.side)
+                    if (live.Side == halo.Side)
                     {
                         live.RemoveStateIns(halo_dic[halo]);
                         halo_dic[halo] = null;
@@ -181,7 +181,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
                 foreach (var halo in halo_dic.Keys)
                 {
-                    if (live.side == halo.side)
+                    if (live.Side == halo.Side)
                     {
                         StateIns state = new StateIns(halo.passive.stateConfig, live, true);
                         live.AddStateIns(state);
@@ -293,7 +293,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         //}
         //else
         {
-            picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_REACHABLE);
+            //picture.sprite = StageView.Instance.brickAtlas.GetSprite(Predefine.BRICK_NORMAL_REACHABLE);
         }
 
         brickExplored = BrickExplored.UNEXPLORED;

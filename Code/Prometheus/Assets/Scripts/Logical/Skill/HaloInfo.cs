@@ -18,14 +18,14 @@ public class HaloInfo  {
     public PassiveSkillIns passive;
     public int id;
     public LiveItem owner;
-    public int side;
+    public LiveItemSide Side;
 
     public bool active = false;
 
-    public HaloInfo(int _range, int _side, LiveItem _owner, PassiveSkillIns _passive)
+    public HaloInfo(int _range, LiveItemSide _side, LiveItem _owner, PassiveSkillIns _passive)
     {
         passive = _passive;
-        side = _side;
+        Side = _side;
         range = _range;
         owner = _owner;
 
@@ -66,7 +66,7 @@ public class HaloInfo  {
                     {
                         LiveItem live = brick.item as LiveItem;
 
-                        if (live.side == side)
+                        if (live.Side == Side)
                         {
                             state = new StateIns(passive.stateConfig, live, true);
 
@@ -112,7 +112,7 @@ public class HaloInfo  {
                     {
                         LiveItem live = brick.item as LiveItem;
 
-                        if (live.side == side)
+                        if (live.Side == Side)
                         {
                             state = new StateIns(passive.stateConfig, live, true);
 

@@ -26,7 +26,7 @@ public class StageView : SingleGameObject<StageView> {
     public Transform skillListRoot;
 
     [Space(5)]
-    public SpriteAtlas brickAtlas;
+    public SpriteAtlas itemAtlas;
     public SpriteAtlas skillAtals;
 
     [Space(5)]

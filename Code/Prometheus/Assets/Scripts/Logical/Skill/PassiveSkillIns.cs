@@ -18,16 +18,16 @@ public class PassiveSkillIns  {
         if (passive_config.stateType == StateType.Halo)
         {
             int range = Mathf.FloorToInt(passive_config.stateArg.f[0]);
-            int side = 0;
+            LiveItemSide side = 0;
             if (passive_config.stateArg.b[0])
             {
-                if (owner.side == 0)
+                if (owner.Side == LiveItemSide.SIDE0 )
                 {
-                    side = 1;
+                    side = LiveItemSide.SIDE1;
                 }
                 else
                 {
-                    side = 0;
+                    side = LiveItemSide.SIDE0;
                 }
             }
 

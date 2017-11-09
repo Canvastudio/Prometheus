@@ -41,6 +41,9 @@ public class Monster : LiveItem
 
     private int player_distance = 0;
 
+    [SerializeField]
+    public Image pwrFrame;
+
     /// <summary>
     /// 是否被玩家奴役
     /// </summary>
@@ -55,14 +58,15 @@ public class Monster : LiveItem
         set
         {
             StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.ENEMY), !value);
 
             if (enslave)
             {
-                side = 1;
+                Side = LiveItemSide.SIDE0;
             }
             else
             {
-                side = 0;
+                Side = LiveItemSide.SIDE1;
             }
 
             _enslave = value;

@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum LiveItemSide
+{
+    SIDE0,
+    SIDE1,
+}
+
+
 public abstract class LiveItem : GameItemBase
 {
     private bool _silent = false;
@@ -101,12 +108,26 @@ public abstract class LiveItem : GameItemBase
     /// </summary>
     public List<HaloInfo> halo_list = new List<HaloInfo>(2);
 
-    public List<StateIns> state_list = new List<StateIns>(8); 
+    public List<StateIns> state_list = new List<StateIns>(8);
 
     /// <summary>
     /// 在哪边, 0是敌对，1是玩家这边
     /// </summary>
-    public int side = 0;
+    [SerializeField]
+    private LiveItemSide _side = LiveItemSide.SIDE0;
+    public LiveItemSide Side
+    {
+        get { return _side; }
+        set
+        {
+            if (_side == value) return;
+            bool b = (value == LiveItemSide.SIDE0);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE0), b);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE1), b);
+            _side = value;
+        }
+    }
+    
 
     public bool isAlive
     {

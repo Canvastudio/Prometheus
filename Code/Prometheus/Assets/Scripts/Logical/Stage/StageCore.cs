@@ -426,6 +426,9 @@ public static class ST
     public const string UNDISCOVER = "UDR";
     public const string FRIEND = "FD";
     public const string LAST = "LT";
+
+    public const string SIDE0 = "SIDE0";
+    public const string SIDE1 = "SIDE1";
 }
 
 

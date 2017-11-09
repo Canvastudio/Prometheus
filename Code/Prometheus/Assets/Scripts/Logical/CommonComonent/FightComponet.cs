@@ -262,15 +262,10 @@ public class FightComponet : MonoBehaviour
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
 
-    
-    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
+    protected IEnumerator FindAndConfrimTarget(ActiveSkillsConfig config)
     {
-        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
-        Debug.Log("伤害公式: " + config.damage);
+        Debug.Log("主动技能寻找和确认目标, id: " + config.id);
 
-        ownerObject.OnActionBegin();
-
-        //1.确定目标
         target_list.Clear();
         apply_list.Clear();
 
@@ -282,10 +277,17 @@ public class FightComponet : MonoBehaviour
             switch (tt)
             {
                 case TargetType.Enemy:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.ENEMY, ST.DISCOVER));
+                    if (ownerObject.Side == LiveItemSide.SIDE0)
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                    }
+                    else
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                    }
                     break;
                 case TargetType.Self:
-                    target_list.Add(StageCore.Instance.Player);
+                    target_list.Add(ownerObject);
                     break;
                 case TargetType.Help:
                     StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
@@ -343,6 +345,21 @@ public class FightComponet : MonoBehaviour
             }
         }
 
+
+        if (config.targetLimit != null)
+        {
+            for (int i = target_list.Count - 1; i >= 0; --i)
+            {
+                Monster monster = target_list[i] as Monster;
+                var mc = monster.config;
+                var q = monster.pwr;
+                if (!config.targetLimit.CheckLimit(mc, q))
+                {
+                    target_list.RemoveAt(i);
+                }
+            }
+        }
+
         if (target_list.Count > 0)
         {
             if (st == SelectType.One)
@@ -374,7 +391,7 @@ public class FightComponet : MonoBehaviour
             }
             else if (st == SelectType.Direct)
             {
-                foreach(var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
+                foreach (var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
                 {
                     target_list.Add(b);
                 }
@@ -415,6 +432,15 @@ public class FightComponet : MonoBehaviour
         {
             Debug.Log("技能找不到符合条件的目标..");
         }
+    }
+    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
+    {
+        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
+        Debug.Log("伤害公式: " + config.damage);
+
+        ownerObject.OnActionBegin();
+
+        yield return FindAndConfrimTarget(config);
 
         if (ownerObject is Player)
         {
