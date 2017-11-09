@@ -28,6 +28,7 @@ public class StageView : SingleGameObject<StageView> {
     [Space(5)]
     public SpriteAtlas itemAtlas;
     public SpriteAtlas skillAtals;
+    public SpriteAtlas stateAtlas;
 
     [Space(5)]
     public int viewBrickRow = 9;

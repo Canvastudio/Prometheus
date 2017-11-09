@@ -116,6 +116,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         monster.cid = id;
         monster.lv = lv;
 
+        monster.icon.sprite = StageView.Instance.itemAtlas.GetSprite(config.icon);
+
         ulong AI_Id = config.ai[pwr];
 
         monster.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
