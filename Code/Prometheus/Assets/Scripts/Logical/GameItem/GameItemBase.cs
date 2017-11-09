@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class GameItemBase : MonoBehaviour, ITagable {
 
@@ -11,6 +12,8 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     public bool inViewArea = false;
 
     private int action = 0;
+
+    public Image icon;
 
     public void OnActionBegin()
     {
