@@ -363,18 +363,30 @@ public class FightComponet : MonoBehaviour
             }
         }
 
+        int min_range = config.carry.ToArray()[0];
+        int max_range = config.carry.ToArray()[1];
 
-        if (config.targetLimit != null)
+        for (int i = target_list.Count - 1; i >= 0; --i)
         {
-            for (int i = target_list.Count - 1; i >= 0; --i)
+            if (config.targetLimit != null)
             {
                 Monster monster = target_list[i] as Monster;
+
                 var mc = monster.config;
                 var q = monster.pwr;
+
                 if (!config.targetLimit.CheckLimit(mc, q))
                 {
                     target_list.RemoveAt(i);
+                    continue;
                 }
+            }
+
+            int distance = ownerObject.standBrick.pathNode.Distance(target_list[i].standBrick.pathNode);
+
+            if (distance < min_range || distance > max_range)
+            {
+                target_list.RemoveAt(i);
             }
         }
 
