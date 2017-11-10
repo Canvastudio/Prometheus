@@ -15,19 +15,21 @@ public class PassiveSkillIns  {
 
         var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(passive_config.bindState);
 
-        if (passive_config.stateType == StateType.Halo)
+        this.owner = owner;
+
+        if (passive_config.stateType == StateType.Halo && passive_config.stateArg.f[0] > 0)
         {
             int range = Mathf.FloorToInt(passive_config.stateArg.f[0]);
-            int side = 0;
+            LiveItemSide side = 0;
             if (passive_config.stateArg.b[0])
             {
-                if (owner.side == 0)
+                if (owner.Side == LiveItemSide.SIDE0 )
                 {
-                    side = 1;
+                    side = LiveItemSide.SIDE1;
                 }
                 else
                 {
-                    side = 0;
+                    side = LiveItemSide.SIDE0;
                 }
             }
 
@@ -40,14 +42,14 @@ public class PassiveSkillIns  {
     public void Active()
     {
         stateIns.ActiveIns();
-
+        owner.AddStateIns(stateIns);
         if (haloInfo != null) haloInfo.Active();
     }
 
     public void Deactive()
     {
         stateIns.DeactiveIns();
-
+        owner.RemoveStateIns(stateIns);
         if (haloInfo != null) haloInfo.Deactive();
     }
 }

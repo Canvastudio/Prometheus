@@ -42,8 +42,6 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     [SerializeField]
     public SpriteAtlas spriteAtlas;
     [SerializeField]
-    CanvasGroup canvasGroup;
-    [SerializeField]
     Button closeBtn;
     [SerializeField]
     Button deleteBtn;
@@ -100,6 +98,8 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
     public IEnumerator InitBoard(ulong play_id)
     {
+        gameObject.SetActive(true);
+
         config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(play_id);
 
         var powerList = config.power.ToArray();
@@ -152,7 +152,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         CalculteChipBoardBound();
 
-        
+        gameObject.SetActive(false);
     }
 
     public void CalculteChipBoardBound()
@@ -196,8 +196,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
     public void OpenChipBoard()
     {
-        canvasGroup.alpha = 1;
-        canvasGroup.blocksRaycasts = true;
+        gameObject.SetActive(true);
 
         _temp_listInstance.Clear();
 
@@ -209,10 +208,28 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         InitChipList();
     }
 
+    private void InitChipList()
+    {
+        int id;
+
+        ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
+
+        var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
+
+        for (int i = 0; i < chipList.Count; ++i)
+        {
+            var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
+            chip.transform.SetParent(chipListRoot);
+            chip.transform.localScale = Vector3.one;
+            chip.gameObject.SetActive(true);
+            chip.id = id;
+            StartCoroutine(chip.InitItem(chipList[i]));
+        }
+    }
+
     public void CloseChipBoard()
     {
-        canvasGroup.alpha = 0;
-        canvasGroup.blocksRaycasts = false;
+        gameObject.SetActive(false);
 
         CheckSkillPointAndProperty();
         StageCore.Instance.Player.RefreshSkillPointStateToSkill();
@@ -307,24 +324,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         }
     }
 
-    private void InitChipList()
-    {
-        int id;
 
-        ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
-
-       var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
-
-        for (int i = 0; i < chipList.Count; ++i)
-        {
-            var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
-            chip.transform.SetParent(chipListRoot);
-            chip.transform.localScale = Vector3.one;
-            chip.gameObject.SetActive(true);
-            chip.id = id;
-            StartCoroutine(chip.InitItem(chipList[i]));
-        }
-    }
 
     public ChipBoardInstance CreateBoardInstance(ChipListItem item)
     {

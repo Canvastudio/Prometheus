@@ -84,19 +84,27 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         AddSkillToFightComponet(fightComponet, config.skill_normal);
 
+        if (pwr == 0)
+        {
+            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_0");
+        }
+        else
         if (pwr == 1)
         {
             AddSkillToFightComponet(fightComponet, config.skill_rare);
+            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_1");
         }
-
+        else
         if (pwr == 2)
         {
             AddSkillToFightComponet(fightComponet, config.skill_elite);
+            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_2");
         }
-
+        else
         if (pwr == 3)
         {
             AddSkillToFightComponet(fightComponet, config.skill_boss);
+            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_3");
         }
 
         monster.fightComponet = fightComponet;
@@ -107,6 +115,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         monster.pwr = pwr;
         monster.cid = id;
         monster.lv = lv;
+
+        monster.icon.sprite = StageView.Instance.itemAtlas.GetSprite(config.icon);
 
         ulong AI_Id = config.ai[pwr];
 
@@ -170,7 +180,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         fightComponet.ActivePassive();
 
-        player.side = 1;
+        player.Side = LiveItemSide.SIDE1;
+
+        player.isDiscovered = true;
 
         return player;
     }

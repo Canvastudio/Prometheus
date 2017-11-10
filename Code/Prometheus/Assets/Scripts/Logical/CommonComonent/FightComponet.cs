@@ -75,6 +75,8 @@ public class FightComponet : MonoBehaviour
             {
                 ins.Active();
             }
+
+            activePassive = true;
         }
     }
 
@@ -142,11 +144,11 @@ public class FightComponet : MonoBehaviour
         {
             return SkillType.Active;
         }
-        else if (i == 2)
+        else if (i == 3)
         {
             return SkillType.Passive;
         }
-        else if (i == 3)
+        else if (i == 2)
         {
             return SkillType.Summon;
         }
@@ -262,15 +264,10 @@ public class FightComponet : MonoBehaviour
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
 
-    
-    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
+    protected IEnumerator FindAndConfrimTarget(ActiveSkillsConfig config)
     {
-        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
-        Debug.Log("伤害公式: " + config.damage);
+        Debug.Log("主动技能寻找和确认目标, id: " + config.id);
 
-        ownerObject.OnActionBegin();
-
-        //1.确定目标
         target_list.Clear();
         apply_list.Clear();
 
@@ -282,13 +279,36 @@ public class FightComponet : MonoBehaviour
             switch (tt)
             {
                 case TargetType.Enemy:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.ENEMY, ST.DISCOVER));
+                    if (ownerObject.Side == LiveItemSide.SIDE0)
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                    }
+                    else
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                    }
                     break;
                 case TargetType.Self:
-                    target_list.Add(StageCore.Instance.Player);
+                    target_list.Add(ownerObject);
                     break;
                 case TargetType.Help:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.FRIEND));
+                    if (ownerObject.Side == LiveItemSide.SIDE0)
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                    }
+                    else
+                    {
+                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                    }
+
+                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                    {
+                        if (target_list[i].itemId == ownerObject.itemId)
+                        {
+                            target_list.RemoveAt(i);
+                        }
+                    }
+
                     break;
                 case TargetType.HideMonster:
                     StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
@@ -343,6 +363,21 @@ public class FightComponet : MonoBehaviour
             }
         }
 
+
+        if (config.targetLimit != null)
+        {
+            for (int i = target_list.Count - 1; i >= 0; --i)
+            {
+                Monster monster = target_list[i] as Monster;
+                var mc = monster.config;
+                var q = monster.pwr;
+                if (!config.targetLimit.CheckLimit(mc, q))
+                {
+                    target_list.RemoveAt(i);
+                }
+            }
+        }
+
         if (target_list.Count > 0)
         {
             if (st == SelectType.One)
@@ -374,7 +409,7 @@ public class FightComponet : MonoBehaviour
             }
             else if (st == SelectType.Direct)
             {
-                foreach(var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
+                foreach (var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
                 {
                     target_list.Add(b);
                 }
@@ -415,6 +450,17 @@ public class FightComponet : MonoBehaviour
         {
             Debug.Log("技能找不到符合条件的目标..");
         }
+    }
+    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
+    {
+        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
+        Debug.Log("伤害公式: " + config.damage);
+
+        ownerObject.OnActionBegin();
+
+        yield return FindAndConfrimTarget(config);
+
+        if (target_list.Count <= 0) yield break;
 
         if (ownerObject is Player)
         {
@@ -460,39 +506,38 @@ public class FightComponet : MonoBehaviour
 
         StageCore.Instance.TimeCast(time_cost);
 
-        yield return StageView.Instance.ShowEffectAndWaitHit(this, config);
+        yield return ArtSkill.DoSkill(config.name, ownerObject.transform.position, apply_list[0].transform.position);
 
-        if (hitTarget)
+
+        foreach (var target in apply_list)
         {
-            foreach (var target in apply_list)
+            if (config.damage != null)
             {
-                if (config.damage != null)
+                var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
+
+                Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
+
+                foreach (var state in ownerObject.state_list)
                 {
-                    var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-
-                    Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
-
-                    foreach (var state in ownerObject.state_list)
+                    foreach (var ins in state.stateEffects)
                     {
-                        foreach (var ins in state.stateEffects)
+                        if (ins.stateType == StateEffectType.OnGenerateDamage)
                         {
-                            if (ins.stateType == StateEffectType.OnGenerateDamage)
-                            {
-                                ins.ApplyState(damageInfo);
-                            }
+                            ins.ApplyState(damageInfo);
                         }
                     }
-
-                    StartCoroutine((target as LiveItem).TakeDamage(damageInfo));
                 }
-            }
 
-            if (config.afterSpecialEffect != null)
-            {
-                var effects = config.afterSpecialEffect.ToArray();
-                yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
+                (target as LiveItem).TakeDamage(damageInfo);
             }
         }
+
+        if (config.afterSpecialEffect != null)
+        {
+            var effects = config.afterSpecialEffect.ToArray();
+            yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
+        }
+        
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
 

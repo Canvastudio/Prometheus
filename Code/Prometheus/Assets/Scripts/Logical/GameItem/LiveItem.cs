@@ -4,9 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum LiveItemSide
+{
+    SIDE0,
+    SIDE1,
+}
+
+
 public abstract class LiveItem : GameItemBase
 {
+    [SerializeField]
     private bool _silent = false;
+    /// <summary>
+    /// 沉默，所有被动技能无效，有些被动技能是给自己/队友施加状态，那么这些状态此时也应该消失。玩家也能被沉默。注意这并不是驱散，它只会使那些永久性质的状态消失（因为导致这些状态的被动技能失效了）
+    /// </summary>
     public bool Silent
     {
         get { return _silent; }
@@ -15,21 +26,15 @@ public abstract class LiveItem : GameItemBase
             if (_silent == value) return;
             _silent = value;
 
-            if (fightComponet != null)
-            {
-                if (_silent && isDiscovered)
-                {
-                    fightComponet.ActivePassive();
-                }
-                else
-                {
-                    fightComponet.DeactivePassive();
-                }
-            }
+            RefreshPassiveSKillState();
         }
     }
 
+    [SerializeField]
     private bool _freeze = false;
+    /// <summary>
+    /// 冻结，冻结后不能反击，不能使用技能，技能CD暂停，暂时解除周围格子锁定。玩家不会中该状态。无参数
+    /// </summary>
     public bool Freeze
     {
         get { return _freeze; }
@@ -38,28 +43,25 @@ public abstract class LiveItem : GameItemBase
             if (_freeze == value) return;
             _freeze = value;
 
-            RefreshActiveSkillEnable();
+            RefreshActiveSKillState();
         }
     }
 
-    private void RefreshActiveSkillEnable()
+    public void RefreshActiveSKillState()
     {
         if (fightComponet != null)
         {
-            bool b = (!Disarm && !Sleep && !Freeze);
+            bool b = (!Disarm && !Sleep && !Freeze && isDiscovered);
 
             if (activeSkillCanUsed != b)
             {
-                if (fightComponet != null)
+                if (activeSkillCanUsed)
                 {
-                    if (activeSkillCanUsed)
-                    {
-                        fightComponet.ActiveSkill();
-                    }
-                    else
-                    {
-                        fightComponet.DeactiveSkill();
-                    }
+                    fightComponet.ActiveSkill();
+                }
+                else
+                {
+                    fightComponet.DeactiveSkill();
                 }
 
                 activeSkillCanUsed = b;
@@ -67,7 +69,36 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    public void RefreshPassiveSKillState()
+    {
+        if (fightComponet != null)
+        {
+            bool b = (!Silent && isDiscovered);
+
+            if (passiveSkillCanUsed != b)
+            {
+                if (b)
+                {
+                    fightComponet.ActivePassive();
+                }
+                else
+                {
+                    fightComponet.DeactivePassive();
+                }
+                
+                passiveSkillCanUsed = b;
+            }
+        }
+    }
+
+    public bool activeSkillCanUsed = false;
+    public bool passiveSkillCanUsed = false;
+
+    [SerializeField]
     private bool _sleep = false;
+    /// <summary>
+    /// 催眠，不能反击，不能使用技能,技能CD暂停，暂时解除周围格子锁定，受到任何伤害都会导致该状态失效，玩家不会中该状态。无参数
+    /// </summary>
     public bool Sleep
     {
         get { return _sleep; }
@@ -76,11 +107,15 @@ public abstract class LiveItem : GameItemBase
             if (_sleep == value) return;
             _sleep = value;
 
-            RefreshActiveSkillEnable();
+            RefreshActiveSKillState();
         }
     }
 
+    [SerializeField]
     private bool _disarm = false;
+    /// <summary>
+    /// 缴械。不能使用主动技能，怪物被缴械后，技能CD暂停。玩家也是可以被缴械的。无参数
+    /// </summary>
     public bool Disarm
     {
         get { return _disarm; }
@@ -89,11 +124,11 @@ public abstract class LiveItem : GameItemBase
             if (_disarm == value) return;
             _disarm = value;
 
-            RefreshActiveSkillEnable();
+            RefreshActiveSKillState();
         }
     }
 
-    public bool activeSkillCanUsed = false;
+
 
     public FightComponet fightComponet;
     /// <summary>
@@ -101,12 +136,26 @@ public abstract class LiveItem : GameItemBase
     /// </summary>
     public List<HaloInfo> halo_list = new List<HaloInfo>(2);
 
-    public List<StateIns> state_list = new List<StateIns>(8); 
+    public List<StateIns> state_list = new List<StateIns>(8);
 
     /// <summary>
     /// 在哪边, 0是敌对，1是玩家这边
     /// </summary>
-    public int side = 0;
+    [SerializeField]
+    private LiveItemSide _side = LiveItemSide.SIDE0;
+    public LiveItemSide Side
+    {
+        get { return _side; }
+        set
+        {
+            if (_side == value) return;
+            bool b = (value == LiveItemSide.SIDE0);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE0), b);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE1), b);
+            _side = value;
+        }
+    }
+    
 
     public bool isAlive
     {
@@ -266,15 +315,11 @@ public abstract class LiveItem : GameItemBase
         cur_hp = Mathf.Min(fmax_hp, new_hp);
     }
 
-    public virtual IEnumerator OnDead(Damage damageInfo)
+    public virtual void OnDead(Damage damageInfo)
     {
         standBrick.CleanItem();
 
         StageCore.Instance.UnRegisterItem(this);
-
-        return null;
-
-        //GameObject.Destroy(gameObject);
     }
 
     WaitForSeconds waitForSeconds = new WaitForSeconds(0.8f);
@@ -298,10 +343,10 @@ public abstract class LiveItem : GameItemBase
 
         yield return waitForSeconds;
 
-        yield return TakeDamage(damageInfo);
+        TakeDamage(damageInfo);
     }
 
-    public virtual IEnumerator TakeDamage(Damage damageInfo)
+    public virtual void TakeDamage(Damage damageInfo)
     {
         foreach (var state in state_list)
         {
@@ -335,7 +380,7 @@ public abstract class LiveItem : GameItemBase
 
         if (cur_hp == 0)
         {
-            yield return OnDead(damageInfo);
+            OnDead(damageInfo);
         }
         else
         {
@@ -344,14 +389,14 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    public void AddStateIns(StateIns ins)
+    public virtual void AddStateIns(StateIns ins)
     {
         int max = ins.stateConfig.max;
 
         state_list.Add(ins);
         ins.ActiveIns();
 
-        for (int i = state_list.Count - 1; i >= 0; ++i)
+        for (int i = state_list.Count - 1; i >= 0; --i)
         {
             if (state_list[i].stateConfig.id == ins.stateConfig.id)
             {
@@ -366,7 +411,7 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    public void RemoveStateIns(StateIns ins)
+    public virtual void RemoveStateIns(StateIns ins)
     {
         ins.DeactiveIns();
 

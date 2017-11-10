@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Reflection;
 
 public enum StateEffectType
 {
@@ -60,6 +61,8 @@ public class StateIns
         }
 
         id = ++_id;
+
+        this.stateConfig = stateConfig;
     }
 
     public void ActiveIns()
@@ -198,10 +201,12 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     public virtual void OnOutData()
     {
         stateConfig = null;
+
         if (active)
         {
             Deactive();
         }
+
         owner = null;
     }
 
@@ -231,27 +236,35 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
 
     public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive)
     {
-        StateEffectIns ins;
+        StateEffectIns ins = null;
 
-        switch (config.stateEffects[i])
-        {
-            case StateEffect.DamageAbsorb:
-                ins = new DamageAbsorb(owner, config, i, passive);
-                break;
-            case StateEffect.DamageRebound:
-                ins = new DamageRebound(owner, config, i, passive);
-                break;
-            case StateEffect.DamageResist:
-                ins = new DamageResist(owner, config, i, passive);
-                break;
-            case StateEffect.DamageStore:
-                ins = new DamageStore(owner, config, i, passive);
-                break;
-            case StateEffect.DamageTransfer:
-                ins = new DamageTransfer(owner, config, i, passive);
-                break;
-        }
+        //switch (config.stateEffects[i])
+        //{
+        //    case StateEffect.DamageAbsorb:
+        //        ins = new DamageAbsorb(owner, config, i, passive);
+        //        break;
+        //    case StateEffect.DamageRebound:
+        //        ins = new DamageRebound(owner, config, i, passive);
+        //        break;
+        //    case StateEffect.DamageResist:
+        //        ins = new DamageResist(owner, config, i, passive);
+        //        break;
+        //    case StateEffect.DamageStore:
+        //        ins = new DamageStore(owner, config, i, passive);
+        //        break;
+        //    case StateEffect.DamageTransfer:
+        //        ins = new DamageTransfer(owner, config, i, passive);
 
-        return null;
+        //        break;
+        //    default:
+        //        Debug.LogError("未完成的StateEffect: " + config.stateEffects[i].ToString());
+        //        break;
+        //}
+
+        ins = (StateEffectIns)Activator.CreateInstance(
+            Type.GetType(config.stateEffects[i].ToString()), owner, config, i, passive);
+            
+
+        return ins;
     }
 }

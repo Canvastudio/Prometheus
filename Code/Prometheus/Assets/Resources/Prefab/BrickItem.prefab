@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1359432129548608
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,17 +160,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e37619fac788654d8064f90ceb78d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  picture: {fileID: 114079050202403926}
+  itemId: 0
+  isDiscovered: 0
+  inViewArea: 0
+  icon: {fileID: 0}
+  _stanbBrick: {fileID: 0}
+  picture: {fileID: 114800356097376612}
   brickBtn: {fileID: 114136464832444728}
   pathMask: {fileID: 114327200035133488}
   blockMask: {fileID: 114856566171785930}
+  last_row: 0
   uid: 0
+  moduel_id: 0
+  level_id: 0
   _brickType: 0
   _brickExplored: 0
   _brickBlock: 0
   _row: 0
   _column: 0
-  item: {fileID: 0}
+  _item: {fileID: 0}
   _pathNode:
     x: 0
     y: 0
@@ -194,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.875, g: 0.36672792, b: 0.36672792, a: 0.29411766}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -220,14 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ffc79c55b6bd04900bca03be32a61f19, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -248,13 +256,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f390c2bd63531ce44bb4f3681ac2b007, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c70f5598ea0d4fb7927e5ebfb4a20ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -323,7 +331,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 118, y: 118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224622888436783226
 RectTransform:
@@ -350,7 +358,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988139489212700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.2499962, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224279626533024216}

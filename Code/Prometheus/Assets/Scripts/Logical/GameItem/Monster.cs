@@ -41,6 +41,9 @@ public class Monster : LiveItem
 
     private int player_distance = 0;
 
+    [SerializeField]
+    public Image pwrFrame;
+
     /// <summary>
     /// 是否被玩家奴役
     /// </summary>
@@ -55,14 +58,15 @@ public class Monster : LiveItem
         set
         {
             StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.ENEMY), !value);
 
             if (enslave)
             {
-                side = 1;
+                Side = LiveItemSide.SIDE0;
             }
             else
             {
-                side = 0;
+                Side = LiveItemSide.SIDE1;
             }
 
             _enslave = value;
@@ -112,18 +116,11 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
+        base.OnDiscoverd();
 
-        if (!Silent)
-        {
-            if (fightComponet != null)
-            {
-                fightComponet.ActivePassive();
-            }
-        }
+        RefreshPassiveSKillState();
 
         StageCore.Instance.discover_monster += 1;
-
-        base.OnDiscoverd();
 
         StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
         StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
@@ -183,7 +180,7 @@ public class Monster : LiveItem
             StageCore.Instance.discover_monster -= 1;
         }
     }
-    public override IEnumerator OnDead(Damage damageInfo)
+    public override void OnDead(Damage damageInfo)
     {
         StageCore.Instance.discover_monster -= 1;
 
@@ -209,7 +206,7 @@ public class Monster : LiveItem
                 if (brick.brickType == BrickType.MONSTER
                     && brick.item.isDiscovered == false)
                 {
-                    yield return brick.OnDiscoverd();
+                    StartCoroutine(brick.OnDiscoverd());
                 }
 
             }
@@ -218,7 +215,7 @@ public class Monster : LiveItem
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(1);
-            yield return fightComponet.DoActiveSkill(skill_list);
+            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
         }
 
         base.OnDead(damageInfo);
@@ -226,18 +223,11 @@ public class Monster : LiveItem
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
-    public override IEnumerator TakeDamage(Damage damageInfo)
+    public override void TakeDamage(Damage damageInfo)
     {
-        IEnumerator ie = base.TakeDamage(damageInfo);
-
-        if (ie != null)
-        {
-            yield return ie;
-        }
+        base.TakeDamage(damageInfo);
 
         fightComponet.skillActive = true;
-
-
     }
 
     public override void Recycle()
