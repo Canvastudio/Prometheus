@@ -135,7 +135,12 @@ public class StageCore : SingleGameObject<StageCore> {
         else if (type == BrickType.SUPPLY)
         {
             var item = brick1.item as Supply;
-            yield return Player.moveComponent.MoveTo(brick1, 0.3f);
+            var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
+
+            GameProperty property;
+
+            float time = FightComponet.CalculageRPN(rpn, Instance.Player, null, out property);
+            yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉
             item.Reactive();
@@ -143,12 +148,21 @@ public class StageCore : SingleGameObject<StageCore> {
         else if (type == BrickType.TREASURE)
         {
             var item = brick1.item as Treasure;
+            var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
-            yield return Player.moveComponent.MoveTo(brick1, 0.3f);
+            GameProperty property;
+
+            float time = FightComponet.CalculageRPN(rpn, Instance.Player, null, out property);
+            yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉
             item.Reactive();
         }
+        else if (type == BrickType.MAINTENANCE)
+        {
+            ChipUpdateView.Instance.Open();
+        }
+
     }
 
     /// <summary>
@@ -193,6 +207,7 @@ public class StageCore : SingleGameObject<StageCore> {
                             case BrickType.MONSTER:
                             case BrickType.SUPPLY:
                             case BrickType.TREASURE:
+                            case BrickType.MAINTENANCE:
 
                                 int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
 
@@ -260,6 +275,8 @@ public class StageCore : SingleGameObject<StageCore> {
                                 }
                                 break;
                         }
+
+                      
                     }
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
