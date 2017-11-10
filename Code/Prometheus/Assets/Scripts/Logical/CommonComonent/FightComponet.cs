@@ -506,7 +506,7 @@ public class FightComponet : MonoBehaviour
 
         StageCore.Instance.TimeCast(time_cost);
 
-        yield return ArtSkill.DoSkill(config.name, ownerObject.transform.position, apply_list[0].transform.position);
+        //yield return ArtSkill.DoSkill(config.name, ownerObject.transform.position, apply_list[0].transform.position);
 
 
         foreach (var target in apply_list)

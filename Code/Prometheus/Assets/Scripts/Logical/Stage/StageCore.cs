@@ -429,6 +429,10 @@ public static class SA
     public const string PlayerMoveStep = "PMS";
     public const string PlayerUseSkill = "PUS";
     public const string ItemTakeDamage = "ITD";
+
+    public const string PlayHpChange = "PIC";
+    public const string PlayerAddState = "PAS";
+    public const string PlayerRemoveState = "PRS";
 }
 
 public static class ST
@@ -443,6 +447,9 @@ public static class ST
     public const string UNDISCOVER = "UDR";
     public const string FRIEND = "FD";
     public const string LAST = "LT";
+
+    public const string SIDE0 = "SIDE0";
+    public const string SIDE1 = "SIDE1";
 }
 
 

@@ -7,7 +7,8 @@ using UnityEngine.U2D;
 /// <summary>
 /// 负责管理关卡界面中的物体的生成和初始化设置等
 /// </summary>
-public class StageView : SingleGameObject<StageView> {
+public class StageView : SingleGameObject<StageView>
+{
 
     private int lastRow = 0;
     private int lastColumn = 0;
@@ -27,8 +28,9 @@ public class StageView : SingleGameObject<StageView> {
     public GameObject stageGo;
 
     [Space(5)]
-    public SpriteAtlas brickAtlas;
+    public SpriteAtlas itemAtlas;
     public SpriteAtlas skillAtals;
+    public SpriteAtlas stateAtlas;
 
     [Space(5)]
     public int viewBrickRow = 9;
@@ -97,7 +99,7 @@ public class StageView : SingleGameObject<StageView> {
     {
         pathBrick.Clear();
 
-        foreach(var node in list)
+        foreach (var node in list)
         {
             var brick = node.behavirour as Brick;
 
@@ -135,7 +137,7 @@ public class StageView : SingleGameObject<StageView> {
     public void AddSkillIntoSkillList(ulong uid)
     {
 #if UNITY_EDITOR
-        foreach(var item in skillItemList)
+        foreach (var item in skillItemList)
         {
             if (item.skill_id == uid)
             {
@@ -144,7 +146,7 @@ public class StageView : SingleGameObject<StageView> {
         }
 #endif
 
-        if (uid > 0 &&  FightComponet.IdToSkillType(uid) == SkillType.Active)
+        if (uid > 0 && FightComponet.IdToSkillType(uid) == SkillType.Active)
         {
             int _id;
             var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
