@@ -31,6 +31,7 @@ public class StageLoopState : IState
         BrickCore.Instance.CreatePlayer(1);
 
         StageCore.Instance.Player.inventory.AddChip(100001);
+        StageCore.Instance.Player.inventory.AddChip(100007);
 
         yield return 0;
 

@@ -40,6 +40,11 @@ public class FightComponet : MonoBehaviour
 
     protected bool activePassive = false;
 
+    private void Awake()
+    {
+        wuf = new WaitUntil(() => targetAttackFinsh == apply_list.Count);
+    }
+
     private LiveItem _ownerObject;
     public LiveItem ownerObject
     {
@@ -390,33 +395,33 @@ public class FightComponet : MonoBehaviour
             }
         }
 
-        if (target_list.Count > 0)
+        if (tt == TargetType.Enemy || tt == TargetType.Help)
         {
-            if (st == SelectType.One)
+            for (int i = target_list.Count - 1; i >= 0; --i)
             {
-                if (tt == TargetType.Enemy || tt == TargetType.Help)
-                {
-                    for (int i = target_list.Count - 1; i >= 0; --i)
-                    {
-                        LiveItem live = target_list[i] as LiveItem;
+                LiveItem live = target_list[i] as LiveItem;
 
-                        foreach (var state in live.state_list)
+                foreach (var state in live.state_list)
+                {
+                    if (state.active)
+                    {
+                        foreach (var effect in state.stateEffects)
                         {
-                            if (state.active)
+                            if (effect.stateType == StateEffectType.SelectImmune)
                             {
-                                foreach (var effect in state.stateEffects)
-                                {
-                                    if (effect.stateType == StateEffectType.SelectImmune)
-                                    {
-                                        target_list.RemoveAt(i);
-                                        break;
-                                    }
-                                }
+                                target_list.RemoveAt(i);
+                                break;
                             }
                         }
                     }
                 }
+            }
+        }
 
+        if (target_list.Count > 0)
+        {
+            if (st == SelectType.One)
+            {
                 yield return LightAndWaitSelect();
             }
             else if (st == SelectType.Direct)
@@ -470,6 +475,8 @@ public class FightComponet : MonoBehaviour
 
         ownerObject.OnActionBegin();
 
+        targetAttackFinsh = 0;
+
         yield return FindAndConfrimTarget(config);
 
         if (target_list.Count <= 0) yield break;
@@ -492,7 +499,7 @@ public class FightComponet : MonoBehaviour
         if (config.beforeSpecialEffect != null)
         {
             var effects = config.beforeSpecialEffect.ToArray();
-            yield return ApplyEffect(config, config.beforeArgs, effects, apply_list);
+            ApplyEffect(config, config.beforeArgs, effects, apply_list);
         }
 
 
@@ -518,36 +525,40 @@ public class FightComponet : MonoBehaviour
 
         StageCore.Instance.TimeCast(time_cost);
 
-        //yield return ArtSkill.DoSkill(config.name, ownerObject.transform.position, apply_list[0].transform.position);
+        float[] successArray = null;
+        float[] weightDamage = null;
 
-
-        foreach (var target in apply_list)
+        if (config.successRate != null)
         {
-            if (config.damage != null)
-            {
-                var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-
-                Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
-
-                foreach (var state in ownerObject.state_list)
-                {
-                    foreach (var ins in state.stateEffects)
-                    {
-                        if (ins.stateType == StateEffectType.OnGenerateDamage)
-                        {
-                            ins.ApplyState(damageInfo);
-                        }
-                    }
-                }
-
-                (target as LiveItem).TakeDamage(damageInfo);
-            }
+            successArray = config.successRate.ToArray();
         }
 
-        if (config.afterSpecialEffect != null)
+        bool successEffect = true;
+
+        for(int i = 0; i < apply_list.Count; ++i)
         {
-            var effects = config.afterSpecialEffect.ToArray();
-            yield return ApplyEffect(config, config.afterArgs, effects, apply_list);
+            if (config.successRate != null)
+            {
+                float r = 0;
+
+                if (apply_list[i] is Player)
+                {
+                    r = successArray[0];
+                }
+                else if (apply_list[i] is Monster)
+                {
+                    r = successArray[(apply_list[i] as Monster).pwr];
+                }
+                else
+                {
+                    Debug.LogError("SuccessRate的技能的目标不是玩家也不是怪物?????");
+                }
+
+                if (r <= Random.Range(0f, 1f))
+                {
+                    successEffect = false;
+                }
+            }
         }
         
 
@@ -559,9 +570,50 @@ public class FightComponet : MonoBehaviour
         {
             ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
         }
+
+        yield return wuf;
     }
 
-    private IEnumerator ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    static WaitUntil wuf;
+
+    private int targetAttackFinsh = 0;
+
+    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float damageMultiple)
+    {
+        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position);
+
+        if (config.damage != null)
+        {
+            GameProperty property;
+
+            var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
+
+            Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
+
+            foreach (var state in ownerObject.state_list)
+            {
+                foreach (var ins in state.stateEffects)
+                {
+                    if (ins.stateType == StateEffectType.OnGenerateDamage)
+                    {
+                        ins.ApplyState(damageInfo);
+                    }
+                }
+            }
+
+            (target as LiveItem).TakeDamage(damageInfo);
+        }
+
+        if (config.afterSpecialEffect != null)
+        {
+            var effects = config.afterSpecialEffect.ToArray();
+            ApplyEffect(config, config.afterArgs, effects, target);
+        }
+
+        targetAttackFinsh++;
+    }
+
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, GameItemBase item)
     {
         Brick brick = null;
         EffectCondition condition = EffectCondition.None;
@@ -574,72 +626,67 @@ public class FightComponet : MonoBehaviour
             {
                 case SpecialEffect.AddState:
                     state_id = args[i].u[0];
-                    foreach (var item in apply_list)
-                    {
-                        var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                        (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false));
-                    }
+
+                    var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
+                    (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false));
+
                     break;
                 case SpecialEffect.Property:
                     GameProperty property;
 
                     long[] rpn_values = args[i].rpn.ToArray(0);
 
-                    foreach (var item in apply_list)
-                    {
-                        var value = CalculageRPN(rpn_values, ownerObject, item, out property);
 
-                        (item as LiveItem).Property.SetFloatProperty(property, value);
-                    }
+                    var value = CalculageRPN(rpn_values, ownerObject, item, out property);
+
+                    (item as LiveItem).Property.SetFloatProperty(property, value);
+
 
                     break;
                 case SpecialEffect.Transfiguration:
                     //TODO
                     break;
                 case SpecialEffect.Enslave:
-                    foreach (var item in apply_list)
-                    {
-                        (item as Monster).enslave = true;
-                    }
+
+                    (item as Monster).enslave = true;
+
                     break;
                 case SpecialEffect.OpenBlockWithNear:
                     int range = (int)args[i].f[0];
                     Brick stand_brick = ownerObject.standBrick;
-                    foreach (var item in apply_list)
+
+                    brick = item as Brick;
+
+                    StartCoroutine(brick.OnDiscoverd());
+
+                    var brick_list = BrickCore.Instance.GetNearbyBrick(brick.row, brick.column, range);
+
+                    foreach (var nearby_brick in brick_list)
                     {
-                        brick = item as Brick;
-
-                        yield return brick.OnDiscoverd();
-
-                        var brick_list = BrickCore.Instance.GetNearbyBrick(brick.row, brick.column, range);
-
-                        foreach (var nearby_brick in brick_list)
-                        {
-                            yield return nearby_brick.OnDiscoverd();
-                        }
+                        StartCoroutine(nearby_brick.OnDiscoverd());
                     }
+
                     break;
                 case SpecialEffect.HalfCostReturn:
                     condition = args[i].ec[0];
-                    foreach (var item in apply_list)
+
+                    if (CheckEffectCondition(condition, item, config.damageType))
                     {
-                        if (CheckEffectCondition(condition, item, config.damageType))
+                        if (ownerObject is Player)
                         {
-                            if (ownerObject is Player)
+                            var stuff = config.stuffCost.stuffs.ToArray();
+                            var count = config.stuffCost.values.ToArray();
+                            Player player = ownerObject as Player;
+                            for (int n = 0; n < stuff.Length; ++n)
                             {
-                                var stuff = config.stuffCost.stuffs.ToArray();
-                                var count = config.stuffCost.values.ToArray();
-                                Player player = ownerObject as Player;
-                                for (int n = 0; n < stuff.Length; ++n)
-                                {
-                                    player.inventory.ChangeStuffCount(stuff[n], Mathf.FloorToInt(.5f * count[n]));
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError("返还消耗的目标不是玩家.");
+                                player.inventory.ChangeStuffCount(stuff[n], Mathf.FloorToInt(.5f * count[n]));
                             }
                         }
+                        else
+                        {
+                            Debug.LogError("返还消耗的目标不是玩家.");
+                        }
+
                     }
                     break;
                 case SpecialEffect.TransferSelf:
@@ -649,7 +696,7 @@ public class FightComponet : MonoBehaviour
                     {
                         if (CheckEffectCondition(condition, brick, config.damageType))
                         {
-                            yield return (ownerObject as Player).moveComponent.Transfer(brick);
+                            StartCoroutine((ownerObject as Player).moveComponent.Transfer(brick));
                         }
                         else
                         {
@@ -659,14 +706,13 @@ public class FightComponet : MonoBehaviour
                     break;
                 case SpecialEffect.TransferTarget:
                     brick = apply_list[0] as Brick;
-                    yield return (ownerObject as LiveItem).moveComponent.Transfer(brick);
+                    StartCoroutine((ownerObject as LiveItem).moveComponent.Transfer(brick));
                     break;
                 case SpecialEffect.OffensiveDisperse:
                     remove_count = (int)args[i].f[0];
-                    foreach (var item in apply_list)
-                    {
-                        (item as LiveItem).RemoveStateBuff(remove_count, true);
-                    }
+
+                    (item as LiveItem).RemoveStateBuff(remove_count, true);
+
                     break;
                 case SpecialEffect.AddStateToSelf:
                     state_id = args[i].u[0];
@@ -674,15 +720,21 @@ public class FightComponet : MonoBehaviour
                     break;
                 case SpecialEffect.Disperse:
                     remove_count = (int)args[i].f[0];
-                    foreach (var item in apply_list)
-                    {
-                        (item as LiveItem).RemoveStateBuff(remove_count, false);
-                    }
+
+                    (item as LiveItem).RemoveStateBuff(remove_count, false);
+
                     break;
                 case SpecialEffect.PositionExchange:
-                    yield return MoveComponet.ExchangePosition(ownerObject.moveComponent, (apply_list[0] as Monster).moveComponent);
+                    StartCoroutine(MoveComponet.ExchangePosition(ownerObject.moveComponent, (apply_list[0] as Monster).moveComponent));
                     break;
             }
+        }
+    }
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    {
+        foreach(var item in apply_list)
+        {
+            ApplyEffect(config, args, effects, item);
         }
     }
 
