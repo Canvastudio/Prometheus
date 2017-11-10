@@ -67,7 +67,10 @@ public class ArtTestSkill : MonoBehaviour {
 			
 				if (number > 1 && number < skilllist.Count) {
 					skill_name = skilllist[number];
-					ArtSkill.DoSkill(skill_name, tranlist[0].position, tranlist[1].position, null);
+					//ArtSkill.DoSkill(skill_name, tranlist[0].position, tranlist[1].position, null);
+
+					StartCoroutine(ArtSkill.DoSkillIE(skill_name, tranlist[0].position, tranlist[1].position));
+
 				}
 			
 			}
@@ -97,4 +100,5 @@ public class ArtTestSkill : MonoBehaviour {
 		tranlist[1] = transform.GetChild(1);
 
 	}
+
 }

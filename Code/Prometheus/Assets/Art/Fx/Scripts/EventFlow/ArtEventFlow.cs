@@ -19,8 +19,11 @@ public class ArtEventFlow : MonoBehaviour {
 	private Vector3 end_pos;
 	private Callback callback;
 
+	public bool ishit = false;
+
 	public void Init(Vector3 _start_pos, Vector3 _end_pos, Callback _callback){
-	
+
+		ishit = false;
 		k = 0;
 		n = eventlist.Count;
 		cur_event = eventlist[k];
@@ -28,7 +31,7 @@ public class ArtEventFlow : MonoBehaviour {
 		m_time = 0;
 		start_pos = _start_pos;
 		end_pos = _end_pos;
-		callback = _callback;
+		callback = CallHit;
 	
 	}
 
@@ -71,6 +74,12 @@ public class ArtEventFlow : MonoBehaviour {
 	void OnEnd() {
 	
 		FxPool.Recover(this.gameObject);
+	
+	}
+
+	public void CallHit() {
+
+		ishit = true;
 	
 	}
 

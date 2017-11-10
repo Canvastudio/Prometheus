@@ -49,8 +49,6 @@ public class ArtFxBase : MonoBehaviour {
 	
 		FxPool.Recover(this.gameObject);
 
-
-
 	}
 
 }
