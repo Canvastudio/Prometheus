@@ -8,7 +8,7 @@ public class ArtFxMissileBezier :  ArtFxBase {
 
 	public override void Init(Vector3 _starPos, Vector3 _endPos, Callback _OnHit)
 	{
-		base.Init(_starPos, _endPos);
+		base.Init(_starPos, _endPos, _OnHit);
 		mover.SetPos(ArtMath.Bezier3Pos(startPos, endPos));
 	}
 
