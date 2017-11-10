@@ -24,6 +24,7 @@ public class StageView : SingleGameObject<StageView> {
     public Transform brickRoot;
     public Transform moveRoot;
     public Transform skillListRoot;
+    public GameObject stageGo;
 
     [Space(5)]
     public SpriteAtlas brickAtlas;
@@ -84,6 +85,8 @@ public class StageView : SingleGameObject<StageView> {
 #if UNITY_EDITOR
         _brick.name = row.ToString() + " : " + col.ToString() + " : " + _brick.realBrickType.ToString();
 #endif
+
+        _brick.standBrick = _brick;
 
         return _brick;
     }

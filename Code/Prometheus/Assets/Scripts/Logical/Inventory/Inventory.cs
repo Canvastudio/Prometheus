@@ -73,6 +73,11 @@ public class Inventory {
         chipList.Add(chip);
     }
 
+    public List<ChipInventory> GetChipList()
+    {
+        return chipList;
+    }
+
     public List<ChipInventory> GetUnusedChipList()
     {
         List<ChipInventory> list = new List<ChipInventory>();

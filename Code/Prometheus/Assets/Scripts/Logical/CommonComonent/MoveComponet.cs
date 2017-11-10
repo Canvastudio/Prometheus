@@ -66,7 +66,13 @@ public class MoveComponet : MonoBehaviour {
     public IEnumerator MoveToNext()
     {
         Brick brick = _path[_pathIndex].behavirour as Brick;
-        float time = 1;
+
+        var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
+
+        GameProperty property;
+
+        float time = FightComponet.CalculageRPN(rpn, owner, null, out property);
+
         if (!IsNextBlock())
         {
             yield return MoveTo(brick, time);
