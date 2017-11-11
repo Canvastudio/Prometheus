@@ -15,6 +15,8 @@ public class ArtFxBase : MonoBehaviour {
 
 	public string fxend = "";
 
+	public bool islookat = false;
+
 	public virtual void Init(Vector3 _starPos, Vector3 _endPos, Callback _OnHit = null) {
 	
 		startPos = _starPos;
@@ -22,6 +24,9 @@ public class ArtFxBase : MonoBehaviour {
 
 		tran = this.transform;
 		tran.position = startPos;
+
+		if(islookat)
+			tran.rotation = ArtMath.LookAtZ(endPos - startPos);
 
 		OnHit = _OnHit;
 		m_time = 0;
