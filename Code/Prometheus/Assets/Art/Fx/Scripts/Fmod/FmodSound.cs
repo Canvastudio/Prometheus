@@ -9,9 +9,17 @@ public class FmodSound : MonoBehaviour {
 
 	public string event_name = "";
 
+	public string parameter = "";
+
 	public void OnEnable() {
 
 		SoundCore.PlayOneShot(event_name);
+	
+	}
+
+	public void OnDisable() {
+	
+
 	
 	}
 
