@@ -17,12 +17,23 @@ public class ArtFxBase : MonoBehaviour {
 
 	public bool islookat = false;
 
+	public bool iscenter = false;
+
 	public virtual void Init(Vector3 _starPos, Vector3 _endPos, Callback _OnHit = null) {
 	
 		startPos = _starPos;
 		endPos = _endPos;
 
 		tran = this.transform;
+
+		if (iscenter) {
+		
+			Vector3 center = Camera.main.transform.position;
+			startPos.y = center.y;
+			startPos.x = center.x;
+		
+		}
+
 		tran.position = startPos;
 
 		if(islookat)
