@@ -62,11 +62,24 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             if (value == BrickExplored.UNEXPLORED)
             {
-                picture.color = new Color(0.5f, 0.5f, 0.5f);
+                icon.sprite  = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetUnExploredBrickName());
             }
             else
+            if (value == BrickExplored.EXPLORED)
             {
-                picture.color = Color.white;
+                if (column == 0)
+                {
+                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
+                }
+                else if (column == 5)
+                {
+                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
+                    icon.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else
+                {
+                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetExploredBrickName());
+                }
             }
 
             _brickExplored = value;

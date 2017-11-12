@@ -18,6 +18,9 @@ public class StageLoopState : IState
 
     public IEnumerator DoState()
     {
+
+        BrickNameCore.Instance.SetCurrentScene(0);
+
         yield return ChipBoard.Instance.InitBoard(1);
 
         ChipUpdateView.Instance.InitView();

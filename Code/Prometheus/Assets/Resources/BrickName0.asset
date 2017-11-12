@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BrickName0
+  m_EditorClassIdentifier: Assembly-CSharp::BrickNameData
+  scene_id: 0
+  unexplore_brick: box_d_0
+  explore_bricks:
+  - box_s_4
+  - box_l_0
+  - box_l_1
+  - box_l_2
+  - box_l_3
+  - box_l_5
+  - box_l_6
+  side_brick: box_s_4
+  obstacle: box_d_0
+  block: box_f_0

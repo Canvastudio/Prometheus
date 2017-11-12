@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class B : MonoBehaviour {
 
+    [SerializeField]
+    GameObject gameObject;
+
     public class BB
     {
         public string bbbb = "1";
@@ -13,10 +16,10 @@ public class B : MonoBehaviour {
 
     System.Action<BB> action;
 	// Use this for initialization
-	IEnumerator Start () {
+	void Start () {
 
-        yield return StartCoroutine(www());
-	}
+        GameObject.Instantiate(gameObject, this.transform).SetActive(true);
+    }
 
     void GGGG(object g)
     {
@@ -30,13 +33,14 @@ public class B : MonoBehaviour {
     }
     void AAA(BB aa)
     {
-        action = (BB x) => { Debug.Log(aa.bbbb); };
+
+
     }
 
 	// Update is called once per frame
 	void Update () {
 
-        action.Invoke(null);
+
 	}
 
     public int v = 0;
