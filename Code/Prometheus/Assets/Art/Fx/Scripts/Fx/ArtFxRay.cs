@@ -37,6 +37,38 @@ public class ArtFxRay : ArtFxBase {
 		tranEnd.position = endPos;
 	}
 
+	public override void Init(Transform _tran_start, Transform _tran_end, Callback _OnHit)
+	{
+		base.Init(_tran_start, _tran_end, _OnHit);
+		UpdatePos();
+	}
+
+	public override void UpdatePos()
+	{
+		base.UpdatePos();
+
+		Vector3 dir = (endPos - startPos).normalized;
+
+		float len = Vector3.Distance(startPos, endPos) - offsetdir;
+
+		Vector3 angle = new Vector3(0, 0, ArtMath.angle_360(startPos, endPos));
+
+		for (int i = 0; i < rolllist.Length; i++) {
+
+			rolllist[i].tran.position = startPos + dir * offsetdir;
+			rolllist[i].tran.eulerAngles = angle; 
+			rolllist[i].SetLen(len);
+
+		}
+
+		tranStart.eulerAngles = angle;
+		tranEnd.eulerAngles = angle;
+
+		tranStart.position = startPos;
+		tranEnd.position = endPos;
+
+	}
+
 	public void OnDrawGizmos() {
 
 		rolllist = this.GetComponentsInChildren<ArtTextureRoll>();

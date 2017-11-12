@@ -36,4 +36,22 @@ public class ArtSkill {
 
 	}
 
+	public static IEnumerator DoSkillIE(string name, Transform tranStart, Transform tranEnd, Callback _callback = null) {
+
+		GameObject objskill = FxPool.Get(FxEnum.Skill, name);
+		ArtEventFlow eventFlow = objskill.GetComponent<ArtEventFlow>();
+		eventFlow.Init(tranStart, tranEnd, null);
+
+		while(true) {
+
+			if (eventFlow.ishit) {
+				yield return true;
+				Debug.Log(objskill.name + "____finished");
+				break;
+			} else
+				yield return null;
+		}
+
+	}
+
 }

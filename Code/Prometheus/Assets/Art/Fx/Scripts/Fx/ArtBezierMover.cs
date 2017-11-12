@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArtBezierMover : ArtMover {
 
-	public List<Vector3> plist = new List<Vector3>(4);
+	public List<Vector3> plist = null; 
 	public float m_time;
 	public float total_time = 3;
 	public float bezierA;
@@ -51,21 +51,23 @@ public class ArtBezierMover : ArtMover {
 
 	public override void SetPos(List<Vector3> _plist) {
 	
-		plist.Clear();
-		plist.Add(_plist[0]);
-		plist.Add(_plist[1]);
-		plist.Add(_plist[2]);
-		plist.Add(_plist[3]);
+		plist = _plist;
 
 		m_time = 0;
 		bezierA = 1;
 
 		tran.position = plist[0];
-		before_pos = _plist[0];
-		cur_pos = _plist[0];
+		before_pos = plist[0];
+		cur_pos = plist[0];
 
 		isStart = true;
 
+	}
+
+	public void UpdatePos(List<Vector3> _plist) {
+	
+		plist = _plist;
+	
 	}
 
 	public void DetectEnd() {

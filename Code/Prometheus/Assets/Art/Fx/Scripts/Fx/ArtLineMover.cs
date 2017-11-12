@@ -18,6 +18,7 @@ public class ArtLineMover : ArtMover {
 	private Vector3 dir;
 
 	public float move_len;
+	public float temp_len;
 	public float cur_len;
 
 	
@@ -26,13 +27,10 @@ public class ArtLineMover : ArtMover {
 
 		if (!isStart)
 			return;
-		
-		m_time += Time.deltaTime;
-		cur_len = velocity * m_time;
 
-		cur_pos = start_pos + dir * cur_len;
-
-		tran.position = cur_pos;
+		tran.position = Vector3.MoveTowards(tran.position, next_pos, Time.deltaTime * velocity);
+		dir = (next_pos - tran.position).normalized;
+		tran.rotation = Quaternion.Lerp(tran.rotation, ArtMath.LookAtZ(dir), Time.deltaTime * 5);
 
 		DetectNext();
 		
@@ -40,17 +38,10 @@ public class ArtLineMover : ArtMover {
 
 	public override void SetPos(List<Vector3> _plist) {
 
-		plist.Clear();
 		plist = _plist;
-
-		m_time = 0;
 		k = 0;
 		n = plist.Count - 1;
-		cur_len = 0;
-		move_len = 0;
-
 		tran.position = plist[k];
-		cur_pos = _plist[k];
 
 		OnNext();
 
@@ -58,10 +49,19 @@ public class ArtLineMover : ArtMover {
 
 	}
 
+	public void UpdatePos(List<Vector3> _plist) {
+
+		plist = _plist;
+
+		if ((k + 1) == n)
+			next_pos = plist[n];
+
+	}
+
 	public void DetectNext() {
 	
-		if (cur_len > move_len) {
-		
+		if (Vector3.Distance(tran.position, next_pos) < .1f) {
+
 			k++;
 
 			if (k + 1 > n) {
@@ -77,13 +77,7 @@ public class ArtLineMover : ArtMover {
 	}
 
 	private void OnNext() {
-	
-		start_pos = plist[k];
 		next_pos = plist[k + 1];
-		dir = (next_pos - start_pos).normalized;
-		move_len += Vector3.Distance(start_pos, next_pos);
-		tran.rotation = ArtMath.LookAtZ(dir);
-	
 	}
 
 }

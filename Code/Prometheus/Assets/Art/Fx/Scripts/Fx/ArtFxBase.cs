@@ -19,6 +19,9 @@ public class ArtFxBase : MonoBehaviour {
 
 	public bool iscenter = false;
 
+	public Transform tran_start = null;
+	public Transform tran_end = null;
+
 	public virtual void Init(Vector3 _starPos, Vector3 _endPos, Callback _OnHit = null) {
 	
 		startPos = _starPos;
@@ -44,12 +47,49 @@ public class ArtFxBase : MonoBehaviour {
 	
 	}
 
+	public virtual void Init(Transform _tran_start, Transform _tran_end, Callback _OnHit = null) {
+
+		tran_start = _tran_start;
+		tran_end = _tran_end;
+
+		tran = this.transform;
+		tran_start.SetPos(ref startPos);
+
+		if (iscenter) {
+
+			Vector3 center = Camera.main.transform.position;
+			startPos.y = center.y;
+			startPos.x = center.x;
+
+		}
+
+		tran.position = startPos;
+		endPos = startPos;
+
+		tran_end.SetPos(ref endPos);
+
+		OnHit = _OnHit;
+		m_time = 0;
+
+	}
+
 	void Update() {
 	
 		m_time += Time.deltaTime;
 
 		if (m_time > total_time)
-			OnEnd();	
+			OnEnd();
+		else
+			UpdatePos();
+	
+	}
+
+	public virtual void UpdatePos() {
+
+		tran_end.SetPos(ref endPos);
+
+		if(islookat)
+			tran.rotation = ArtMath.LookAtZ(endPos - startPos);
 	
 	}
 
@@ -58,7 +98,7 @@ public class ArtFxBase : MonoBehaviour {
 		GameObject obj = FxPool.Get(FxEnum.Fx, fxend);
 
 		if (obj != null)
-			obj.GetComponent<ArtFxBase>().Init(this.tran.position, this.tran.position);
+			obj.GetComponent<ArtFxBase>().Init(this.tran, null);
 
 		if (OnHit != null)
 			OnHit();

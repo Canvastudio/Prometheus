@@ -69,7 +69,7 @@ public class ArtTestSkill : MonoBehaviour {
 					skill_name = skilllist[number];
 					//ArtSkill.DoSkill(skill_name, tranlist[0].position, tranlist[1].position, null);
 
-					StartCoroutine(ArtSkill.DoSkillIE(skill_name, tranlist[0].position, tranlist[1].position));
+					StartCoroutine(ArtSkill.DoSkillIE(skill_name, tranlist[0], tranlist[1]));
 
 				}
 			
