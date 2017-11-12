@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222637041449783584}
   - component: {fileID: 114950792208918696}
   - component: {fileID: 114726884674308218}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Supply
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c813dbb215254f748b41bc2239fee97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemId: 0
   isDiscovered: 0
+  inViewArea: 0
+  icon: {fileID: 0}
   _stanbBrick: {fileID: 0}
 --- !u!114 &114950792208918696
 MonoBehaviour:
@@ -82,7 +85,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714161537929942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -309, y: -465, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

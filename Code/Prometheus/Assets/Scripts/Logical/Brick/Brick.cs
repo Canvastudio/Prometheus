@@ -421,7 +421,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         base.Recycle();
 
-        if (item != null)
+        if (realBrickType != BrickType.EMPTY && item != null)
         {
             item.Recycle();
             item = null;

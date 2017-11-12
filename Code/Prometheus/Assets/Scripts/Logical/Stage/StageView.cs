@@ -126,8 +126,8 @@ public class StageView : SingleGameObject<StageView>
             if (StageCore.Instance.totalTime >= 4)
             {
                 LeanTween.moveLocalY(
-                    moveRoot.gameObject,
-                    moveRoot.transform.localPosition.y - (brickWidth * .5f * distance), distance);
+                    show_camera.gameObject,
+                   show_camera.transform.localPosition.y + (brickWidth * .5f * distance / 100), distance);
             }
 
             Messenger.Invoke(SA.MapMoveDown);

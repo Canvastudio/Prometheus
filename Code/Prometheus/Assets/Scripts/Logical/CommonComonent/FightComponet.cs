@@ -479,8 +479,12 @@ public class FightComponet : MonoBehaviour
 
         yield return FindAndConfrimTarget(config);
 
-        if (target_list.Count <= 0) yield break;
+        if (target_list.Count <= 0)
+        {
+            yield break;
+        }
 
+        //扣除消耗
         if (ownerObject is Player)
         {
             var stuff = config.stuffCost.stuffs.ToArray();
@@ -496,20 +500,12 @@ public class FightComponet : MonoBehaviour
             StageCore.Instance.JustdiscoverMonster = false;
         }
 
-        if (config.beforeSpecialEffect != null)
-        {
-            var effects = config.beforeSpecialEffect.ToArray();
-            ApplyEffect(config, config.beforeArgs, effects, apply_list);
-        }
 
-
+        //时间消耗
         long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
-
         GameProperty property;
-
         float time_cost = CalculageRPN(rpn, ownerObject, null, out property, config);
         RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
-
         foreach (var state in ownerObject.state_list)
         {
             foreach (var effect in state.stateEffects)
@@ -520,13 +516,11 @@ public class FightComponet : MonoBehaviour
                 }
             }
         }
-
         time_cost = rangeSkillCost.cost;
-
         StageCore.Instance.TimeCast(time_cost);
 
         float[] successArray = null;
-        float[] weightDamage = null;
+        float[] apperanceArray = config.damageArg.ToArray();
 
         if (config.successRate != null)
         {
@@ -558,6 +552,10 @@ public class FightComponet : MonoBehaviour
                 {
                     successEffect = false;
                 }
+
+                StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+
+                yield return 0.2f;
             }
         }
         
@@ -578,33 +576,45 @@ public class FightComponet : MonoBehaviour
 
     private int targetAttackFinsh = 0;
 
-    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float damageMultiple)
+    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance)
     {
-        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position);
-
-        if (config.damage != null)
+        if (config.beforeSpecialEffect != null && specialEffect)
         {
-            GameProperty property;
-
-            var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-
-            Damage damageInfo = new Damage(damage, ownerObject, target as LiveItem, config.damageType);
-
-            foreach (var state in ownerObject.state_list)
-            {
-                foreach (var ins in state.stateEffects)
-                {
-                    if (ins.stateType == StateEffectType.OnGenerateDamage)
-                    {
-                        ins.ApplyState(damageInfo);
-                    }
-                }
-            }
-
-            (target as LiveItem).TakeDamage(damageInfo);
+            var effects = config.beforeSpecialEffect.ToArray();
+            ApplyEffect(config, config.beforeArgs, effects, target);
         }
 
-        if (config.afterSpecialEffect != null)
+        GameProperty property;
+        var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
+
+        int damageTimes = damageApperance.Length;
+
+        int i = 0;
+
+        while (i < damageTimes)
+        {
+            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position);
+
+            if (config.damage != null)
+            {
+                Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, target as LiveItem, config.damageType);
+
+                foreach (var state in ownerObject.state_list)
+                {
+                    foreach (var ins in state.stateEffects)
+                    {
+                        if (ins.stateType == StateEffectType.OnGenerateDamage)
+                        {
+                            ins.ApplyState(damageInfo);
+                        }
+                    }
+                }
+
+                (target as LiveItem).TakeDamage(damageInfo);
+            }
+        }
+
+        if (config.afterSpecialEffect != null && specialEffect)
         {
             var effects = config.afterSpecialEffect.ToArray();
             ApplyEffect(config, config.afterArgs, effects, target);
