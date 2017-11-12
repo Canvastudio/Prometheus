@@ -18,7 +18,7 @@ public class ArtSkill {
 	
 	}
 
-	public static IEnumerator DoSkillIE(string name, Vector3 _start_pos, Vector3 _end_pos) {
+	public static IEnumerator DoSkillIE(string name, Vector3 _start_pos, Vector3 _end_pos, Callback _callback = null) {
 
 		GameObject objskill = FxPool.Get(FxEnum.Skill, name);
 		ArtEventFlow eventFlow = objskill.GetComponent<ArtEventFlow>();
