@@ -460,6 +460,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 4c54fc89bdf1ce84faa509f7cefb2e8b, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 4c54fc89bdf1ce84faa509f7cefb2e8b, type: 2}
+      propertyPath: randomSeed
+      value: 1499207615
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 4c54fc89bdf1ce84faa509f7cefb2e8b, type: 2}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 4c54fc89bdf1ce84faa509f7cefb2e8b, type: 2}
+      propertyPath: InitialModule.startSizeZ.minMaxState
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -955,7 +967,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
