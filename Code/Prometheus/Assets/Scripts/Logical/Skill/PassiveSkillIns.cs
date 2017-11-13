@@ -8,6 +8,7 @@ public class PassiveSkillIns  {
     public HaloInfo haloInfo;
     public LiveItem owner;
     public StateConfig stateConfig;
+    public PassiveSkillsConfig passiveConfig;
 
     public PassiveSkillIns(ulong skill_id, LiveItem owner)
     {

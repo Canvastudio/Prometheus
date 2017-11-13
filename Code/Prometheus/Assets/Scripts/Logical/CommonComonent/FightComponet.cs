@@ -529,7 +529,7 @@ public class FightComponet : MonoBehaviour
 
         bool successEffect = true;
 
-        for(int i = 0; i < apply_list.Count; ++i)
+        for (int i = 0; i < apply_list.Count; ++i)
         {
             if (config.successRate != null)
             {
@@ -552,12 +552,13 @@ public class FightComponet : MonoBehaviour
                 {
                     successEffect = false;
                 }
-
-                StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
-
-                yield return 0.2f;
             }
+
+            StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+
+            yield return 0.2f;
         }
+        
         
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
@@ -593,25 +594,27 @@ public class FightComponet : MonoBehaviour
 
         while (i < damageTimes)
         {
-            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position);
-
-            if (config.damage != null)
+            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position, () =>
             {
-                Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, target as LiveItem, config.damageType);
 
-                foreach (var state in ownerObject.state_list)
+                if (config.damage != null)
                 {
-                    foreach (var ins in state.stateEffects)
+                    Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
+
+                    foreach (var state in ownerObject.state_list)
                     {
-                        if (ins.stateType == StateEffectType.OnGenerateDamage)
+                        foreach (var ins in state.stateEffects)
                         {
-                            ins.ApplyState(damageInfo);
+                            if (ins.stateType == StateEffectType.OnGenerateDamage)
+                            {
+                                ins.ApplyState(damageInfo);
+                            }
                         }
                     }
-                }
 
-                (target as LiveItem).TakeDamage(damageInfo);
-            }
+                    (target as LiveItem).TakeDamage(damageInfo);
+                }
+            });
         }
 
         if (config.afterSpecialEffect != null && specialEffect)

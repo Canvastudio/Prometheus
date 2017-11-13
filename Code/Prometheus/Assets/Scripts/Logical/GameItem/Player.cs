@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : LiveItem {
 
-    public ulong typeId = 1;
+    public ulong playerId = 1;
     public PlayerInitConfig config;
     public Inventory inventory = new Inventory();
     public SkillPointsComponet skillPointsComponet;

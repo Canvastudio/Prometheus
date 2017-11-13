@@ -160,7 +160,7 @@ public class StageCore : SingleGameObject<StageCore> {
         }
         else if (type == BrickType.MAINTENANCE)
         {
-            ChipUpdateView.Instance.Open();
+ 
         }
 
     }
@@ -281,7 +281,7 @@ public class StageCore : SingleGameObject<StageCore> {
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
                 {
-                    ulong skill_id = (waitMsg.result.para as SkillListItem).skill_id;
+                    ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
 
                     Debug.Log("使用技能id: " + skill_id);
 

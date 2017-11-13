@@ -22,7 +22,7 @@ public class SkillPoint {
         id = _id;
         SkillPointsConfig config = ConfigDataBase.GetConfigDataById<SkillPointsConfig>(id);
         skillIds = config.skillIds.ToArray();
-        updateLimit = config.characterActivate.ToArray((int)(StageCore.Instance.Player.typeId));
+        updateLimit = config.characterActivate.ToArray((int)(StageCore.Instance.Player.playerId));
     }
 
     public void ChangeSkillPoint(int change_count)

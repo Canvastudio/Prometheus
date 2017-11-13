@@ -217,7 +217,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
     }
 
 
-    public T GetObjFromPool(string name, T source = null, Component componet = null, bool autoCreatePool = true)
+    public T GetObjFromPool(string name)//, T source = null, Component componet = null, bool autoCreatePool = true)
     {
         T res;
 
@@ -225,14 +225,14 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             Debug.LogError("Qing Xin: Try to get unexcept obj from pool.");
 
-            if (autoCreatePool)
-            {
-                CoroCore.Instance.ExStartCoroutine(InitData(name, source));
-            }
-            else
-            {
-                return null;
-            }
+            //if (autoCreatePool)
+            //{
+            //    CoroCore.Instance.ExStartCoroutine(InitData(name, source));
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
 
         if (Data[name].uu.Count > 0)
