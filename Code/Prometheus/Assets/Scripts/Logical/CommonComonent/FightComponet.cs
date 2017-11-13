@@ -21,17 +21,17 @@ public class FightComponet : MonoBehaviour
     /// <summary>
     /// ref主动技能配置表
     /// </summary>
-    private List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
+    public List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
 
     /// <summary>
     /// 被动技能实例
     /// </summary>
-    private List<PassiveSkillIns> passiveInsList = new List<PassiveSkillIns>();
+    public List<PassiveSkillIns> passiveInsList = new List<PassiveSkillIns>();
 
     /// <summary>
     /// ref召唤技能配置表
     /// </summary>
-    private List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
+    public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
 
     /// <summary>
     /// 是否激活使用技能

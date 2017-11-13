@@ -6,7 +6,8 @@ public class SkillListItem : DragableScrollItem
 {
     [SerializeField]
     Button button;
-
+    [SerializeField]
+    ActiveSkillsConfig config;
     public int id;
 
     public ulong skill_id;
@@ -19,6 +20,7 @@ public class SkillListItem : DragableScrollItem
     public void SetInfo(ulong id)
     {
         skill_id = id;
+        config = ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(id);
         button.image.sprite = HelpFunction.GetSkillIcon(id, StageView.Instance.skillAtals);
     }
 
@@ -29,6 +31,6 @@ public class SkillListItem : DragableScrollItem
 
     public void OnClick()
     {
-        Messenger<SkillListItem>.Invoke(SA.PlayerClickSkill, this);
+        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerClickSkill, config);
     }
 }

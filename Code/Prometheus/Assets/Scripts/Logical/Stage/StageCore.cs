@@ -185,7 +185,7 @@ public class StageCore : SingleGameObject<StageCore> {
                 StageView.Instance.CancelPahtNode();
 
                 //如果没有处于自动状态，则等待并处理玩家点击事件
-                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<SkillListItem>(SA.PlayerClickSkill);
+                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
 
                 if (waitMsg.result.msg == SA.PlayerClickBrick)
                 {

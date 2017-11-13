@@ -28,14 +28,15 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: a39ccc8e0893fef390539e1e5257f10e
+      Hash: 9946549000187ecf7a526d7337d296de
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: a39ccc8e0893fef390539e1e5257f10e
-    totalSpriteSurfaceArea: 34275
+    hashString: 9946549000187ecf7a526d7337d296de
+    totalSpriteSurfaceArea: 44640
     packables:
     - {fileID: 102900000, guid: d98bb82ec6cf24c4eb374e1f3672a52e, type: 3}
+    - {fileID: 102900000, guid: 1ff90e20f66f84c5db2eb2f1f13b57c8, type: 3}
     packedSpriteRenderDataKeys:
     - 7908eaca49b7aff46bcfbf22256dc2b9: 21300000
     - bdbed3bf7f217574bb9e168d16ca8e7f: 21300000
@@ -46,6 +47,12 @@ SpriteAtlas:
     - faaa000f09893db48bbb9e174c039f65: 21300000
     - a20d99e686b34c4439319952c38b8f75: 21300000
     - 97cae1d08aec4e14c8cff9e52920f7b3: 21300000
+    - 17a70ef816075465ca7b89198a8ac5ba: 21300000
+    - f6fbb2cbd12de4b0d982f3c014358902: 21300000
+    - cdeef5d3e8dee434883d62232f90bede: 21300000
+    - e14fd702e6e68415e8aab2c1c50d23c5: 21300000
+    - 4a431e582d1aa4960a1ea2768c56a0a3: 21300000
+    - 9584033fb3c3d44c5a992b3ca9d61b99: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 7908eaca49b7aff46bcfbf22256dc2b9, type: 3}
@@ -57,6 +64,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: faaa000f09893db48bbb9e174c039f65, type: 3}
   - {fileID: 21300000, guid: a20d99e686b34c4439319952c38b8f75, type: 3}
   - {fileID: 21300000, guid: 97cae1d08aec4e14c8cff9e52920f7b3, type: 3}
+  - {fileID: 21300000, guid: 17a70ef816075465ca7b89198a8ac5ba, type: 3}
+  - {fileID: 21300000, guid: f6fbb2cbd12de4b0d982f3c014358902, type: 3}
+  - {fileID: 21300000, guid: cdeef5d3e8dee434883d62232f90bede, type: 3}
+  - {fileID: 21300000, guid: e14fd702e6e68415e8aab2c1c50d23c5, type: 3}
+  - {fileID: 21300000, guid: 4a431e582d1aa4960a1ea2768c56a0a3, type: 3}
+  - {fileID: 21300000, guid: 9584033fb3c3d44c5a992b3ca9d61b99, type: 3}
   m_PackedSpriteNamesToIndex:
   - blue_chippart
   - yellow_chippart
@@ -67,5 +80,11 @@ SpriteAtlas:
   - green_chipsquare
   - white_chipsquare
   - red_chipsquare
+  - chip_0
+  - chip_+
+  - chip_-
+  - chip_bg
+  - chipline_45
+  - chipline_90
   m_Tag: Chip_Atlas
   m_IsVariant: 0
