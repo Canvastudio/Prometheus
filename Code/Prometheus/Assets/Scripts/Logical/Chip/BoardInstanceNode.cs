@@ -19,15 +19,15 @@ public class BoardInstanceNode : MonoBehaviour {
 
             if (v == 1)
             {
-                foreground.sprite = ChipBoard.Instance.normalSpirte;
+                foreground.sprite = ChipView.Instance.normalSpirte;
             }
             else if (v == 2)
             {
-                foreground.sprite = ChipBoard.Instance.positiveSprite;
+                foreground.sprite = ChipView.Instance.positiveSprite;
             }
             else if (v == 3)
             {
-                foreground.sprite = ChipBoard.Instance.negativeSprite;
+                foreground.sprite = ChipView.Instance.negativeSprite;
             }
         }
         else

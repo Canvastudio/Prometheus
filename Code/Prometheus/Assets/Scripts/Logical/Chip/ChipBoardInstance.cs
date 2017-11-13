@@ -69,7 +69,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     private void OnLongPress()
     {
-        ChipBoard.Instance.selectChip = this;
+        ChipView.Instance.selectChip = this;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -79,7 +79,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             transform.parent.Rt(),
             eventData.position,
-            ChipBoard.Instance.camera,
+            ChipView.Instance.camera,
             out local_pos);
 
         transform.localPosition = local_pos - offset;
@@ -90,7 +90,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             transform.Rt(),
             eventData.position,
-            ChipBoard.Instance.camera,
+            ChipView.Instance.camera,
             out offset);
 
         temp_localpos = transform.localPosition;
@@ -99,7 +99,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
     public void OnEndDrag(PointerEventData eventData)
     {
         //尝试放在拖动位置
-        if (!ChipBoard.Instance.MatrixDragPut(this))
+        if (!ChipView.Instance.MatrixDragPut(this))
         {
             PutBack();
         }

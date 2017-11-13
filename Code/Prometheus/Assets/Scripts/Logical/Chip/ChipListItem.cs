@@ -27,6 +27,7 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         this.chipInventory = chipInventory;
         chipInventory.listItem = this;
+
         yield return GameGlobalVariable.waitForEndOfFrame;
 
         HudEvent.Get(btn).onLongPress = OnLongPress;
@@ -83,6 +84,6 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     /// </summary>
     private void OnClick()
     {
-        boardInstance = ChipBoard.Instance.CreateBoardInstance(this);
+        boardInstance = ChipView.Instance.CreateBoardInstance(this);
     }
 }

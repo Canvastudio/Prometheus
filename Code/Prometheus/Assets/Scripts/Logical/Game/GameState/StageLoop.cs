@@ -21,7 +21,7 @@ public class StageLoopState : IState
 
         BrickNameCore.Instance.SetCurrentScene(0);
 
-        yield return ChipBoard.Instance.InitBoard(1);
+        yield return MuiCore.Instance.Init("ChipBoard", 1);
 
         ChipUpdateView.Instance.InitView();
 

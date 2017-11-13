@@ -12,7 +12,7 @@ public class GM_UI : MonoBehaviour {
 	void Start () {
         HudEvent.Get(OpenChipBoard_Btn.gameObject).onClick = () =>
         {
-            ChipBoard.Instance.OpenChipBoard();
+            ChipView.Instance.OpenChipBoard();
         };
 	}
 	

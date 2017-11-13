@@ -102,7 +102,7 @@ public class ChipSquare : MonoBehaviour {
     {
         this.chipGrid = chipGrid;
 
-        image.sprite = ChipBoard.Instance.spriteAtlas.GetSprite(ChipGridTypeToSpriteName(chipGrid));
+        image.sprite = ChipView.Instance.spriteAtlas.GetSprite(ChipGridTypeToSpriteName(chipGrid));
     }
 
     private void OnCheckPowerState()

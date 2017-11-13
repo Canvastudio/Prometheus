@@ -16,8 +16,6 @@ public class ChipUpdateView : SingleGameObject<ChipUpdateView> {
 
     public void Open()
     {
-        ChipBoard.Instance.CloseChipBoard();
-        StageView.Instance.stageGo.SetActive(false);
         gameObject.SetActive(true);
     }
 }

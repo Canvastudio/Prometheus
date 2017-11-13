@@ -7,24 +7,21 @@ using UnityEngine.U2D;
 /// <summary>
 /// 负责管理关卡界面中的物体的生成和初始化设置等
 /// </summary>
-public class StageView : SingleGameObject<StageView>
+public class StageView : MuiSingleBase<StageView>
 {
-
     private int lastRow = 0;
     private int lastColumn = 0;
 
     [Space(5)]
     [SerializeField]
     Brick _brickPrefab;
-    [SerializeField]
-    SkillListItem _skillListItemPrefab;
+
 
     [Space(5)]
     public Transform liveItemRoot;
     public Transform NonliveItemRoot;
     public Transform brickRoot;
-    public Transform moveRoot;
-    public Transform skillListRoot;
+
     public GameObject stageGo;
 
     [Space(5)]
@@ -41,15 +38,6 @@ public class StageView : SingleGameObject<StageView>
     public Camera show_camera;
     public RectTransform viewArea;
 
-    private List<SkillListItem> skillItemList = new List<SkillListItem>(10);
-
-    protected override void Init()
-    {
-        base.Init();
-
-        ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
-        ObjPool<SkillListItem>.Instance.InitOrRecyclePool(skillListItemName, _skillListItemPrefab);
-    }
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
@@ -134,54 +122,25 @@ public class StageView : SingleGameObject<StageView>
         }
     }
 
-    public void AddSkillIntoSkillList(ulong uid)
+    public override IEnumerator Init(object param)
     {
-#if UNITY_EDITOR
-        foreach (var item in skillItemList)
-        {
-            if (item.skill_id == uid)
-            {
-                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + uid.ToString());
-            }
-        }
-#endif
+        ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
 
-        if (uid > 0 && FightComponet.IdToSkillType(uid) == SkillType.Active)
-        {
-            int _id;
-            var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
-            list_item.id = _id;
-            list_item.SetInfo(uid);
-            list_item.SetParentAndNormalize(skillListRoot);
-            skillItemList.Add(list_item);
-        }
+        return null;
     }
 
-    public void RemoveSkillFromSkillList(ulong uid)
+    public override IEnumerator Open(object param)
     {
-        if (FightComponet.IdToSkillType(uid) == SkillType.Active)
-        {
-            for (int i = 0; i < skillItemList.Count; ++i)
-            {
-                if (skillItemList[i].skill_id == uid)
-                {
-                    ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
-                    skillItemList.RemoveAt(i);
-                    return;
-                }
-            }
-        }
+        throw new System.NotImplementedException();
     }
 
-    public IEnumerator LightTargetWaitSelect(List<GameItemBase> list)
+    public override IEnumerator Close(object param)
     {
-        yield return 0;
+        throw new System.NotImplementedException();
     }
 
-    public IEnumerator ShowEffectAndWaitHit(FightComponet fightComponet, ActiveSkillsConfig config)
+    public override IEnumerator Hide(object param)
     {
-        yield return GameGlobalVariable.wait0_3s;
-
-        fightComponet.hitTarget = true;
+        throw new System.NotImplementedException();
     }
 }

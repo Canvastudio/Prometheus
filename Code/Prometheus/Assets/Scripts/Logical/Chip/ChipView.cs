@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
 
-public class ChipBoard : SingleGameObject<ChipBoard>
-{
-
+public class ChipView : MuiSingleBase<ChipView> {
 
     const int maxRowNum = 23;
     const int maxColNum = 11;
@@ -51,7 +49,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     public Camera camera;
 
     private ChipDiskConfig config;
-    private ChipSquare[,] chipSquareArray = new ChipSquare[maxRowNum, maxColNum ];
+    private ChipSquare[,] chipSquareArray = new ChipSquare[maxRowNum, maxColNum];
     private List<BoardSupplyInstance> powerSupplyList;
     [SerializeField]
     private List<BoardPowerGrid> powerGridArray = new List<BoardPowerGrid>(4);
@@ -94,65 +92,6 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
-    }
-
-    public IEnumerator InitBoard(ulong play_id)
-    {
-        gameObject.SetActive(true);
-
-        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(play_id);
-
-        var powerList = config.power.ToArray();
-        powerSupplyList = new List<BoardSupplyInstance>(powerList.Length);
-        int power_id = 0;
-        int power = 0;
-
-        midRowNum = maxRowNum / 2;
-        midColNum = maxColNum / 2;
-
-        for (int i = 0; i < maxRowNum; ++i)
-        {
-            for (int m = 0; m < maxColNum; ++m)
-            {
-                ChipSquare chip = GameObject.Instantiate(chipSquare, chipBoardRoot);
-
-                chip.name = "ChipSqarue: " + i + "," + m;
-
-                var chip_grid = config.chipGridMatrix[i, m];
-                chipSquareArray[i, m] = chip;
-                chip.InitChipSquare(chip_grid);
-
-                if (chip_grid == ChipGrid.Power)
-                {
-                    power = powerList[power_id];
-                    var supply = GameObject.Instantiate(supplyInstance, chipInstanceRoot);
-                    supply.Init(power);
-                    supply.row = i;
-                    supply.col = m;
-                    supply.uid = 1 << power_id;
-                    chip.state = ChipSquareState.Power;
-                    chip.supplyInstance = supply;
-                }
-
-                chip.row = i;
-                chip.col = m;
-
-                chip.transform.localPosition = new Vector3(
-                    itemWidth * (m - midColNum),
-                    itemWidth * (midRowNum - i),
-                    0
-                    );
-            }
-
-            yield return 0;
-        }
-
-        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
-        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
-
-        CalculteChipBoardBound();
-
-        gameObject.SetActive(false);
     }
 
     public void CalculteChipBoardBound()
@@ -200,7 +139,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         _temp_listInstance.Clear();
 
-        foreach(var ins in listInstance)
+        foreach (var ins in listInstance)
         {
             _temp_listInstance.Add(ins.chipInventory.config.id, ins);
         }
@@ -208,7 +147,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         InitChipList();
     }
 
-    private void InitChipList()
+    private IEnumerator InitChipList()
     {
         int id;
 
@@ -223,16 +162,14 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             chip.transform.localScale = Vector3.one;
             chip.gameObject.SetActive(true);
             chip.id = id;
-            StartCoroutine(chip.InitItem(chipList[i]));
+
+            yield return (chip.InitItem(chipList[i]));
         }
     }
 
     public void CloseChipBoard()
     {
-        gameObject.SetActive(false);
 
-        CheckSkillPointAndProperty();
-        StageCore.Instance.Player.RefreshSkillPointStateToSkill();
     }
 
     public void DeleteSelectChip()
@@ -248,14 +185,14 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             {
                 for (int c = -1; c <= 1; ++c)
                 {
-                    if (selectChip.chipInventory.model[(r+1)*3+c+1] > 0)
+                    if (selectChip.chipInventory.model[(r + 1) * 3 + c + 1] > 0)
                     {
                         chipSquareArray[row + r, col + c].state = ChipSquareState.Free;
                     }
                 }
             }
 
-            for (int i =0; i <  listInstance.Count; ++i)
+            for (int i = 0; i < listInstance.Count; ++i)
             {
                 if (listInstance[i].uid == selectChip.uid)
                 {
@@ -274,7 +211,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             ChipBoardInstance chip;
             int power;
 
-            if(!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out chip))
+            if (!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out chip))
             {
                 power = 0;
             }
@@ -301,7 +238,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             }
         }
 
-        foreach(var pair in _temp_listInstance)
+        foreach (var pair in _temp_listInstance)
         {
             ulong id = pair.Key;
             int power = pair.Value.Power;
@@ -424,17 +361,17 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         {
             var supply = powerSupplyList[i];
 
-                _boardPowerGrid = supply.GetOrAddComponet<BoardPowerGrid>();
+            _boardPowerGrid = supply.GetOrAddComponet<BoardPowerGrid>();
 
-                _boardPowerGrid.Clean();
+            _boardPowerGrid.Clean();
 
-                _boardPowerGrid.id = i << i;
+            _boardPowerGrid.id = i << i;
 
-                supply.powerGrid = _boardPowerGrid;
+            supply.powerGrid = _boardPowerGrid;
 
-                powerGridArray.Add(_boardPowerGrid);
+            powerGridArray.Add(_boardPowerGrid);
 
-                _boardPowerGrid.AddSupply(supply);
+            _boardPowerGrid.AddSupply(supply);
 
             if (supply.negativeConnectInstance.Count > 0)
             {
@@ -527,14 +464,14 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         {
             var power_grid = powerGridArray[i];
 
-            foreach(var depth_list in power_grid.unactiveDic)
+            foreach (var depth_list in power_grid.unactiveDic)
             {
                 if (power_leak) break;
 
                 var list = depth_list.Value;
                 list.Sort(InstanceComparison);
                 list.Reverse();
-                for(int m = list.Count -1; m >=0;--m)
+                for (int m = list.Count - 1; m >= 0; --m)
                 {
                     var instance = list[m];
                     var pg = instance.powerGrid;
@@ -544,7 +481,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                         list.RemoveAt(m);
                         instance.Power = 1;
                         List<BoardInstanceBase> list1;
-                        if(pg.activeDic.TryGetValue(depth_list.Key, out list1))
+                        if (pg.activeDic.TryGetValue(depth_list.Key, out list1))
                         {
                             list.Add(instance);
                         }
@@ -561,9 +498,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
                         break;
                     }
                 }
-                
+
             }
-            
+
         }
 
         Debug.Log("构建电网结束： " + Time.realtimeSinceStartup);
@@ -572,7 +509,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
     private bool AutoPutChipBoardInstance(ChipBoardInstance instance)
     {
         var model = instance.chipInventory.model;
-         
+
         int rn;
         int cn;
         int mr;
@@ -629,7 +566,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             instance.col = c + 1;
 
 
-            for (int i = 0; i< instance.positiveConnectInstance.Count; ++i)
+            for (int i = 0; i < instance.positiveConnectInstance.Count; ++i)
             {
                 var ins = instance.positiveConnectInstance[i];
 
@@ -662,7 +599,7 @@ public class ChipBoard : SingleGameObject<ChipBoard>
         bool putable = chipSquareArray[r, c].state == ChipSquareState.Free
             && chipSquareArray[r, c].chipGrid != ChipGrid.None
             && chipSquareArray[r, c].chipGrid != ChipGrid.Power
-            && chipSquareArray[r,c].isActive;
+            && chipSquareArray[r, c].isActive;
 
         return putable;
     }
@@ -949,9 +886,9 @@ public class ChipBoard : SingleGameObject<ChipBoard>
             {
                 list.RemoveAt(i);
             }
-            else if (list[i].boardInstance != null 
+            else if (list[i].boardInstance != null
                 && chipSquareArray[r, c].boardInstance != null
-                && list[i].boardInstance.uid == chipSquareArray[r,c].boardInstance.uid)
+                && list[i].boardInstance.uid == chipSquareArray[r, c].boardInstance.uid)
             {
                 list.RemoveAt(i);
             }
@@ -1022,10 +959,99 @@ public class ChipBoard : SingleGameObject<ChipBoard>
 
         return list;
     }
+
+    public override IEnumerator Init(object param)
+    {
+        var pid = (ulong)param;
+
+        gameObject.SetActive(true);
+
+        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(pid);
+
+        var powerList = config.power.ToArray();
+        powerSupplyList = new List<BoardSupplyInstance>(powerList.Length);
+        int power_id = 0;
+        int power = 0;
+
+        midRowNum = maxRowNum / 2;
+        midColNum = maxColNum / 2;
+
+        for (int i = 0; i < maxRowNum; ++i)
+        {
+            for (int m = 0; m < maxColNum; ++m)
+            {
+                ChipSquare chip = GameObject.Instantiate(chipSquare, chipBoardRoot);
+
+                chip.name = "ChipSqarue: " + i + "," + m;
+
+                var chip_grid = config.chipGridMatrix[i, m];
+                chipSquareArray[i, m] = chip;
+                chip.InitChipSquare(chip_grid);
+
+                if (chip_grid == ChipGrid.Power)
+                {
+                    power = powerList[power_id];
+                    var supply = GameObject.Instantiate(supplyInstance, chipInstanceRoot);
+                    supply.Init(power);
+                    supply.row = i;
+                    supply.col = m;
+                    supply.uid = 1 << power_id;
+                    chip.state = ChipSquareState.Power;
+                    chip.supplyInstance = supply;
+                }
+
+                chip.row = i;
+                chip.col = m;
+
+                chip.transform.localPosition = new Vector3(
+                    itemWidth * (m - midColNum),
+                    itemWidth * (midRowNum - i),
+                    0
+                    );
+            }
+
+            yield return 0;
+        }
+
+        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
+        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
+
+        CalculteChipBoardBound();
+
+        gameObject.SetActive(false);
+    }
+
+    public override IEnumerator Open(object param)
+    {
+        gameObject.SetActive(true);
+
+        _temp_listInstance.Clear();
+
+        foreach (var ins in listInstance)
+        {
+            _temp_listInstance.Add(ins.chipInventory.config.id, ins);
+        }
+
+        yield return InitChipList();
+    }
+
+    public override IEnumerator Hide(object param)
+    {
+        gameObject.SetActive(false);
+
+        CheckSkillPointAndProperty();
+        StageCore.Instance.Player.RefreshSkillPointStateToSkill();
+
+        return null;
+    }
+
+    public override IEnumerator Close(object param)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public class ChipBoardEvent
 {
-    public const string CheckPowerState = "CPS";
+    public static string CheckPowerState = "CCPS";
 }
-

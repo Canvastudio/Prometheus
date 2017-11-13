@@ -93,5 +93,4 @@ public abstract class SingleGameObject<T> : MonoBehaviour, ISingleHandler where 
     protected virtual void Init() { }
     public virtual void CleanData() { }
     public virtual void ResetData() { CleanData();Init(); }
-
 }
