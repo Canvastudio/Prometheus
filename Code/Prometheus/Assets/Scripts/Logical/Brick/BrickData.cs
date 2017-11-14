@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BrickData {
 
+    [SerializeField]
 	List<Brick[]> bricks = new List<Brick[]>();
 
+    [SerializeField]
 	int _lowestRow = 0;
+    [SerializeField]
 	int _highestRow = 0;
 
 	public Brick GetBrick(int row ,int column)

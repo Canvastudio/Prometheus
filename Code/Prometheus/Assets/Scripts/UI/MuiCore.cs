@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UiName
+public class UiName
 {
-    ChipView,
-    ChipUpdateView,
-    SkillInfoView,
-    BrickView,
+    public static string strChipView = "ChipView";
+    public static string strChipUpdateView = "ChipUpdateView";
+    public static string strSkillInfoView = "SkillInfoView";
+    public static string strStageView = "StageView";
+    //public static string strStageUIView = "StageUIView";
 }
 
 public class MuiCore : SingleGameObject<MuiCore> {
@@ -16,7 +17,7 @@ public class MuiCore : SingleGameObject<MuiCore> {
 
     public Camera uiCamera;
 
-    List<IManagedUI> showList = new List<IManagedUI>();
+    Stack<MuiBase> stack = new Stack<MuiBase>();
 
     [SerializeField]
     string resourcePaht = "UI_Prefab/";
@@ -44,19 +45,54 @@ public class MuiCore : SingleGameObject<MuiCore> {
         return ui;
     }
 
-    public IEnumerator Init(string name, object param)
+    public IEnumerator Init(string name, object param = null)
     {
-        yield return GetMui(name).Init(param);
+        var mui = GetMui(name);
+        yield return mui.Init(param);
+        mui.gameObject.SetActive(false);
+        mui.isHide = true;
     }
 
-    public IEnumerator Open(string name, object param)
+    public IEnumerator OpenIE(string name, object param = null)
     {
+        MuiBase ui;
+
+        while(stack.Count > 0)
+        {
+            ui = stack.Pop();
+            ui.Hide();
+        }
+
+        ui = GetMui(name);
+
+        yield return GetMui(name).Open(param); ;
+
+        stack.Push(ui);
+    }
+    public void Open(string name, object param = null)
+    {
+        StartCoroutine(OpenIE(name, param));
+    }
+
+    public IEnumerator AddOpen(string name, object param = null)
+    {
+        var ui = GetMui(name);
+
         yield return GetMui(name).Open(param);
+
+        stack.Push(ui);
     }
 
-    public IEnumerator Hide(string name, object param)
+    //public void Hide(string name, object param = null)
+    //{
+    //    GetMui(name).isHide = true;
+    //    GetMui(name).Hide(param);
+    //}
+
+    public void HideTop()
     {
-        yield return GetMui(name).Hide(param);
+        var ui = stack.Pop();
+        ui.Hide();
     }
 
     public IEnumerator Close(string name, object param)

@@ -110,6 +110,7 @@ public class FightComponet : MonoBehaviour
                 {
                     passiveSkillIns.Active();
                 }
+                passiveInsList.Add(passiveSkillIns);
                 break;
             case SkillType.Summon:
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));

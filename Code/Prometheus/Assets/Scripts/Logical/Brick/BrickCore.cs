@@ -7,8 +7,9 @@ using System.Linq;
 /// <summary>
 /// 创建brick和他上面对象的逻辑发起,管理brick对象
 /// </summary>
-public class BrickCore : SingleObject<BrickCore> , IGetNode {
+public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
+    [SerializeField]
     ulong curLevelId = 0;
 
     WeightSection _weightSection;
@@ -16,11 +17,13 @@ public class BrickCore : SingleObject<BrickCore> , IGetNode {
     /// <summary>
     /// 当前一共创建到多少row了
     /// </summary>
+    [SerializeField]
     int _row = 0;
 
     /// <summary>
     /// 保存了砖块数据
     /// </summary>
+    [SerializeField]
     BrickData data = new BrickData();
 
     public void RemoveRowIndata(Brick brick)

@@ -30,7 +30,7 @@ public class Player : LiveItem {
                 if (skill_point.skillId > 0)
                 {
                     fightComponet.RemoveSkill(skill_point.skillId);
-                    StageUiView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
+                    StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
                 }
 
                 ulong new_skillId = skill_point.GetNewSkillId();
@@ -38,7 +38,7 @@ public class Player : LiveItem {
                 if (new_skillId > 0)
                 {
                     fightComponet.AddSkill(new_skillId);
-                    StageUiView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
+                    StageView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
                 }
             }
         }

@@ -33,7 +33,7 @@ public class StageCore : SingleGameObject<StageCore> {
     /// </summary>
     public float totalTime;
 
-    public bool isLooping = false;
+    public bool isLooping = false; 
 
     /// <summary>
     /// 时间
@@ -365,7 +365,7 @@ public class StageCore : SingleGameObject<StageCore> {
     public IEnumerator StopLoop()
     {
         //停止逻辑循环
-        CoroCore.Instance.ExStartCoroutine(RunLoop());
+        CoroCore.Instance.StopCoroutine(RunLoop());
         //重置标志
         isLooping = false;
 

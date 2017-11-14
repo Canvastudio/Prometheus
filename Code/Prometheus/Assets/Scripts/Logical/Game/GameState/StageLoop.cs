@@ -16,40 +16,17 @@ public class StageLoopState : IState
         }
     }
 
+    IEnumerator ie;
     public IEnumerator DoState()
     {
-
-        BrickNameCore.Instance.SetCurrentScene(0);
-
-        yield return MuiCore.Instance.Init("ChipBoard", 1);
-
-        ChipUpdateView.Instance.InitView();
-
-        yield return FxCore.Instance.PreLoadStageFx();
-
-        //生成地图，怪物
-        BrickCore.Instance.CreatePrimitiveStage();
-
-        //生成玩家
-        BrickCore.Instance.CreatePlayer(1);
-
-        StageCore.Instance.Player.inventory.AddChip(100001);
-        StageCore.Instance.Player.inventory.AddChip(100007);
-
-        yield return 0;
-
-        //刷新下位置
-        Messenger.Invoke(SA.RefreshGameItemPos);
-
         //开始执行关卡内部的逻辑循环
-        yield return StageCore.Instance.RunLoop();
-
+        ie = StageCore.Instance.RunLoop();
+        yield return ie;
         Debug.Log("StageLoop 结束！！！！！！！！！！！");
     }
 
     public IState GetNextState()
     {
-  
         return null;
     }
 

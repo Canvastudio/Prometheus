@@ -169,7 +169,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public void CloseChipBoard()
     {
-
+        MuiCore.Instance.Open(UiName.strStageView);
     }
 
     public void DeleteSelectChip()
@@ -962,11 +962,15 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public override IEnumerator Init(object param)
     {
-        var pid = (ulong)param;
-
         gameObject.SetActive(true);
 
-        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(pid);
+        HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
+        HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
+
+        ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
+        ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
+
+        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(StageCore.Instance.Player.playerId);
 
         var powerList = config.power.ToArray();
         powerSupplyList = new List<BoardSupplyInstance>(powerList.Length);
@@ -1035,14 +1039,12 @@ public class ChipView : MuiSingleBase<ChipView> {
         yield return InitChipList();
     }
 
-    public override IEnumerator Hide(object param)
+    public override void Hide(object param)
     {
         gameObject.SetActive(false);
 
         CheckSkillPointAndProperty();
         StageCore.Instance.Player.RefreshSkillPointStateToSkill();
-
-        return null;
     }
 
     public override IEnumerator Close(object param)

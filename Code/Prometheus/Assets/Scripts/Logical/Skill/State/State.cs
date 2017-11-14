@@ -261,8 +261,15 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         //        break;
         //}
 
-        ins = (StateEffectIns)Activator.CreateInstance(
-            Type.GetType(config.stateEffects[i].ToString()), owner, config, i, passive);
+        try
+        {
+            ins = (StateEffectIns)Activator.CreateInstance(
+                Type.GetType(config.stateEffects[i].ToString()), owner, config, i, passive);
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("Activator Exception: " + e.Message);
+        }
             
 
         return ins;

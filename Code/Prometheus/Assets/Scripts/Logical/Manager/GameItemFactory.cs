@@ -150,6 +150,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var player = go.GetComponent<Player>();
 
         player.standBrick = bornBrick;
+        player.transform.position = bornBrick.transform.position;
 
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
