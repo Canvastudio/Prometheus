@@ -11,6 +11,8 @@ public class MergeOption : DragableScrollItem {
     Text chipName;
     [SerializeField]
     Text chipDescribe;
+    [SerializeField]
+    ChipLink chipLink;
 
     public int id;
 
@@ -18,10 +20,12 @@ public class MergeOption : DragableScrollItem {
 
     public void Init(ChipInventory _chip,int _id)
     {
+        chip = _chip;
         chipName.text = chip.config.name;
         chipDescribe.text = chip.config.descrip;
         id = _id;
         HudEvent.Get(button).onClick = OnClick;
+        chipLink.Set(_chip);
     }
 
     private void OnClick()

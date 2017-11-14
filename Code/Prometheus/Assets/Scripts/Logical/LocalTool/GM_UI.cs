@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class GM_UI : MonoBehaviour {
 
     [SerializeField]
-    Button OpenChipBoard_Btn;
+    Button OpenChipUpdate_Btn;
     
 	// Use this for initialization
 	void Start () {
-        HudEvent.Get(OpenChipBoard_Btn.gameObject).onClick = () =>
+        HudEvent.Get(OpenChipUpdate_Btn.gameObject).onClick = () =>
         {
-            ChipView.Instance.OpenChipBoard();
+            MuiCore.Instance.Open(UiName.strChipUpdateView);
         };
 	}
 	
