@@ -14,7 +14,8 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
 
     public override void Hide(object param)
     {
-
+        gameObject.SetActive(false);
+        chipMerge.ShowMergeBtns();
     }
 
     public override IEnumerator Init(object param)
@@ -30,7 +31,7 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     {
         gameObject.SetActive(true);
         chipMerge.gameObject.SetActive(true);
-        chipMerge.Show();
+        chipMerge.ShowMergeBtns();
 
         return null;
     }
