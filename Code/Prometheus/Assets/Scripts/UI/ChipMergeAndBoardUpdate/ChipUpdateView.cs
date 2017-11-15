@@ -20,13 +20,14 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     {
         gameObject.SetActive(false);
         chipMerge.ShowMergeBtns();
+        chipMerge.Clean();
     }
 
     public override IEnumerator Init(object param)
     {
         chipMerge.Init();
         gameObject.SetActive(false);
-
+  
         HudEvent.Get(closeButton).onClick = OnClose;
 
         return null;

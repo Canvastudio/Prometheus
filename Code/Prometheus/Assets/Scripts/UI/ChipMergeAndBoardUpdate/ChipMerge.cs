@@ -105,7 +105,8 @@ public class ChipMerge : MonoBehaviour {
 
     ChipConfig mergeConfig;
     int mergeCost;
-
+    Stuff[] sts;
+    int[] vas;
     private void CheckMergeResult()
     {
         matInfo.CleanCost();
@@ -120,8 +121,8 @@ public class ChipMerge : MonoBehaviour {
 
             result.SetActive(true);
 
-            var sts =chips[0].config.stuffCost.stuffs.ToArray();
-            var vas = chips[0].config.stuffCost.values.ToArray();
+            sts =chips[0].config.stuffCost.stuffs.ToArray();
+            vas = chips[0].config.stuffCost.values.ToArray();
 
             for (int i = 0; i < sts.Length; ++i)
             {
@@ -154,6 +155,19 @@ public class ChipMerge : MonoBehaviour {
         StageCore.Instance.Player.inventory.RemoveChip(chips[0]);
         StageCore.Instance.Player.inventory.RemoveChip(chips[1]);
         StageCore.Instance.Player.inventory.AddChip(mergeConfig.id, mergeCost);
+
+        chipInfo[0].gameObject.SetActive(false);
+        chipInfo[1].gameObject.SetActive(false);
+        chips[0] = null;
+        chips[1] = null;
+
+        for (int i = 0; i < sts.Length; ++i)
+        {
+            StageCore.Instance.Player.inventory.ChangeStuffCount(sts[i], -vas[i]);
+        }
+
+        matInfo.RefreshOwned();
+        matInfo.CleanCost();
     }
 
     private void ShowChipOption(ulong cid = 0)
@@ -187,6 +201,15 @@ public class ChipMerge : MonoBehaviour {
 
             state = 1;
         }
+    }
+
+    public void Clean()
+    {
+        chipInfo[0].gameObject.SetActive(false);
+        chipInfo[1].gameObject.SetActive(false);
+        chips[0] = null;
+        chips[1] = null;
+        result.gameObject.SetActive(false);
     }
 
     public void ShowMergeBtns()

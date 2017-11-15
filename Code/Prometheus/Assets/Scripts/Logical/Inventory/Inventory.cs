@@ -119,6 +119,8 @@ public class Inventory {
 
                     StageCore.Instance.Player.RefreshSkillPointStateToSkill();
                 }
+
+                chipList.RemoveAt(i);
             }
         }
     }

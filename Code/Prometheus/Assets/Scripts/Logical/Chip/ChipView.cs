@@ -1103,10 +1103,33 @@ public class ChipView : MuiSingleBase<ChipView> {
     {
         for(int i = 0; i < listInstance.Count; ++i)
         {
-            RefreshChipInstanceConnectInfo(instance, false);
-            ConstructPowerGrid();
-            Destroy(listInstance[i]);
-            listInstance.RemoveAt(i);
+            if (listInstance[i].uid == instance.uid)
+            {
+                RefreshChipInstanceConnectInfo(instance, false);
+                ConstructPowerGrid();
+
+                int r = instance.row;
+                int c = instance.col;
+
+                int o = 0;
+
+                for (int m = -1; m <= 1; ++m)
+                {
+                    for (int n = -1; n <= 1; ++n)
+                    {
+                        if (instance.chipInventory.model[o++] > 0)
+                        {
+                            if (!(r + m < r1 || r + m > r2 || c +n< 0 || c+ n > r2))
+                            {
+                                chipSquareArray[r + m, c + n].state = ChipSquareState.Free;
+                            }
+                        }
+                    }
+                }
+
+                Destroy(listInstance[i].gameObject);
+                listInstance.RemoveAt(i);
+            }
         }
     }
 }
