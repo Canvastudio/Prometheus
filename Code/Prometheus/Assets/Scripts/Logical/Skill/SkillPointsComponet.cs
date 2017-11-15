@@ -22,6 +22,5 @@ public class SkillPointsComponet : MonoBehaviour {
         skillPoint = new SkillPoint(pointId);
         skillPoint.ChangeSkillPoint(count);
         pointList.Add(skillPoint);
-        
     }
 }

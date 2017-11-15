@@ -47,7 +47,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
             else if (v == 3) negativeIndex = i;
         }
 
-        castPower = chipItem.chipInventory.power;
+        castPower = chipItem.chipInventory.cost;
         Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnPowerGridRefresh);
     }
 

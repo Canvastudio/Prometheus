@@ -27,14 +27,22 @@ public class GameInit : IState
 
         yield return MuiCore.Instance.Init(UiName.strChipView);
 
+        StageCore.Instance.Player.inventory.ChangeStuffCount(Stuff.Coherer, 50);
+        StageCore.Instance.Player.inventory.ChangeStuffCount(Stuff.Core, 50);
+        StageCore.Instance.Player.inventory.ChangeStuffCount(Stuff.Organics, 50);
+        StageCore.Instance.Player.inventory.ChangeStuffCount(Stuff.Soul, 50);
+
         yield return MuiCore.Instance.Init(UiName.strChipUpdateView);
 
         yield return MuiCore.Instance.Init(UiName.strSkillInfoView);
 
         //测试代码
         StageCore.Instance.Player.inventory.AddChip(100001);
+        StageCore.Instance.Player.inventory.AddChip(100001);
         StageCore.Instance.Player.inventory.AddChip(100007);
         StageCore.Instance.Player.inventory.AddChip(100136);
+
+
     }
 
     public IState GetNextState()

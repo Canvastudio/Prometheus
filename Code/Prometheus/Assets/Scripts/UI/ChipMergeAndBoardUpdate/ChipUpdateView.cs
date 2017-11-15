@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
 
+    [SerializeField]
+    Button closeButton;
+    
     public ChipMerge chipMerge;
     public string optionName = "OPN";
 
@@ -21,10 +25,16 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     public override IEnumerator Init(object param)
     {
         chipMerge.Init();
-
         gameObject.SetActive(false);
 
+        HudEvent.Get(closeButton).onClick = OnClose;
+
         return null;
+    }
+
+    private void OnClose()
+    {
+        MuiCore.Instance.Open(UiName.strStageView);
     }
 
     public override IEnumerator Open(object param)

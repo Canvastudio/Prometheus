@@ -53,7 +53,7 @@ public class StageCore : SingleGameObject<StageCore> {
     /// <summary>
     /// 玩家是处于动作中
     /// </summary>
-    public bool playerDoing = false;
+    //public bool playerDoing = false;
 
     /// <summary>
     /// 是否符合被动里面的just状态

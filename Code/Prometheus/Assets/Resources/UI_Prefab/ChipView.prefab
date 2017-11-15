@@ -1020,12 +1020,13 @@ MonoBehaviour:
   negative: {fileID: 1327212566661030}
   scrollRect: {fileID: 114265502582079862}
   chipInventory:
-    power: 0
+    cost: 0
     power_max: 0
     power_min: 0
     model: 
     boardInstance: {fileID: 0}
     listItem: {fileID: 0}
+    uid: 0
   boardInstance: {fileID: 0}
 --- !u!114 &114372795618737180
 MonoBehaviour:
@@ -1465,6 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c484f6bdefa1e43a5bf07648eb3ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHide: 0
   rowNum: 3
   colNum: 3
   chipSquare: {fileID: 114898044491075630, guid: 9f1bfbf3be0d6ac41b29282829fef4af,
@@ -1931,7 +1933,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1479418102286766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 296.275, y: 0, z: 0}
+  m_LocalPosition: {x: -296.275, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224609645943313242}
@@ -1942,7 +1944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -592.55, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224243133236565696

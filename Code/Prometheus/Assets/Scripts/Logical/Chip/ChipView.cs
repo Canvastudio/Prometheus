@@ -292,48 +292,95 @@ public class ChipView : MuiSingleBase<ChipView> {
         return instance;
     }
 
-    private void RefreshChipInstanceConnectInfo(ChipBoardInstance instance)
+    private void RefreshChipInstanceConnectInfo(ChipBoardInstance instance, bool add = true)
     {
         instance.negativeConnectInstance.Clear();
         instance.positiveConnectInstance.Clear();
 
-        //寻找他的正极相连的负极极和电源
-        int r, c;
-        instance.GetInPowerRC(out r, out c);
-        var chipSquares = FindOutPowerSquareAround(r, c);
-        if (chipSquares.Count > 0)
+        if (add)
         {
-            for (int i = 0; i < chipSquares.Count; ++i)
+            //寻找他的正极相连的负极极和电源
+            int r, c;
+            instance.GetInPowerRC(out r, out c);
+            var chipSquares = FindOutPowerSquareAround(r, c);
+            if (chipSquares.Count > 0)
             {
-                if (chipSquares[i].boardInstance != null)
+                for (int i = 0; i < chipSquares.Count; ++i)
                 {
-                    chipSquares[i].boardInstance.negativeConnectInstance.Add(instance);
-                    instance.positiveConnectInstance.Add(chipSquares[i].boardInstance);
+                    if (chipSquares[i].boardInstance != null)
+                    {
+                        chipSquares[i].boardInstance.negativeConnectInstance.Add(instance);
+                        instance.positiveConnectInstance.Add(chipSquares[i].boardInstance);
+                    }
+                    else
+                    {
+                        instance.positiveConnectInstance.Add(chipSquares[i].supplyInstance);
+                        chipSquares[i].supplyInstance.negativeConnectInstance.Add(instance);
+                    }
                 }
-                else
+            }
+
+            //寻找他的负极相连的正极
+            instance.GetOutPowerRC(out r, out c);
+            chipSquares = FindInPowerSquareAround(r, c);
+            if (chipSquares.Count > 0)
+            {
+                for (int i = 0; i < chipSquares.Count; ++i)
                 {
-                    instance.positiveConnectInstance.Add(chipSquares[i].supplyInstance);
-                    chipSquares[i].supplyInstance.negativeConnectInstance.Add(instance);
+                    if (chipSquares[i].boardInstance != null)
+                    {
+                        chipSquares[i].boardInstance.positiveConnectInstance.Add(instance);
+                        instance.negativeConnectInstance.Add(chipSquares[i].boardInstance);
+                    }
+                    else
+                    {
+                        instance.negativeConnectInstance.Add(chipSquares[i].supplyInstance);
+                        chipSquares[i].supplyInstance.positiveConnectInstance.Add(instance);
+                    }
                 }
             }
         }
-
-        //寻找他的负极相连的正极
-        instance.GetOutPowerRC(out r, out c);
-        chipSquares = FindInPowerSquareAround(r, c);
-        if (chipSquares.Count > 0)
+        else
         {
-            for (int i = 0; i < chipSquares.Count; ++i)
+            //寻找他的正极相连的负极极和电源
+            int r, c;
+            instance.GetInPowerRC(out r, out c);
+            var chipSquares = FindOutPowerSquareAround(r, c);
+            if (chipSquares.Count > 0)
             {
-                if (chipSquares[i].boardInstance != null)
+                for (int i = 0; i < chipSquares.Count; ++i)
                 {
-                    chipSquares[i].boardInstance.positiveConnectInstance.Add(instance);
-                    instance.negativeConnectInstance.Add(chipSquares[i].boardInstance);
+                    if (chipSquares[i].boardInstance != null)
+                    {
+                        chipSquares[i].boardInstance.negativeConnectInstance.Remove(instance);
+                        instance.positiveConnectInstance.Remove(chipSquares[i].boardInstance);
+                    }
+                    else
+                    {
+                        instance.positiveConnectInstance.Remove(chipSquares[i].supplyInstance);
+                        chipSquares[i].supplyInstance.negativeConnectInstance.Remove(instance);
+                    }
                 }
-                else
+            }
+
+            //寻找他的负极相连的正极
+            instance.GetOutPowerRC(out r, out c);
+            chipSquares = FindInPowerSquareAround(r, c);
+            if (chipSquares.Count > 0)
+            {
+                for (int i = 0; i < chipSquares.Count; ++i)
                 {
-                    instance.negativeConnectInstance.Add(chipSquares[i].supplyInstance);
-                    chipSquares[i].supplyInstance.positiveConnectInstance.Add(instance);
+                    if (chipSquares[i].boardInstance != null)
+                    {
+                        chipSquares[i].boardInstance.positiveConnectInstance.Add(instance);
+                        instance.negativeConnectInstance.Add(chipSquares[i].boardInstance);
+                    }
+                    else
+                    {
+                        instance.negativeConnectInstance.Add(chipSquares[i].supplyInstance);
+                        chipSquares[i].supplyInstance.positiveConnectInstance.Add(instance);
+                    }
+
                 }
             }
         }
@@ -1050,6 +1097,17 @@ public class ChipView : MuiSingleBase<ChipView> {
     public override IEnumerator Close(object param)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void RemoveChipInstance(ChipBoardInstance instance)
+    {
+        for(int i = 0; i < listInstance.Count; ++i)
+        {
+            RefreshChipInstanceConnectInfo(instance, false);
+            ConstructPowerGrid();
+            Destroy(listInstance[i]);
+            listInstance.RemoveAt(i);
+        }
     }
 }
 

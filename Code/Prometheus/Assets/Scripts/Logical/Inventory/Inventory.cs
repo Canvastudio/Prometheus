@@ -24,7 +24,8 @@ public class Inventory {
         else
         {
             stuffDic.Add(id, new StuffInventory()
-            { config = ConfigDataBase.GetConfigDataById<StuffConfig>(id),
+            {
+                config = ConfigDataBase.GetConfigDataById<StuffConfig>(id),
                 count = count
             });
         }
@@ -62,9 +63,9 @@ public class Inventory {
         return GetStuffCount(id);
     }
 
-    public void AddChip(ulong id)
+    public void AddChip(ulong id, int cost = -1)
     {
-        chipList.Add(new ChipInventory(id));
+        chipList.Add(new ChipInventory(id, cost));
     }
 
 
@@ -84,13 +85,42 @@ public class Inventory {
 
         foreach(var chip in chipList)
         {
-            if (chip.listItem == null)
+            if (chip.boardInstance == null)
             {
                 list.Add(chip);
             }
         }
 
         return list;
+    }
+
+    public void RemoveChip(ChipInventory chip)
+    {
+        for(int i = 0; i < chipList.Count; ++i)
+        {
+            if (chipList[i].uid == chip.uid)
+            {
+                if (chipList[i].boardInstance != null)
+                {
+                    //移除芯片盘上的芯片
+                    ChipView.Instance.RemoveChipInstance(chipList[i].boardInstance);
+
+                    //因为芯片盘只有每次手动关闭才会去刷新技能，所以这里得手动刷新下技能
+                    var sp = chip.config.skillPoint;
+                    int c = sp.Count();
+                    {
+                        for (int m = 0; m < c; ++m)
+                        {
+                            ulong skill_id = (ulong)sp[m, 0];
+                            int count = sp[m, 1];
+                            StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * -1);
+                        }
+                    }
+
+                    StageCore.Instance.Player.RefreshSkillPointStateToSkill();
+                }
+            }
+        }
     }
 }
 
@@ -105,19 +135,16 @@ public class StuffInventory
 public class ChipInventory
 {
     public ChipConfig config;
-
-    public float power;
-
+    public float cost;
     public int power_max;
-
     public int power_min;
-
     public int[] model;
-
     public ChipBoardInstance boardInstance;
     public ChipListItem listItem;
+    public int uid = 0;
+    private static int _uid = 0;
 
-    public ChipInventory(ulong id)
+    public ChipInventory(ulong id, int cost = -1)
     {
         config = ConfigDataBase.GetConfigDataById<ChipConfig>(id);
 
@@ -126,22 +153,19 @@ public class ChipInventory
         power_min = power_range[0];
         power_max = power_range[1];
 
-        
-        if(id == 100011)
+        if (cost < 0)
         {
-            power = 1;
-        }
-        else if (id == 100026)
-        {
-            power = 2;
+            this.cost = Random.Range(power_min, power_max);
         }
         else
         {
-            power = Random.Range(power_min, power_max);
+            this.cost = cost;
         }
 
         int model_count = config.model.Count();
 
         model = config.model.ToArray(Random.Range(0, model_count - 1));
+
+        uid = _uid++;
     }
 }
