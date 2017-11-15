@@ -147,7 +147,7 @@ public class ChipMerge : MonoBehaviour {
         {
             if (StageCore.Instance.Player.inventory.GetStuffCount(sts[i]) < vas[i])
             {
-                PopTipView.Instance.Show("资源不足？？？");
+                PopTipView.Instance.Show("deficient_resources");
                 return;
             }
         }

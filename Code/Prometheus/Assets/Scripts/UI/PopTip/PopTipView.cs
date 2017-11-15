@@ -22,6 +22,10 @@ public class PopTipView : SingleGameObject<PopTipView> {
         item.SetParentAndNormalize(this.transform);
         item.transform.localPosition = new Vector3(0f, 275f, 0);
         item.gameObject.SetActive(true);
+        if (text != null)
+        {
+            text = TipsConfig.GetConfigDataByKey<TipsConfig>(text).text;
+        }
         item.Set(_id, _duration, text); 
     }
 }
