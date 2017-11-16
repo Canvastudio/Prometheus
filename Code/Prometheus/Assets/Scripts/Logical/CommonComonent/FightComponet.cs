@@ -482,6 +482,7 @@ public class FightComponet : MonoBehaviour
 
         if (target_list.Count <= 0)
         {
+            PopTipView.Instance.Show("target_none");
             yield break;
         }
 
@@ -555,9 +556,7 @@ public class FightComponet : MonoBehaviour
                 }
             }
 
-            StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
-
-            yield return 0.2f;
+            yield return(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
         }
         
         
@@ -572,6 +571,8 @@ public class FightComponet : MonoBehaviour
         }
 
         yield return wuf;
+
+        Debug.Log("技能释放完毕: " + name);
     }
 
     static WaitUntil wuf;
@@ -595,6 +596,7 @@ public class FightComponet : MonoBehaviour
 
         while (i < damageTimes)
         {
+            Debug.Log("播放技能特效: " + config.effect);
             yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position, () =>
             {
 

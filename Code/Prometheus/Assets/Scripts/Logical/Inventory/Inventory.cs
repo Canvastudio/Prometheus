@@ -14,7 +14,7 @@ public class Inventory {
 
     public void ChangeStuffCount(ulong id, int count)
     {
-        Debug.Log("获得stuff: " + id.ToString() + " " + count.ToString());
+        //Debug.Log("获得stuff: " + id.ToString() + " " + count.ToString());
         StuffInventory stuffInventory;
 
         if (stuffDic.TryGetValue(id, out stuffInventory))
