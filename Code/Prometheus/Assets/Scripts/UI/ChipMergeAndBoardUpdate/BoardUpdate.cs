@@ -22,33 +22,39 @@ public class BoardUpdate : MonoBehaviour {
 
     public void Show()
     {
-
         mat.RefreshOwned();
 
-        int t = ChipCore.Instance.chipBoardUpdate;
+        int t = ChipCore.Instance.chipBoardUpdate + 1;
+        lvText.text = t.ToString();
 
-        var ts = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.Count(
-            (int)StageCore.Instance.Player.playerId);
-
-        if (t > ts)
+        if (t <= GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).maxUpdateCount)
         {
-            t = ts;
+
+            var ts = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.Count(
+                (int)StageCore.Instance.Player.playerId);
+
+            if (t > ts)
+            {
+                t = ts;
+            }
+
+            cost = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.ToArray(
+                (int)StageCore.Instance.Player.playerId, t - 1);
+
+            for (int i = 0; i < cost.Length; ++i)
+            {
+                Stuff s = (Stuff)i;
+                int c = cost[i];
+
+                mat.SetCost(s, c);
+            }
+        }
+        else
+        {
+            updateButton.interactable = false;
         }
 
-        cost = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.ToArray(
-            (int)StageCore.Instance.Player.playerId, t);
 
-        for (int i = 0; i < cost.Length; ++i)
-        {
-            Stuff s = (Stuff)i;
-            int c = cost[i];
-
-            mat.SetCost(s, c);
-        }
-
-        ChipCore.Instance.chipBoardUpdate += 1;
-
-        lvText.text = ChipCore.Instance.chipBoardUpdate.ToString();
     }
 
     public void OnUpdate()
@@ -74,7 +80,7 @@ public class BoardUpdate : MonoBehaviour {
 
         }
 
-        ChipCore.Instance.chipBoardUpdate = Mathf.Max(13, ChipCore.Instance.chipBoardUpdate + 1);
+        ChipCore.Instance.chipBoardUpdate += 1;
 
         Show();
     }

@@ -111,6 +111,7 @@ public class ChipView : MuiSingleBase<ChipView> {
             for (int n = 0; n < maxColNum; ++n)
             {
                 bool active = (m >= r1 && m <= r2) && (n >= c1 && n <= c2);
+
                 chipSquareArray[m, n].isActive = active;
 
                 if (chipSquareArray[m, n].supplyInstance != null)
@@ -122,6 +123,7 @@ public class ChipView : MuiSingleBase<ChipView> {
                     }
                     else
                     {
+                        chipSquareArray[m, n].supplyInstance.gameObject.SetActive(true);
                         powerSupplyList.Add(chipSquareArray[m, n].supplyInstance);
                     }
                 }

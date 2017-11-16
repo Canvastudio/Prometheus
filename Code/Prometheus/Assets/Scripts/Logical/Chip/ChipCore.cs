@@ -20,6 +20,8 @@ public class ChipCore : SingleObject<ChipCore> {
             {
                 ChipView.Instance.CalculteChipBoardBound();
             }
+
+            _cbu = value;
         }
     }
 
