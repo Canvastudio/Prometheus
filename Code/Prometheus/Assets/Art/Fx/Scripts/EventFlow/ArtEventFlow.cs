@@ -52,7 +52,6 @@ public class ArtEventFlow : MonoBehaviour {
 
 		tran_start.SetPos(ref start_pos);
 		tran_end.SetPos(ref end_pos);
-
 		callback = CallHit;
 	
 	}

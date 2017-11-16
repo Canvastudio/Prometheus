@@ -40,7 +40,7 @@ public class ArtSkill {
 
 		GameObject objskill = FxPool.Get(FxEnum.Skill, name);
 		ArtEventFlow eventFlow = objskill.GetComponent<ArtEventFlow>();
-		eventFlow.Init(tranStart, tranEnd, null);
+		eventFlow.Init(tranStart, tranEnd, _callback);
 
 		while(true) {
 
