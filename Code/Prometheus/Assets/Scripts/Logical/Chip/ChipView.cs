@@ -96,6 +96,9 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public void CalculteChipBoardBound()
     {
+        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
+        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
+
         powerSupplyList.Clear();
 
         r1 = Mathf.Max(0, midRowNum - rowNum);
@@ -1064,8 +1067,7 @@ public class ChipView : MuiSingleBase<ChipView> {
             yield return 0;
         }
 
-        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
-        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
+
 
         CalculteChipBoardBound();
 

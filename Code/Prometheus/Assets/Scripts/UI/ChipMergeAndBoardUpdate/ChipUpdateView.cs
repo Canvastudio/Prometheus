@@ -7,9 +7,18 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
 
     [SerializeField]
     Button closeButton;
-    
+    [SerializeField]
+    Button mergeButon;
+    [SerializeField]
+    Button boardButton;
+
+
+
+    public BoardUpdate board;
     public ChipMerge chipMerge;
     public string optionName = "OPN";
+
+    int state = 0;
 
     public override IEnumerator Close(object param)
     {
@@ -26,11 +35,32 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     public override IEnumerator Init(object param)
     {
         chipMerge.Init();
+        board.Init();
         gameObject.SetActive(false);
   
         HudEvent.Get(closeButton).onClick = OnClose;
+        HudEvent.Get(mergeButon).onClick = OnMerge;
+        HudEvent.Get(boardButton).onClick = OnBoard;
 
         return null;
+    }
+
+
+    private void OnMerge()
+    {
+        chipMerge.ShowMergeBtns();
+        chipMerge.gameObject.SetActive(true);
+        board.gameObject.SetActive(false);
+        state = 0;
+    }
+
+    private void OnBoard()
+    {
+        chipMerge.Hide();
+        chipMerge.gameObject.SetActive(false);
+        board.gameObject.SetActive(true);
+        board.Show();
+        state = 1;
     }
 
     private void OnClose()
@@ -43,6 +73,7 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
         gameObject.SetActive(true);
         chipMerge.gameObject.SetActive(true);
         chipMerge.ShowMergeBtns();
+        board.gameObject.SetActive(false);
 
         return null;
     }

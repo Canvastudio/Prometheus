@@ -214,8 +214,16 @@ public class ChipMerge : MonoBehaviour {
 
     public void ShowMergeBtns()
     {
+        if (state == 1)
+        {
+            LeanTween.moveLocalX(this.gameObject, 0, 0.3f);
 
+            state = 0;
+        }
+    }
 
+    public void Hide()
+    {
         if (state == 1)
         {
             LeanTween.moveLocalX(this.gameObject, 0, 0.3f);
