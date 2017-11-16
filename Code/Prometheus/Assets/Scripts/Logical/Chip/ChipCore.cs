@@ -18,10 +18,11 @@ public class ChipCore : SingleObject<ChipCore> {
         {
             if (value != _cbu)
             {
+                _cbu = value;
                 ChipView.Instance.CalculteChipBoardBound();
             }
 
-            _cbu = value;
+
         }
     }
 
