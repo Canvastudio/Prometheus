@@ -12,6 +12,8 @@ public class SkillPoint {
     private int _count;
     public int last_count;
 
+    public int activeIndex = -1;
+
     public int count
     {
         get { return _count; }
@@ -30,7 +32,7 @@ public class SkillPoint {
         this._count = _count + change_count;
 
 #if UNITY_EDITOR
-        if (_count < 0) Debug.LogError("skill point 数量小于了0.");
+        if (_count < 0) Debug.Log("skill point 数量小于了0.");
 #endif
     }
 
@@ -43,7 +45,7 @@ public class SkillPoint {
             if (updateLimit[i] <= _count)
             {
                 skillId = skillIds[i];
-
+                activeIndex = i;
                  return skillId;
             }
         }

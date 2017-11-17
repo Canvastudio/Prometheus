@@ -27,11 +27,11 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     public bool hasPut = false;
 
-    public void Init(ChipListItem chipItem)
+    public void Init(ChipInventory _chipInventory)
     {
-        chipInventory = chipItem.chipInventory;
+        chipInventory = _chipInventory;
         Color color = SuperTool.CreateColor(chipInventory.config.color);
-        chipItem.chipInventory.boardInstance = this;
+        chipInventory.boardInstance = this;
 
         for (int i = 0; i < itemsList.Count; ++i)
         {
@@ -47,7 +47,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
             else if (v == 3) negativeIndex = i;
         }
 
-        castPower = chipItem.chipInventory.cost;
+        castPower = chipInventory.cost;
         Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnPowerGridRefresh);
     }
 

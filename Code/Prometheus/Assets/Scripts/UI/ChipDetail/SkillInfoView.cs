@@ -33,12 +33,12 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
 
             ObjPool<SkillDetailItem>.Instance.RecyclePool(pname);
 
-            foreach (var config in StageCore.Instance.Player.fightComponet.activeSkillConfigs)
+            foreach (var ins in StageCore.Instance.Player.fightComponet.activeInsList)
             {
                 var item = ObjPool<SkillDetailItem>.Instance.GetObjFromPool(pname);
                 item.SetParentAndNormalize(contentRoot);
                 item.gameObject.SetActive(true);
-                item.Set(config);
+                item.Set(ins.config);
             }
         }
     }

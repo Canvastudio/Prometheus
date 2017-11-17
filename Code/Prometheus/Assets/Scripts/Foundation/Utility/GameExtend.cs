@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public static class GameExtend  {
 
@@ -68,6 +69,11 @@ public static class GameExtend  {
         {
             return null;
         }
+    }
+
+    public static void Clean(this StringBuilder sb)
+    {
+        sb.Remove(0, sb.Length);
     }
 }
 

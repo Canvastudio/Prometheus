@@ -26,21 +26,12 @@ public class MonsterFightComponet : FightComponet {
     };
 
     [SerializeField]
-    List<MonsterActiveSkillIns> activeInsList = new List<MonsterActiveSkillIns>(2);
+    public new List<MonsterActiveSkillIns> activeInsList = new List<MonsterActiveSkillIns>(2);
 
-    public override void AddSkill(ulong id)
+    protected new void AddActiveIns(ulong id, SkillPoint point)
     {
-        base.AddSkill(id);
-
-        switch (IdToSkillType(id))
-        {
-            case SkillType.Active:
-                MonsterActiveSkillIns ins = new MonsterActiveSkillIns(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id), ownerObject);
-                activeInsList.Add(ins);
-                break;
-        }
-
-        ReorderSkill();
+        ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+        activeInsList.Add(new MonsterActiveSkillIns(aconfig, ownerObject, point));
     }
 
     public void ReorderSkill()
@@ -79,6 +70,8 @@ public class MonsterFightComponet : FightComponet {
                 Messenger<float>.AddListener(SA.StageTimeCast, OnTimeCast);
             }
         }
+
+        ReorderSkill();
     }
 
     public override void DeactiveSkill()

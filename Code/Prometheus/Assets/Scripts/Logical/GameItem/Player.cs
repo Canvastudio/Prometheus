@@ -37,7 +37,7 @@ public class Player : LiveItem {
 
                 if (new_skillId > 0)
                 {
-                    fightComponet.AddSkill(new_skillId);
+                    fightComponet.AddSkill(new_skillId, skill_point);
                     StageView.Instance.AddSkillIntoSkillList(skill_point.GetNewSkillId());
                 }
             }

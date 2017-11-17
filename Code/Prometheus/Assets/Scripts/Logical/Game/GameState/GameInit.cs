@@ -36,6 +36,8 @@ public class GameInit : IState
 
         yield return MuiCore.Instance.Init(UiName.strSkillInfoView);
 
+        yield return MuiCore.Instance.Init(UiName.strChipDetailVew);
+
         //测试代码
         StageCore.Instance.Player.inventory.AddChip(100001);
         StageCore.Instance.Player.inventory.AddChip(100001);

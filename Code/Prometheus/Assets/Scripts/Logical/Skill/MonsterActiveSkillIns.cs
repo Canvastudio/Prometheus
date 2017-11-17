@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class MonsterActiveSkillIns {
-
+public class MonsterActiveSkillIns : ActiveSkillIns
+{
     public float cooldown;
 
     /// <summary>
@@ -12,31 +12,11 @@ public class MonsterActiveSkillIns {
     /// </summary>
     public float time;
 
-    public LiveItem owner;
-    private bool active = false;
-    public ActiveSkillsConfig config;
-
-    public MonsterActiveSkillIns(ActiveSkillsConfig config, LiveItem owner)
+    public MonsterActiveSkillIns(ActiveSkillsConfig config, LiveItem owner, SkillPoint point) :base (config, owner, point)
     {
         cooldown = config.coolDown;
         this.owner = owner;
         this.config = config;
-    }
-
-    public void Active()
-    {
-        if (!active)
-        {
-            active = true;
-        }
-    }
-
-    public void Deactive()
-    {
-        if (active)
-        {
-            active = false;
-        }
     }
 
     /// <summary>

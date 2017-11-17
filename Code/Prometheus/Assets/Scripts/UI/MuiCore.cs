@@ -8,6 +8,8 @@ public class UiName
     public static string strChipUpdateView = "ChipUpdateView";
     public static string strSkillInfoView = "SkillInfoView";
     public static string strStageView = "StageView";
+    public static string strChipDetailVew = "ChipDetailView";
+
     //public static string strStageUIView = "StageUIView";
 }
 

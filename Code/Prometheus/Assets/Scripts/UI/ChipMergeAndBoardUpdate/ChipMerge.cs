@@ -92,7 +92,7 @@ public class ChipMerge : MonoBehaviour {
 
         if (chip != null)
         {
-            chipInfo[index].Init(chip, -1, false);
+            chipInfo[index].Init(chip, -1, OnMergeOptionClick);
             chipInfo[index].gameObject.SetActive(true);
         }
         else
@@ -230,5 +230,11 @@ public class ChipMerge : MonoBehaviour {
 
             state = 0;
         }
+    }
+
+    public void OnMergeOptionClick(MergeOption op)
+    {
+        SetChip(op.chip);
+        ShowMergeBtns();
     }
 }

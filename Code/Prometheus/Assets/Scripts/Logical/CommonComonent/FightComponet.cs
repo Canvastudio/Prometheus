@@ -18,10 +18,8 @@ public class FightComponet : MonoBehaviour
 
     public bool hitTarget = false;
 
-    /// <summary>
-    /// ref主动技能配置表
-    /// </summary>
-    public List<ActiveSkillsConfig> activeSkillConfigs = new List<ActiveSkillsConfig>();
+    [SerializeField]
+    public List<ActiveSkillIns> activeInsList = new List<ActiveSkillIns>(10);
 
     /// <summary>
     /// 被动技能实例
@@ -96,16 +94,16 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public virtual void AddSkill(ulong id)
+    public virtual void AddSkill(ulong id, SkillPoint point = null)
     {
         switch (IdToSkillType(id))
         {
             case SkillType.Active:
-                activeSkillConfigs.Add(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
+                AddActiveIns(id, point);
                 break;
             case SkillType.Passive:
                 var config = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(id);
-                PassiveSkillIns passiveSkillIns = new PassiveSkillIns(id, ownerObject);
+                PassiveSkillIns passiveSkillIns = new PassiveSkillIns(id, point, ownerObject);
                 if (activePassive)
                 {
                     passiveSkillIns.Active();
@@ -119,12 +117,26 @@ public class FightComponet : MonoBehaviour
 
     }
     
+    protected virtual void AddActiveIns(ulong id, SkillPoint point)
+    {
+        ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+        activeInsList.Add(new ActiveSkillIns(aconfig, ownerObject, point));
+    }
+
     public virtual void RemoveSkill(ulong id)
     {
         switch (IdToSkillType(id))
         {
             case SkillType.Active:
-                activeSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id));
+                for (int i = 0; i < activeInsList.Count; ++i)
+                {
+                    if (activeInsList[i].config.id == id)
+                    {
+                        activeInsList[i].Deactive();
+                        activeInsList.RemoveAt(i);
+                        break;
+                    }
+                }
                 break;
             case SkillType.Passive:
                 for(int i = 0; i < passiveInsList.Count; ++i)

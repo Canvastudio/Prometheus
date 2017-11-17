@@ -9,14 +9,15 @@ public class PassiveSkillIns  {
     public LiveItem owner;
     public StateConfig stateConfig;
     public PassiveSkillsConfig passiveConfig;
+    public SkillPoint point;
 
-    public PassiveSkillIns(ulong skill_id, LiveItem owner)
+    public PassiveSkillIns(ulong skill_id, SkillPoint _point, LiveItem owner)
     {
         passiveConfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_id);
-
         stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(passiveConfig.bindState);
-
+        point = _point;
         this.owner = owner;
+       
 
         if (passiveConfig.stateType == StateType.Halo && passiveConfig.stateArg.f[0] > 0)
         {

@@ -84,6 +84,11 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     /// </summary>
     private void OnClick()
     {
-        boardInstance = ChipView.Instance.CreateBoardInstance(this);
+        boardInstance = ChipView.Instance.CreateBoardInstance(this.chipInventory);
+
+        if (boardInstance != null)
+        {
+            ObjPool<ChipListItem>.Instance.RecycleObj(ChipView.Instance.itemName, id);
+        }
     }
 }

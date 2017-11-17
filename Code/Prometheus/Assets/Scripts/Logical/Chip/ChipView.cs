@@ -57,7 +57,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     private List<BoardPowerGrid> powerGridArray = new List<BoardPowerGrid>(4);
     private List<BoardPowerGrid> powerGridSearchList = new List<BoardPowerGrid>(4);
 
-    string itemName = "CI";
+    public string itemName = "CI";
     string instanceName = "BI";
 
     /// <summary>
@@ -85,7 +85,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     /// 
     /// </summary>
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
-    public Dictionary<ulong, ChipBoardInstance> _temp_listInstance = new Dictionary<ulong, ChipBoardInstance>();
+    public Dictionary<int, ChipBoardInstance> _temp_listInstance = new Dictionary<int, ChipBoardInstance>();
 
     private void Start()
     {
@@ -98,9 +98,8 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     private void ShowDetail()
     {
-
+        MuiCore.Instance.Open(UiName.strChipDetailVew);
     }
-
 
     public void CalculteChipBoardBound()
     {
@@ -154,7 +153,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var ins in listInstance)
         {
-            _temp_listInstance.Add(ins.chipInventory.config.id, ins);
+            _temp_listInstance.Add(ins.chipInventory.uid, ins);
         }
 
         InitChipList();
@@ -224,14 +223,14 @@ public class ChipView : MuiSingleBase<ChipView> {
             ChipBoardInstance chip;
             int power;
 
-            if (!_temp_listInstance.TryGetValue(ins.chipInventory.config.id, out chip))
+            if (!_temp_listInstance.TryGetValue(ins.chipInventory.uid, out chip))
             {
                 power = 0;
             }
             else
             {
                 power = chip.Power;
-                _temp_listInstance.Remove(ins.chipInventory.config.id);
+                _temp_listInstance.Remove(ins.chipInventory.uid);
             }
 
             int change_power = ins.Power - power;
@@ -253,7 +252,6 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var pair in _temp_listInstance)
         {
-            ulong id = pair.Key;
             int power = pair.Value.Power;
 
             int change_power = -power;
@@ -276,7 +274,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
 
 
-    public ChipBoardInstance CreateBoardInstance(ChipListItem item)
+    public ChipBoardInstance CreateBoardInstance(ChipInventory item)
     {
         int id;
 
@@ -292,6 +290,7 @@ public class ChipView : MuiSingleBase<ChipView> {
         {
             ObjPool<ChipBoardInstance>.Instance.RecycleObj(instanceName, id);
             Debug.Log("自动寻找不到适合的的位置放置芯片");
+            item.boardInstance = null;
             return null;
         }
 
@@ -300,7 +299,8 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         ConstructPowerGrid();
 
-        ObjPool<ChipListItem>.Instance.RecycleObj(itemName, item.id);
+        //ObjPool<ChipListItem>.Instance.RecycleObj(itemName, item.id);
+        item.boardInstance = instance;
 
         return instance;
     }
@@ -406,7 +406,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     {
         Messenger.Invoke(ChipBoardEvent.CheckPowerState);
 
-        Debug.Log("构建电网开始： " + Time.realtimeSinceStartup);
+        //Debug.Log("构建电网开始： " + Time.realtimeSinceStartup);
 
         powerGridSearchList.Clear();
         powerGridArray.Clear();
@@ -563,7 +563,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         }
 
-        Debug.Log("构建电网结束： " + Time.realtimeSinceStartup);
+        //Debug.Log("构建电网结束： " + Time.realtimeSinceStartup);
 
     }
     private bool AutoPutChipBoardInstance(ChipBoardInstance instance)
@@ -1092,7 +1092,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var ins in listInstance)
         {
-            _temp_listInstance.Add(ins.chipInventory.config.id, ins);
+            _temp_listInstance.Add(ins.chipInventory.uid, ins);
         }
 
         yield return InitChipList();
@@ -1141,6 +1141,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
                 Destroy(listInstance[i].gameObject);
                 listInstance.RemoveAt(i);
+                instance.chipInventory.boardInstance = null;
             }
         }
     }
