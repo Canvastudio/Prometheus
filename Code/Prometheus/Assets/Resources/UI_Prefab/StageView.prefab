@@ -652,12 +652,12 @@ GameObject:
   - component: {fileID: 114612901926665256}
   - component: {fileID: 114656623636351610}
   m_Layer: 5
-  m_Name: OpenChipBoard_Btn
+  m_Name: OpenChipU[date_Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1972615115641624
 GameObject:
   m_ObjectHideFlags: 1
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1418,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ec39ab5b7d4f74bb80c9c026e68426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenChipBoard_Btn: {fileID: 114612901926665256}
+  OpenChipUpdate_Btn: {fileID: 114612901926665256}
 --- !u!114 &114671868337730204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2238,7 +2238,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -89.5, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224113451040931264
 RectTransform:
@@ -2831,7 +2831,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1014115513368036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -62.5, z: 0}
+  m_LocalPosition: {x: 0, y: -66.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224072651347959990}
@@ -2911,7 +2911,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362151355954576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000030517578, y: 29.5, z: 0}
+  m_LocalPosition: {x: -0.000030517578, y: 33.800003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224893146469142336}
@@ -2920,8 +2920,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000015259, y: 111}
-  m_SizeDelta: {x: 750, y: 125}
+  m_AnchoredPosition: {x: -0.000015259, y: 115.3}
+  m_SizeDelta: {x: 750, y: 133.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224927135308102388
 RectTransform:

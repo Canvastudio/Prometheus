@@ -43,6 +43,8 @@ public class ChipView : MuiSingleBase<ChipView> {
     Button closeBtn;
     [SerializeField]
     Button deleteBtn;
+    [SerializeField]
+    Button detailButton;
 
     float itemWidth = 50f;
 
@@ -89,10 +91,16 @@ public class ChipView : MuiSingleBase<ChipView> {
     {
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
         HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
-
+        HudEvent.Get(detailButton).onClick = ShowDetail;
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
     }
+
+    private void ShowDetail()
+    {
+
+    }
+
 
     public void CalculteChipBoardBound()
     {
