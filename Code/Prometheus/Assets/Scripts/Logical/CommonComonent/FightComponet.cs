@@ -609,7 +609,7 @@ public class FightComponet : MonoBehaviour
         while (i < damageTimes)
         {
             Debug.Log("播放技能特效: " + config.effect);
-            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform.position, apply_list[0].transform.position, () =>
+            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, apply_list[0].transform, () =>
             {
 
                 if (config.damage != null)
