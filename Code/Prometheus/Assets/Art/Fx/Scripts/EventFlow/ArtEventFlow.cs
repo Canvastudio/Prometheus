@@ -52,7 +52,7 @@ public class ArtEventFlow : MonoBehaviour {
 
 		tran_start.SetPos(ref start_pos);
 		tran_end.SetPos(ref end_pos);
-		callback = CallHit;
+		callback = _callback;
 	
 	}
 
@@ -94,6 +94,7 @@ public class ArtEventFlow : MonoBehaviour {
 
 	void OnEnd() {
 	
+		ishit = true;
 		FxPool.Recover(this.gameObject);
 	
 	}
