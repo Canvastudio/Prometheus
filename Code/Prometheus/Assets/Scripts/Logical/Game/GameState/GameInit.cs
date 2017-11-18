@@ -39,12 +39,21 @@ public class GameInit : IState
         yield return MuiCore.Instance.Init(UiName.strChipDetailVew);
 
         //测试代码
-        StageCore.Instance.Player.inventory.AddChip(100001);
-        StageCore.Instance.Player.inventory.AddChip(100001);
-        StageCore.Instance.Player.inventory.AddChip(100007);
-        StageCore.Instance.Player.inventory.AddChip(100136);
+        {
+            foreach (var value in GameTestData.Instance.AddChips)
+            {
+                if (value > 0)
+                {
 
+                    StageCore.Instance.Player.inventory.AddChip(value);
+                }
+            }
 
+            for (int i = 0; i < GameTestData.Instance.Add_4_Stuff.Length; ++i)
+            {
+                StageCore.Instance.Player.inventory.ChangeStuffCount((Stuff)i, GameTestData.Instance.Add_4_Stuff[i]);
+            }
+        }
     }
 
     public IState GetNextState()
