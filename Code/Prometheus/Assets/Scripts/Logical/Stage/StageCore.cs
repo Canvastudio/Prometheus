@@ -286,6 +286,8 @@ public class StageCore : SingleGameObject<StageCore> {
                     Debug.Log("使用技能id: " + skill_id);
 
                     yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
+
+                    Debug.Log("技能结束, 回到主循环..");
                 }
 
             }

@@ -292,94 +292,99 @@ public class FightComponet : MonoBehaviour
         var st = config.selectType;
         var tt = config.targetType;
 
-        if (st == SelectType.One)
+
+        switch (tt)
         {
-            switch (tt)
-            {
-                case TargetType.Enemy:
-                    if (ownerObject.Side == LiveItemSide.SIDE0)
-                    {
-                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
-                    }
-                    else
-                    {
-                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
-                    }
-                    break;
-                case TargetType.Self:
-                    target_list.Add(ownerObject);
-                    break;
-                case TargetType.Help:
-                    if (ownerObject.Side == LiveItemSide.SIDE0)
-                    {
-                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
-                    }
-                    else
-                    {
-                        StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
-                    }
+            case TargetType.Enemy:
+                if (ownerObject.Side == LiveItemSide.SIDE0)
+                {
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                }
+                else
+                {
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                }
+                break;
+            case TargetType.Self:
+                target_list.Add(ownerObject);
+                break;
+            case TargetType.Help:
+                if (ownerObject.Side == LiveItemSide.SIDE0)
+                {
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE0, ST.DISCOVER));
+                }
+                else
+                {
+                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
+                }
 
-                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; ++i)
+                {
+                    if (target_list[i].itemId == ownerObject.itemId)
                     {
-                        if (target_list[i].itemId == ownerObject.itemId)
-                        {
-                            target_list.RemoveAt(i);
-                        }
+                        target_list.RemoveAt(i);
                     }
+                }
 
-                    break;
-                case TargetType.HideMonster:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
-                    break;
-                case TargetType.LightBlock:
-                    StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
+                break;
+            case TargetType.HideMonster:
+                StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.MONSTER, ST.ENEMY, ST.UNDISCOVER));
+                break;
+            case TargetType.LightBlock:
+                StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
-                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; ++i)
+                {
+                    Brick brick = target_list[i] as Brick;
+
+                    if (brick.realBrickType == BrickType.OBSTACLE)
                     {
-                        Brick brick = target_list[i] as Brick;
-
-                        if (brick.realBrickType == BrickType.OBSTACLE)
-                        {
-                            target_list.RemoveAt(i);
-                        }
+                        target_list.RemoveAt(i);
                     }
-                    break;
-                case TargetType.EmptyBlock:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
+                }
+                break;
+            case TargetType.EmptyBlock:
+                target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
-                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; ++i)
+                {
+                    Brick brick = target_list[i] as Brick;
+
+                    if (brick.realBrickType != BrickType.EMPTY)
                     {
-                        Brick brick = target_list[i] as Brick;
-
-                        if (brick.realBrickType != BrickType.EMPTY)
-                        {
-                            target_list.RemoveAt(i);
-                        }
+                        target_list.RemoveAt(i);
                     }
-                    break;
-                case TargetType.DarkBlock:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.UNDISCOVER, ST.BRICK));
-                    break;
-                case TargetType.ObstructBlock:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
-                    break;
-                case TargetType.Fort:
-                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
-                    for (int i = target_list.Count - 1; i >= 0; ++i)
+                }
+                break;
+            case TargetType.DarkBlock:
+                target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.UNDISCOVER, ST.BRICK));
+                break;
+            case TargetType.ObstructBlock:
+                target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
+                break;
+            case TargetType.Fort:
+                target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
+                for (int i = target_list.Count - 1; i >= 0; ++i)
+                {
+                    Obstacle ob = target_list[i] as Obstacle;
+
+                    if (ob.occupy)
                     {
-                        Obstacle ob = target_list[i] as Obstacle;
-
-                        if (ob.occupy)
-                        {
-                            target_list.RemoveAt(i);
-                        }
+                        target_list.RemoveAt(i);
                     }
-                    break;
-                case TargetType.Satellite:
-                    target_list.Add(ownerObject);
-                    break;
-            }
+                }
+                break;
+            case TargetType.Satellite:
+                target_list.Add(ownerObject);
+                break;
+            case TargetType.Block:
+                if (st != SelectType.Direct)
+                {
+                    target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.BRICK));
+                }
+                break;
         }
+
 
         int min_range = config.carry.ToArray()[0];
         int max_range = config.carry.ToArray()[1];
@@ -431,19 +436,22 @@ public class FightComponet : MonoBehaviour
             }
         }
 
+        if (st == SelectType.Direct)
+        {
+            target_list.Clear();
+
+            foreach (var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
+            {
+                target_list.Add(b);
+            }
+
+            yield return LightAndWaitSelect();
+        }
+        else
         if (target_list.Count > 0)
         {
             if (st == SelectType.One)
             {
-                yield return LightAndWaitSelect();
-            }
-            else if (st == SelectType.Direct)
-            {
-                foreach (var b in BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, 1))
-                {
-                    target_list.Add(b);
-                }
-
                 yield return LightAndWaitSelect();
             }
             else if (st == SelectType.RA)
@@ -481,6 +489,7 @@ public class FightComponet : MonoBehaviour
             Debug.Log("技能找不到符合条件的目标..");
         }
     }
+
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
@@ -495,6 +504,7 @@ public class FightComponet : MonoBehaviour
         if (target_list.Count <= 0)
         {
             PopTipView.Instance.Show("target_none");
+            ownerObject.OnActionEnd();
             yield break;
         }
 
@@ -568,10 +578,8 @@ public class FightComponet : MonoBehaviour
                 }
             }
 
-            yield return(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+            yield return (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
         }
-        
-        
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
 
@@ -605,32 +613,30 @@ public class FightComponet : MonoBehaviour
         int damageTimes = damageApperance.Length;
 
         int i = 0;
-
-        while (i < damageTimes)
+   
+        Debug.Log("播放技能特效: " + config.effect);
+        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, apply_list[0].transform, () =>
         {
-            Debug.Log("播放技能特效: " + config.effect);
-            yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, apply_list[0].transform, () =>
+
+            if (config.damage != null)
             {
+                Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
 
-                if (config.damage != null)
+                foreach (var state in ownerObject.state_list)
                 {
-                    Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
-
-                    foreach (var state in ownerObject.state_list)
+                    foreach (var ins in state.stateEffects)
                     {
-                        foreach (var ins in state.stateEffects)
+                        if (ins.stateType == StateEffectType.OnGenerateDamage)
                         {
-                            if (ins.stateType == StateEffectType.OnGenerateDamage)
-                            {
-                                ins.ApplyState(damageInfo);
-                            }
+                            ins.ApplyState(damageInfo);
                         }
                     }
-
-                    (target as LiveItem).TakeDamage(damageInfo);
                 }
-            });
-        }
+
+                (target as LiveItem).TakeDamage(damageInfo);
+            }
+        });
+        
 
         if (config.afterSpecialEffect != null && specialEffect)
         {

@@ -399,11 +399,14 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         for (int i = -distance; i <= distance; ++i)
         {
-            for (int m = -distance; m <= distance; ++i)
+            for (int m = -distance; m <= distance; ++m)
             {
-                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance && (m == 0 && i == 0))
+                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance && !(m == 0 && i == 0))
                 {
-                    result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                    if (GetNode(r + i, c + m) != null)
+                    {
+                        result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                    }
                 }
             }
         }
