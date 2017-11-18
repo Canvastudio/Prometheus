@@ -665,8 +665,16 @@ public class FightComponet : MonoBehaviour
     {
         if (config.beforeSpecialEffect != null && specialEffect)
         {
-            var effects = config.beforeSpecialEffect.ToArray();
-            ApplyEffect(config, config.beforeArgs, effects, target);
+            var effects1 = config.beforeSpecialEffect.ToArray();
+
+            if (damageList == null)
+            {
+                ApplyEffect(config, config.beforeArgs, effects1, target);
+            }
+            else
+            {
+                ApplyEffect(config, config.beforeArgs, effects1, damageList);
+            }
         }
 
         GameProperty property;
@@ -721,12 +729,22 @@ public class FightComponet : MonoBehaviour
                 }
             }
         });
-        
+
+
 
         if (config.afterSpecialEffect != null && specialEffect)
         {
-            var effects = config.afterSpecialEffect.ToArray();
-            ApplyEffect(config, config.afterArgs, effects, target);
+            var effects2 = config.afterSpecialEffect.ToArray();
+
+            if (damageList == null)
+            {
+                ApplyEffect(config, config.afterArgs, effects2, target);
+            }
+            else
+            {
+
+                ApplyEffect(config, config.afterArgs, effects2, damageList);
+            }
         }
 
         targetAttackFinsh++;
