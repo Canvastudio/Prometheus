@@ -87,8 +87,18 @@ public class ArtEventFlow : MonoBehaviour {
 		else
 			artbase.Init(tran_start, tran_end, cur_event.ishit ? callback : null);
 
+		if (cur_event.ishitevent)
+			OnCall();
+
 		k++;
 		cur_event = k < n ? eventlist[k] : null;
+	
+	}
+
+	public void OnCall() {
+	
+		if (callback != null)
+			callback();
 	
 	}
 

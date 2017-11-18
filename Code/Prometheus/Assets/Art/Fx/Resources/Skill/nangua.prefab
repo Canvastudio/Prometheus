@@ -54,5 +54,20 @@ MonoBehaviour:
   eventlist:
   - time: 0
     fxname: nangua_hit
-    ishit: 1
+    ishit: 0
+    isendpos: 0
+    ishitevent: 0
+  - time: 1
+    fxname: nangua_hit
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
+  - time: 3
+    fxname: nangua_hit
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
   destroy_time: 5
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  ishit: 0

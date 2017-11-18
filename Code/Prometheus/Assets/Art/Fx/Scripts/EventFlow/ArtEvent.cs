@@ -10,4 +10,6 @@ public class ArtEvent  {
 	public bool ishit = false;
 	public bool isendpos = false;
 
+	public bool ishitevent = false;
+
 }
