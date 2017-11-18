@@ -157,6 +157,7 @@ MonoBehaviour:
   iscenter: 0
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
+  layername: StageView
 --- !u!114 &114686194056564164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,7 +232,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -358602356
+  randomSeed: 869331873
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3488,7 +3489,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -271769935
+  randomSeed: -349677301
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10026,7 +10027,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -2143607816
+  randomSeed: 1709967903
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13427,8 +13428,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -13481,8 +13482,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -13535,8 +13536,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -13589,8 +13590,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0

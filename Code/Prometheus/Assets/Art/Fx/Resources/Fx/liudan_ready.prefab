@@ -56,6 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/liudan_ready
+  parameter: 
 --- !u!114 &114692365015723850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +74,11 @@ MonoBehaviour:
   total_time: 2
   m_time: 0
   fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageView
 --- !u!198 &198223038361041060
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3423,8 +3429,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

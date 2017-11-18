@@ -127,6 +127,7 @@ MonoBehaviour:
   iscenter: 0
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
+  layername: StageView
   mover: {fileID: 114947935197487442}
   plist:
   - {x: 0, y: 0, z: 0}
@@ -229,7 +230,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1291685644
+  randomSeed: 1877824989
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3546,7 +3547,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 946547734
+  randomSeed: -1080882890
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10153,8 +10154,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -10207,8 +10208,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -10261,8 +10262,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0

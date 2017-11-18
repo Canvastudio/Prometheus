@@ -268,6 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/sanshe_hit
+  parameter: 
 --- !u!114 &114189390367152244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,6 +305,10 @@ MonoBehaviour:
   m_time: 0
   fxend: 
   islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageUI
   tranStart: {fileID: 4312278648126978}
   tranEnd: {fileID: 4588472407985870}
   rolllist:

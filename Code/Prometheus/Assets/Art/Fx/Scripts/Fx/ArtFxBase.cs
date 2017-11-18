@@ -107,4 +107,31 @@ public class ArtFxBase : MonoBehaviour {
 
 	}
 
+
+	#region set layer
+
+	public string layername = "StageUI";
+
+	public void SetLayer(string _layername) {
+	
+		layername = _layername;
+
+		ParticleSystemRenderer[] prenders = this.GetComponentsInChildren<ParticleSystemRenderer>(true);
+
+		for(int i = 0; i < prenders.Length; i++) {
+		
+			prenders[i].sortingLayerName = layername;
+		
+		}
+	
+	}
+
+	public void OnDrawGizmos() {
+	
+		SetLayer("StageView");
+	
+	}
+
+	#endregion
+
 }

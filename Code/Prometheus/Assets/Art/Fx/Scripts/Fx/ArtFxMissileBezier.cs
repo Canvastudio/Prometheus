@@ -34,6 +34,7 @@ public class ArtFxMissileBezier :  ArtFxBase {
 	public void OnDrawGizmos() {
 
 		mover = this.GetComponent<ArtBezierMover>();
+		SetLayer("StageView");
 
 	}
 

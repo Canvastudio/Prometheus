@@ -40,6 +40,7 @@ public class ArtFxMissile : ArtFxBase {
 	public void OnDrawGizmos() {
 
 		mover = this.GetComponent<ArtLineMover>();
+		SetLayer("StageView");
 
 	}
 

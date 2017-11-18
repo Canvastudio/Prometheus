@@ -153,6 +153,11 @@ MonoBehaviour:
   total_time: 2
   m_time: 0
   fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageView
 --- !u!114 &114821163633016544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,7 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: event:/Skill/
-  event_name: event:/Skill/zhongzidan_ready
+  event_name: event:/Skill/zhongzidan_hit
+  parameter: 
 --- !u!198 &198015932790156282
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -226,7 +232,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 357209712
+  randomSeed: 311623560
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3549,7 +3555,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -406545379
+  randomSeed: -770359590
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6860,7 +6866,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1294817054
+  randomSeed: -519256431
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10225,7 +10231,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -306529163
+  randomSeed: -1613976016
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13476,8 +13482,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -13530,8 +13536,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -13584,8 +13590,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -13638,8 +13644,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

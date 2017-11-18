@@ -123,7 +123,15 @@ MonoBehaviour:
   total_time: 5
   m_time: 0
   fxend: fuyoua1xing_hit
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageView
   mover: {fileID: 114780565932881722}
+  plist:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &114581156036028930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/fuyoua1xing_fly
+  parameter: 
 --- !u!114 &114780565932881722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,6 +168,7 @@ MonoBehaviour:
   k: 0
   n: 4
   move_len: 0
+  temp_len: 0
   cur_len: 0
 --- !u!198 &198293665753159264
 ParticleSystem:
@@ -220,7 +230,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -714752236
+  randomSeed: 244236528
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3435,7 +3445,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1242509323
+  randomSeed: -1480122325
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6752,7 +6762,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1188207143
+  randomSeed: 322863753
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9946,8 +9956,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -10000,8 +10010,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -10054,8 +10064,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

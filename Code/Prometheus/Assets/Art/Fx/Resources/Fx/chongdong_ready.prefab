@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/chongdong_ready
+  parameter: 
 --- !u!114 &114756943950620328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,6 +136,11 @@ MonoBehaviour:
   total_time: 2
   m_time: 0
   fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageView
 --- !u!198 &198020353389982340
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -195,7 +201,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -101506599
+  randomSeed: -1328862643
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3464,7 +3470,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1767872270
+  randomSeed: 242998160
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6745,7 +6751,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -2016563935
+  randomSeed: 584262314
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9999,8 +10005,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 1
@@ -10053,8 +10059,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -10107,8 +10113,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 1

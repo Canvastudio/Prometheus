@@ -246,7 +246,13 @@ MonoBehaviour:
   total_time: 100
   m_time: 0
   fxend: quandanqifa_hit
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  layername: StageView
   mover: {fileID: 114913549407780382}
+  berizerPos: []
 --- !u!114 &114841561956660320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/quandanqifa_fly
+  parameter: 
 --- !u!114 &114913549407780382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,7 +348,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -285588699
+  randomSeed: -1188476225
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3658,7 +3665,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -592729643
+  randomSeed: -1521256359
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6975,7 +6982,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2019175386
+  randomSeed: -1234173733
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10265,8 +10272,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -10319,8 +10326,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
@@ -10373,8 +10380,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
