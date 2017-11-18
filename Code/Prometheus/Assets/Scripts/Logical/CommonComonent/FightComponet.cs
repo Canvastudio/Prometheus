@@ -281,6 +281,9 @@ public class FightComponet : MonoBehaviour
 
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
+    List<GameItemBase> damage_list;
+    SelectType st;
+    TargetType tt;
 
     protected IEnumerator FindAndConfrimTarget(ActiveSkillsConfig config)
     {
@@ -289,9 +292,8 @@ public class FightComponet : MonoBehaviour
         target_list.Clear();
         apply_list.Clear();
 
-        var st = config.selectType;
-        var tt = config.targetType;
-
+        st = config.selectType;
+        tt = config.targetType;
 
         switch (tt)
         {
@@ -446,47 +448,107 @@ public class FightComponet : MonoBehaviour
             }
 
             yield return LightAndWaitSelect();
+
+            Brick brick = apply_list[0] as Brick;
+            damage_list = new List<GameItemBase>(12);
+            List<Brick> bricks = null;
+
+            if (brick.row == ownerObject.standBrick.row)
+            {
+                bricks = BrickCore.Instance.GetBrickOnRow(brick.row);
+
+                for (int i = bricks.Count-1; i >= 0; --i)
+                {
+                    if (brick.column < ownerObject.standBrick.column)
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].column > ownerObject.standBrick.column)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].column < ownerObject.standBrick.column)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                bricks = BrickCore.Instance.GetBrickOnColumn(brick.column);
+
+                for (int i = bricks.Count - 1; i >= 0; --i)
+                {
+                    if (brick.row < ownerObject.standBrick.row)
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].row > ownerObject.standBrick.row)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].row < ownerObject.standBrick.row)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
+            foreach(var b in bricks)
+            {
+                if (b.item != null && b.item is LiveItem)
+                {
+                    damage_list.Add(b.item);
+                }
+            }
         }
         else
-        if (target_list.Count > 0)
         {
-            if (st == SelectType.One)
+            if (target_list.Count > 0)
             {
-                yield return LightAndWaitSelect();
-            }
-            else if (st == SelectType.RA)
-            {
-                int count = config.selectArg;
-
-                while (count > 0 && target_list.Count > 0)
+                if (st == SelectType.One)
                 {
-                    int i = Random.Range(0, count);
+                    yield return LightAndWaitSelect();
+                }
+                else if (st == SelectType.RA)
+                {
+                    int count = config.selectArg;
 
-                    apply_list.Add(target_list[i]);
+                    while (count > 0 && target_list.Count > 0)
+                    {
+                        int i = Random.Range(0, count);
 
-                    target_list.RemoveAt(i);
+                        apply_list.Add(target_list[i]);
 
-                    count -= 1;
+                        target_list.RemoveAt(i);
+
+                        count -= 1;
+                    }
+
+                }
+                else if (st == SelectType.RB)
+                {
+                    int count = config.selectArg;
+                    while (count > 0 && target_list.Count > 0)
+                    {
+                        int i = Random.Range(0, count);
+
+                        apply_list.Add(target_list[i]);
+
+                        count -= 1;
+                    }
                 }
 
+                damage_list = null;
             }
-            else if (st == SelectType.RB)
+            else
             {
-                int count = config.selectArg;
-                while (count > 0 && target_list.Count > 0)
-                {
-                    int i = Random.Range(0, count);
-
-                    apply_list.Add(target_list[i]);
-
-                    count -= 1;
-                }
-
+                Debug.Log("技能找不到符合条件的目标..");
             }
-        }
-        else
-        {
-            Debug.Log("技能找不到符合条件的目标..");
         }
     }
 
@@ -578,7 +640,7 @@ public class FightComponet : MonoBehaviour
                 }
             }
 
-            yield return (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+            yield return (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray, damage_list));
         }
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
@@ -599,7 +661,7 @@ public class FightComponet : MonoBehaviour
 
     private int targetAttackFinsh = 0;
 
-    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance)
+    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance, List<GameItemBase> damageList = null)
     {
         if (config.beforeSpecialEffect != null && specialEffect)
         {
@@ -615,25 +677,48 @@ public class FightComponet : MonoBehaviour
         int i = 0;
    
         Debug.Log("播放技能特效: " + config.effect);
+
         yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, apply_list[0].transform, () =>
         {
-
             if (config.damage != null)
             {
-                Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
-
-                foreach (var state in ownerObject.state_list)
+                if (damageList == null)
                 {
-                    foreach (var ins in state.stateEffects)
+                    Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
+                    foreach (var state in ownerObject.state_list)
                     {
-                        if (ins.stateType == StateEffectType.OnGenerateDamage)
+                        foreach (var ins in state.stateEffects)
                         {
-                            ins.ApplyState(damageInfo);
+                            if (ins.stateType == StateEffectType.OnGenerateDamage)
+                            {
+                                ins.ApplyState(damageInfo);
+                            }
                         }
                     }
-                }
 
-                (target as LiveItem).TakeDamage(damageInfo);
+                    (target as LiveItem).TakeDamage(damageInfo);
+                }
+                else
+                {
+                    foreach (var item in damageList)
+                    {
+                        Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
+                        foreach (var state in ownerObject.state_list)
+                        {
+                            foreach (var ins in state.stateEffects)
+                            {
+                                if (ins.stateType == StateEffectType.OnGenerateDamage)
+                                {
+                                    ins.ApplyState(damageInfo);
+                                }
+                            }
+                        }
+
+                        (item as LiveItem as LiveItem).TakeDamage(damageInfo);
+                    }
+
+                    ++i;
+                }
             }
         });
         

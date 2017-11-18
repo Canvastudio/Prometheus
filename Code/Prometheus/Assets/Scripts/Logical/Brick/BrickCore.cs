@@ -414,6 +414,16 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         return result;
     }
 
+    public List<Brick> GetBrickOnRow(int row)
+    {
+        return data.GetRow(row);
+    }
+
+    public List<Brick> GetBrickOnColumn(int col)
+    {
+        return data.GetCol(col);
+    }
+
     public List<Brick> GetNearbyBrick(Brick brick, int distance)
     {
         return GetNearbyBrick(brick.row, brick.column, distance);

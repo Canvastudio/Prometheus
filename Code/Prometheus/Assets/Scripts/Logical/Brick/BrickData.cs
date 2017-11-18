@@ -29,6 +29,30 @@ public class BrickData {
 		return bricks[row - _lowestRow][column];
 	}
 
+    public List<Brick> GetRow(int row)
+    {
+        if (row < _lowestRow) return null;
+        if (row > _lowestRow + bricks.Count - 1)
+        {
+            return null;
+        }
+
+        return new List<Brick>(bricks[row - _lowestRow]);
+    }
+
+    public List<Brick> GetCol(int col)
+    {
+        List<Brick> brickList = new List<Brick>();
+
+        for (int i = 0; i < bricks.Count; ++i)
+        {
+            brickList.Add(bricks[i][col]);
+        }
+
+        return brickList;
+    }
+
+
     public void Remove(Brick brick)
     {
         bricks.RemoveAt(0);
