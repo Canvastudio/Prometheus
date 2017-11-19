@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.10.00">
     <object class="Event" id="{9ebece61-8459-471c-b265-e15c4024610e}">
         <property name="name">
-            <value>guanchuanshexian_hit</value>
+            <value>guanchuanshexian_ready</value>
         </property>
         <property name="outputFormat">
             <value>0</value>
@@ -24,6 +24,7 @@
         </relationship>
         <relationship name="markerTracks">
             <destination>{f85efced-fd11-4c6f-b71d-91f31f2c7208}</destination>
+            <destination>{f58e976d-d57f-4c39-8093-ce4df92316da}</destination>
         </relationship>
         <relationship name="groupTracks">
             <destination>{c34f0179-9e2e-4b09-adae-292786c46824}</destination>
@@ -61,6 +62,7 @@
     </object>
     <object class="EventAutomatableProperties" id="{d91e2ec7-8bdf-465f-8796-0af528b72efb}"/>
     <object class="MarkerTrack" id="{f85efced-fd11-4c6f-b71d-91f31f2c7208}"/>
+    <object class="MarkerTrack" id="{f58e976d-d57f-4c39-8093-ce4df92316da}"/>
     <object class="GroupTrack" id="{c34f0179-9e2e-4b09-adae-292786c46824}">
         <relationship name="modules">
             <destination>{d0f2da40-51f5-4a68-bc98-2ede55b5c22c}</destination>
@@ -75,6 +77,8 @@
         </relationship>
         <relationship name="markers">
             <destination>{64077d01-1832-48ad-afa5-3a17d0bcd567}</destination>
+            <destination>{351a102a-2e56-427b-a14a-eb3455ec175a}</destination>
+            <destination>{18f2cf8a-f37f-4456-8995-0128ec09913c}</destination>
         </relationship>
     </object>
     <object class="ParameterProxy" id="{ff5c066c-b242-44d5-8025-4d790aa7cb23}">
@@ -141,6 +145,40 @@
             <destination>{f85efced-fd11-4c6f-b71d-91f31f2c7208}</destination>
         </relationship>
     </object>
+    <object class="TransitionRegion" id="{351a102a-2e56-427b-a14a-eb3455ec175a}">
+        <property name="position">
+            <value>1.5</value>
+        </property>
+        <property name="length">
+            <value>0.70000000000000018</value>
+        </property>
+        <relationship name="triggerConditions">
+            <destination>{9b2fcf74-078d-4838-b4c1-cf09eaad6efb}</destination>
+        </relationship>
+        <relationship name="destination">
+            <destination>{18f2cf8a-f37f-4456-8995-0128ec09913c}</destination>
+        </relationship>
+        <relationship name="timeline">
+            <destination>{bac88e9b-2d90-4a4c-818f-45773ecbed72}</destination>
+        </relationship>
+        <relationship name="markerTrack">
+            <destination>{f58e976d-d57f-4c39-8093-ce4df92316da}</destination>
+        </relationship>
+    </object>
+    <object class="NamedMarker" id="{18f2cf8a-f37f-4456-8995-0128ec09913c}">
+        <property name="position">
+            <value>2.2000000000000002</value>
+        </property>
+        <property name="name">
+            <value>Marker A</value>
+        </property>
+        <relationship name="timeline">
+            <destination>{bac88e9b-2d90-4a4c-818f-45773ecbed72}</destination>
+        </relationship>
+        <relationship name="markerTrack">
+            <destination>{f58e976d-d57f-4c39-8093-ce4df92316da}</destination>
+        </relationship>
+    </object>
     <object class="MixerBusEffectChain" id="{52418543-d7df-4ce9-8b89-4cd65a61de30}">
         <relationship name="effects">
             <destination>{c9da7f49-fda2-4eef-bf32-3228a9d3abeb}</destination>
@@ -168,6 +206,17 @@
         </property>
         <property name="maximum">
             <value>1</value>
+        </property>
+        <relationship name="parameter">
+            <destination>{c3fa1348-922f-4465-beea-53cbc023c0f0}</destination>
+        </relationship>
+    </object>
+    <object class="ParameterCondition" id="{9b2fcf74-078d-4838-b4c1-cf09eaad6efb}">
+        <property name="minimum">
+            <value>0</value>
+        </property>
+        <property name="maximum">
+            <value>0</value>
         </property>
         <relationship name="parameter">
             <destination>{c3fa1348-922f-4465-beea-53cbc023c0f0}</destination>
