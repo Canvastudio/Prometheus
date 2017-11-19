@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingleGameObject<GameManager> {
 
-    public bool MapScroll = true;
-
     protected override void Init()
     {
         base.Init();

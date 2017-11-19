@@ -112,7 +112,7 @@ public class StageView : MuiSingleBase<StageView>
 
     public void MoveDownMap(float distance)
     {
-        if (GameManager.Instance.MapScroll)
+        if (!GameTestData.Instance.NoSroll)
         {
             if (StageCore.Instance.totalTime >= 4)
             {
