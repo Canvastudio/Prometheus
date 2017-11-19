@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameTestData : SingleGameObject<GameTestData> {
 
+    public bool NoSroll;
+    public bool SuperMonster;
     public ulong[] AddChips;
     public int[] Add_4_Stuff;
 }

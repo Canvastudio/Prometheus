@@ -43,6 +43,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public void CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
+        if (GameTestData.Instance.SuperMonster)
+        {
+            pwr = 3;
+        }
+
         int tid;
 
         var monster = ObjPool<Monster>.Instance.GetObjFromPoolWithID(out tid, monster_pool);
@@ -131,6 +136,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         bornBrick.item = monster;
 
         monster.Init();
+
+#if UNITY_EDITOR
+        monster.name += "_" + config.m_name;
+#endif
     }
 
     /// <summary>
