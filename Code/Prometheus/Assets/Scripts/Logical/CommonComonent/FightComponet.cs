@@ -18,25 +18,27 @@ public class FightComponet : MonoBehaviour
 
     public bool hitTarget = false;
 
+    /// <summary>
+    /// 是否激活使用技能
+    /// </summary>
+    public bool skillActive = false;
+
+    [SerializeField]
+    protected bool activePassive = false;
+
     [SerializeField]
     public List<ActiveSkillIns> activeInsList = new List<ActiveSkillIns>(10);
 
     /// <summary>
     /// 被动技能实例
     /// </summary>
+    [SerializeField]
     public List<PassiveSkillIns> passiveInsList = new List<PassiveSkillIns>();
 
     /// <summary>
     /// ref召唤技能配置表
     /// </summary>
     public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
-
-    /// <summary>
-    /// 是否激活使用技能
-    /// </summary>
-    public bool skillActive = false;
-
-    protected bool activePassive = false;
 
     private void Awake()
     {

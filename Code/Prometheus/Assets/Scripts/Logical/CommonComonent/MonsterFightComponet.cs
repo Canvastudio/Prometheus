@@ -26,17 +26,17 @@ public class MonsterFightComponet : FightComponet {
     };
 
     [SerializeField]
-    public new List<MonsterActiveSkillIns> activeInsList = new List<MonsterActiveSkillIns>(2);
+    public new List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
 
     protected new void AddActiveIns(ulong id, SkillPoint point)
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
-        activeInsList.Add(new MonsterActiveSkillIns(aconfig, ownerObject, point));
+        monsterActiveInsList.Add(new MonsterActiveSkillIns(aconfig, ownerObject, point));
     }
 
     public void ReorderSkill()
     {
-        activeInsList.Sort(comparison);
+        monsterActiveInsList.Sort(comparison);
     }
 
     public override void RemoveSkill(ulong id)
@@ -46,12 +46,12 @@ public class MonsterFightComponet : FightComponet {
         switch (IdToSkillType(id))
         {
             case SkillType.Active:
-                for (int i = 0; i < activeInsList.Count; ++i)
+                for (int i = 0; i < monsterActiveInsList.Count; ++i)
                 {
-                    if (activeInsList[i].config.id == id)
+                    if (monsterActiveInsList[i].config.id == id)
                     {
-                        activeInsList[i].Deactive();
-                        activeInsList.RemoveAt(i);
+                        monsterActiveInsList[i].Deactive();
+                        monsterActiveInsList.RemoveAt(i);
                     }
                 }
                 break;
@@ -64,7 +64,7 @@ public class MonsterFightComponet : FightComponet {
 
         if (!activePassive)
         {
-            foreach (var ins in activeInsList)
+            foreach (var ins in monsterActiveInsList)
             {
                 ins.Active();
                 Messenger<float>.AddListener(SA.StageTimeCast, OnTimeCast);
@@ -78,7 +78,7 @@ public class MonsterFightComponet : FightComponet {
     {
         if (activePassive)
         {
-            foreach (var ins in activeInsList)
+            foreach (var ins in monsterActiveInsList)
             {
                 ins.Deactive();
                 Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
@@ -90,7 +90,7 @@ public class MonsterFightComponet : FightComponet {
     {
         bool one_ready = false;
 
-        foreach (var ins in activeInsList)
+        foreach (var ins in monsterActiveInsList)
         {
             if(!one_ready && ins.OnTimeCast(time))
             {

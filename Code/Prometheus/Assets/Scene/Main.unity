@@ -182,6 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d101a35ba268944594040b57c5f0829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoSroll: 1
+  SuperMonster: 1
   AddChips: a186010000000000ab86010000000000a78601000000000028870100000000000000000000000000
   Add_4_Stuff: 32000000320000003200000032000000
 --- !u!4 &13273353
@@ -4569,7 +4571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04b9f63d4c15e449a582f8171a75265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapScroll: 0
 --- !u!114 &1779828384
 MonoBehaviour:
   m_ObjectHideFlags: 0
