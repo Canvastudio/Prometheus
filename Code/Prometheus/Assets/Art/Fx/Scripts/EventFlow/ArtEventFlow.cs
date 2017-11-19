@@ -79,13 +79,18 @@ public class ArtEventFlow : MonoBehaviour {
 		if (k == n)
 			return;
 
-		GameObject objFx = FxPool.Get(FxEnum.Fx, cur_event.fxname);
-		ArtFxBase artbase = objFx.GetComponent<ArtFxBase>();
+		if (cur_event.fxname.Length > 0) {
+			
+			GameObject objFx = FxPool.Get(FxEnum.Fx, cur_event.fxname);
+			ArtFxBase artbase = objFx.GetComponent<ArtFxBase>();
 
-		if (cur_event.isendpos)
-			artbase.Init(tran_end, tran_end, cur_event.ishit ? callback : null);
-		else
-			artbase.Init(tran_start, tran_end, cur_event.ishit ? callback : null);
+			if (cur_event.isendpos)
+				artbase.Init(tran_end, tran_end, cur_event.ishit ? callback : null);
+			else
+				artbase.Init(tran_start, tran_end, cur_event.ishit ? callback : null);
+
+		}
+
 
 		if (cur_event.ishitevent)
 			OnCall();

@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4665990714223870}
   - component: {fileID: 114946702970716528}
-  - component: {fileID: 114876437411660130}
+  - component: {fileID: 114206999762807696}
   m_Layer: 0
   m_Name: nangua_hit
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114876437411660130
+--- !u!114 &114206999762807696
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -172,22 +172,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1978503157747060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: fe311c4e5dc98459aad15b583cc72085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: event:/Skill/nangua_hit
-  PlayEvent: 11
-  StopEvent: 12
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params:
-  - Name: laserStop
-    Value: 1
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
+  path: event:/Skill/
+  event_name: event:/Skill/nangua_hit
+  stop_parameter: laserStop
 --- !u!114 &114908497570603480
 MonoBehaviour:
   m_ObjectHideFlags: 1
