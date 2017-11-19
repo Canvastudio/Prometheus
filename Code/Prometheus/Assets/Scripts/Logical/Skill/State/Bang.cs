@@ -8,7 +8,7 @@ public class Bang : StateEffectIns
     float probability = 0;
     ulong state_id;
 
-    public Bang(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Bang(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = stateConfig.stateArgs[index].ec[0];
         stateType = StateEffectType.OnGenerateDamage;

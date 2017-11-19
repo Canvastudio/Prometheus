@@ -6,7 +6,7 @@ public class DeathMark : StateEffectIns
 {
     int count = 0;
 
-    public DeathMark(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public DeathMark(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         count = Mathf.FloorToInt(stateConfig.stateArgs[index].f[0]);
     }

@@ -7,7 +7,7 @@ public class SoulRepair : StateEffectIns
     EffectCondition condition;
     float restoration = 0;
 
-    public SoulRepair(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public SoulRepair(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = stateConfig.stateArgs[index].ec[0];
         restoration = stateConfig.stateArgs[index].f[0];

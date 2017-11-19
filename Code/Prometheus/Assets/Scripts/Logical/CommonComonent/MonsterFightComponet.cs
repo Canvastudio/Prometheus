@@ -28,7 +28,7 @@ public class MonsterFightComponet : FightComponet {
     [SerializeField]
     public new List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
 
-    protected new void AddActiveIns(ulong id, SkillPoint point)
+    protected override void AddActiveIns(ulong id, SkillPoint point)
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
         monsterActiveInsList.Add(new MonsterActiveSkillIns(aconfig, ownerObject, point));
@@ -60,10 +60,12 @@ public class MonsterFightComponet : FightComponet {
 
     public override void ActiveSkill()
     {
-        base.ActivePassive();
+        base.ActiveSkill();
 
-        if (!activePassive)
+        if (!skillActive)
         {
+            skillActive = true;
+
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Active();
@@ -76,8 +78,10 @@ public class MonsterFightComponet : FightComponet {
 
     public override void DeactiveSkill()
     {
-        if (activePassive)
+        if (skillActive)
         {
+            skillActive = false;
+
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Deactive();

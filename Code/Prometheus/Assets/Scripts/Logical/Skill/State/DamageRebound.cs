@@ -7,8 +7,7 @@ public class DamageRebound : StateEffectIns
     EffectCondition condition;
     float percent = 0;
 
-    public DamageRebound(LiveItem owner, StateConfig config, int index, bool passive)
-        : base(owner, config, index, passive)
+    public DamageRebound(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = config.stateArgs[index].ec[0];
         percent = config.stateArgs[index].f[0];

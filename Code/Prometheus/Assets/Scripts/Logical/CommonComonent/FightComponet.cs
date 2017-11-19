@@ -608,7 +608,11 @@ public class FightComponet : MonoBehaviour
         StageCore.Instance.TimeCast(time_cost);
 
         float[] successArray = null;
-        float[] apperanceArray = config.damageArg.ToArray();
+        float[] apperanceArray = null;
+        if (config.damageArg != null)
+        {
+            apperanceArray = config.damageArg.ToArray();
+        }
 
         if (config.successRate != null)
         {
@@ -767,7 +771,7 @@ public class FightComponet : MonoBehaviour
                     state_id = args[i].u[0];
 
                     var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                    (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false));
+                    (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false, ownerObject));
 
                     break;
                 case SpecialEffect.Property:

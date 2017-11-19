@@ -315,11 +315,13 @@ public abstract class LiveItem : GameItemBase
         cur_hp = Mathf.Min(fmax_hp, new_hp);
     }
 
-    public virtual void OnDead(Damage damageInfo)
+    public virtual IEnumerator OnDead(Damage damageInfo)
     {
         standBrick.CleanItem();
 
         StageCore.Instance.UnRegisterItem(this);
+
+        return null;
     }
 
     WaitForSeconds waitForSeconds = new WaitForSeconds(0.8f);
@@ -380,7 +382,7 @@ public abstract class LiveItem : GameItemBase
 
         if (cur_hp == 0)
         {
-            OnDead(damageInfo);
+           StartCoroutine(OnDead(damageInfo));
         }
         else
         {

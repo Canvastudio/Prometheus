@@ -19,8 +19,7 @@ public class DamageStore : StateEffectIns
 
     EffectCondition condition;
 
-    public DamageStore(LiveItem owner, StateConfig config, int index, bool passive) 
-        : base(owner, config, index, passive)
+    public DamageStore(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         store_times = Mathf.FloorToInt(config.stateArgs[index].f[0]);
         multiply = config.stateArgs[index].f[1];

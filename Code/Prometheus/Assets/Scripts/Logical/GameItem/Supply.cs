@@ -14,13 +14,13 @@ public class Supply : GameItemBase, IReactive {
 
         standBrick.brickType = BrickType.EMPTY;
 
-        GameObject.Destroy(this.gameObject);
+        ObjPool<Supply>.Instance.RecycleObj(GameItemFactory.Instance.supply_pool, itemId);
     }
 
     public override void Recycle()
     {
         base.Recycle();
 
-        GameObject.Destroy(this.gameObject);
+        ObjPool<Supply>.Instance.RecycleObj(GameItemFactory.Instance.supply_pool, itemId);
     }
 }

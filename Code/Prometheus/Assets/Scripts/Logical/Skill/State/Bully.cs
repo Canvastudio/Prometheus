@@ -8,7 +8,7 @@ public class Bully : StateEffectIns
     EffectCondition condition;
     float extra = 0;
 
-    public Bully(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Bully(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         threshold = stateConfig.stateArgs[index].f[0];
         extra = stateConfig.stateArgs[index].f[1];

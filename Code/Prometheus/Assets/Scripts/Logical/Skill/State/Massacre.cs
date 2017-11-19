@@ -11,7 +11,7 @@ public class Massacre : StateEffectIns
     float total_extra = 0;
     float max_extra = 0;
 
-    public Massacre(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Massacre(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition1 = stateConfig.stateArgs[index].ec[0];
         condition2 = stateConfig.stateArgs[index].ec[1];

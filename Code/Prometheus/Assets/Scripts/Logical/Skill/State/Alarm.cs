@@ -6,7 +6,7 @@ public class Alarm : StateEffectIns
 {
     int range = 0;
 
-    public Alarm(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Alarm(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         range = Mathf.FloorToInt(stateConfig.stateArgs[index].f[0]);
 

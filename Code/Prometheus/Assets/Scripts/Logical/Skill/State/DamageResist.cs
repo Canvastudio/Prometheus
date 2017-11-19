@@ -9,8 +9,7 @@ public class DamageResist : StateEffectIns
     float damage_decrease = 0;
 
 
-    public DamageResist(LiveItem owner, StateConfig stateConfig, int index, bool passive)
-        : base(owner, stateConfig, index, passive)
+    public DamageResist(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         probability = stateConfig.stateArgs[index].f[0];
         condition = stateConfig.stateArgs[index].ec[0];

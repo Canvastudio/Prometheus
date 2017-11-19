@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveSkillIns  {
 
+    public ulong skillId;
     public StateIns stateIns;
     public HaloInfo haloInfo;
     public LiveItem owner;
@@ -14,6 +15,7 @@ public class PassiveSkillIns  {
 
     public PassiveSkillIns(ulong skill_id, SkillPoint _point, LiveItem owner)
     {
+        skillId = skill_id;
         passiveConfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_id);
         stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(passiveConfig.bindState);
         point = _point;
@@ -44,14 +46,14 @@ public class PassiveSkillIns  {
 
     public void Active()
     {
-        stateIns.ActiveIns();
+        //stateIns.ActiveIns();
         owner.AddStateIns(stateIns);
         if (haloInfo != null) haloInfo.Active();
     }
 
     public void Deactive()
     {
-        stateIns.DeactiveIns();
+        //stateIns.DeactiveIns();
         owner.RemoveStateIns(stateIns);
         if (haloInfo != null) haloInfo.Deactive();
     }

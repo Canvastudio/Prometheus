@@ -135,11 +135,6 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             n.uu.Push(new Obj<T>(o, ObjPoolId._id++));
 
             ++m;
-
-            //if (m > 5)
-            //{
-            //    yield return 0;
-            //}
         }
 
         n.capacity = Data[name].u.Count + Data[name].uu.Count;

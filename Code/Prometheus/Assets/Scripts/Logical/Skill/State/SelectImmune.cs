@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SelectImmune : StateEffectIns
 {
-    public SelectImmune(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public SelectImmune(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         stateType = StateEffectType.SelectImmune;
     }

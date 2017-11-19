@@ -8,18 +8,39 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public string monster_pool = "MPI";
     public string obstacle_pool = "OBE";
+    public string treasure_pool = "TRP";
+    public string tablet_pool = "TAT";
+    public string maintenance_pool = "MTE";
+    public string supply_pool = "SUY";
 
     protected override void Init()
     {
         base.Init();
+
         var monster_go = Resources.Load("Prefab/Monster") as GameObject;
         var monster = monster_go.GetComponent<Monster>();
 
         var obstacle_go = Resources.Load("Prefab/Obstacle") as GameObject;
         var obstacle = obstacle_go.GetComponent<Obstacle>();
 
+        var treasure_go = Resources.Load("Prefab/Treasure") as GameObject;
+        var treasure = treasure_go.GetComponent<Treasure>();
+
+        var tablet_go = Resources.Load("Prefab/Tablet") as GameObject;
+        var tablet = tablet_go.GetComponent<Tablet>();
+
+        var maintenance_go = Resources.Load("Prefab/Maintenance") as GameObject;
+        var maintenance = maintenance_go.GetComponent<Maintenance>();
+
+        var supply_go = Resources.Load("Prefab/Supply") as GameObject;
+        var supply = supply_go.GetComponent<Supply>();
+
         ObjPool<Monster>.Instance.InitOrRecyclePool(monster_pool, monster, 6);
         ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool, treasure, 3);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool, tablet, 3);
+        ObjPool<Maintenance>.Instance.InitOrRecyclePool(maintenance_pool, maintenance, 3);
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply_pool, supply, 3);
     }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)
@@ -87,11 +108,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         FightComponet fightComponet = monster.GetOrAddComponet<MonsterFightComponet>();
 
-        AddSkillToFightComponet(fightComponet, config.skill_normal);
-
         if (pwr == 0)
         {
             monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_0");
+            AddSkillToFightComponet(fightComponet, config.skill_normal);
         }
         else
         if (pwr == 1)
@@ -134,9 +154,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         bornBrick.item = monster;
-
-        monster.Init();
-
 #if UNITY_EDITOR
         monster.name += "_" + config.m_name;
 #endif
@@ -165,17 +182,28 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         
         player.config = config;
 
-        player.Property.InitBaseProperty(
-            config.mhp,
-            config.speed,
-            config.melee,
-            config.laser,
-            config.cartridge
-        );
+        if (GameTestData.Instance.SuperPlayer)
+        {
+            player.Property.InitBaseProperty(
+                9999 ,
+                2,
+                999,
+                999,
+                999
+            );
+        }
+        else
+        {
+            player.Property.InitBaseProperty(
+                config.mhp,
+                config.speed,
+                config.melee,
+                config.laser,
+                config.cartridge
+            );
+        }
 
         player.SetPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
-
-        //BrickCore.Instance.OpenNearbyBrick(bornBrick.pathNode.x, bornBrick.pathNode.z);
 
         FightComponet fightComponet = player.GetOrAddComponet<FightComponet>();
         player.fightComponet = fightComponet;
@@ -199,48 +227,51 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Supply CreateSupply(ulong uid, Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Supply"), bornBrick.transform) as GameObject;
+        int tid;
 
-        go.transform.SetParentAndNormalize(bornBrick.transform);
+        var item = ObjPool<Supply>.Instance.GetObjFromPoolWithID(out tid, supply_pool);
 
-        go.transform.SetSiblingIndex(2);
+        item.itemId = tid;
 
-        var supply = go.GetComponent<Supply>();
+        item.transform.SetParentAndNormalize(bornBrick.transform);
 
-        supply.standBrick = bornBrick;
+        item.transform.SetSiblingIndex(2);
 
-        supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
+        item.standBrick = bornBrick;
 
-        return supply;
+        item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
+
+        return item;
     }
 
     public Maintenance CreateMaintenance(Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Maintenance"), bornBrick.transform) as GameObject;
+        int tid;
 
-        go.transform.SetParentAndNormalize(bornBrick.transform);
+        var item = ObjPool<Maintenance>.Instance.GetObjFromPoolWithID(out tid, maintenance_pool);
 
-        go.transform.SetSiblingIndex(2);
+        item.itemId = tid;
 
-        var Maintence = go.GetComponent<Maintenance>();
+        item.transform.SetParentAndNormalize(bornBrick.transform);
 
-        Maintence.standBrick = bornBrick;
+        item.transform.SetSiblingIndex(2);
 
-        //supply.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
+        item.standBrick = bornBrick;
 
-
-        return Maintence;
+        return item;
     }
 
     public Tablet CreateTablet(ulong uid, Brick bornBrick)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Tablet"), bornBrick.transform) as GameObject;
+        int tid;
 
-        go.transform.SetParentAndNormalize(bornBrick.transform);
+        var tablet = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool);
 
-        go.transform.SetSiblingIndex(2);
+        tablet.itemId = tid;
 
-        var tablet = go.GetComponent<Tablet>();
+        tablet.transform.SetParentAndNormalize(bornBrick.transform);
+
+        tablet.transform.SetSiblingIndex(2);
 
         tablet.standBrick = bornBrick;
 
@@ -251,13 +282,15 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Treasure CreateTreasure(Brick bornBrick, ulong uid, int distance)
     {
-        var go = GameObject.Instantiate(Resources.Load("Prefab/Treasure"), bornBrick.transform) as GameObject;
+        int tid;
 
-        go.transform.SetParentAndNormalize(bornBrick.transform);
+        var treasure = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool);
 
-        go.transform.SetSiblingIndex(2);
+        treasure.itemId = tid;
 
-        var treasure = go.GetComponent<Treasure>();
+        treasure.transform.SetParentAndNormalize(bornBrick.transform);
+
+        treasure.transform.SetSiblingIndex(2);
 
         treasure.standBrick = bornBrick;
 

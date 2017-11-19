@@ -41,22 +41,25 @@ public class HaloInfo  {
     {
         var new_bricks = BrickCore.Instance.GetNearbyBrick(owner.standBrick, range);
 
-        foreach(var brick in effect_bricks)
+        if (effect_bricks != null)
         {
-            if (!new_bricks.Contains(brick))
+            foreach (var brick in effect_bricks)
             {
-                if (brick.item is LiveItem)
+                if (!new_bricks.Contains(brick))
                 {
-                    (brick.item as LiveItem).RemoveStateIns(brick.halo_dic[this]);
-                }
+                    if (brick.item is LiveItem)
+                    {
+                        (brick.item as LiveItem).RemoveStateIns(brick.halo_dic[this]);
+                    }
 
-                brick.halo_dic.Remove(this);
+                    brick.halo_dic.Remove(this);
+                }
             }
         }
 
         foreach(var brick in new_bricks)
         {
-            if (!effect_bricks.Contains(brick))
+            if (effect_bricks == null || !effect_bricks.Contains(brick))
             {
                 StateIns state = null;
 

@@ -75,16 +75,7 @@ public class Monster : LiveItem
 
     public DangerousLevels dangerousLevels;
 
-    public void Init()
-    {
-        Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
-    }
 
-    void OnDisable()
-    {
-        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
-    }
-   
     public void CheckDistance()
     {
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
@@ -97,7 +88,7 @@ public class Monster : LiveItem
             }
         }
 
-        if (player_distance < 1)
+        if (player_distance <= 1)
         {
             if (!block_other)
             {
@@ -171,6 +162,13 @@ public class Monster : LiveItem
         }
     }
 
+    protected override void OnEnterIntoArea()
+    {
+        base.OnEnterIntoArea();
+
+        Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
+    }
+
     protected override void OnExitFromArea()
     {
         base.OnExitFromArea();
@@ -179,8 +177,11 @@ public class Monster : LiveItem
         {
             StageCore.Instance.discover_monster -= 1;
         }
+
+        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
     }
-    public override void OnDead(Damage damageInfo)
+     
+    public override IEnumerator OnDead(Damage damageInfo)
     {
         StageCore.Instance.discover_monster -= 1;
 
@@ -215,7 +216,11 @@ public class Monster : LiveItem
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(1);
-            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+
+            if (skill_list[0] > 0)
+            {
+                yield return fightComponet.DoActiveSkill(skill_list);
+            }
         }
 
         base.OnDead(damageInfo);

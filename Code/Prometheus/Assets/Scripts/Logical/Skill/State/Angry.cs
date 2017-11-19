@@ -14,7 +14,7 @@ public class Angry : StateEffectIns
     float total_extra1 = 0;
     float total_extra2 = 0;
 
-    public Angry(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Angry(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = stateConfig.stateArgs[index].ec[0];
         extra1 = stateConfig.stateArgs[index].f[1];

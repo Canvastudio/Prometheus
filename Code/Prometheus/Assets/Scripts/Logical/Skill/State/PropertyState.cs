@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PropertyState : StateEffectIns
+public class Property : StateEffectIns
 {
-
     protected Dictionary<GameProperty, float> changes = new Dictionary<GameProperty, float>();
 
-    LiveItem source;
     /// <summary>
     /// Property因为有可能是别人给的伤害，那么需要确定伤害来源，所以需要提供一个source，表示谁提供了找个Property 状态
     /// </summary>
@@ -16,7 +14,7 @@ public class PropertyState : StateEffectIns
     /// <param name="config"></param>
     /// <param name="index"></param>
     /// <param name="passive"></param>
-    public PropertyState(LiveItem source, LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Property(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         stateType = StateEffectType.PropertyChange;
     }
@@ -48,7 +46,7 @@ public class PropertyState : StateEffectIns
         {
             var value = FightComponet.CalculageRPN(
                 stateConfig.stateArgs[index].rpn.ToArray(0),
-                source, owner,
+                owner, source,
                 out property);
 
             float origin_value = owner.Property.GetFloatProperty(property);

@@ -172,7 +172,7 @@ public class Tablet : GameItemBase {
     {
         base.Recycle();
 
-        GameObject.Destroy(this.gameObject);
+        ObjPool<Tablet>.Instance.RecycleObj(GameItemFactory.Instance.tablet_pool, itemId);
     }
 }
 

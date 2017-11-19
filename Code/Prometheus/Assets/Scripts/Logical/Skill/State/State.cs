@@ -49,7 +49,7 @@ public class StateIns
         set { if (value) OnOutData(); out_data = value; }
     }
 
-    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive)
+    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive, LiveItem source = null)
     {
         int effect_count = stateConfig.stateEffects.Count();
 
@@ -57,7 +57,7 @@ public class StateIns
 
         for (int i = 0; i < effect_count; ++i)
         {
-            stateEffects[i] = StateEffectIns.GenerateStateEffects(stateConfig, i, owner, passive);
+            stateEffects[i] = StateEffectIns.GenerateStateEffects(stateConfig, i, owner, passive, source);
         }
 
         id = ++_id;
@@ -152,6 +152,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     public StateEffectType stateType = StateEffectType.Invalid;
     public StateConfig stateConfig;
 
+    public LiveItem source;
     public int index;
     protected bool passive;
     public LiveItem owner;
@@ -170,12 +171,13 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     /// </summary>
     public float exist_time = 0;
 
-    public StateEffectIns(LiveItem owner, StateConfig config, int index, bool passive)
+    public StateEffectIns(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source)
     {
         this.owner = owner;
         this.stateConfig = config;
         this.index = index;
         this.passive = passive;
+        this.source = source;
     }
 
     /// <summary>
@@ -234,10 +236,10 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         }
     }
 
-    public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive)
+    public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive, LiveItem source)
     {
         StateEffectIns ins = null;
-
+        Type t = null;
         //switch (config.stateEffects[i])
         //{
         //    case StateEffect.DamageAbsorb:
@@ -261,16 +263,16 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         //        break;
         //}
 
+
         try
         {
-            ins = (StateEffectIns)Activator.CreateInstance(
-                Type.GetType(config.stateEffects[i].ToString()), owner, config, i, passive);
+            t = Type.GetType(config.stateEffects[i].ToString());
+            ins = (StateEffectIns)Activator.CreateInstance(t, owner, config, i, passive, source);
         }
         catch (System.Exception e)
         {
-            Debug.Log("Activator Exception: " + e.Message);
+            Debug.LogError("Activator Exception: " + e.Message);
         }
-            
 
         return ins;
     }

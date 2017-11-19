@@ -8,7 +8,7 @@ public class Critical : StateEffectIns
     float multiply = 1;
     EffectCondition condition;
 
-    public Critical(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Critical(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         probability = stateConfig.stateArgs[index].f[0];
         multiply = stateConfig.stateArgs[index].f[1];

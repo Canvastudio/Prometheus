@@ -78,11 +78,7 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     }
 
-    protected virtual void OnEnable()
-    {
-        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
-    }
+
 
     public virtual IEnumerator OnDiscoverd()
     {
@@ -141,7 +137,16 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     public virtual void Recycle()
     {
         ResetValues();
+    }
 
+    protected virtual void OnEnable()
+    {
+        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
+        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
+    }
+
+    private void RemoveLister()
+    {
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
         Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
@@ -161,16 +166,13 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
         CheckViewArea();
     }
 
-    private void OnDestroy()
-    {
-        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
-    }
+
 
     public virtual void ResetValues()
     {
         isDiscovered = false;
         inViewArea = false;
+        RemoveLister();
     }
 
     public override bool Equals(object other)

@@ -8,7 +8,7 @@ public class Maintenance : GameItemBase{
     {
         base.Recycle();
 
-        GameObject.Destroy(this.gameObject);
+        ObjPool<Maintenance>.Instance.RecycleObj(GameItemFactory.Instance.maintenance_pool, itemId);
     }
 
 

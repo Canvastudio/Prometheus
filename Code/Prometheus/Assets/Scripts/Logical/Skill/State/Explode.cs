@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Explode : StateEffectIns
 {
-    public Explode(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public Explode(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         stateType = StateEffectType.Countdown;
     }

@@ -12,8 +12,7 @@ public class DamageTransfer : StateEffectIns
     int range = 0;
     List<Monster> list = new List<Monster>(8);
 
-    public DamageTransfer(LiveItem owner, StateConfig config, int index, bool passive) 
-        : base(owner, config, index, passive)
+    public DamageTransfer(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
         condition = config.stateArgs[index].ec[0];

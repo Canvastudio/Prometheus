@@ -8,7 +8,7 @@ public class DamageAbsorb : StateEffectIns
     float absorb_damage;
     int times;
 
-    public DamageAbsorb(LiveItem owner, StateConfig config, int index, bool passive) : base(owner, config, index, passive)
+    public DamageAbsorb(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = config.stateArgs[index].ec[0];
         GameProperty property;
