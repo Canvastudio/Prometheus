@@ -63,10 +63,12 @@ public class Monster : LiveItem
             if (enslave)
             {
                 Side = LiveItemSide.SIDE0;
+                StageCore.Instance.enslave += 1;
             }
             else
             {
                 Side = LiveItemSide.SIDE1;
+                StageCore.Instance.enslave -= 1;
             }
 
             _enslave = value;

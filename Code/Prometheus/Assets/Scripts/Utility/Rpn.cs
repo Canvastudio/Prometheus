@@ -91,6 +91,10 @@ public class Rpn {
                 {
                     stack.Push(skillDamage);
                 }
+                else if (property == GameProperty.monsterNum)
+                {
+                    stack.Push(StageCore.Instance.discover_monster - StageCore.Instance.enslave);
+                }
                 else
                 {
                     LiveItem target = null;

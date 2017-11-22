@@ -245,6 +245,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             yield return item.OnDiscoverd();
         }
+
+        if (realBrickType != BrickType.OBSTACLE)
+        {
+            StageCore.Instance.discover_brick += 1;
+        }
     }
 
     public void RefreshWalkableAndBlockState()
@@ -448,7 +453,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         //Debug.Log("回收砖块: row: " + row + " col: " + column);
 
-
+        StageCore.Instance.discover_brick -= 1;
 
         if (column == 0)
         {

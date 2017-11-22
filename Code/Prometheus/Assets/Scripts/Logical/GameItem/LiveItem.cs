@@ -149,7 +149,9 @@ public abstract class LiveItem : GameItemBase
         set
         {
             if (_side == value) return;
+
             bool b = (value == LiveItemSide.SIDE0);
+
             StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE0), b);
             StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE1), b);
             _side = value;

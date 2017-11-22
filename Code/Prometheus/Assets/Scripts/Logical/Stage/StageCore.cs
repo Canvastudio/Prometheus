@@ -104,7 +104,36 @@ public class StageCore : SingleGameObject<StageCore> {
         allItems.Add(gameItemBase);
     }
 
-    public int discover_monster = 0;
+    private int _discover_monster = 0;
+    public int discover_monster
+    {
+        get { return _discover_monster; }
+        set
+        {
+            if (_discover_monster != value)
+            {
+                _discover_monster = value;
+                Messenger.Invoke(SA.DiscoverMonsterChange);
+                Messenger.Invoke(SA.EnmeyCountChange);
+            }
+        }
+    }
+
+    private int _enslave = 0;
+    public int enslave
+    {
+        get { return _enslave; }
+        set
+        {
+            if (_enslave != value)
+            {
+                Messenger.Invoke(SA.EnmeyCountChange);
+            }
+        }
+    }
+
+
+    public int discover_brick = 0;
 
     public void UnRegisterItem(GameItemBase gameItem)
     {
@@ -122,6 +151,16 @@ public class StageCore : SingleGameObject<StageCore> {
         records.lastDeadMonster.lv = monster.lv;
         records.lastDeadMonster.pwr = monster.pwr;
         records.lastDeadMonster.uid = monster.cid;
+
+        if (monster.isDiscovered)
+        {
+            discover_monster -= 1;
+        }
+
+        if (!monster.enslave)
+        {
+            enslave -= 1;
+        }
     }
 
     public IEnumerator DoNearByBrickSpecialAction(Brick brick1)
@@ -435,6 +474,9 @@ public static class SA
     public const string PlayHpChange = "PIC";
     public const string PlayerAddState = "PAS";
     public const string PlayerRemoveState = "PRS";
+
+    public const string EnmeyCountChange = "ECC";
+    public const string DiscoverMonsterChange = "DMC";
 }
 
 public static class ST
