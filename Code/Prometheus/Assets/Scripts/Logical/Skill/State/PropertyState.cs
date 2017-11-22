@@ -23,6 +23,11 @@ public class Property : StateEffectIns
     {
         base.Deactive();
 
+        ResetChange();
+    }
+
+    protected void ResetChange()
+    {
         foreach (var change in changes)
         {
             if (change.Key != GameProperty.nhp)
@@ -36,10 +41,8 @@ public class Property : StateEffectIns
         }
     }
 
-    public override void Active()
+    protected void ApplyChange()
     {
-        base.Active();
-
         GameProperty property;
 
         if (stateConfig != null)
@@ -71,6 +74,13 @@ public class Property : StateEffectIns
                 }
             }
         }
+    }
+
+    public override void Active()
+    {
+        base.Active();
+
+        ApplyChange();
     }
 
     protected override void Apply(object param)

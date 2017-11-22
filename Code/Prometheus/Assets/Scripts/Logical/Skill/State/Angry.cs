@@ -18,8 +18,8 @@ public class Angry : StateEffectIns
     {
         condition = stateConfig.stateArgs[index].ec[0];
         extra1 = stateConfig.stateArgs[index].f[1];
-        extra0 = stateConfig.stateArgs[index].f[1];
-        extra2 = stateConfig.stateArgs[index].f[1];
+        extra0 = stateConfig.stateArgs[index].f[0];
+        extra2 = stateConfig.stateArgs[index].f[2];
 
         stateType = StateEffectType.OnGenerateDamage;
     }
