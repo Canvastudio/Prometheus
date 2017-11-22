@@ -789,11 +789,18 @@ public class FightComponet : MonoBehaviour
             }
         }
     }
-    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list, Dictionary<int ,float> realDamages)
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list, Dictionary<int ,float> realDamages = null)
     {
         foreach(var item in apply_list)
         {
-            ApplyEffect(config, args, effects, item, realDamages[item.itemId]);
+            if (realDamages != null)
+            {
+                ApplyEffect(config, args, effects, item, realDamages[item.itemId]);
+            }
+            else
+            {
+                ApplyEffect(config, args, effects, item);
+            }
         }
     }
 

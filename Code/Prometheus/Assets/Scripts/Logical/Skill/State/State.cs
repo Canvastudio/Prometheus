@@ -43,26 +43,29 @@ public class StateIns
     public bool active;
     public float exist_time;
     private bool _out_data = false;
+    public float skillDamage = 0;
     public bool out_data
     {
         get { return _out_data; }
         set { if (value) OnOutData(); out_data = value; }
     }
 
-    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive, LiveItem source = null)
+    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive, LiveItem source = null, float _skillDamage = 0)
     {
         int effect_count = stateConfig.stateEffects.Count();
-
+        skillDamage = _skillDamage;
+        this.stateConfig = stateConfig;
         stateEffects = new StateEffectIns[effect_count];
 
         for (int i = 0; i < effect_count; ++i)
         {
             stateEffects[i] = StateEffectIns.GenerateStateEffects(stateConfig, i, owner, passive, source);
+            stateEffects[i].skillDamage = _skillDamage;
         }
 
         id = ++_id;
 
-        this.stateConfig = stateConfig;
+
     }
 
     public void ActiveIns()
@@ -156,7 +159,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     public int index;
     protected bool passive;
     public LiveItem owner;
-
+    public float skillDamage;
     private bool _out_data = false;
     public bool out_data
     {

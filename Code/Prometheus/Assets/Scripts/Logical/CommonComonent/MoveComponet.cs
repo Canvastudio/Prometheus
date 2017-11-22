@@ -71,7 +71,7 @@ public class MoveComponet : MonoBehaviour {
 
         GameProperty property;
 
-        float time = FightComponet.CalculageRPN(rpn, owner, null, out property);
+        float time = Rpn.CalculageRPN(rpn, owner, null, out property);
 
         if (!IsNextBlock())
         {

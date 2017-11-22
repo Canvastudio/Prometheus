@@ -139,7 +139,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
             GameProperty property;
 
-            float time = FightComponet.CalculageRPN(rpn, Instance.Player, null, out property);
+            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out property);
             yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉
@@ -152,7 +152,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
             GameProperty property;
 
-            float time = FightComponet.CalculageRPN(rpn, Instance.Player, null, out property);
+            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out property);
             yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉

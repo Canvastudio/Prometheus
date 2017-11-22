@@ -47,10 +47,10 @@ public class Property : StateEffectIns
 
         if (stateConfig != null)
         {
-            var value = FightComponet.CalculageRPN(
+            var value = Rpn.CalculageRPN(
                 stateConfig.stateArgs[index].rpn.ToArray(0),
                 owner, source,
-                out property);
+                out property, null, skillDamage);
 
             float origin_value = owner.Property.GetFloatProperty(property);
             float change = value - origin_value;

@@ -228,11 +228,11 @@ public class Monster : LiveItem
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
-    public override void TakeDamage(Damage damageInfo)
+    public override float TakeDamage(Damage damageInfo)
     {
-        base.TakeDamage(damageInfo);
-
         fightComponet.skillActive = true;
+
+        return base.TakeDamage(damageInfo);
     }
 
     public override void Recycle()

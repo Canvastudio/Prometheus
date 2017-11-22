@@ -20,7 +20,7 @@ public class Explode : StateEffectIns
 
         GameProperty property;
 
-        float damage = FightComponet.CalculageRPN(stateConfig.stateArgs[index].rpn.ToArray(0), owner, StageCore.Instance.Player, out property);
+        float damage = Rpn.CalculageRPN(stateConfig.stateArgs[index].rpn.ToArray(0), owner, StageCore.Instance.Player, out property);
 
         Damage damageInfo = new Damage(damage, owner, StageCore.Instance.Player, DamageType.Physical);
 
