@@ -19,7 +19,7 @@ public class GunAuto : TempObj
         gameObject.transform.Rotate(Vector3.forward,3);
     }
 
-    public void FallDone()
+    public void DoneFall()
     {
         fall = true;
         ClickLimit.UnLock(this,true);

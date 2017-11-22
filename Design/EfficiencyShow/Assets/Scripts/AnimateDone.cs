@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class AnimateDone : MonoBehaviour
 {
-    public void Done()
+    public void FallDone()
     {
-        SendMessageUpwards("FallDone");
+        SendMessageUpwards("DoneFall");
+    }
+
+    public void QiPao()
+    {
+        SendMessageUpwards("ChangeState");
     }
 }

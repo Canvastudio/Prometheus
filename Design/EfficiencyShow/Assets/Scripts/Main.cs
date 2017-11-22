@@ -5,6 +5,7 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public GameObject stage;
+    public GameObject uiStage;
     public GameObject ControlButton;
     void Awake()
     {
@@ -17,7 +18,9 @@ public class Main : MonoBehaviour
         SuperResource.Instance.LoadAsync();
         StartCoroutine(Check());
         var mb=MessageCenter.CreatMsgBuilder(this);
-        mb.AddListener("召唤物", On_炮台);
+        mb.AddListener("召唤炮台", On_炮台);
+        mb.AddListener("状态气泡", On_气泡);
+        mb.AddListener("浮动文字", On_浮动文字);
     }
 
     private IEnumerator Check()
@@ -58,5 +61,22 @@ public class Main : MonoBehaviour
     }
 
 
+    private void On_气泡(object arg)
+    {
+        if (!ClickLimit.AlowClick) return;
+        Background.Instance.Reset();
+        var t=SuperResource.Instance.GetInstance("怪物");
+        SuperTool.SetParentWithLocal(stage.transform, t.transform);
 
+    }
+
+    private void On_浮动文字(object arg)
+    {
+        if (!ClickLimit.AlowClick) return;
+        var t = SuperResource.Instance.GetInstance("浮动文字");
+        SuperTool.SetParentWithLocal(uiStage.transform, t.transform);
+
+    }
+
+    
 }
