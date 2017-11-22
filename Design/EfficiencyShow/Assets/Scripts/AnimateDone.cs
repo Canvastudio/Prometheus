@@ -13,4 +13,14 @@ public class AnimateDone : MonoBehaviour
     {
         SendMessageUpwards("ChangeState");
     }
+
+    public void BaoZa1()
+    {
+        SendMessageUpwards("HideSelf");
+    }
+
+    public void BaoZa2()
+    {
+        SendMessageUpwards("DestroySelf");
+    }
 }

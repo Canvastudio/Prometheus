@@ -8,7 +8,10 @@ public class TempObj : MonoBehaviour
     void Awake()
     {
         MessageCenter.Instance.AddListener(MSG_BT.Down, DestroySelf);
+        Init();
     }
+
+     protected virtual void Init() { }
 
     void Destroy()
     {
@@ -17,8 +20,7 @@ public class TempObj : MonoBehaviour
 
     void DestroySelf(object arg)
     {
-        if (this != null)
-            Destroy(gameObject);
+        if (this != null) Destroy(gameObject);
     }
 
 }

@@ -17,10 +17,11 @@ public class Main : MonoBehaviour
     {
         SuperResource.Instance.LoadAsync();
         StartCoroutine(Check());
-        var mb=MessageCenter.CreatMsgBuilder(this);
+        var mb = MessageCenter.CreatMsgBuilder(this);
         mb.AddListener("召唤炮台", On_炮台);
         mb.AddListener("状态气泡", On_气泡);
         mb.AddListener("浮动文字", On_浮动文字);
+        mb.AddListener("复活石碑", On_复活石碑);
     }
 
     private IEnumerator Check()
@@ -45,7 +46,7 @@ public class Main : MonoBehaviour
         ClickLimit.AddLock(this, count);
         for (int i = 0; i < count; i++)
         {
-            SuperTimer.Instance.SetTimer(Random.Range(0.1f,0.3f), CreatGuns);
+            SuperTimer.Instance.SetTimer(Random.Range(0.1f, 0.3f), CreatGuns);
         }
 
     }
@@ -57,7 +58,7 @@ public class Main : MonoBehaviour
         Vector2 pos = tar.transform.position;
         gun.transform.position = pos;
         SuperTool.SetParentWithLocal(stage.transform, gun.transform);
-        ClickLimit.UnLock(this,true);
+        ClickLimit.UnLock(this, true);
     }
 
 
@@ -65,7 +66,7 @@ public class Main : MonoBehaviour
     {
         if (!ClickLimit.AlowClick) return;
         Background.Instance.Reset();
-        var t=SuperResource.Instance.GetInstance("怪物");
+        var t = SuperResource.Instance.GetInstance("怪物");
         SuperTool.SetParentWithLocal(stage.transform, t.transform);
 
     }
@@ -78,5 +79,30 @@ public class Main : MonoBehaviour
 
     }
 
-    
+    private void On_复活石碑(object arg)
+    {
+        if (!ClickLimit.AlowClick) return;
+        var sb = SuperResource.Instance.GetInstance("复活石碑");
+        SuperTool.SetParentWithLocal(stage.transform, sb.transform);
+
+        SuperTimer.Instance.SetTimer(4f, Resu, sb);
+        SuperTimer.Instance.SetTimer(1f, o =>
+        {
+            if (sb != null)
+            {
+                var t = sb.GetComponent<MonsterResurrection>();
+                if (t != null) t.MonsterDie();
+            }
+        });
+
+
+    }
+
+    private void Resu(object arg)
+    {
+        GameObject sb = arg as GameObject;
+        if (sb == null) return;
+        var resu = sb.GetComponent<MonsterResurrection>();
+        resu.SetRun(true);
+    }
 }
