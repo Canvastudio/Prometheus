@@ -348,7 +348,7 @@ public abstract class LiveItem : GameItemBase
         TakeDamage(damageInfo);
     }
 
-    public virtual void TakeDamage(Damage damageInfo)
+    public virtual float TakeDamage(Damage damageInfo)
     {
         foreach (var state in state_list)
         {
@@ -389,6 +389,8 @@ public abstract class LiveItem : GameItemBase
 
             Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
         }
+
+        return damageInfo.damage;
     }
 
     public virtual void AddStateIns(StateIns ins)

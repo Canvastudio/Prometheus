@@ -176,110 +176,7 @@ public class FightComponet : MonoBehaviour
         return SkillType.Invalid;
     }
 
-    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType, ActiveSkillsConfig skillsConfig = null)
-    {
-        Stack<float> stack = new Stack<float>();
-
-        float[] fv = new float[2];
-
-        SuperTool.GetValue(damage_values[damage_values.Length - 1], ref fv);
-
-        valueType = (GameProperty)fv[0];
-
-        for (int i = 0; i < damage_values.Length - 1; ++i)
-        {
-            SuperTool.GetValue(damage_values[i], ref fv);
-
-
-            var property = (GameProperty)fv[0];
-
-            if (fv[1] == 0)
-            {
-                stack.Push(fv[0]);
-            }
-            else
-            {
-                if (property == GameProperty.Eql)
-                {
-                    if (stack.Count != 0)
-                    {
-                        return stack.Pop();
-                    }
-                }
-                else if (property == GameProperty.Plus)
-                {
-                    if (stack.Count < 2)
-                    {
-                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                    }
-                    float v1 = stack.Pop();
-                    float v2 = stack.Pop();
-
-                    stack.Push(v1 + v2);
-
-                }
-                else if (property == GameProperty.Sub)
-                {
-                    if (stack.Count < 2)
-                    {
-                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                    }
-                    float v1 = stack.Pop();
-                    float v2 = stack.Pop();
-
-                    stack.Push(v2 - v1);
-
-                }
-                else if (property == GameProperty.Mul)
-                {
-                    if (stack.Count < 2)
-                    {
-                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                    }
-                    float v1 = stack.Pop();
-                    float v2 = stack.Pop();
-
-                    stack.Push(v1 * v2);
-
-                }
-                else if (property == GameProperty.Div)
-                {
-                    if (stack.Count < 2)
-                    {
-                        Debug.Log("逆波兰遇到操作符号的时候stack长度小于2");
-                    }
-                    float v1 = stack.Pop();
-                    float v2 = stack.Pop();
-
-                    stack.Push(v2/ v1);
-
-                }
-                else if (property == GameProperty.skillTime)
-                {
-                    stack.Push(skillsConfig.costTime);
-                }
-                else
-                {
-                    LiveItem target = null;
-
-                    if (fv[1] == 1)
-                    {
-                        target = rpn_source as LiveItem;
-                    }
-                    else
-                    {
-                        target = rpn_target as LiveItem;
-                    }
-
-                    stack.Push(target.Property.GetFloatProperty(property));
-                }
-            }
-        }
-
-        Debug.Log("逆波兰没有出口.");
-
-        return 0;
-    }
+    
 
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
@@ -592,7 +489,7 @@ public class FightComponet : MonoBehaviour
         //时间消耗
         long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
         GameProperty property;
-        float time_cost = CalculageRPN(rpn, ownerObject, null, out property, config);
+        float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out property, config);
         RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
         foreach (var state in ownerObject.state_list)
         {
@@ -684,9 +581,10 @@ public class FightComponet : MonoBehaviour
         }
 
         GameProperty property;
-        var damage = CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-
+        var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
         int damageTimes = damageApperance.Length;
+
+        Dictionary<int, float> realDamages = new Dictionary<int, float>();
 
         int i = 0;
    
@@ -710,7 +608,16 @@ public class FightComponet : MonoBehaviour
                         }
                     }
 
-                    (target as LiveItem).TakeDamage(damageInfo);
+                    float v = 0;
+
+                    if (realDamages.TryGetValue(target.itemId, out v))
+                    {
+                        realDamages[target.itemId] = v + (target as LiveItem as LiveItem).TakeDamage(damageInfo);
+                    }
+                    else
+                    {
+                        realDamages.Add(target.itemId, (target as LiveItem as LiveItem).TakeDamage(damageInfo));
+                    }
                 }
                 else
                 {
@@ -728,7 +635,16 @@ public class FightComponet : MonoBehaviour
                             }
                         }
 
-                        (item as LiveItem as LiveItem).TakeDamage(damageInfo);
+                        float v = 0;
+
+                        if (realDamages.TryGetValue(item.itemId, out v))
+                        {
+                            realDamages[item.itemId] = v + (item as LiveItem as LiveItem).TakeDamage(damageInfo);
+                        }
+                        else
+                        {
+                            realDamages.Add(item.itemId, (item as LiveItem as LiveItem).TakeDamage(damageInfo));
+                        }
                     }
 
                     ++i;
@@ -744,19 +660,19 @@ public class FightComponet : MonoBehaviour
 
             if (damageList == null)
             {
-                ApplyEffect(config, config.afterArgs, effects2, target);
+                ApplyEffect(config, config.afterArgs, effects2, target, realDamages[target.itemId]);
             }
             else
             {
 
-                ApplyEffect(config, config.afterArgs, effects2, damageList);
+                ApplyEffect(config, config.afterArgs, effects2, damageList, realDamages);
             }
         }
 
         targetAttackFinsh++;
     }
 
-    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, GameItemBase item)
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, GameItemBase item, float skillDamage = 0)
     {
         Brick brick = null;
         EffectCondition condition = EffectCondition.None;
@@ -780,7 +696,7 @@ public class FightComponet : MonoBehaviour
                     long[] rpn_values = args[i].rpn.ToArray(0);
 
 
-                    var value = CalculageRPN(rpn_values, ownerObject, item, out property);
+                    var value = Rpn.CalculageRPN(rpn_values, ownerObject, item, out property, config, skillDamage);
 
                     (item as LiveItem).Property.SetFloatProperty(property, value);
 
@@ -873,11 +789,11 @@ public class FightComponet : MonoBehaviour
             }
         }
     }
-    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list)
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list, Dictionary<int ,float> realDamages)
     {
         foreach(var item in apply_list)
         {
-            ApplyEffect(config, args, effects, item);
+            ApplyEffect(config, args, effects, item, realDamages[item.itemId]);
         }
     }
 
