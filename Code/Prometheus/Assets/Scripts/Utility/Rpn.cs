@@ -93,7 +93,15 @@ public class Rpn {
                 }
                 else if (property == GameProperty.monsterNum)
                 {
-                    stack.Push(StageCore.Instance.discover_monster - StageCore.Instance.enslave);
+                    stack.Push(GContext.Instance.discover_monster - GContext.Instance.enslave_count);
+                }
+                else if (property == GameProperty.openGridNum)
+                {
+                    stack.Push(GContext.Instance.discover_brick);
+                }
+                else if (property == GameProperty.darkGridNum)
+                {
+                    stack.Push(GContext.Instance.dark_brick);
                 }
                 else
                 {

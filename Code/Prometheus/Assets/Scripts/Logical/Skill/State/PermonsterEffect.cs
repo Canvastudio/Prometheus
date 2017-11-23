@@ -26,7 +26,7 @@ public class PermonsterEffect : Property
 
     private void CheckEnemyCount()
     {
-        int c = StageCore.Instance.discover_monster - StageCore.Instance.enslave;
+        int c = GContext.Instance.enemy_count;
 
         if (c != enemyCount)
         {

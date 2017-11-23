@@ -50,28 +50,6 @@ public class StageCore : SingleGameObject<StageCore> {
     /// </summary>
     public StageRecording records;
 
-    /// <summary>
-    /// 玩家是处于动作中
-    /// </summary>
-    //public bool playerDoing = false;
-
-    /// <summary>
-    /// 是否符合被动里面的just状态
-    /// </summary>
-    private bool inJustState = false;
-
-    /// <summary>
-    /// 最后一个翻开的怪物
-    /// </summary>
-    private Monster lastDiscoverMonster = null;
-    public bool JustdiscoverMonster = false;
-
-    public void SetDiscoverMonster(Monster monster)
-    {
-        lastDiscoverMonster = monster;
-        JustdiscoverMonster = true;
-    }
-
     protected override void Init()
     {
         base.Init();
@@ -104,44 +82,8 @@ public class StageCore : SingleGameObject<StageCore> {
         allItems.Add(gameItemBase);
     }
 
-    public int enemy_count
-    {
-        get
-        {
-            return discover_monster - enslave;
-        }
-    }
-
-    private int _discover_monster = 0;
-    public int discover_monster
-    {
-        get { return _discover_monster; }
-        set
-        {
-            if (_discover_monster != value)
-            {
-                _discover_monster = value;
-                Messenger.Invoke(SA.DiscoverMonsterChange);
-                Messenger.Invoke(SA.EnmeyCountChange);
-            }
-        }
-    }
-
-    private int _enslave = 0;
-    public int enslave
-    {
-        get { return _enslave; }
-        set
-        {
-            if (_enslave != value)
-            {
-                Messenger.Invoke(SA.EnmeyCountChange);
-            }
-        }
-    }
 
 
-    public int discover_brick = 0;
 
     public void UnRegisterItem(GameItemBase gameItem)
     {
@@ -162,12 +104,12 @@ public class StageCore : SingleGameObject<StageCore> {
 
         if (monster.isDiscovered)
         {
-            discover_monster -= 1;
+            GContext.Instance.discover_monster -= 1;
         }
 
         if (!monster.enslave)
         {
-            enslave -= 1;
+            GContext.Instance.enslave_count -= 1;
         }
     }
 
@@ -357,7 +299,7 @@ public class StageCore : SingleGameObject<StageCore> {
         //autoMove = false;
         StageView.Instance.CancelPahtNode();
 
-        JustdiscoverMonster = false;
+        GContext.Instance.JustdiscoverMonster = false;
     }
     
     IEnumerator PlayerMeleeAction(Brick brick1)
@@ -366,7 +308,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         var monster = brick1.item as Monster;
 
-        if (monster.itemId == lastDiscoverMonster.itemId && JustdiscoverMonster)
+        if (monster.itemId == GContext.Instance.lastDiscoverMonster.itemId && GContext.Instance.JustdiscoverMonster)
         {
             just = true;
         }
@@ -408,7 +350,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         }
 
-        JustdiscoverMonster = false;
+        GContext.Instance.JustdiscoverMonster = false;
     }
 
     public IEnumerator StopLoop()
@@ -485,6 +427,9 @@ public static class SA
 
     public const string EnmeyCountChange = "ECC";
     public const string DiscoverMonsterChange = "DMC";
+
+    public const string DiscoverBrickChange = "DBC";
+    public const string DarkBrickChange = "DKBC";
 }
 
 public static class ST

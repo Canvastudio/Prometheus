@@ -482,7 +482,7 @@ public class FightComponet : MonoBehaviour
             }
 
             //使用技能之后就不符合just的状态了
-            StageCore.Instance.JustdiscoverMonster = false;
+            GContext.Instance.JustdiscoverMonster = false;
         }
 
 

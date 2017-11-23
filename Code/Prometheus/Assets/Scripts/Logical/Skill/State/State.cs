@@ -275,6 +275,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         catch (System.Exception e)
         {
             Debug.LogError("Activator Exception: " + e.Message);
+            Debug.LogError("State: " + config.stateEffects[i].ToString());
         }
 
         return ins;

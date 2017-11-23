@@ -365,7 +365,7 @@ public abstract class LiveItem : GameItemBase
                 {
                     var last_count = StageCore.Instance.tagMgr.GetEntity(ETag.GetETag(ST.LAST)).Count;
 
-                    if (last_count <= StageCore.Instance.discover_monster)
+                    if (last_count <= GContext.Instance.discover_monster)
                     {
                         damageInfo.damage = 0;
                     }

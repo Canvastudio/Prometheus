@@ -248,10 +248,21 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         if (realBrickType != BrickType.OBSTACLE)
         {
-            StageCore.Instance.discover_brick += 1;
+            GContext.Instance.discover_brick += 1;
         }
+
+        GContext.Instance.dark_brick -= 1;
     }
 
+    protected override void OnEnterIntoArea()
+    {
+        base.OnEnterIntoArea();
+
+        if (!isDiscovered)
+        {
+            GContext.Instance.dark_brick += 1;
+        }
+    }
     public void RefreshWalkableAndBlockState()
     {
         blockMask.gameObject.SetActive(false);
@@ -453,7 +464,14 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         //Debug.Log("回收砖块: row: " + row + " col: " + column);
 
-        StageCore.Instance.discover_brick -= 1;
+        if (isDiscovered)
+        {
+            GContext.Instance.discover_brick -= 1;
+        }
+        else
+        {
+            GContext.Instance.dark_brick -= 1;
+        }
 
         if (column == 0)
         {

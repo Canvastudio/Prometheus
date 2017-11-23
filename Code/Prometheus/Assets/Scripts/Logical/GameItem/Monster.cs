@@ -57,21 +57,24 @@ public class Monster : LiveItem
         }
         set
         {
-            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
-            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.ENEMY), !value);
-
-            if (enslave)
+            if (_enslave != value)
             {
-                Side = LiveItemSide.SIDE0;
-                StageCore.Instance.enslave += 1;
-            }
-            else
-            {
-                Side = LiveItemSide.SIDE1;
-                StageCore.Instance.enslave -= 1;
-            }
+                StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.FRIEND), value);
+                StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.ENEMY), !value);
 
-            _enslave = value;
+                if (enslave)
+                {
+                    Side = LiveItemSide.SIDE0;
+                    GContext.Instance.enslave_count += 1;
+                }
+                else
+                {
+                    Side = LiveItemSide.SIDE1;
+                    GContext.Instance.enslave_count -= 1;
+                }
+
+                _enslave = value;
+            }
         }
     }
 
@@ -113,11 +116,12 @@ public class Monster : LiveItem
 
         RefreshPassiveSKillState();
 
-        StageCore.Instance.discover_monster += 1;
+        GContext.Instance.discover_monster += 1;
+        GContext.Instance.lastDiscoverMonster = this;
 
         StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
         StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
-        StageCore.Instance.SetDiscoverMonster(this);
+
 
         if (standBrick != null)
         {
@@ -177,7 +181,7 @@ public class Monster : LiveItem
 
         if (isDiscovered && cur_hp > 0)
         {
-            StageCore.Instance.discover_monster -= 1;
+            GContext.Instance.discover_monster -= 1;
         }
 
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
@@ -185,7 +189,7 @@ public class Monster : LiveItem
      
     public override IEnumerator OnDead(Damage damageInfo)
     {
-        StageCore.Instance.discover_monster -= 1;
+        GContext.Instance.discover_monster -= 1;
 
         if (standBrick != null)
         {

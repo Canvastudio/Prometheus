@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PerbrickEffect : Property
+{
+    public PerbrickEffect(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    {
+
+    }
+
+    public override void Active()
+    {
+        Messenger.AddListener(SA.DiscoverBrickChange, OnDiscoverBrickCountChange);
+    }
+
+    private void OnDiscoverBrickCountChange()
+    {
+        ApplyChange();
+    }
+
+    public override void Deactive()
+    {
+        base.Deactive();
+        Messenger.RemoveListener(SA.DiscoverBrickChange, OnDiscoverBrickCountChange);
+    }
+
+
+}
