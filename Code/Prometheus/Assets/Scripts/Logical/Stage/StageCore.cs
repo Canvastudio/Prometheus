@@ -104,6 +104,14 @@ public class StageCore : SingleGameObject<StageCore> {
         allItems.Add(gameItemBase);
     }
 
+    public int enemy_count
+    {
+        get
+        {
+            return discover_monster - enslave;
+        }
+    }
+
     private int _discover_monster = 0;
     public int discover_monster
     {
