@@ -12,10 +12,13 @@ public class PerbrickEffect : Property
     public override void Active()
     {
         Messenger.AddListener(SA.DiscoverBrickChange, OnDiscoverBrickCountChange);
+
+        base.Active();
     }
 
     private void OnDiscoverBrickCountChange()
     {
+        ResetChange();
         ApplyChange();
     }
 

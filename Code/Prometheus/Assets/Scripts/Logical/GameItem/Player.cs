@@ -61,11 +61,9 @@ public class Player : LiveItem {
 
     public override float TakeDamage(Damage damageInfo)
     {
-        float result = base.TakeDamage(damageInfo);
-
         Messenger.Invoke(SA.PlayHpChange);
 
-        return result;
+        return base.TakeDamage(damageInfo);
     }
 
     protected override void OnSetStandBrick(Brick brick)

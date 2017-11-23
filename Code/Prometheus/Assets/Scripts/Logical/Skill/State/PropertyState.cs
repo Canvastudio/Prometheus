@@ -39,6 +39,8 @@ public class Property : StateEffectIns
                 owner.Property.SetFloatProperty(change.Key, value);
             }
         }
+
+        changes.Clear();
     }
 
     protected void ApplyChange()

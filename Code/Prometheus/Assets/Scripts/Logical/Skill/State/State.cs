@@ -31,7 +31,7 @@ public enum StateEffectType
     Last,
 }
 
-
+[System.Serializable]
 public class StateIns
 {
     static int _id = 0;
@@ -47,7 +47,7 @@ public class StateIns
     public bool out_data
     {
         get { return _out_data; }
-        set { if (value) OnOutData(); out_data = value; }
+        set { if (value) OnOutData(); _out_data = value; }
     }
 
     public StateIns(StateConfig stateConfig, LiveItem owner, bool passive, LiveItem source = null, float _skillDamage = 0)
@@ -164,7 +164,7 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
     public bool out_data
     {
         get { return _out_data; }
-        set { if (value) OnOutData(); out_data = value; }
+        set { if (value) OnOutData(); _out_data = value; }
     }
 
     public bool active = false;

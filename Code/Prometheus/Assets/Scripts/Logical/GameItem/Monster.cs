@@ -85,20 +85,23 @@ public class Monster : LiveItem
     {
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 
-        if (AIConfig.warning > 0)
+        if (!isDiscovered && player_distance <= AIConfig.warning)
         {
-            if (!isDiscovered && player_distance <= AIConfig.warning)
-            {
-                standBrick.OnDiscoverd();
-            }
+            StartCoroutine(standBrick.OnDiscoverd());
         }
+        
 
-        if (player_distance <= 1)
+        if (player_distance <= 1 && isDiscovered)
         {
             if (!block_other)
             {
                 BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
                 block_other = true;
+
+                if (!isDiscovered)
+                {
+                    standBrick.OnDiscoverd();
+                }
             }
 
             if (dangerousLevels == DangerousLevels.Neutral)

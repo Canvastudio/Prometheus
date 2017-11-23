@@ -157,15 +157,9 @@ public abstract class LiveItem : GameItemBase
             _side = value;
         }
     }
-    
 
-    public bool isAlive
-    {
-        get
-        {
-            return cur_hp > 0;
-        }
-    }
+
+    public bool isAlive = true;
 
     [SerializeField]
     private MoveComponet _moveComponet;
@@ -300,10 +294,38 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    private void OnPropertyChange(GameProperty property)
+    {
+        if (property == GameProperty.nhp)
+        {
+            if (hp_value != null)
+            {
+                hp_value.text = cur_hp.ToString();
+            }
+        }
+        else if (property == GameProperty.melee)
+        {
+            if (atk_value != null)
+            {
+                atk_value.text = melee.ToString();
+            }
+        }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        Property = new LiveBasePropertys();
+        Property.changeCallback = OnPropertyChange;
+        isAlive = true;
+    }
+
+
     /// <summary>
     /// 基础属性，血量，速度等
     /// </summary>
-    public LiveBasePropertys Property = new LiveBasePropertys();
+    public LiveBasePropertys Property;
 
     public void AddHpPercent(float percent)
     {
@@ -319,9 +341,11 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator OnDead(Damage damageInfo)
     {
-        standBrick.CleanItem();
-
         StageCore.Instance.UnRegisterItem(this);
+
+        isAlive = false;
+
+        standBrick.CleanItem();
 
         return null;
     }
@@ -336,8 +360,7 @@ public abstract class LiveItem : GameItemBase
 
             Damage damageInfo = new Damage(damage, this, target, DamageType.Physical);
 
-            yield return this.ExStartCoroutine
-                (target.MeleeAttackByOther(this, damageInfo));
+            yield return target.MeleeAttackByOther(this, damageInfo);
         }
     }
 
@@ -382,7 +405,7 @@ public abstract class LiveItem : GameItemBase
             AddStateIns(ins);
         }
 
-        if (cur_hp == 0)
+        if (cur_hp == 0 && isAlive)
         {
            StartCoroutine(OnDead(damageInfo));
         }

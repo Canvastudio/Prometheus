@@ -69,8 +69,9 @@ public class MonsterFightComponet : FightComponet {
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Active();
-                Messenger<float>.AddListener(SA.StageTimeCast, OnTimeCast);
             }
+
+            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeCast);
         }
 
         ReorderSkill();
@@ -85,8 +86,9 @@ public class MonsterFightComponet : FightComponet {
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Deactive();
-                Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
             }
+
+            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
         }
     }
 

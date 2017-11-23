@@ -14,6 +14,8 @@ public class PermonsterEffect : Property
     public override void Active()
     {
         Messenger.AddListener(SA.EnmeyCountChange, CheckEnemyCount);
+
+        base.Active();
     }
 
     public override void Deactive()
@@ -26,13 +28,8 @@ public class PermonsterEffect : Property
 
     private void CheckEnemyCount()
     {
-        int c = GContext.Instance.enemy_count;
-
-        if (c != enemyCount)
-        {
-            ApplyChange();
-            enemyCount = c;
-        }
+        ResetChange();
+        ApplyChange();
     }
 
     protected override void Apply(object param)

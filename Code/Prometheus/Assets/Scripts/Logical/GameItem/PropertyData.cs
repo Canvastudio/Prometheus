@@ -6,6 +6,8 @@ public class PropertyData
 {
     protected Dictionary<GameProperty, float> data = new Dictionary<GameProperty, float>();
 
+    public Callback<GameProperty> changeCallback;
+
     public float this[GameProperty gameProperty]
     {
         get

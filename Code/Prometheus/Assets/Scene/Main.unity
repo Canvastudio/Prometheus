@@ -652,6 +652,31 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 223114034836045306, guid: 3fa5765024e4cee47a8700150883b0ce,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: -2114422657
+      objectReference: {fileID: 0}
+    - target: {fileID: 223497834941352064, guid: 3fa5765024e4cee47a8700150883b0ce,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 223472635134076162, guid: 3fa5765024e4cee47a8700150883b0ce,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 223100313737863612, guid: 3fa5765024e4cee47a8700150883b0ce,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 223114034836045306, guid: 3fa5765024e4cee47a8700150883b0ce,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3fa5765024e4cee47a8700150883b0ce, type: 2}
   m_IsPrefabParent: 0
@@ -1517,6 +1542,52 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 527163659}
+--- !u!1 &547007847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 547007849}
+  - component: {fileID: 547007848}
+  m_Layer: 0
+  m_Name: GContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &547007848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 547007847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f19fdc799f84f4ca8db4ab6434bf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _discover_monster: 0
+  _enslave: 0
+  _discover_brick: 0
+  _dark_brick: 0
+  _lastDiscoverMonster: {fileID: 0}
+  JustdiscoverMonster: 0
+--- !u!4 &547007849
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 547007847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22773111, y: -2.5387216, z: 4.9521484}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &555287495
 GameObject:
   m_ObjectHideFlags: 0

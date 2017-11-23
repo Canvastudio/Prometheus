@@ -308,7 +308,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         var monster = brick1.item as Monster;
 
-        if (monster.itemId == GContext.Instance.lastDiscoverMonster.itemId && GContext.Instance.JustdiscoverMonster)
+        if (GContext.Instance.JustdiscoverMonster && monster.itemId == GContext.Instance.lastDiscoverMonster.itemId)
         {
             just = true;
         }
@@ -320,12 +320,12 @@ public class StageCore : SingleGameObject<StageCore> {
         {
             yield return Player.MeleeAttackTarget(monster);
 
-            if (monster != null && monster.isAlive && !monster.enslave)
+            if (monster != null && monster.cur_hp > 0 && !monster.enslave)
             {
                 yield return monster.MeleeAttackTarget(Player);
             }
 
-            if (Player != null && Player.isAlive && player_Speed >= monster_Speed * 1.5f)
+            if (Player != null && Player.cur_hp > 0 && player_Speed >= monster_Speed * 1.5f)
             {
                 yield return Player.MeleeAttackTarget(monster);
             }
@@ -334,12 +334,12 @@ public class StageCore : SingleGameObject<StageCore> {
         {
             yield return monster.MeleeAttackTarget(Player);
 
-            if (Player != null && Player.isAlive)
+            if (Player != null && Player.cur_hp > 0)
             {
                 yield return Player.MeleeAttackTarget(monster);
             }
 
-            if (monster != null && monster.isAlive && monster_Speed >= player_Speed * 1.5f)
+            if (monster != null && monster.cur_hp > 0 && monster_Speed >= player_Speed * 1.5f)
             {
                 yield return monster.MeleeAttackTarget(Player);
             }

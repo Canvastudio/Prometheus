@@ -15,24 +15,30 @@ MonoBehaviour:
   - {fileID: 114398328650651688}
   - {fileID: 114247190248411498}
   - {fileID: 114625188787129548}
+  - {fileID: 114143309577346230}
   EditorEvents:
   - {fileID: 114997364886808452}
   - {fileID: 114655506140269658}
   - {fileID: 114503032586022962}
   - {fileID: 114924557215722006}
   - {fileID: 114703765789235894}
-  - {fileID: 114212655339377192}
   - {fileID: 114652066397690180}
-  - {fileID: 114876214302982454}
   - {fileID: 114054205564511966}
   - {fileID: 114419730289498622}
   - {fileID: 114646722763571242}
   - {fileID: 114963102329103488}
   - {fileID: 114954016294476478}
-  - {fileID: 114441844946801436}
+  - {fileID: 114624100661412082}
+  - {fileID: 114458114494335148}
+  - {fileID: 114935419993373898}
+  - {fileID: 114984593967032434}
+  - {fileID: 114873611553305538}
+  - {fileID: 114758162397483552}
+  - {fileID: 114473492299738728}
+  - {fileID: 114477737313556994}
   MasterBankRef: {fileID: 114625188787129548}
   StringsBankRef: {fileID: 114398328650651688}
-  stringsBankWriteTime: 636461103805640297
+  stringsBankWriteTime: 636466907560577491
   cacheVersion: 2
 --- !u!114 &114054205564511966
 MonoBehaviour:
@@ -79,6 +85,54 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 3631
+--- !u!114 &114143309577346230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: F:\Jim\Document\Prometheus\Sound\game_sound\Build\Desktop\BGM.bank
+  lastModified: 636462958062196260
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1873056
+  Exists: 1
+--- !u!114 &114151173224389546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
+--- !u!114 &114208427922966308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
 --- !u!114 &114212655339377192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,11 +187,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: F:\Jim\Document\Prometheus\Sound\game_sound\Build\Desktop\Skill.bank
-  lastModified: 636461103805675386
+  lastModified: 636466907560667604
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 384096
+    Value: 420160
   Exists: 1
 --- !u!114 &114267455214640998
 MonoBehaviour:
@@ -236,11 +290,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: F:\Jim\Document\Prometheus\Sound\game_sound\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636461103805640297
+  lastModified: 636466907560577491
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1384
+    Value: 1652
   Exists: 1
 --- !u!114 &114412659526494556
 MonoBehaviour:
@@ -280,7 +334,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114903683308708014}
+  - {fileID: 114788513858231490}
   MinDistance: 0
   MaxDistance: 0
   Length: 900
@@ -307,6 +361,28 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1383
+--- !u!114 &114458114494335148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/chenmo_fly
+  guid: 30123c25e3e5864ba2a04f4730f692e4
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 646
 --- !u!114 &114459775552459650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +404,51 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1306
+--- !u!114 &114473492299738728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/nuyi_hit
+  guid: d9db5cb513ca4943a8559ca8a58bbd02
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1380
+--- !u!114 &114477737313556994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/sanshe_ready
+  guid: fe126ba66e809e40bc833a88e914a91c
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 114151173224389546}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1383
 --- !u!114 &114503032586022962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +542,28 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114624100661412082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/BGM_1
+  guid: fc6c89a2f939914c8c61622482878c1f
+  Banks:
+  - {fileID: 114143309577346230}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 233691
 --- !u!114 &114625188787129548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +668,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114297147950220288}
+  - {fileID: 114988899892413118}
   MinDistance: 0
   MaxDistance: 0
   Length: 3631
@@ -614,6 +757,28 @@ MonoBehaviour:
   - Name: Desktop
     Value: 12474
   Exists: 1
+--- !u!114 &114758162397483552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/chenmo_hit
+  guid: b3ea1d3b18060a4bb2712200a2d08f70
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1354
 --- !u!114 &114776247228053750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +801,21 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1358
+--- !u!114 &114788513858231490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Parameter 2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114809429063960196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +831,43 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
+--- !u!114 &114816009185721890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
+--- !u!114 &114873611553305538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/nuyi_fly
+  guid: 9477e212dde5014fa8fc7eb954048e64
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 646
 --- !u!114 &114876214302982454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,6 +928,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1306
+--- !u!114 &114935419993373898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/nangua_ready
+  guid: 49d041d507ef444eb497197e4085ac6a
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 114208427922966308}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4600
 --- !u!114 &114954016294476478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,6 +1013,44 @@ MonoBehaviour:
   - Name: Desktop
     Value: 79968
   Exists: 1
+--- !u!114 &114984593967032434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/guanchuanshexian_ready
+  guid: 61cebe9e59841c47b265e15c4024610e
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 114816009185721890}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2546
+--- !u!114 &114988899892413118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Parameter 2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114997364886808452
 MonoBehaviour:
   m_ObjectHideFlags: 0
