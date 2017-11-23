@@ -8,7 +8,6 @@ public class KillSelf : MonoBehaviour
     public void StartExplode()
     {
         var animate = GetComponentInChildren<Animator>();
-        Debug.Log(animate);
         animate.SetBool("explode",true);
     }
 

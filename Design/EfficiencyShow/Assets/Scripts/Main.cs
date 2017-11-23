@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main : MonoBehaviour
+public class Main : SingleGameObject<Main>
 {
-    public GameObject stage;
-    public GameObject uiStage;
+    public  GameObject stage;
+    public  GameObject uiStage;
     public GameObject ControlButton;
-    void Awake()
+
+
+    protected override void Init()
     {
         SuperTimer.Instance.CreatAndBound(this);
         ControlButton.SetActive(false);
@@ -82,27 +84,28 @@ public class Main : MonoBehaviour
     private void On_复活石碑(object arg)
     {
         if (!ClickLimit.AlowClick) return;
-        var sb = SuperResource.Instance.GetInstance("复活石碑");
-        SuperTool.SetParentWithLocal(stage.transform, sb.transform);
+        var stone = SuperResource.Instance.GetInstance("复活石碑");
+        SuperTool.SetParentWithLocal(stage.transform, stone.transform);
 
-        SuperTimer.Instance.SetTimer(4f, Resu, sb);
+        SuperTimer.Instance.SetTimer(4f, Resu, stone);
         SuperTimer.Instance.SetTimer(1f, o =>
         {
-            if (sb != null)
+            if (stone != null)
             {
-                var t = sb.GetComponent<MonsterResurrection>();
+                var t = stone.GetComponent<MonsterResurrection>();
                 if (t != null) t.MonsterDie();
             }
         });
-
 
     }
 
     private void Resu(object arg)
     {
-        GameObject sb = arg as GameObject;
-        if (sb == null) return;
-        var resu = sb.GetComponent<MonsterResurrection>();
+        GameObject stone = arg as GameObject;
+        if (stone == null) return;
+        var resu = stone.GetComponent<MonsterResurrection>();
         resu.SetRun(true);
+        var v = SuperResource.Instance.GetInstance("法阵");
+        v.GetComponent<VffaControl>().SetDeploy(true);
     }
 }

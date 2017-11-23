@@ -23,4 +23,14 @@ public class AnimateDone : MonoBehaviour
     {
         SendMessageUpwards("DestroySelf");
     }
+
+    public void VffaMax()
+    {
+        SendMessageUpwards("_VffaMax");
+    }
+
+    public void VffaMin()
+    {
+        SendMessageUpwards("_VffaMin");
+    }
 }
