@@ -271,11 +271,6 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         if (_brick != null && _brick.brickExplored == BrickExplored.UNEXPLORED)
         {
             yield return _brick.OnDiscoverd();
-
-            if (_brick.item != null)
-            {
-               yield return _brick.item.OnDiscoverd();
-            }
         }
     }
 

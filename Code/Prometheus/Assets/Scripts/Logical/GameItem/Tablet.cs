@@ -31,6 +31,9 @@ public class Tablet : GameItemBase {
     /// </summary>
     int int_arg1 = 0;
 
+    [SerializeField]
+    Monster lastDeadMonster;
+
     public void AddRound(float t)
     {
         if (isDiscovered && CheckFunc())
@@ -39,8 +42,9 @@ public class Tablet : GameItemBase {
 
             if (round > activeRound)
             {
-                round -= activeRound;
                 StartCoroutine(TakeEffect());
+                lastDeadMonster = null;
+                round = 0;
             }
         }
         else
@@ -74,11 +78,10 @@ public class Tablet : GameItemBase {
                 break;
             case TotemType.Resurgence:
 
-                var lastDeadMonster = StageCore.Instance.records.lastDeadMonster;
                 BrickCore.Instance.CreateMonsterOnRandomStandableBrick(
                     lastDeadMonster.pwr,
                     lastDeadMonster.lv,
-                    lastDeadMonster.uid);
+                    lastDeadMonster.config.id);
 
                 break;
             case TotemType.Renew:
@@ -131,7 +134,7 @@ public class Tablet : GameItemBase {
                 break;
             case TotemType.Resurgence:
                 activeRound = int.Parse(config.arg);
-                //Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
+                Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
                 CheckFunc = HaveMonsterDead;
                 break;
             case TotemType.Renew:
@@ -160,12 +163,13 @@ public class Tablet : GameItemBase {
 
     private bool HaveMonsterDead()
     {
-        return StageCore.Instance.records.lastDeadMonster != null;
+        return lastDeadMonster != null;
     }
 
     private void OnMonsterDead(Monster monster)
     {
         round = 0;
+        lastDeadMonster = monster;
     }
 
     public override void Recycle()
@@ -173,6 +177,10 @@ public class Tablet : GameItemBase {
         base.Recycle();
 
         ObjPool<Tablet>.Instance.RecycleObj(GameItemFactory.Instance.tablet_pool, itemId);
+        if (config.totemType == TotemType.Resurgence)
+        {
+            Messenger<Monster>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+        }
     }
 }
 

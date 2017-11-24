@@ -15,6 +15,8 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public Image icon;
 
+    public CanvasGroup canvasGroup;
+
     public void OnActionBegin()
     {
         if (action == 0)
@@ -34,8 +36,6 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
             StageCore.Instance.action_item -= 1;
         }
     }
-
-
 
     /// <summary>
     /// 当前依附的砖块
@@ -82,10 +82,12 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual IEnumerator OnDiscoverd()
     {
+        Debug.Log("发现: " + gameObject.name);
+
         isDiscovered = true;
+        canvasGroup.alpha = 1;
 
         CheckViewArea();
-
         return null;
     }
 

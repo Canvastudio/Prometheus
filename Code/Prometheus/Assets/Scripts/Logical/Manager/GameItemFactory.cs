@@ -71,11 +71,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         int tid;
 
-        var monster = ObjPool<Monster>.Instance.GetObjFromPoolWithID(out tid, monster_pool);
+        var item = ObjPool<Monster>.Instance.GetObjFromPoolWithID(out tid, monster_pool);
 
-        monster.itemId = tid;
+        item.itemId = tid;
 
-        var go = monster.gameObject;
+        var go = item.gameObject;
 
         go.SetActive(true);
 
@@ -85,19 +85,19 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         go.transform.position = bornBrick.transform.position;
 
-        monster.standBrick = bornBrick;
+        item.standBrick = bornBrick;
 
         MonsterConfig config = ConfigDataBase.GetConfigDataById<MonsterConfig>(id);
 
         SuperArrayValue<float> propertys = config.propertys;
 
-        monster.config = config;
+        item.config = config;
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        monster.Property = new LiveBasePropertys();
+        item.Property = new LiveBasePropertys();
 
-        monster.Property.InitBaseProperty(
+        item.Property.InitBaseProperty(
             lv_Property.mhp * propertys[pwr, 0],
             lv_Property.speed * propertys[pwr, 1],
             lv_Property.melee * propertys[pwr, 2],
@@ -105,10 +105,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             lv_Property.cartridge * propertys[pwr, 4]
             );
 
-        monster.InitInfoUI();
+        item.InitInfoUI();
 
 
-        MonsterFightComponet fightComponet = monster.GetOrAddComponet<MonsterFightComponet>();
+        MonsterFightComponet fightComponet = item.GetOrAddComponet<MonsterFightComponet>();
 
         fightComponet.activeInsList.Clear();
         fightComponet.passiveInsList.Clear();
@@ -117,52 +117,67 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         if (pwr == 0)
         {
-            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_0");
+            item.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_0");
             AddSkillToFightComponet(fightComponet, config.skill_normal);
         }
         else
         if (pwr == 1)
         {
             AddSkillToFightComponet(fightComponet, config.skill_rare);
-            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_1");
+            item.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_1");
         }
         else
         if (pwr == 2)
         {
             AddSkillToFightComponet(fightComponet, config.skill_elite);
-            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_2");
+            item.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_2");
         }
         else
         if (pwr == 3)
         {
             AddSkillToFightComponet(fightComponet, config.skill_boss);
-            monster.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_3");
+            item.pwrFrame.sprite = StageView.Instance.itemAtlas.GetSprite("border_m_3");
         }
 
-        monster.fightComponet = fightComponet;
+        item.fightComponet = fightComponet;
 
-        monster.monsterType = config.monsterType;
+        item.monsterType = config.monsterType;
 
 
-        monster.pwr = pwr;
-        monster.cid = id;
-        monster.lv = lv;
+        item.pwr = pwr;
+        item.cid = id;
+        item.lv = lv;
 
-        monster.icon.sprite = StageView.Instance.itemAtlas.GetSprite(config.icon);
+        item.icon.sprite = StageView.Instance.itemAtlas.GetSprite(config.icon);
 
         ulong AI_Id = config.ai[pwr];
 
-        monster.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
-        monster.dangerousLevels = monster.AIConfig.dangerous_levels;
+        item.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
+        item.dangerousLevels = item.AIConfig.dangerous_levels;
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
-            CoroCore.Instance.StartCoroutine(monster.OnDiscoverd());
+            CoroCore.Instance.StartCoroutine(item.OnDiscoverd());
         }
 
-        bornBrick.item = monster;
+        bornBrick.item = item;
+
+        if (item.canvasGroup == null)
+        {
+            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
+        }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.canvasGroup.alpha = 1;
+        }
+        else
+        {
+            item.canvasGroup.alpha = 0;
+        }
+
 #if UNITY_EDITOR
-        monster.name += "_" + config.m_name;
+        item.name += "_" + config.m_name;
 #endif
     }
 
@@ -253,6 +268,20 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
+        if (item.canvasGroup == null)
+        {
+            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
+        }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.canvasGroup.alpha = 1;
+        }
+        else
+        {
+            item.canvasGroup.alpha = 0;
+        }
+
         return item;
     }
 
@@ -270,6 +299,20 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.standBrick = bornBrick;
 
+        if (item.canvasGroup == null)
+        {
+            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
+        }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.canvasGroup.alpha = 1;
+        }
+        else
+        {
+            item.canvasGroup.alpha = 0;
+        }
+
         return item;
     }
 
@@ -277,43 +320,71 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         int tid;
 
-        var tablet = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool);
+        var item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool);
 
-        tablet.itemId = tid;
+        item.itemId = tid;
 
-        tablet.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(bornBrick.transform);
 
-        tablet.transform.SetSiblingIndex(2);
+        item.transform.SetSiblingIndex(2);
 
-        tablet.standBrick = bornBrick;
+        item.standBrick = bornBrick;
 
-        tablet.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
+        item.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
 
-        return tablet;
+        if (item.canvasGroup == null)
+        {
+            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
+        }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.canvasGroup.alpha = 1;
+        }
+        else
+        {
+            item.canvasGroup.alpha = 0;
+        }
+
+        return item;
     }
 
     public Treasure CreateTreasure(Brick bornBrick, ulong uid, int distance)
     {
         int tid;
 
-        var treasure = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool);
+        var item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool);
 
-        treasure.itemId = tid;
+        item.itemId = tid;
 
-        treasure.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(bornBrick.transform);
 
-        treasure.transform.SetSiblingIndex(2);
+        item.transform.SetSiblingIndex(2);
 
-        treasure.standBrick = bornBrick;
+        item.standBrick = bornBrick;
 
-        treasure.distance = distance;
+        item.distance = distance;
 
-        treasure.config = ConfigDataBase.GetConfigDataById<BoxConfig>(uid);
+        item.config = ConfigDataBase.GetConfigDataById<BoxConfig>(uid);
 
         ///宝箱比较复杂，需要去初始化一些东西
-        treasure.Init();
+        item.Init();
 
-        return treasure;
+        if (item.canvasGroup == null)
+        {
+            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
+        }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.canvasGroup.alpha = 1;
+        }
+        else
+        {
+            item.canvasGroup.alpha = 0;
+        }
+
+        return item;
     }
 
     public Obstacle CreateObstacle(Brick bornBrick)
@@ -332,6 +403,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.transform.position = bornBrick.transform.position;
         item.gameObject.SetActive(true);
+
         return item;
     }
 }

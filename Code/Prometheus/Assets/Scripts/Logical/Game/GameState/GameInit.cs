@@ -37,10 +37,15 @@ public class GameInit : IState
         {
             foreach (var value in GameTestData.Instance.AddChips)
             {
-                if (value > 0)
+                ulong u;
+                if (ulong.TryParse(value, out u))
                 {
-
-                    StageCore.Instance.Player.inventory.AddChip(value);
+                    StageCore.Instance.Player.inventory.AddChip(u);
+                }
+                else
+                {
+                    u = ChipConfig.GetConfigDataByKey<ChipConfig>(value).id;
+                    StageCore.Instance.Player.inventory.AddChip(u);
                 }
             }
 

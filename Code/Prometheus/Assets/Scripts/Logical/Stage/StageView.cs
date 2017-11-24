@@ -81,6 +81,9 @@ public class StageView : MuiSingleBase<StageView>
 
         _brick.standBrick = _brick;
 
+
+        if (_brick.canvasGroup == null) _brick.canvasGroup = _brick.GetOrAddComponet<CanvasGroup>();
+
         return _brick;
     }
 

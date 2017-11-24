@@ -132,7 +132,6 @@ public class Monster : LiveItem
             {
                 if (!block_other)
                 {
-                    Debug.Log("发现: " + gameObject.name);
                     BrickCore.Instance.BlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
                     block_other = true;
                 }

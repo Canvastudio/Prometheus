@@ -439,7 +439,7 @@ public class FightComponet : MonoBehaviour
 
                     while (count > 0 && target_list.Count > 0)
                     {
-                        int i = Random.Range(0, count);
+                        int i = Random.Range(0, target_list.Count);
 
                         apply_list.Add(target_list[i]);
 
