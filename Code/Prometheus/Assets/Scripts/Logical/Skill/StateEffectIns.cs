@@ -53,6 +53,11 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         active = false;
     }
 
+    public virtual void Remove()
+    {
+
+    }
+
     public virtual void OnTimeChange(float time)
     {
 

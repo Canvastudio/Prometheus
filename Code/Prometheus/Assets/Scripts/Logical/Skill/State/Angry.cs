@@ -38,6 +38,13 @@ public class Angry : StateEffectIns
         Messenger<Damage>.RemoveListener(SA.ItemTakeDamage, OnDamage);
     }
 
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger<Damage>.RemoveListener(SA.ItemTakeDamage, OnDamage);
+    }
+
     private void OnDamage(Damage damage)
     {
         if (active && damage.damageTarget.itemId == owner.itemId && FightComponet.CheckEffectCondition(condition, null, damage.damageType))

@@ -33,6 +33,14 @@ public class DamageBoost : StateEffectIns
 
         Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
     }
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
+    }
+
     private void OnPlayUseSkill(ActiveSkillsConfig config)
     {
         if (FightComponet.CheckEffectCondition(condition, null, config.damageType))

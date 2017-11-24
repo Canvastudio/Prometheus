@@ -294,7 +294,7 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    private void OnPropertyChange(GameProperty property)
+    public void OnPropertyChange(GameProperty property)
     {
         if (property == GameProperty.nhp)
         {
@@ -311,16 +311,6 @@ public abstract class LiveItem : GameItemBase
             }
         }
     }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        Property = new LiveBasePropertys();
-        Property.changeCallback = OnPropertyChange;
-        isAlive = true;
-    }
-
 
     /// <summary>
     /// 基础属性，血量，速度等
@@ -366,6 +356,8 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator MeleeAttackByOther<T>(T other, Damage damageInfo) where T : LiveItem
     {
+        Debug.Log("被攻击： " + damageInfo.damageTarget);
+
         LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
 
         yield return waitForSeconds;
@@ -375,6 +367,8 @@ public abstract class LiveItem : GameItemBase
 
     public virtual float TakeDamage(Damage damageInfo)
     {
+        Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
+
         foreach (var state in state_list)
         {
             foreach (var ins in state.stateEffects)
@@ -450,6 +444,7 @@ public abstract class LiveItem : GameItemBase
         {
             if (state_list[i].stateConfig.id == ins.stateConfig.id)
             {
+                state_list[i].DeactiveIns();
                 state_list.RemoveAt(i);
             }
         }
@@ -458,6 +453,16 @@ public abstract class LiveItem : GameItemBase
     public void RemoveStateBuff(int count, bool isBuff)
     {
 
+    }
+
+    public override void Recycle()
+    {
+        base.Recycle();
+
+        if (fightComponet != null)
+        {
+            fightComponet.CleanData();
+        }
     }
 }
 

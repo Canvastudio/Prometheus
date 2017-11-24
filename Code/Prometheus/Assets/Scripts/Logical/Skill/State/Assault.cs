@@ -26,6 +26,14 @@
         Messenger<Brick>.RemoveListener(SA.PlayerMoveStep, OnPlayerMove);
     }
 
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger<Brick>.RemoveListener(SA.PlayerMoveStep, OnPlayerMove);
+    }
+
     private void OnPlayerMove(Brick brick)
     {
         if (active)

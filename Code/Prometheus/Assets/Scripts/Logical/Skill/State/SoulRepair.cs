@@ -12,7 +12,27 @@ public class SoulRepair : StateEffectIns
         condition = stateConfig.stateArgs[index].ec[0];
         restoration = stateConfig.stateArgs[index].f[0];
 
+    }
+
+    public override void Active()
+    {
+        base.Active();
+
         Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
+    }
+
+    public override void Deactive()
+    {
+        base.Deactive();
+
+        Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+    }
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
     }
 
     private void OnMonsterDead(Damage damage)

@@ -59,6 +59,24 @@ public class FightComponet : MonoBehaviour
         }
     }
 
+    public virtual void CleanData()
+    {
+ 
+        for (int i = activeInsList.Count - 1; i >= 0; --i)
+        {
+            activeInsList[i].Deactive();
+            activeInsList.RemoveAt(i);
+        }
+
+        for (int i = passiveInsList.Count - 1; i >= 0; --i)
+        {
+            passiveInsList[i].Deactive();
+            passiveInsList.RemoveAt(i);
+        }
+
+        //summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
+    }
+
     /// <summary>
     /// 激活主动技能
     /// </summary>
@@ -436,7 +454,7 @@ public class FightComponet : MonoBehaviour
                     int count = config.selectArg;
                     while (count > 0 && target_list.Count > 0)
                     {
-                        int i = Random.Range(0, count);
+                        int i = Random.Range(0, target_list.Count);
 
                         apply_list.Add(target_list[i]);
 
@@ -455,6 +473,11 @@ public class FightComponet : MonoBehaviour
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
+        if (gameObject == null || config == null)
+        {
+            Debug.Log("奇怪？？？");
+        }
+
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         Debug.Log("伤害公式: " + config.damage);
 
@@ -489,22 +512,26 @@ public class FightComponet : MonoBehaviour
 
 
         //时间消耗
-        long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
-        GameProperty property;
-        float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out property, config);
-        RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
-        foreach (var state in ownerObject.state_list)
+        if (ownerObject is Player)
         {
-            foreach (var effect in state.stateEffects)
+            long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
+            GameProperty property;
+            float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out property, config);
+            RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
+
+            foreach (var state in ownerObject.state_list)
             {
-                if (effect.stateType == StateEffectType.RangeSkillCost)
+                foreach (var effect in state.stateEffects)
                 {
-                    effect.ApplyState(rangeSkillCost);
+                    if (effect.stateType == StateEffectType.RangeSkillCost)
+                    {
+                        effect.ApplyState(rangeSkillCost);
+                    }
                 }
             }
+            time_cost = rangeSkillCost.cost;
+            StageCore.Instance.TimeCast(time_cost);
         }
-        time_cost = rangeSkillCost.cost;
-        StageCore.Instance.TimeCast(time_cost);
 
         float[] successArray = null;
         float[] apperanceArray = null;
@@ -519,6 +546,11 @@ public class FightComponet : MonoBehaviour
         }
 
         bool successEffect = true;
+
+        if (use_fxlock)
+        {
+            ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
+        }
 
         for (int i = 0; i < apply_list.Count; ++i)
         {
@@ -545,19 +577,15 @@ public class FightComponet : MonoBehaviour
                 }
             }
 
-            yield return (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray, damage_list));
+            StartCoroutine (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray, damage_list));
         }
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
 
-        ownerObject.OnActionEnd();
-
-        if (use_fxlock)
-        {
-            ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
-        }
 
         yield return wuf;
+
+        ownerObject.OnActionEnd();
 
         Debug.Log("技能释放完毕: " + name);
     }
@@ -592,7 +620,7 @@ public class FightComponet : MonoBehaviour
    
         Debug.Log("播放技能特效: " + config.effect);
 
-        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, apply_list[0].transform, () =>
+        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, target.transform, () =>
         {
             if (config.damage != null)
             {

@@ -28,6 +28,15 @@ public class MonsterFightComponet : FightComponet {
     [SerializeField]
     public new List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
 
+    public override void CleanData()
+    {
+        base.CleanData();
+
+        DeactiveSkill();
+        monsterActiveInsList.Clear();
+
+    }
+
     protected override void AddActiveIns(ulong id, SkillPoint point)
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);

@@ -26,4 +26,11 @@ public class Freeze : StateEffectIns
 
         owner.Freeze = false;
     }
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        owner.Freeze = false;
+    }
 }

@@ -95,6 +95,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
+        monster.Property = new LiveBasePropertys();
+
         monster.Property.InitBaseProperty(
             lv_Property.mhp * propertys[pwr, 0],
             lv_Property.speed * propertys[pwr, 1],
@@ -106,7 +108,12 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         monster.InitInfoUI();
 
 
-        FightComponet fightComponet = monster.GetOrAddComponet<MonsterFightComponet>();
+        MonsterFightComponet fightComponet = monster.GetOrAddComponet<MonsterFightComponet>();
+
+        fightComponet.activeInsList.Clear();
+        fightComponet.passiveInsList.Clear();
+        fightComponet.summonSkillConfigs.Clear();
+        fightComponet.monsterActiveInsList.Clear();
 
         if (pwr == 0)
         {
@@ -174,6 +181,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         go.transform.localScale = Vector3.one;
 
         var player = go.GetComponent<Player>();
+
+
+        player.Property = new LiveBasePropertys();
+        player.Property.changeCallback = player.OnPropertyChange;
+        player.isAlive = true;
 
         player.standBrick = bornBrick;
         player.transform.position = bornBrick.transform.position;

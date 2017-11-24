@@ -40,6 +40,12 @@ public class Massacre : StateEffectIns
         Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
     }
 
+    public override void Remove()
+    {
+        Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
+        Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+    }
+
     private void OnPlayUseSkill(ActiveSkillsConfig config)
     {
         if (FightComponet.CheckEffectCondition(condition2, null, config.damageType))

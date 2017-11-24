@@ -48,7 +48,7 @@ public class Player : LiveItem {
 
     public override IEnumerator MeleeAttackTarget<T>(T target)
     {
-        var e = base.MeleeAttackTarget(target);
+        Debug.Log("玩家攻击：" + target.gameObject.name);
 
         var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
         var atk_Speed = Property.GetFloatProperty(GameProperty.atkSpeed);
@@ -56,7 +56,7 @@ public class Player : LiveItem {
         
         StageCore.Instance.TimeCast(timeSpend);
 
-        return e;
+        yield return base.MeleeAttackTarget(target);
     }
 
     public override float TakeDamage(Damage damageInfo)

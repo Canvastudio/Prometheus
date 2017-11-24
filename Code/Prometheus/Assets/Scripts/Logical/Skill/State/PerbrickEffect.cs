@@ -28,5 +28,11 @@ public class PerbrickEffect : Property
         Messenger.RemoveListener(SA.DiscoverBrickChange, OnDiscoverBrickCountChange);
     }
 
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger.RemoveListener(SA.DiscoverBrickChange, OnDiscoverBrickCountChange);
+    }
 
 }

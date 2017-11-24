@@ -28,51 +28,57 @@ public class Property : StateEffectIns
 
     protected void ResetChange()
     {
-        foreach (var change in changes)
+        if (owner.isAlive)
         {
-            if (change.Key != GameProperty.nhp)
+            foreach (var change in changes)
             {
-                float origin_value = owner.Property.GetFloatProperty(change.Key);
+                if (change.Key != GameProperty.nhp)
+                {
+                    float origin_value = owner.Property.GetFloatProperty(change.Key);
 
-                float value = origin_value - change.Value;
+                    float value = origin_value - change.Value;
 
-                owner.Property.SetFloatProperty(change.Key, value);
+                    owner.Property.SetFloatProperty(change.Key, value);
+                }
             }
-        }
 
-        changes.Clear();
+            changes.Clear();
+        }
     }
 
     protected void ApplyChange()
     {
-        GameProperty property;
-
-        if (stateConfig != null)
+        if (owner.isAlive)
         {
-            var value = Rpn.CalculageRPN(
-                stateConfig.stateArgs[index].rpn.ToArray(0),
-                owner, source,
-                out property, null, skillDamage);
+            GameProperty property;
 
-            float origin_value = owner.Property.GetFloatProperty(property);
-            float change = value - origin_value;
-
-
-            if (property != GameProperty.nhp)
+            if (stateConfig != null)
             {
-                owner.Property.SetFloatProperty(property, value);
-                changes.Add(property, change);
-            }
-            else
-            {
-                //如果修改属性是修改当前血量，那么就判定为一次物理伤害
-                if (change < 0)
+                var value = Rpn.CalculageRPN(
+                    stateConfig.stateArgs[index].rpn.ToArray(0),
+                    owner, source,
+                    out property, null, skillDamage);
+
+                float origin_value = owner.Property.GetFloatProperty(property);
+                float change = value - origin_value;
+
+
+                if (property != GameProperty.nhp)
                 {
-                    owner.MeleeAttackByOther(owner, new Damage(-change, source, owner, DamageType.Physical));
+                    owner.Property.SetFloatProperty(property, value);
+                    changes.Add(property, change);
                 }
                 else
                 {
-                    owner.Property.SetFloatProperty(property, value);
+                    //如果修改属性是修改当前血量，那么就判定为一次物理伤害
+                    if (change < 0)
+                    {
+                        owner.MeleeAttackByOther(owner, new Damage(-change, source, owner, DamageType.Physical));
+                    }
+                    else
+                    {
+                        owner.Property.SetFloatProperty(property, value);
+                    }
                 }
             }
         }

@@ -23,6 +23,13 @@ public class Sleep : StateEffectIns
         owner.Sleep = false;
     }
 
+    public override void Remove()
+    {
+        base.Remove();
+
+        owner.Sleep = false;
+    }
+
     protected override void Apply(object param)
     {
         throw new System.NotImplementedException();

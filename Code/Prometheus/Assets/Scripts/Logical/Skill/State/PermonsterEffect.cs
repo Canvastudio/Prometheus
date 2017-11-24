@@ -25,6 +25,12 @@ public class PermonsterEffect : Property
         Messenger.RemoveListener(SA.EnmeyCountChange, CheckEnemyCount);
     }
 
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger.RemoveListener(SA.EnmeyCountChange, CheckEnemyCount);
+    }
 
     private void CheckEnemyCount()
     {

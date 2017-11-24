@@ -25,6 +25,14 @@ public class DeathMark : StateEffectIns
         Messenger<Monster>.RemoveListener(SA.MonsterDead, OnMonsterDead);
     }
 
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        Messenger<Monster>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+    }
+
     private void OnMonsterDead(Monster monster)
     {
         if (active)

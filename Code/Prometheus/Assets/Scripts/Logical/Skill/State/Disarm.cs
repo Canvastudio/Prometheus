@@ -22,6 +22,14 @@ public class Disarm : StateEffectIns
         owner.Disarm = false;
     }
 
+
+    public override void Remove()
+    {
+        base.Remove();
+
+        owner.Disarm = false;
+    }
+
     protected override void Apply(object param)
     {
         throw new System.NotImplementedException();

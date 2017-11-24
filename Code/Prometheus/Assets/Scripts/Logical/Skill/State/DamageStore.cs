@@ -54,9 +54,4 @@ public class DamageStore : StateEffectIns
             damageInfo.damage = 0;
         }
     }
-
-    public override void OnOutData()
-    {
-
-    }
 }
