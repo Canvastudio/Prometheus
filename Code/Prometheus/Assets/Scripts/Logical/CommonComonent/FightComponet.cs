@@ -219,7 +219,7 @@ public class FightComponet : MonoBehaviour
                     StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.SIDE1, ST.DISCOVER));
                 }
 
-                for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; --i)
                 {
                     if (target_list[i].itemId == ownerObject.itemId)
                     {
@@ -234,7 +234,7 @@ public class FightComponet : MonoBehaviour
             case TargetType.LightBlock:
                 StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
-                for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; --i)
                 {
                     Brick brick = target_list[i] as Brick;
 
@@ -247,7 +247,7 @@ public class FightComponet : MonoBehaviour
             case TargetType.EmptyBlock:
                 target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
-                for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; --i)
                 {
                     Brick brick = target_list[i] as Brick;
 
@@ -265,7 +265,7 @@ public class FightComponet : MonoBehaviour
                 break;
             case TargetType.Fort:
                 target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
-                for (int i = target_list.Count - 1; i >= 0; ++i)
+                for (int i = target_list.Count - 1; i >= 0; --i)
                 {
                     Obstacle ob = target_list[i] as Obstacle;
 
@@ -287,6 +287,8 @@ public class FightComponet : MonoBehaviour
         }
 
 
+        int[] range = config.carry.ToArray();
+        Debug.Log("range length: " + range.Length);
         int min_range = config.carry.ToArray()[0];
         int max_range = config.carry.ToArray()[1];
 

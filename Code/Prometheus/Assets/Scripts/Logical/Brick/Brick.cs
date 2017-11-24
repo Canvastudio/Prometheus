@@ -167,7 +167,9 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 {
                     LiveItem live = (_item as LiveItem);
 
-                    foreach (var halo in halo_dic.Keys)
+                    var l = new List<HaloInfo>(halo_dic.Keys);
+
+                    foreach (var halo in l)
                     {
                         if (live.Side == halo.Side)
                         {

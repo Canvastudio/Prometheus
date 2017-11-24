@@ -446,7 +446,7 @@ public abstract class LiveItem : GameItemBase
 
         ins.stateEffects = null;
 
-        for (int i = state_list.Count - 1; i >= 0; ++i)
+        for (int i = state_list.Count - 1; i >= 0; --i)
         {
             if (state_list[i].stateConfig.id == ins.stateConfig.id)
             {
