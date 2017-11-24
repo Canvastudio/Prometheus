@@ -487,7 +487,7 @@ public class FightComponet : MonoBehaviour
 
         yield return FindAndConfrimTarget(config);
 
-        if (target_list.Count <= 0)
+        if (apply_list.Count <= 0)
         {
             PopTipView.Instance.Show("target_none");
             ownerObject.OnActionEnd();
