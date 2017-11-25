@@ -50,34 +50,37 @@ public class Property : StateEffectIns
     {
         if (owner.isAlive)
         {
-            GameProperty property;
-
-            if (stateConfig != null)
+            for (int i = 0; i < stateConfig.stateArgs[index].rpn.Count(); ++i)
             {
-                var value = Rpn.CalculageRPN(
-                    stateConfig.stateArgs[index].rpn.ToArray(0),
-                    owner, source,
-                    out property, null, skillDamage);
+                GameProperty property;
 
-                float origin_value = owner.Property.GetFloatProperty(property);
-                float change = value - origin_value;
-
-
-                if (property != GameProperty.nhp)
+                if (stateConfig != null)
                 {
-                    owner.Property.SetFloatProperty(property, value);
-                    changes.Add(property, change);
-                }
-                else
-                {
-                    //如果修改属性是修改当前血量，那么就判定为一次物理伤害
-                    if (change < 0)
+                    var value = Rpn.CalculageRPN(
+                        stateConfig.stateArgs[index].rpn.ToArray(i),
+                        owner, source,
+                        out property, null, skillDamage);
+
+                    float origin_value = owner.Property.GetFloatProperty(property);
+                    float change = value - origin_value;
+
+
+                    if (property != GameProperty.nhp)
                     {
-                        owner.MeleeAttackByOther(owner, new Damage(-change, source, owner, DamageType.Physical));
+                        owner.Property.SetFloatProperty(property, value);
+                        changes.Add(property, change);
                     }
                     else
                     {
-                        owner.Property.SetFloatProperty(property, value);
+                        //如果修改属性是修改当前血量，那么就判定为一次物理伤害
+                        if (change < 0)
+                        {
+                            owner.MeleeAttackByOther(owner, new Damage(-change, source, owner, DamageType.Physical));
+                        }
+                        else
+                        {
+                            owner.Property.SetFloatProperty(property, value);
+                        }
                     }
                 }
             }

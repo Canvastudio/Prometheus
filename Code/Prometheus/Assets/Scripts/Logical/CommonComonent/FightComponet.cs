@@ -739,6 +739,8 @@ public class FightComponet : MonoBehaviour
                     var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
                     StateIns ins = new StateIns(state_config, item as LiveItem, false, ownerObject);
                     ins.ActiveIns();
+
+                    Debug.Log("为：" + item.gameObject.name + " 添加状态: " + state_config.name);
                     (item as LiveItem).AddStateIns(ins);
 
                     break;
