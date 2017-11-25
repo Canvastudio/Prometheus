@@ -33,7 +33,7 @@ public class ArtTestSkill : MonoBehaviour {
 		"siwangbiaoji",
 		"chongdong",
 		"pianzhuantuceng",
-		"tongkujiyi",
+		"shangtongjiyi",
 		"jisutianzhuang",
 		"paotai",
 		"fuyoua1xing",

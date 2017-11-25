@@ -633,97 +633,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4485133724331352, guid: 4a9088934b4c845b486e8e825f9a4cb8,
     type: 2}
   m_PrefabInternal: {fileID: 1290543468}
---- !u!1001 &1303203739
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.00000003090862
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: -0.00000003090862
-      objectReference: {fileID: 0}
-    - target: {fileID: 4357076034169720, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1866410899409516, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: randomSeed
-      value: -1465468746
-      objectReference: {fileID: 0}
-    - target: {fileID: 198317132628959014, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: randomSeed
-      value: -383456337
-      objectReference: {fileID: 0}
-    - target: {fileID: 199655764675639142, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 380cae0e9229a44b9ac918b02d951bb8, type: 2}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key0.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key0.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198203067078160828, guid: b97f1cba4d2d641e590b31cba1a0c72b,
-        type: 2}
-      propertyPath: ColorModule.gradient.maxGradient.key0.b
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b97f1cba4d2d641e590b31cba1a0c72b, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &1400295748
 Prefab:
   m_ObjectHideFlags: 0
@@ -953,7 +862,7 @@ MonoBehaviour:
   - siwangbiaoji
   - chongdong
   - pianzhuantuceng
-  - tongkujiyi
+  - shangtongjiyi
   - jisutianzhuang
   - paotai
   - fuyoua1xing
@@ -990,15 +899,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400004, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: -1.93
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 1b47b8b09ec9ff7489e136e8510ec1a5, type: 2}
       propertyPath: m_LocalRotation.x
