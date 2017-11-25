@@ -198,7 +198,7 @@ public class FightComponet : MonoBehaviour
 
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
-    List<GameItemBase> damage_list;
+    List<GameItemBase> damage_list = new List<GameItemBase>(10);
     SelectType st;
     TargetType tt;
 
@@ -208,6 +208,7 @@ public class FightComponet : MonoBehaviour
 
         target_list.Clear();
         apply_list.Clear();
+        damage_list.Clear();
 
         st = config.selectType;
         tt = config.targetType;
@@ -369,7 +370,6 @@ public class FightComponet : MonoBehaviour
             yield return LightAndWaitSelect();
 
             Brick brick = apply_list[0] as Brick;
-            damage_list = new List<GameItemBase>(12);
             List<Brick> bricks = null;
 
             if (brick.row == ownerObject.standBrick.row)
@@ -462,11 +462,24 @@ public class FightComponet : MonoBehaviour
                     }
                 }
 
-                damage_list = null;
+                damage_list.AddRange(apply_list);
             }
             else
             {
                 Debug.Log("技能找不到符合条件的目标..");
+            }
+        }
+
+        if (damage_list.Count > 0)
+        {
+            int count = damage_list.Count;
+
+            if (config.multipleType == MultipleType.Diffuse)
+            {
+                for (int i = count; i >= 0; ++i)
+                {
+                    BrickCore.Instance.GetNearbyLiveItem(damage_list[i].standBrick, config.multipleArg, false);
+                }
             }
         }
     }
@@ -535,6 +548,7 @@ public class FightComponet : MonoBehaviour
 
         float[] successArray = null;
         float[] apperanceArray = null;
+
         if (config.damageArg != null)
         {
             apperanceArray = config.damageArg.ToArray();
@@ -594,39 +608,34 @@ public class FightComponet : MonoBehaviour
 
     private int targetAttackFinsh = 0;
 
-    private IEnumerator DoSkillOnTarget(GameItemBase target, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance, List<GameItemBase> damageList = null)
+    private IEnumerator DoSkillOnTarget(GameItemBase ShowTarget, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance, List<GameItemBase> damageList)
     {
         if (config.beforeSpecialEffect != null && specialEffect)
         {
             var effects1 = config.beforeSpecialEffect.ToArray();
-
-            if (damageList == null)
-            {
-                ApplyEffect(config, config.beforeArgs, effects1, target);
-            }
-            else
-            {
-                ApplyEffect(config, config.beforeArgs, effects1, damageList);
-            }
+            ApplyEffect(config, config.beforeArgs, effects1, damageList);
         }
 
-        GameProperty property;
-        var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, target, out property);
-        int damageTimes = damageApperance.Length;
 
         Dictionary<int, float> realDamages = new Dictionary<int, float>();
 
         int i = 0;
-   
+        int damageTimes = damageApperance.Length;
+
         Debug.Log("播放技能特效: " + config.effect);
 
-        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, target.transform, () =>
+        yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, ShowTarget.transform, () =>
         {
             if (config.damage != null)
             {
-                if (damageList == null)
+                foreach (var item in damageList)
                 {
-                    Damage damageInfo = new Damage(damage * damageApperance[i++], ownerObject, target as LiveItem, config.damageType);
+                    GameProperty property;
+
+                    var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, item, out property);
+
+                    Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
+
                     foreach (var state in ownerObject.state_list)
                     {
                         foreach (var ins in state.stateEffects)
@@ -640,45 +649,17 @@ public class FightComponet : MonoBehaviour
 
                     float v = 0;
 
-                    if (realDamages.TryGetValue(target.itemId, out v))
+                    if (realDamages.TryGetValue(item.itemId, out v))
                     {
-                        realDamages[target.itemId] = v + (target as LiveItem as LiveItem).TakeDamage(damageInfo);
+                        realDamages[item.itemId] = v + (item as LiveItem as LiveItem).TakeDamage(damageInfo);
                     }
                     else
                     {
-                        realDamages.Add(target.itemId, (target as LiveItem as LiveItem).TakeDamage(damageInfo));
+                        realDamages.Add(item.itemId, (item as LiveItem as LiveItem).TakeDamage(damageInfo));
                     }
                 }
-                else
-                {
-                    foreach (var item in damageList)
-                    {
-                        Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
-                        foreach (var state in ownerObject.state_list)
-                        {
-                            foreach (var ins in state.stateEffects)
-                            {
-                                if (ins.stateType == StateEffectType.OnGenerateDamage)
-                                {
-                                    ins.ApplyState(damageInfo);
-                                }
-                            }
-                        }
 
-                        float v = 0;
-
-                        if (realDamages.TryGetValue(item.itemId, out v))
-                        {
-                            realDamages[item.itemId] = v + (item as LiveItem as LiveItem).TakeDamage(damageInfo);
-                        }
-                        else
-                        {
-                            realDamages.Add(item.itemId, (item as LiveItem as LiveItem).TakeDamage(damageInfo));
-                        }
-                    }
-
-                    ++i;
-                }
+                ++i;
             }
         });
 
@@ -688,14 +669,9 @@ public class FightComponet : MonoBehaviour
         {
             var effects2 = config.afterSpecialEffect.ToArray();
 
-            if (damageList == null)
+            foreach (var item in damageList)
             {
-                ApplyEffect(config, config.afterArgs, effects2, target, realDamages[target.itemId]);
-            }
-            else
-            {
-
-                ApplyEffect(config, config.afterArgs, effects2, damageList, realDamages);
+                ApplyEffect(config, config.afterArgs, effects2, item, realDamages[item.itemId]);
             }
         }
 

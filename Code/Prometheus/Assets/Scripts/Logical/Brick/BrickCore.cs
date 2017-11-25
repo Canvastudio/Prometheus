@@ -388,7 +388,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         return result;
     }
 
-    public List<Brick> GetNearbyBrick(int r, int c, int distance)
+    public List<Brick> GetNearbyBrick(int r, int c, int distance, bool diagonal = false)
     {
         List<Brick> result = new List<Brick>(distance * distance + (distance + 1) * (distance + 1));
 
@@ -396,17 +396,52 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         {
             for (int m = -distance; m <= distance; ++m)
             {
-                if (Mathf.Abs(i) + Mathf.Abs(m) <= distance && !(m == 0 && i == 0))
+                if (diagonal)
                 {
-                    if (GetNode(r + i, c + m) != null)
+                    if ((Mathf.Abs(i) <= distance || Mathf.Abs(m)<= distance) && !(i == 0 && m == 0))
                     {
-                        result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                        if (GetNode(r + i, c + m) != null)
+                        {
+                            result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                        }
+                    }
+                }
+                else
+                {
+                    if (Mathf.Abs(i) + Mathf.Abs(m) <= distance && !(m == 0 && i == 0))
+                    {
+                        if (GetNode(r + i, c + m) != null)
+                        {
+                            result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                        }
                     }
                 }
             }
         }
 
         return result;
+    }
+
+    public List<LiveItem> GetNearbyLiveItem(int r, int c, int distance, bool diagonal = false)
+    {
+        var bricks = GetNearbyBrick(r, c, distance, diagonal);
+
+        var res = new List<LiveItem>();
+
+        foreach(var brick in bricks)
+        {
+            if (brick.item != null && brick.item is LiveItem)
+            {
+                res.Add(brick.item as LiveItem);
+            }
+        }
+
+        return res;
+    }
+
+    public List<LiveItem> GetNearbyLiveItem(Brick brick, int distance, bool diagonal = false)
+    {
+        return GetNearbyLiveItem(brick.row, brick.column, distance, diagonal);
     }
 
     public List<Brick> GetBrickOnRow(int row)
