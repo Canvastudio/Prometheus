@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4410692178409862}
   - component: {fileID: 114211259732506808}
   m_Layer: 0
-  m_Name: pugong
+  m_Name: shenwei
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,10 +53,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventlist:
   - time: 0
-    fxname: pugong_hit
-    ishit: 1
+    fxname: shenwei_hit
+    ishit: 0
     isendpos: 1
     ishitevent: 0
+  - time: 0.5
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
   destroy_time: 2
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
