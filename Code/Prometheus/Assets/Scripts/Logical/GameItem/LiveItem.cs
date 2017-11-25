@@ -30,6 +30,13 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    public MonsterType monsterType;
+
+    /// <summary>
+    /// 强度
+    /// </summary>
+    public int pwr = 0;
+
     [SerializeField]
     private bool _freeze = false;
     /// <summary>
