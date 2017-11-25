@@ -474,11 +474,30 @@ public class FightComponet : MonoBehaviour
         {
             int count = damage_list.Count;
 
-            if (config.multipleType == MultipleType.Diffuse)
+            for (int i = count; i >= 0; --i)
             {
-                for (int i = count; i >= 0; ++i)
+                var liveItems = BrickCore.Instance.GetNearbyLiveItem(damage_list[i].standBrick, config.multipleArg, config.multipleType == MultipleType.Round);
+
+                foreach(var item in liveItems)
                 {
-                    BrickCore.Instance.GetNearbyLiveItem(damage_list[i].standBrick, config.multipleArg, false);
+                    damage_list.Add(item);
+                }
+            }
+
+            if (config.targetLimit != null)
+            {
+                for (int i = damage_list.Count; i >= 0; --i)
+                {
+                    LiveItem liveItem = damage_list[i] as LiveItem;
+
+                    //var mc = liveItem.config;
+                    //var q = liveItem.pwr;
+
+                    //if (!config.targetLimit.CheckLimit(mc, q))
+                    //{
+                    //    target_list.RemoveAt(i);
+                    //    continue;
+                    //}
                 }
             }
         }
