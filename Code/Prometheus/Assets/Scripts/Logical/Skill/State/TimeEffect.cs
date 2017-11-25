@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TimeEffect : Property
 {
+    [UnityEngine.SerializeField]
     float interval;
+    [UnityEngine.SerializeField]
     float t;
 
     public TimeEffect(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

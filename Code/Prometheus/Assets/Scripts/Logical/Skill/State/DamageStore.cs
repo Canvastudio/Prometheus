@@ -8,15 +8,17 @@ public class DamageStore : StateEffectIns
     /// <summary>
     /// 生效次数
     /// </summary>
+    [UnityEngine.SerializeField]
     int store_times = 0;
 
     /// <summary>
     /// 返还倍率
     /// </summary>
+    [UnityEngine.SerializeField]
     float multiply = 1;
-
+    [UnityEngine.SerializeField]
     float total_store;
-
+    [UnityEngine.SerializeField]
     EffectCondition condition;
 
     public DamageStore(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

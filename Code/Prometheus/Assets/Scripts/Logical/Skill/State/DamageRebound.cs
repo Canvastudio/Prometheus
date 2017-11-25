@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DamageRebound : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float percent = 0;
 
     public DamageRebound(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

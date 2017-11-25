@@ -9,6 +9,7 @@ public class RangeSkillCost
         cost = _cost;
     }
 
+    [UnityEngine.SerializeField]
     public float cost = 0;
 }
 

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class DamageAbsorb : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float absorb_damage;
+    [UnityEngine.SerializeField]
     int times;
 
     public DamageAbsorb(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

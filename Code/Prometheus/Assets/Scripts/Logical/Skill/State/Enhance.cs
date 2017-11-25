@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Enhance : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     float threshold = 1;
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float extra = 0;
 
 

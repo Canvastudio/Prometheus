@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Massacre : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     EffectCondition condition1;
+    [UnityEngine.SerializeField]
     EffectCondition condition2;
 
+    [UnityEngine.SerializeField]
     float extra = 0;
+    [UnityEngine.SerializeField]
     float total_extra = 0;
+    [UnityEngine.SerializeField]
     float max_extra = 0;
 
     public Massacre(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

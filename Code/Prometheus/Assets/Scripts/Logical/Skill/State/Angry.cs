@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Angry : StateEffectIns
 {
-    EffectCondition condition;
+    public EffectCondition condition;
 
-    float extra0 = 0;
-    float extra1 = 0;
-    float extra2 = 0;
+    public float extra0 = 0;
+    public float extra1 = 0;
+    public float extra2 = 0;
 
-    float total_extra0 = 0;
-    float total_extra1 = 0;
-    float total_extra2 = 0;
+    public float total_extra0 = 0;
+    public float total_extra1 = 0;
+    public float total_extra2 = 0;
 
     public Angry(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {

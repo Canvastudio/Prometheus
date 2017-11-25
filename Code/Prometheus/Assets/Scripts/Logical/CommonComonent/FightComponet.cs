@@ -163,7 +163,7 @@ public class FightComponet : MonoBehaviour
                 {
                      if (passiveInsList[i].stateConfig.id == id)
                     {
-                        passiveInsList[i].Deactive();
+                        passiveInsList[i].Remove();
                         passiveInsList.RemoveAt(i);
                         break;
                     }
@@ -402,6 +402,10 @@ public class FightComponet : MonoBehaviour
 
                         count -= 1;
                     }
+                }
+                else if (st == SelectType.ALL)
+                {
+                    apply_list.AddRange(target_list);
                 }
             }
             else
@@ -661,7 +665,6 @@ public class FightComponet : MonoBehaviour
         Dictionary<int, float> realDamages = new Dictionary<int, float>();
 
         i = 0;
-        int damageTimes = damageApperance.Length;
 
         Debug.Log("播放技能特效: " + config.effect);
 
@@ -731,10 +734,12 @@ public class FightComponet : MonoBehaviour
             switch (effects[i])
             {
                 case SpecialEffect.AddState:
-                    state_id = args[i].u[0];
 
+                    state_id = args[i].u[0];
                     var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                    (item as LiveItem).AddStateIns(new StateIns(state_config, item as LiveItem, false, ownerObject));
+                    StateIns ins = new StateIns(state_config, item as LiveItem, false, ownerObject);
+                    ins.ActiveIns();
+                    (item as LiveItem).AddStateIns(ins);
 
                     break;
                 case SpecialEffect.Property:

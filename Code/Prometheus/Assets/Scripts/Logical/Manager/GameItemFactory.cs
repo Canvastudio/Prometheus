@@ -197,9 +197,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var player = go.GetComponent<Player>();
 
-
-        player.Property = new LiveBasePropertys();
-        player.Property.changeCallback = player.OnPropertyChange;
         player.isAlive = true;
 
         player.standBrick = bornBrick;

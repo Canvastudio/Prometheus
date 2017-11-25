@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class DamageResist : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     float probability = 0;
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float damage_decrease = 0;
 
 

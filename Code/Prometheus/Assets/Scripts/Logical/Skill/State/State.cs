@@ -37,9 +37,12 @@ public class StateIns
     static int _id = 0;
 
     public int id;
-    [SerializeField]
+
     public StateEffectIns[] stateEffects;
     public StateConfig stateConfig;
+
+    public ulong state_id;
+
     public bool passive;
     public bool active;
     public float exist_time;
@@ -65,8 +68,7 @@ public class StateIns
         }
 
         id = ++_id;
-
-
+        state_id = stateConfig.id;
     }
 
     public void ActiveIns()

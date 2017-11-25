@@ -7,6 +7,7 @@ public class ActiveSkillIns {
 
     public ulong skillId;
     public LiveItem owner;
+    [SerializeField]
     protected bool active = false;
     public ActiveSkillsConfig config;
     public SkillPoint point;

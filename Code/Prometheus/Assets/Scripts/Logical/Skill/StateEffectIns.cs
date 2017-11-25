@@ -7,7 +7,7 @@ using System;
 /// 结算类的状态的具体效果，比如伤害结算的减少伤害的， 攻击结算的造成暴击的
 /// </summary>
 [System.Serializable]
-public abstract class StateEffectIns : IEquatable<StateEffectIns>
+public class StateEffectIns : IEquatable<StateEffectIns>
 {
     public StateEffectType stateType = StateEffectType.Invalid;
     public StateConfig stateConfig;
@@ -24,6 +24,9 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         set { if (value) OnOutData(); _out_data = value; }
     }
 
+#if UNITY_EDITOR
+    public string effectName;
+#endif
     public bool active = false;
 
     /// <summary>
@@ -38,12 +41,16 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
         this.index = index;
         this.passive = passive;
         this.source = source;
-    }
 
-    /// <summary>
-    /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
-    /// </summary>
-    public virtual void Active()
+        #if UNITY_EDITOR
+        effectName = config.name;
+        #endif
+}
+
+/// <summary>
+/// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
+/// </summary>
+public virtual void Active()
     {
         active = true;
     }
@@ -63,7 +70,10 @@ public abstract class StateEffectIns : IEquatable<StateEffectIns>
 
     }
 
-    protected abstract void Apply(object param);
+    protected virtual void Apply(object param)
+    {
+
+    }
 
     public virtual void OnOutData()
     {

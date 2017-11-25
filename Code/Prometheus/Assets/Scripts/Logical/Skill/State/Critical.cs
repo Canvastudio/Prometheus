@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Critical : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     float probability = 0;
+    [UnityEngine.SerializeField]
     float multiply = 1;
+    [UnityEngine.SerializeField]
     EffectCondition condition;
 
     public Critical(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

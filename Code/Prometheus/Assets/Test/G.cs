@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class G : MonoBehaviour {
 
-	// Use this for initialization
+    public StateEffectIns[] a;
+    // Use this for initialization
 	void Start () {
         co = StartCoroutine(Go());
     }

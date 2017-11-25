@@ -135,7 +135,11 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-
+    public void Awake()
+    {
+        Property = new LiveBasePropertys();
+        Property.changeCallback = OnPropertyChange;
+    }
 
     public FightComponet fightComponet;
     /// <summary>
@@ -424,7 +428,6 @@ public abstract class LiveItem : GameItemBase
         int max = ins.stateConfig.max;
 
         state_list.Add(ins);
-        ins.ActiveIns();
 
         for (int i = state_list.Count - 1; i >= 0; --i)
         {
