@@ -198,7 +198,7 @@ public class FightComponet : MonoBehaviour
 
     List<GameItemBase> target_list = new List<GameItemBase>(10);
     List<GameItemBase> apply_list = new List<GameItemBase>(10);
-    List<GameItemBase> damage_list = new List<GameItemBase>(10);
+
     SelectType st;
     TargetType tt;
 
@@ -208,7 +208,6 @@ public class FightComponet : MonoBehaviour
 
         target_list.Clear();
         apply_list.Clear();
-        damage_list.Clear();
 
         st = config.selectType;
         tt = config.targetType;
@@ -317,10 +316,9 @@ public class FightComponet : MonoBehaviour
             {
                 Monster monster = target_list[i] as Monster;
 
-                var mc = monster.config;
                 var q = monster.pwr;
 
-                if (!config.targetLimit.CheckLimit(mc, q))
+                if (!config.targetLimit.CheckLimit(monster.monsterType, q))
                 {
                     target_list.RemoveAt(i);
                     continue;
@@ -368,62 +366,6 @@ public class FightComponet : MonoBehaviour
             }
 
             yield return LightAndWaitSelect();
-
-            Brick brick = apply_list[0] as Brick;
-            List<Brick> bricks = null;
-
-            if (brick.row == ownerObject.standBrick.row)
-            {
-                bricks = BrickCore.Instance.GetBrickOnRow(brick.row);
-
-                for (int i = bricks.Count-1; i >= 0; --i)
-                {
-                    if (brick.column < ownerObject.standBrick.column)
-                    {
-                        if (!bricks[i].inViewArea || bricks[i].column > ownerObject.standBrick.column)
-                        {
-                            bricks.RemoveAt(i);
-                        }
-                    }
-                    else
-                    {
-                        if (!bricks[i].inViewArea || bricks[i].column < ownerObject.standBrick.column)
-                        {
-                            bricks.RemoveAt(i);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                bricks = BrickCore.Instance.GetBrickOnColumn(brick.column);
-
-                for (int i = bricks.Count - 1; i >= 0; --i)
-                {
-                    if (brick.row < ownerObject.standBrick.row)
-                    {
-                        if (!bricks[i].inViewArea || bricks[i].row > ownerObject.standBrick.row)
-                        {
-                            bricks.RemoveAt(i);
-                        }
-                    }
-                    else
-                    {
-                        if (!bricks[i].inViewArea || bricks[i].row < ownerObject.standBrick.row)
-                        {
-                            bricks.RemoveAt(i);
-                        }
-                    }
-                }
-            }
-
-            foreach(var b in bricks)
-            {
-                if (b.item != null && b.item is LiveItem)
-                {
-                    damage_list.Add(b.item);
-                }
-            }
         }
         else
         {
@@ -461,8 +403,6 @@ public class FightComponet : MonoBehaviour
                         count -= 1;
                     }
                 }
-
-                damage_list.AddRange(apply_list);
             }
             else
             {
@@ -470,37 +410,7 @@ public class FightComponet : MonoBehaviour
             }
         }
 
-        if (damage_list.Count > 0)
-        {
-            int count = damage_list.Count;
 
-            for (int i = count; i >= 0; --i)
-            {
-                var liveItems = BrickCore.Instance.GetNearbyLiveItem(damage_list[i].standBrick, config.multipleArg, config.multipleType == MultipleType.Round);
-
-                foreach(var item in liveItems)
-                {
-                    damage_list.Add(item);
-                }
-            }
-
-            if (config.targetLimit != null)
-            {
-                for (int i = damage_list.Count; i >= 0; --i)
-                {
-                    LiveItem liveItem = damage_list[i] as LiveItem;
-
-                    //var mc = liveItem.config;
-                    //var q = liveItem.pwr;
-
-                    //if (!config.targetLimit.CheckLimit(mc, q))
-                    //{
-                    //    target_list.RemoveAt(i);
-                    //    continue;
-                    //}
-                }
-            }
-        }
     }
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
@@ -610,7 +520,7 @@ public class FightComponet : MonoBehaviour
                 }
             }
 
-            StartCoroutine (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray, damage_list));
+            StartCoroutine (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
         }
 
         Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
@@ -627,18 +537,130 @@ public class FightComponet : MonoBehaviour
 
     private int targetAttackFinsh = 0;
 
-    private IEnumerator DoSkillOnTarget(GameItemBase ShowTarget, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance, List<GameItemBase> damageList)
+
+    public List<GameItemBase> CheckFinalEffectItems(GameItemBase target, ActiveSkillsConfig config)
     {
+        List<GameItemBase> finalEffectItems = new List<GameItemBase>(10);
+
+        if (config.selectType == SelectType.Direct)
+        {
+            Brick brick = target as Brick;
+            List<Brick> bricks = null;
+
+            if (brick.row == ownerObject.standBrick.row)
+            {
+                bricks = BrickCore.Instance.GetBrickOnRow(brick.row);
+
+                for (int i = bricks.Count - 1; i >= 0; --i)
+                {
+                    if (brick.column < ownerObject.standBrick.column)
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].column > ownerObject.standBrick.column)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].column < ownerObject.standBrick.column)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                bricks = BrickCore.Instance.GetBrickOnColumn(brick.column);
+
+                for (int i = bricks.Count - 1; i >= 0; --i)
+                {
+                    if (brick.row < ownerObject.standBrick.row)
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].row > ownerObject.standBrick.row)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        if (!bricks[i].inViewArea || bricks[i].row < ownerObject.standBrick.row)
+                        {
+                            bricks.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
+            foreach (var b in bricks)
+            {
+                if (b.item != null && b.item is LiveItem)
+                {
+                    finalEffectItems.Add(b.item);
+                }
+            }
+        }
+        else
+        {
+            finalEffectItems.Add(target);
+        }
+
+        if (config.multipleType != MultipleType.None)
+        {
+            int i = 0;
+
+            if (finalEffectItems.Count > 0)
+            {
+                int count = finalEffectItems.Count;
+
+                for (i = count; i >= 0; --i)
+                {
+                    var liveItems = BrickCore.Instance.GetNearbyLiveItem(finalEffectItems[i].standBrick, config.multipleArg, config.multipleType == MultipleType.Round);
+
+                    foreach (var item in liveItems)
+                    {
+                        finalEffectItems.Add(item);
+                    }
+                }
+
+                if (config.targetLimit != null)
+                {
+                    for (i = finalEffectItems.Count; i >= 0; --i)
+                    {
+                        LiveItem liveItem = finalEffectItems[i] as LiveItem;
+                        MonsterType type = liveItem.monsterType;
+
+                        if (!config.targetLimit.CheckLimit(liveItem.monsterType, liveItem.pwr))
+                        {
+                            finalEffectItems.RemoveAt(i);
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+
+        return finalEffectItems;
+    }
+
+    private IEnumerator DoSkillOnTarget(GameItemBase ShowTarget, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance)
+    {
+        int i = 0;
+
+        var items = CheckFinalEffectItems(ShowTarget, config);
+
+        Debug.Log("技能： " + config.name + " 得造成伤害得目标数量为: " + items.Count);
+
         if (config.beforeSpecialEffect != null && specialEffect)
         {
             var effects1 = config.beforeSpecialEffect.ToArray();
-            ApplyEffect(config, config.beforeArgs, effects1, damageList);
+            ApplyEffect(config, config.beforeArgs, effects1, items);
         }
 
 
         Dictionary<int, float> realDamages = new Dictionary<int, float>();
 
-        int i = 0;
+        i = 0;
         int damageTimes = damageApperance.Length;
 
         Debug.Log("播放技能特效: " + config.effect);
@@ -647,7 +669,7 @@ public class FightComponet : MonoBehaviour
         {
             if (config.damage != null)
             {
-                foreach (var item in damageList)
+                foreach (var item in items)
                 {
                     GameProperty property;
 
@@ -688,7 +710,7 @@ public class FightComponet : MonoBehaviour
         {
             var effects2 = config.afterSpecialEffect.ToArray();
 
-            foreach (var item in damageList)
+            foreach (var item in items)
             {
                 ApplyEffect(config, config.afterArgs, effects2, item, realDamages[item.itemId]);
             }

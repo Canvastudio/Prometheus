@@ -9,20 +9,16 @@ using UnityEngine.UI;
 /// </summary>
 public class Monster : LiveItem
 {
-    public MonsterType monsterType;
     /// <summary>
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
 
     /// <summary>
-    /// 当前怪物强度
-    /// </summary>
-    public int pwr;
-    /// <summary>
     /// 当前怪物等级
     /// </summary>
     public int lv;
+
     /// <summary>
     /// 当前怪物在表中的id
     /// </summary>

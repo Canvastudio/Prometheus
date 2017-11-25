@@ -208,6 +208,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
         player.config = config;
+        player.monsterType = config.playerType;
 
         if (GameTestData.Instance.SuperPlayer)
         {
