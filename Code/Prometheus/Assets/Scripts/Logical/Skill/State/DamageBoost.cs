@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class DamageBoost : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float extra = 0;
+    [UnityEngine.SerializeField]
     float total_extra;
+    [UnityEngine.SerializeField]
     float max_extra;
-
+    [UnityEngine.SerializeField]
     float last_time = 0;
 
     public DamageBoost(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

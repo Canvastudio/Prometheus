@@ -1,7 +1,10 @@
 ﻿public class Assault : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float extra = 0;
+    [UnityEngine.SerializeField]
     float total_extra = 0;
 
     public Assault(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

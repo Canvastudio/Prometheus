@@ -65,7 +65,7 @@ public class ArtTestSkill : MonoBehaviour {
 
 			if (int.TryParse(numstring, out number)) {
 			
-				if (number > 1 && number < skilllist.Count) {
+				if (number > 0 && number < skilllist.Count) {
 					skill_name = skilllist[number];
 					//ArtSkill.DoSkill(skill_name, tranlist[0].position, tranlist[1].position, null);
 

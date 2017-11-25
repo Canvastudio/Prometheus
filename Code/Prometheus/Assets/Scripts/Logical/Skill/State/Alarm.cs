@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Alarm : StateEffectIns
 {
-    int range = 0;
+    public int range = 0;
 
     public Alarm(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {

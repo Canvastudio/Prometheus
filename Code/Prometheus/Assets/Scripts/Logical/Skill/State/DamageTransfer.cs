@@ -7,9 +7,13 @@ public class DamageTransfer : StateEffectIns
     /// <summary>
     /// 能转移多少次
     /// </summary>
+    [UnityEngine.SerializeField]
     public int times = 0;
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     int range = 0;
+    [UnityEngine.SerializeField]
     List<Monster> list = new List<Monster>(8);
 
     public DamageTransfer(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

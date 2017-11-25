@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Bully : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     float threshold = 1;
+    [UnityEngine.SerializeField]
     EffectCondition condition;
+    [UnityEngine.SerializeField]
     float extra = 0;
 
     public Bully(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

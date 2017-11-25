@@ -197,9 +197,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var player = go.GetComponent<Player>();
 
-
-        player.Property = new LiveBasePropertys();
-        player.Property.changeCallback = player.OnPropertyChange;
         player.isAlive = true;
 
         player.standBrick = bornBrick;
@@ -208,6 +205,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
         player.config = config;
+        player.monsterType = config.playerType;
 
         if (GameTestData.Instance.SuperPlayer)
         {

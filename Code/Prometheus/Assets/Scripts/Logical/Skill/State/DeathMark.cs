@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeathMark : StateEffectIns
 {
+    [UnityEngine.SerializeField]
     int count = 0;
 
     public DeathMark(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)

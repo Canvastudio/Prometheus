@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4520747522092228}
   - component: {fileID: 114769777556818462}
   m_Layer: 0
-  m_Name: sanshe
+  m_Name: xiulijiqiren
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,20 +53,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventlist:
   - time: 0
-    fxname: sanshe_hit
-    ishit: 0
+    fxname: xiulijiqiren_hit
+    ishit: 1
     isendpos: 0
     ishitevent: 0
-  - time: 0.5
-    fxname: 
-    ishit: 0
-    isendpos: 0
-    ishitevent: 1
-  - time: 1
-    fxname: 
-    ishit: 0
-    isendpos: 0
-    ishitevent: 1
   destroy_time: 5
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}

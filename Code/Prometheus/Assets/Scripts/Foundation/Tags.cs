@@ -200,6 +200,8 @@ public class EntitysTag<E> where E : ITagable
     /// <returns></returns>
     public List<M> GetEntity<M>(ref List<M> res, params ETag[] tags) where M : E
     {
+        res.Clear();
+
         List<E> entitys;
 
         for (int n = 0; n < tags.Length; ++n)

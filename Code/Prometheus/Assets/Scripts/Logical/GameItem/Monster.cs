@@ -9,20 +9,16 @@ using UnityEngine.UI;
 /// </summary>
 public class Monster : LiveItem
 {
-    public MonsterType monsterType;
     /// <summary>
     /// 策划属性配置表
     /// </summary>
     public MonsterConfig config;
 
     /// <summary>
-    /// 当前怪物强度
-    /// </summary>
-    public int pwr;
-    /// <summary>
     /// 当前怪物等级
     /// </summary>
     public int lv;
+
     /// <summary>
     /// 当前怪物在表中的id
     /// </summary>
@@ -117,6 +113,7 @@ public class Monster : LiveItem
     {
         base.OnDiscoverd();
 
+        RefreshActiveSKillState();
         RefreshPassiveSKillState();
 
         GContext.Instance.discover_monster += 1;
@@ -166,6 +163,7 @@ public class Monster : LiveItem
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(0);
+            Debug.Log("被发现时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
             StartCoroutine(fightComponet.DoActiveSkill(skill_list));
         }
     }

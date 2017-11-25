@@ -30,6 +30,13 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    public MonsterType monsterType;
+
+    /// <summary>
+    /// 强度
+    /// </summary>
+    public int pwr = 0;
+
     [SerializeField]
     private bool _freeze = false;
     /// <summary>
@@ -128,7 +135,11 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-
+    public void Awake()
+    {
+        Property = new LiveBasePropertys();
+        Property.changeCallback = OnPropertyChange;
+    }
 
     public FightComponet fightComponet;
     /// <summary>
@@ -417,7 +428,6 @@ public abstract class LiveItem : GameItemBase
         int max = ins.stateConfig.max;
 
         state_list.Add(ins);
-        ins.ActiveIns();
 
         for (int i = state_list.Count - 1; i >= 0; --i)
         {
