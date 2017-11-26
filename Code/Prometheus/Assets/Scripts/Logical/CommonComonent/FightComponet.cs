@@ -620,7 +620,7 @@ public class FightComponet : MonoBehaviour
             {
                 int count = finalEffectItems.Count;
 
-                for (i = count; i >= 0; --i)
+                for (i = count - 1; i >= 0; --i)
                 {
                     var liveItems = BrickCore.Instance.GetNearbyLiveItem(finalEffectItems[i].standBrick, config.multipleArg, config.multipleType == MultipleType.Round);
 
@@ -635,7 +635,7 @@ public class FightComponet : MonoBehaviour
 
                 if (config.targetLimit != null)
                 {
-                    for (i = finalEffectItems.Count; i >= 0; --i)
+                    for (i = finalEffectItems.Count - 1; i >= 0; --i)
                     {
                         LiveItem liveItem = finalEffectItems[i] as LiveItem;
                         MonsterType type = liveItem.monsterType;
