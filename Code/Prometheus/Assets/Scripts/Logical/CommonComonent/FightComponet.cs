@@ -559,14 +559,14 @@ public class FightComponet : MonoBehaviour
                 {
                     if (brick.column < ownerObject.standBrick.column)
                     {
-                        if (!bricks[i].inViewArea || bricks[i].column > ownerObject.standBrick.column)
+                        if (!bricks[i].inViewArea || bricks[i].column > ownerObject.standBrick.column || !brick.isDiscovered)
                         {
                             bricks.RemoveAt(i);
                         }
                     }
                     else
                     {
-                        if (!bricks[i].inViewArea || bricks[i].column < ownerObject.standBrick.column)
+                        if (!bricks[i].inViewArea || bricks[i].column < ownerObject.standBrick.column || !brick.isDiscovered)
                         {
                             bricks.RemoveAt(i);
                         }
@@ -600,7 +600,10 @@ public class FightComponet : MonoBehaviour
             {
                 if (b.item != null && b.item is LiveItem)
                 {
-                    finalEffectItems.Add(b.item);
+                    if (b.item.isDiscovered)
+                    {
+                        finalEffectItems.Add(b.item);
+                    }
                 }
             }
         }
@@ -623,7 +626,10 @@ public class FightComponet : MonoBehaviour
 
                     foreach (var item in liveItems)
                     {
-                        finalEffectItems.Add(item);
+                        if (item.isDiscovered)
+                        {
+                            finalEffectItems.Add(item);
+                        }
                     }
                 }
 
