@@ -6,6 +6,19 @@ using UnityEngine.UI;
 
 public class ChipView : MuiSingleBase<ChipView> {
 
+    class ChipTempData
+    {
+        public int power;
+        public ChipConfig config;
+
+        public ChipTempData(int _power, ChipConfig _config)
+        {
+            power = _power;
+            config = _config;
+        }
+    }
+
+
     const int maxRowNum = 23;
     const int maxColNum = 11;
 
@@ -85,7 +98,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     /// 
     /// </summary>
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
-    public Dictionary<int, ChipBoardInstance> _temp_listInstance = new Dictionary<int, ChipBoardInstance>();
+    private Dictionary<int, ChipTempData> _temp_listInstance = new Dictionary<int, ChipTempData>();
 
     private void Start()
     {
@@ -153,7 +166,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var ins in listInstance)
         {
-            _temp_listInstance.Add(ins.chipInventory.uid, ins);
+            _temp_listInstance.Add(ins.chipInventory.uid, new ChipTempData(ins.Power, ins.chipInventory.config));
         }
 
         InitChipList();
@@ -221,15 +234,17 @@ public class ChipView : MuiSingleBase<ChipView> {
             var ins = listInstance[i];
 
             ChipBoardInstance chip;
-            int power;
+            ChipTempData data;
 
-            if (!_temp_listInstance.TryGetValue(ins.chipInventory.uid, out chip))
+            int power = 0;
+
+            if (!_temp_listInstance.TryGetValue(ins.chipInventory.uid, out data))
             {
                 power = 0;
             }
             else
             {
-                power = chip.Power;
+                power = data.power;
                 _temp_listInstance.Remove(ins.chipInventory.uid);
             }
 
@@ -252,13 +267,13 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var pair in _temp_listInstance)
         {
-            int power = pair.Value.Power;
+            int power = pair.Value.power;
 
             int change_power = -power;
 
             if (change_power != 0)
             {
-                var sp = pair.Value.chipInventory.config.skillPoint;
+                var sp = pair.Value.config.skillPoint;
                 int c = sp.Count();
                 {
                     for (int m = 0; m < c; ++m)
@@ -271,8 +286,6 @@ public class ChipView : MuiSingleBase<ChipView> {
             }
         }
     }
-
-
 
     public ChipBoardInstance CreateBoardInstance(ChipInventory item)
     {
@@ -1092,7 +1105,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
         foreach (var ins in listInstance)
         {
-            _temp_listInstance.Add(ins.chipInventory.uid, ins);
+            _temp_listInstance.Add(ins.chipInventory.uid, new ChipTempData(ins.Power, ins.chipInventory.config));
         }
 
         yield return InitChipList();
