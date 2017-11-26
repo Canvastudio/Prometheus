@@ -75,5 +75,7 @@ public class ArtFxRay : ArtFxBase {
 		tranStart = this.transform.Find("ps_start");
 		tranEnd = this.transform.Find("ps_end");
 
+		SetLayer("StageView");
+
 	}
 }
