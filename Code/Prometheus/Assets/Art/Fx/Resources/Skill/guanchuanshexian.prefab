@@ -53,8 +53,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventlist:
   - time: 0
-    fxname: guanchuanshexian_hit
+    fxname: guanchuanshexian_ready
     ishit: 1
     isendpos: 0
+    ishitevent: 0
   destroy_time: 5
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
   ishit: 0
