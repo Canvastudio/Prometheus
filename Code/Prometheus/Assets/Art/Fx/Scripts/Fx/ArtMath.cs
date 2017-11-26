@@ -74,7 +74,7 @@ public class ArtMath {
 		float len = Vector3.Distance(start, end);
 
 		vecList[0] = start;
-		vecList[1] = RndBezierPos(start, len * 3);
+		vecList[1] = RndBezierPos(start, len / 3);
 		vecList[2] = RndBezierPos(vecList[1], len/3);
 		vecList[3] = end;
 

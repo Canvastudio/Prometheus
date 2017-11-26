@@ -17,7 +17,6 @@ public class ArtBezierMover : ArtMover {
 	private Vector3 dir;
 
 	//public List<Vector3> buffer = new List<Vector3>(100);
-
 	
 	// Update is called once per frame
 	void Update () {
@@ -66,13 +65,16 @@ public class ArtBezierMover : ArtMover {
 
 	public void UpdatePos(List<Vector3> _plist) {
 	
-		plist = _plist;
+		//plist = _plist;
+
+		//endPos = plist[3];
+		//endPos.z = tran.position.z;
 	
 	}
 
 	public void DetectEnd() {
 
-		if (Vector3.Distance(tran.position, plist[3]) < 0.1f) {
+		if (m_time == 1) {
 
 			OnEnd();
 

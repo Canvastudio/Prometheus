@@ -56,6 +56,8 @@ public class ArtLineMover : ArtMover {
 		if ((k + 1) == n)
 			next_pos = plist[n];
 
+		next_pos.z = tran.position.z;
+
 	}
 
 	public void DetectNext() {
