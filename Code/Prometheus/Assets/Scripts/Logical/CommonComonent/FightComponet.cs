@@ -783,11 +783,11 @@ public class FightComponet : MonoBehaviour
                     liveItem.state.state_list.Clear();
                     liveItem.state.halo_list.Clear();
                     break;
-                case SpecialEffect.Enslave:
+                //case SpecialEffect.Enslave:
 
-                    (item as Monster).enslave = true;
+                //    (item as Monster).enslave = true;
 
-                    break;
+                //    break;
                 case SpecialEffect.OpenBlockWithNear:
                     int range = (int)args[i].f[0];
                     Brick stand_brick = ownerObject.standBrick;

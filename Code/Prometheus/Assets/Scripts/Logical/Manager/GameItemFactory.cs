@@ -98,8 +98,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        item.Property = new LiveBasePropertys();
-
         item.Property.InitBaseProperty(
             lv_Property.mhp * propertys[pwr, 0],
             lv_Property.speed * propertys[pwr, 1],

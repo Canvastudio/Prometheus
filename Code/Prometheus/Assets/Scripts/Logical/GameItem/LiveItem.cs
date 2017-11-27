@@ -201,7 +201,7 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_cur_hp.HasValue) _cur_hp = Property.GetFloatProperty(GameProperty.nhp);
+            _cur_hp = Property.GetFloatProperty(GameProperty.nhp);
 
             return _cur_hp.Value;
         }
@@ -232,8 +232,7 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_fmax_hp.HasValue)
-                _fmax_hp = Property.GetFloatProperty(GameProperty.mhp) * (1 + Property.GetFloatProperty(GameProperty.mhp_percent));
+             _fmax_hp = Property.GetFloatProperty(GameProperty.mhp) * (1 + Property.GetFloatProperty(GameProperty.mhp_percent));
 
             return _fmax_hp.Value;
         }
@@ -245,8 +244,8 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_max_hp.HasValue)
-                _max_hp = Property.GetFloatProperty(GameProperty.mhp);
+
+             _max_hp = Property.GetFloatProperty(GameProperty.mhp);
 
             return _max_hp.Value;
         }
@@ -274,7 +273,7 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-            if (!_melee.HasValue) _melee = Property.GetFloatProperty(GameProperty.melee);
+            _melee = Property.GetFloatProperty(GameProperty.melee);
 
             return _melee.Value;
         }
@@ -378,6 +377,8 @@ public abstract class LiveItem : GameItemBase
     public virtual float TakeDamage(Damage damageInfo)
     {
         Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
+
+        Sleep = false;
 
         foreach (var state in state.state_list)
         {

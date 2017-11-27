@@ -47,10 +47,10 @@ public class StateEffectIns : IEquatable<StateEffectIns>
         #endif
 }
 
-/// <summary>
-/// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
-/// </summary>
-public virtual void Active()
+    /// <summary>
+    /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效
+    /// </summary>
+    public virtual void Active()
     {
         active = true;
     }
