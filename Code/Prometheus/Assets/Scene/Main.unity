@@ -188,6 +188,7 @@ MonoBehaviour:
   alwaysShow: 1
   AddChips:
   - 100036
+  - 100041
   Add_4_Stuff: 32000000320000003200000032000000
 --- !u!4 &13273353
 Transform:
@@ -3982,12 +3983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d793db1806f654c9190f2b1611b996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemAtlas: {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184,
-    type: 2}
-  skillAtals: {fileID: 4343727234628468602, guid: 33a7d969eeb19f24ea1709079377d3a3,
-    type: 2}
-  stateAtlas: {fileID: 4343727234628468602, guid: 4403dfd80a892dd40af9f4e59840cd13,
-    type: 2}
 --- !u!4 &1582500421
 Transform:
   m_ObjectHideFlags: 0

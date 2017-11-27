@@ -757,17 +757,31 @@ public class FightComponet : MonoBehaviour
                 case SpecialEffect.Property:
                     GameProperty property;
 
-                    long[] rpn_values = args[i].rpn.ToArray(0);
+                    int arg_count = args[i].rpn.Count();
+
+                    for (int m = 0; m < arg_count; ++m)
+                    {
+                        long[] rpn_values = args[i].rpn.ToArray(m);
 
 
-                    var value = Rpn.CalculageRPN(rpn_values, ownerObject, item, out property, config, skillDamage);
+                        var value = Rpn.CalculageRPN(rpn_values, ownerObject, item, out property, config, skillDamage);
 
-                    (item as LiveItem).Property.SetFloatProperty(property, value);
-
-
+                        (item as LiveItem).Property.SetFloatProperty(property, value);
+                    }
                     break;
                 case SpecialEffect.Transfiguration:
                     //TODO
+                    Monster liveItem = item as Monster;
+                    liveItem.icon.sprite = StageView.Instance.itemAtlas.GetSprite("chicken_0");
+                    liveItem.fightComponet.DeactiveSkill();
+                    liveItem.fightComponet.DeactivePassive();
+                    liveItem.fightComponet.Clean();
+                    foreach(var state in liveItem.state.state_list)
+                    {
+                        state.DeactiveIns();
+                    }
+                    liveItem.state.state_list.Clear();
+                    liveItem.state.halo_list.Clear();
                     break;
                 case SpecialEffect.Enslave:
 

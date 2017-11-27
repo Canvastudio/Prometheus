@@ -53,16 +53,21 @@ public class PropertyData
         }
     }
 
-    public PropertyData SetIntProperty(GameProperty id, int value)
-    {
-        data[id] = value;
+    //public PropertyData SetIntProperty(GameProperty id, int value)
+    //{
+    //    data[id] = value;
 
-        return this;
-    }
+    //    return this;
+    //}
 
     public PropertyData SetFloatProperty(GameProperty id, float value)
     {
         data[id] = value;
+
+        if (changeCallback != null)
+        {
+            changeCallback.Invoke(id);
+        }
 
         return this;
     }
