@@ -349,6 +349,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
     #endregion
 
+    public bool IsLiveItemBrick()
+    {
+        return (item != null && item is LiveItem);
+    }
+
     public void SetAsPathNode()
     {
         pathMask.gameObject.SetActive(true);

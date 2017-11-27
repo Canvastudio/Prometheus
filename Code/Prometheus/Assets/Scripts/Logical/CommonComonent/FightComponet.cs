@@ -418,9 +418,14 @@ public class FightComponet : MonoBehaviour
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
-        if (gameObject == null || config == null)
+        if (gameObject == null )
         {
-            Debug.Log("奇怪？？？");
+            Debug.Log("奇怪？？？gameObject 为空");
+        }
+
+        if (config == null)
+        {
+            Debug.Log("奇怪？？？config 为空");
         }
 
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);

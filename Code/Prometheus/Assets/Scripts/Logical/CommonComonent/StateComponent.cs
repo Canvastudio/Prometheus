@@ -14,15 +14,30 @@ public class StateComponent : MonoBehaviour {
 
     public List<HaloInfo> halo_list = new List<HaloInfo>(4);
 
-    public LiveItem owner;
+    public Monster owner;
 
     public void OnEnable()
     {
-        owner = GetComponent<LiveItem>();
+        owner = GetComponent<Monster>();
 
-        if (owner == null)
+        t = 0;
+    }
+
+    float t;
+
+    private void Update()
+    {
+
+        if (owner != null && owner.isDiscovered && owner.isAlive && state_list.Count > 0)
         {
-            Debug.LogError("StateComponent 需要添加在LiveItem生上");
+            t += Time.deltaTime;
+
+            if (t >= 1)
+            {
+                t -= 1;
+
+                owner.artPop.OnNext();
+            }
         }
     }
 
@@ -51,6 +66,11 @@ public class StateComponent : MonoBehaviour {
                 }
             }
         }
+
+        if (ins.stateConfig.iShow)
+        {
+            owner.artPop.Add(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
+        }
     }
 
     public virtual void RemoveStateIns(StateIns ins)
@@ -66,6 +86,11 @@ public class StateComponent : MonoBehaviour {
                 state_list[i].DeactiveIns();
                 state_list.RemoveAt(i);
             }
+        }
+
+        if (ins.stateConfig.iShow)
+        {
+            owner.artPop.Remove(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
         }
     }
 

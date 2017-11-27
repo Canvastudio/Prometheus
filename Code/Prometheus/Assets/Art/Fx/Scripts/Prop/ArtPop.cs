@@ -9,10 +9,11 @@ public class ArtPop : MonoBehaviour {
 	public Image Image_state;
 	public int index = -1;
 	public Animator anim;
-
+    private Sprite cur_sprite;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		anim.SetBool("isloop", spriteList.Count > 1);
+        gameObject.SetActive(false);
 	}
 
 	public void OnNext() {
@@ -22,13 +23,20 @@ public class ArtPop : MonoBehaviour {
 		
 			OnEnd();
 			return;
-		
 		}
 
-		index++;
-		index = index >= spriteList.Count ? 0 : index;
-		Image_state.sprite = spriteList[index];
-	
+        if (spriteList.Count == 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            index++;
+            index = index >= spriteList.Count ? 0 : index;
+            Image_state.sprite = spriteList[index];
+            cur_sprite = spriteList[index];
+        }
 	}
 
 	public void Add(List<Sprite> slist) {
@@ -39,12 +47,16 @@ public class ArtPop : MonoBehaviour {
 	}
 
 	public void Add(Sprite sprite) {
-	
-		spriteList.Add(sprite);
 
-		anim.SetBool("isloop", spriteList.Count > 1);
-	
-	}
+        if (!spriteList.Contains(sprite))
+        {
+            spriteList.Add(sprite);
+
+            anim.SetBool("isloop", spriteList.Count > 1);
+        }
+
+        gameObject.SetActive(true);
+    }
 
 	public void Remove(Sprite sprite) {
 	
@@ -52,8 +64,13 @@ public class ArtPop : MonoBehaviour {
 		
 			spriteList.Remove(sprite);
 			anim.SetBool("isloop", spriteList.Count > 1);
-		
-		}
+
+            if (cur_sprite == sprite)
+            {
+                OnNext();
+            }
+
+        }
 	
 	}
 

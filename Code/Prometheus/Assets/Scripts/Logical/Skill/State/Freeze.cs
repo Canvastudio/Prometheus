@@ -6,6 +6,7 @@ public class Freeze : StateEffectIns
 {
     public Freeze(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
+        Debug.Log("Frezz");
     }
 
     protected override void Apply(object param)

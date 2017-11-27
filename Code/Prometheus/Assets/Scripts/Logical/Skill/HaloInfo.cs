@@ -16,7 +16,7 @@ public class HaloInfo  {
     public LiveItem owner;
     public LiveItemSide Side;
 
-    public List<GameItemBase> effectItems = new List<GameItemBase>(10);
+    public List<Brick> effectBricks = new List<Brick>(10);
 
     public bool active = false;
 
@@ -40,9 +40,38 @@ public class HaloInfo  {
 
     }
 
+    public void Remove()
+    {
+        foreach(var brick in effectBricks)
+        {
+            brick.haloComponent.RemoveHalo(this);
+        }
+    }
+
     private void RefreshEffectItem(float f)
     {
-        var items = BrickCore.Instance.GetNearbyLiveItem(owner.standBrick, range);
+        var bricks = BrickCore.Instance.GetNearbyBrick(owner.standBrick, range);
+
+        foreach(var brick in bricks)
+        {
+            if (!effectBricks.Contains(brick))
+            {
+                brick.haloComponent.AddHalo(this);
+                effectBricks.Add(brick);
+            }
+        }
+
+        for (int i = effectBricks.Count -1; i>= 0; --i)
+        {
+            var brick = effectBricks[i];
+
+            if (!bricks.Contains(brick))
+            {
+                brick.haloComponent.RemoveHalo(this);
+                effectBricks.RemoveAt(i);
+            }
+        }
+        
     }
 
     public override bool Equals(object obj)

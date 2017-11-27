@@ -82,6 +82,7 @@ public class Monster : LiveItem
 
     public DangerousLevels dangerousLevels;
 
+    public ArtPop artPop;
 
     public void CheckDistance()
     {

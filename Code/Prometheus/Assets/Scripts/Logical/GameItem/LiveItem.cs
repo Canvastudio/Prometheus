@@ -30,6 +30,8 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+
+
     public MonsterType monsterType;
 
     public StateComponent state;

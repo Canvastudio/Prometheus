@@ -8,6 +8,13 @@ public class HaloComponent : MonoBehaviour {
 
     public LiveItem oldLive = null;
 
+    public Brick owner;
+
+    public void OnEnable()
+    {
+        owner = GetComponent<Brick>();
+    }
+
     public void OnStandItemChange(LiveItem liveItem)
     {
         if (liveItem != null)
@@ -32,13 +39,32 @@ public class HaloComponent : MonoBehaviour {
         }
     }
 
-    public void Active()
+    public void RemoveHalo(HaloInfo halo)
     {
+        if (owner.IsLiveItemBrick())
+        {
+            LiveItem item = owner.item as LiveItem;
+            item.state.RemoveHalo(halo);
+        }
 
+        halo_list.Remove(halo);
+
+        if (halo_list.Count == 0)
+        {
+            owner.icon.color = Color.white;
+        }
     }
 
-    public void Deactive()
+    public void AddHalo(HaloInfo halo)
     {
+        if (owner.IsLiveItemBrick())
+        {
+            LiveItem item = owner.item as LiveItem;
+            item.state.AddHalo(halo);
+        }
 
+        halo_list.Add(halo);
+
+        owner.icon.color = Color.red;
     }
 }
