@@ -19,6 +19,12 @@ public class Monster : LiveItem
     /// </summary>
     public int lv;
 
+
+    /// <summary>
+    /// 怪物名字，测试用
+    /// </summary>
+    public Text monsterName;
+
     /// <summary>
     /// 当前怪物在表中的id
     /// </summary>
@@ -230,6 +236,8 @@ public class Monster : LiveItem
         }
 
         base.OnDead(damageInfo);
+
+        Debug.Log("怪物死亡：" + gameObject.name);
 
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }

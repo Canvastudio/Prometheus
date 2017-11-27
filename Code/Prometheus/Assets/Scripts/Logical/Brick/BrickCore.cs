@@ -93,7 +93,6 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         ulong level_Id = 0;
 
-        //for (int i = map_Data.Count - 1; i >= 0; ++i)
         for (int i = 0; i < map_Data.Count; ++i)
         {
             if (map_Data[i].distance > distance)

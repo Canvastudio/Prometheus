@@ -32,6 +32,8 @@ public abstract class LiveItem : GameItemBase
 
     public MonsterType monsterType;
 
+    public StateComponent state;
+
     /// <summary>
     /// 强度
     /// </summary>
@@ -142,12 +144,7 @@ public abstract class LiveItem : GameItemBase
     }
 
     public FightComponet fightComponet;
-    /// <summary>
-    /// 自己拥有的光环，不包括别人影响自己的
-    /// </summary>
-    public List<HaloInfo> halo_list = new List<HaloInfo>(2);
 
-    public List<StateIns> state_list = new List<StateIns>(8);
 
     /// <summary>
     /// 在哪边, 0是敌对，1是玩家这边
@@ -380,7 +377,7 @@ public abstract class LiveItem : GameItemBase
     {
         Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
 
-        foreach (var state in state_list)
+        foreach (var state in state.state_list)
         {
             foreach (var ins in state.stateEffects)
             {
@@ -407,7 +404,7 @@ public abstract class LiveItem : GameItemBase
         {
             var config = StateConfig.GetConfigDataById<StateConfig>(damageInfo.attach_state);
             StateIns ins = new StateIns(config, this, false);
-            AddStateIns(ins);
+            state.AddStateIns(ins);
         }
 
         if (cur_hp == 0 && isAlive)
@@ -423,56 +420,17 @@ public abstract class LiveItem : GameItemBase
         return damageInfo.damage;
     }
 
-    public virtual void AddStateIns(StateIns ins)
-    {
-        int max = ins.stateConfig.max;
-
-        state_list.Add(ins);
-
-        for (int i = state_list.Count - 1; i >= 0; --i)
-        {
-            if (state_list[i].stateConfig.id == ins.stateConfig.id)
-            {
-                --max;
-
-                if (max < 0)
-                {
-                    state_list[i].DeactiveIns();
-                    state_list.RemoveAt(i);
-                }
-            }
-        }
-    }
-
-    public virtual void RemoveStateIns(StateIns ins)
-    {
-        ins.DeactiveIns();
-
-        ins.stateEffects = null;
-
-        for (int i = state_list.Count - 1; i >= 0; --i)
-        {
-            if (state_list[i].stateConfig.id == ins.stateConfig.id)
-            {
-                state_list[i].DeactiveIns();
-                state_list.RemoveAt(i);
-            }
-        }
-    }
-
-    public void RemoveStateBuff(int count, bool isBuff)
-    {
-
-    }
-
     public override void Recycle()
     {
         base.Recycle();
 
-        if (fightComponet != null)
-        {
-            fightComponet.CleanData();
-        }
+        fightComponet.Clean();
+        state.Clean();
+
+
+        Freeze = false;
+        Disarm = false;
+        Silent = false;
     }
 }
 

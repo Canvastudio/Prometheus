@@ -28,9 +28,9 @@ public class MonsterFightComponet : FightComponet {
     [SerializeField]
     public new List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
 
-    public override void CleanData()
+    public override void Clean()
     {
-        base.CleanData();
+        base.Clean();
 
         DeactiveSkill();
         monsterActiveInsList.Clear();

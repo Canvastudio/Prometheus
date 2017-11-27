@@ -59,9 +59,8 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public virtual void CleanData()
+    public virtual void Clean()
     {
- 
         for (int i = activeInsList.Count - 1; i >= 0; --i)
         {
             activeInsList[i].Deactive();
@@ -70,7 +69,7 @@ public class FightComponet : MonoBehaviour
 
         for (int i = passiveInsList.Count - 1; i >= 0; --i)
         {
-            passiveInsList[i].Deactive();
+            passiveInsList[i].Remove();
             passiveInsList.RemoveAt(i);
         }
 
@@ -339,7 +338,7 @@ public class FightComponet : MonoBehaviour
             {
                 LiveItem live = target_list[i] as LiveItem;
 
-                foreach (var state in live.state_list)
+                foreach (var state in live.state.state_list)
                 {
                     if (state.active)
                     {
@@ -465,7 +464,7 @@ public class FightComponet : MonoBehaviour
             float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out property, config);
             RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
 
-            foreach (var state in ownerObject.state_list)
+            foreach (var state in ownerObject.state.state_list)
             {
                 foreach (var effect in state.stateEffects)
                 {
@@ -686,7 +685,7 @@ public class FightComponet : MonoBehaviour
 
                     Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
 
-                    foreach (var state in ownerObject.state_list)
+                    foreach (var state in ownerObject.state.state_list)
                     {
                         foreach (var ins in state.stateEffects)
                         {
@@ -747,7 +746,7 @@ public class FightComponet : MonoBehaviour
                     ins.ActiveIns();
 
                     Debug.Log("为：" + item.gameObject.name + " 添加状态: " + state_config.name);
-                    (item as LiveItem).AddStateIns(ins);
+                    (item as LiveItem).state.AddStateIns(ins);
 
                     break;
                 case SpecialEffect.Property:
@@ -830,17 +829,17 @@ public class FightComponet : MonoBehaviour
                 case SpecialEffect.OffensiveDisperse:
                     remove_count = (int)args[i].f[0];
 
-                    (item as LiveItem).RemoveStateBuff(remove_count, true);
+                    (item as LiveItem).state.RemoveStateBuff(remove_count, true);
 
                     break;
                 case SpecialEffect.AddStateToSelf:
                     state_id = args[i].u[0];
-                    ownerObject.AddStateIns(new StateIns(ConfigDataBase.GetConfigDataById<StateConfig>(state_id), ownerObject, false));
+                    ownerObject.state.AddStateIns(new StateIns(ConfigDataBase.GetConfigDataById<StateConfig>(state_id), ownerObject, false));
                     break;
                 case SpecialEffect.Disperse:
                     remove_count = (int)args[i].f[0];
 
-                    (item as LiveItem).RemoveStateBuff(remove_count, false);
+                    (item as LiveItem).state.RemoveStateBuff(remove_count, false);
 
                     break;
                 case SpecialEffect.PositionExchange:

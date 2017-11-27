@@ -23,7 +23,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public ulong moduel_id = 0;
     public ulong level_id = 0;
 
-    #region BrickInfo
     public BrickType brickType
     {
         get
@@ -128,6 +127,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     [SerializeField]
     private int _column;
 
+    public HaloComponent haloComponent;
+
     /// <summary>
     /// 当前格子得怪物，为空表示没有怪物
     /// </summary>
@@ -143,80 +144,9 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             if (_item == value) return;
 
-            if (_item == null)
-            {
-                if (value is LiveItem)
-                {
-                    LiveItem live = (value as LiveItem);
-
-                    foreach (var halo in halo_dic.Keys)
-                    {
-                        if (live.Side == halo.Side)
-                        {
-                            StateIns state = new StateIns(halo.passive.stateConfig, live, true);
-                            live.AddStateIns(state);
-
-                            halo_dic[halo] = state;
-                        }
-                    }
-                }
-            }
-            else if (value == null)
-            {
-                if (_item is LiveItem)
-                {
-                    LiveItem live = (_item as LiveItem);
-
-                    var l = new List<HaloInfo>(halo_dic.Keys);
-
-                    foreach (var halo in l)
-                    {
-                        if (live.Side == halo.Side)
-                        {
-                            live.RemoveStateIns(halo_dic[halo]);
-                            halo_dic[halo] = null;
-                        }
-                    }
-                }
-            }
-            else if (_item is LiveItem && value is LiveItem)
-            {
-                LiveItem live = (_item as LiveItem);
-
-                foreach (var halo in halo_dic.Keys)
-                {
-                    if (live.Side == halo.Side)
-                    {
-                        live.RemoveStateIns(halo_dic[halo]);
-                        halo_dic[halo] = null;
-                    }
-                }
-
-                live = value as LiveItem;
-
-                foreach (var halo in halo_dic.Keys)
-                {
-                    if (live.Side == halo.Side)
-                    {
-                        StateIns state = new StateIns(halo.passive.stateConfig, live, true);
-                        live.AddStateIns(state);
-
-                        halo_dic[halo] = state;
-                    }
-                }
-
-            }
-
             _item = value;
         }
     }
-
-    /// <summary>
-    /// 当前item对于每一个光环所拥有的状态实例
-    /// </summary>
-    public Dictionary<HaloInfo, StateIns> halo_dic = new Dictionary<HaloInfo, StateIns>();
-    #endregion
-
 
     public Node pathNode
     {

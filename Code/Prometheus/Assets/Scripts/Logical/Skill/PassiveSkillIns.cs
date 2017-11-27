@@ -43,7 +43,7 @@ public class PassiveSkillIns  {
    
         stateIns = new StateIns(stateConfig, owner, true);
 
-        owner.AddStateIns(stateIns);
+        owner.state.AddStateIns(stateIns);
     }
 
     public void Active()
@@ -62,7 +62,7 @@ public class PassiveSkillIns  {
 
     public void Remove()
     {
-        owner.RemoveStateIns(stateIns);
+        owner.state.RemoveStateIns(stateIns);
         if (haloInfo != null) haloInfo.Deactive();
     }
 }

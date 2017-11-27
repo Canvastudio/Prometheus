@@ -62,6 +62,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1598855568716998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224669724543047118}
+  - component: {fileID: 222379318301719720}
+  - component: {fileID: 114445705660817682}
+  m_Layer: 8
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1714161537929942
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +158,39 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114445705660817682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1598855568716998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 22
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
 --- !u!114 &114615181243584750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,21 +239,25 @@ MonoBehaviour:
   isDiscovered: 0
   inViewArea: 0
   icon: {fileID: 114950792208918696}
+  canvasGroup: {fileID: 0}
   _stanbBrick: {fileID: 0}
   _silent: 0
+  monsterType: 0
+  pwr: 0
   _freeze: 0
   activeSkillCanUsed: 0
   passiveSkillCanUsed: 0
   _sleep: 0
   _disarm: 0
   fightComponet: {fileID: 0}
+  state_list: []
   _side: 0
+  isAlive: 1
   _moveComponet: {fileID: 0}
   hp_value: {fileID: 114615181243584750}
   atk_value: {fileID: 114022638677778802}
-  monsterType: 0
-  pwr: 0
   lv: 0
+  monsterName: {fileID: 114445705660817682}
   cid: 0
   discover_howl: 0
   dead_howl: 0
@@ -224,7 +278,10 @@ MonoBehaviour:
   time: 0
   hitTarget: 0
   skillActive: 0
+  activePassive: 0
   activeInsList: []
+  passiveInsList: []
+  monsterActiveInsList: []
 --- !u!114 &114950792208918696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +321,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1217795938384180}
+--- !u!222 &222379318301719720
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1598855568716998}
 --- !u!222 &222586988385426728
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -312,6 +375,24 @@ RectTransform:
   m_AnchoredPosition: {x: 53.1, y: -46.5}
   m_SizeDelta: {x: -70, y: -86}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224669724543047118
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1598855568716998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224859639751209890}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224859639751209890
 RectTransform:
   m_ObjectHideFlags: 1
@@ -325,6 +406,7 @@ RectTransform:
   - {fileID: 224921435760028566}
   - {fileID: 224546553023481806}
   - {fileID: 224330799521594290}
+  - {fileID: 224669724543047118}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

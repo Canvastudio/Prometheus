@@ -79,18 +79,17 @@ public class Player : LiveItem {
         base.Recycle();
     }
 
-    public override void AddStateIns(StateIns ins)
-    {
-        base.AddStateIns(ins);
+    //public override void AddStateIns(StateIns ins)
+    //{
+    //    base.AddStateIns(ins);
 
-        Messenger<StateIns>.Invoke(SA.PlayerAddState, ins);
-    }
+    //    Messenger<StateIns>.Invoke(SA.PlayerAddState, ins);
+    //}
 
-    public override void RemoveStateIns(StateIns ins)
-    {
-        base.RemoveStateIns(ins);
+    //public override void RemoveStateIns(StateIns ins)
+    //{
+    //    base.RemoveStateIns(ins);
 
-        Messenger<StateIns>.Invoke(SA.PlayerRemoveState, ins);
-    }
-
+    //    Messenger<StateIns>.Invoke(SA.PlayerRemoveState, ins);
+    //}
 }

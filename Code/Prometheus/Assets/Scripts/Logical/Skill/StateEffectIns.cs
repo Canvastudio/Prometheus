@@ -83,8 +83,6 @@ public virtual void Active()
         {
             Deactive();
         }
-
-        owner = null;
     }
 
     public bool Equals(StateEffectIns other)
@@ -95,18 +93,8 @@ public virtual void Active()
 
     public void ApplyState(object param)
     {
-        if (!owner.Silent || out_data || active == false)
+        if (!out_data && !owner.Silent || active == false)
         {
-            //if (stateType == StateEffectType.OnGenerateDamage
-            //    || stateType == StateEffectType.OnTakenDamage)
-            //{
-            //    Apply(param as Damage);
-            //}
-            //else if (stateType == StateEffectType.RangeSkillCost)
-            //{
-            //    Apply(param as RangeSkillCost);
-            //}
-
             Apply(param);
         }
     }

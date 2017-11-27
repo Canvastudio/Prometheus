@@ -86,11 +86,17 @@ public class StateIns
 
     public void DeactiveIns()
     {
-        foreach (var effect in stateEffects)
+        if (stateEffects != null)
         {
-            effect.Deactive();
+            foreach (var effect in stateEffects)
+            {
+                effect.Deactive();
+            }
         }
-
+        else
+        {
+            Debug.LogError("stateEffects为空: " + stateConfig.name);
+        }
 
         if (!passive)
         {

@@ -87,6 +87,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.standBrick = bornBrick;
 
+        if (item.state == null)
+            item.state = item.GetOrAddComponet<StateComponent>();
+
         MonsterConfig config = ConfigDataBase.GetConfigDataById<MonsterConfig>(id);
 
         SuperArrayValue<float> propertys = config.propertys;
@@ -176,6 +179,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             item.canvasGroup.alpha = 0;
         }
 
+        item.monsterName.text = config.m_name;
+
 #if UNITY_EDITOR
         item.name += "_" + config.m_name;
 #endif
@@ -200,7 +205,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         player.isAlive = true;
 
         player.standBrick = bornBrick;
+
         player.transform.position = bornBrick.transform.position;
+
+        player.state = player.GetOrAddComponet<StateComponent>();
 
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
