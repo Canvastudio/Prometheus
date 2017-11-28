@@ -874,7 +874,7 @@ public class FightComponet : MonoBehaviour
 
                     condition = args[i].ec[0];
 
-                    if (has_kill && CheckEffectCondition(condition, item, config.damageType))
+                    if (CheckEffectCondition(condition, item, config.damageType))
                     {
                         if (ownerObject is Player)
                         {
@@ -961,7 +961,20 @@ public class FightComponet : MonoBehaviour
                 }
                 else
                 {
-                    return false;
+                    if (item is Brick)
+                    {
+                        Brick b = item as Brick;
+                        if (b.realBrickType == BrickType.MONSTER)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                        return false;
                 }
             case EffectCondition.NoMonster:
                 if (item is Monster)
@@ -970,10 +983,23 @@ public class FightComponet : MonoBehaviour
                 }
                 else
                 {
-                    return true;
+                    if (item is Brick)
+                    {
+                        Brick b = item as Brick;
+
+                        if (b.realBrickType != BrickType.MONSTER)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                        return true;
                 }
             case EffectCondition.Empty:
-                if ((item as Brick).item == null && (item as Brick).realBrickType == BrickType.EMPTY)
+                if ((item as Brick).realBrickType == BrickType.EMPTY)
                 {
                     return true;
                 }
