@@ -69,9 +69,9 @@ public class MoveComponet : MonoBehaviour {
 
         var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
-        GameProperty property;
+        float[] f;
 
-        float time = Rpn.CalculageRPN(rpn, owner, null, out property);
+        float time = Rpn.CalculageRPN(rpn, owner, null, out f);
 
         if (!IsNextBlock())
         {

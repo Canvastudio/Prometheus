@@ -317,7 +317,7 @@ public class FightComponet : MonoBehaviour
 
                 var q = monster.pwr;
 
-                if (!config.targetLimit.CheckLimit(monster.monsterType, q))
+                if (config.targetLimit.CheckLimit(monster.monsterType, q))
                 {
                     target_list.RemoveAt(i);
                     continue;
@@ -465,8 +465,9 @@ public class FightComponet : MonoBehaviour
         if (ownerObject is Player)
         {
             long[] rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).reloadSpeedFormula.ToArray();
-            GameProperty property;
-            float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out property, config);
+            float[] v;
+            float time_cost = Rpn.CalculageRPN(rpn, ownerObject, null, out v, config);
+ 
             RangeSkillCost rangeSkillCost = new RangeSkillCost(time_cost);
 
             foreach (var state in ownerObject.state.state_list)
@@ -684,9 +685,9 @@ public class FightComponet : MonoBehaviour
             {
                 foreach (var item in items)
                 {
-                    GameProperty property;
+                    float[] value;
 
-                    var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, item, out property);
+                    var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, item, out value);
 
                     Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
 
@@ -755,6 +756,7 @@ public class FightComponet : MonoBehaviour
 
                     break;
                 case SpecialEffect.Property:
+
                     GameProperty property;
 
                     int arg_count = args[i].rpn.Count();
@@ -763,10 +765,20 @@ public class FightComponet : MonoBehaviour
                     {
                         long[] rpn_values = args[i].rpn.ToArray(m);
 
+                        float[] f;
 
-                        var value = Rpn.CalculageRPN(rpn_values, ownerObject, item, out property, config, skillDamage);
+                        var value = Rpn.CalculageRPN(rpn_values, ownerObject, item, out f, config, skillDamage);
 
-                        (item as LiveItem).Property.SetFloatProperty(property, value);
+                        property = (GameProperty)(f[0]);
+
+                        if (f[1] == 2)
+                        {
+                            (item as LiveItem).Property.SetFloatProperty(property, value);
+                        }
+                        else if (f[1]== 1)
+                        {
+                            (ownerObject as LiveItem).Property.SetFloatProperty(property, value);
+                        }
                     }
                     break;
                 case SpecialEffect.Transfiguration:

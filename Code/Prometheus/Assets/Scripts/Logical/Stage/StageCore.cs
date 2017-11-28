@@ -126,9 +126,9 @@ public class StageCore : SingleGameObject<StageCore> {
             var item = brick1.item as Supply;
             var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
-            GameProperty property;
+            float[] f;
 
-            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out property);
+            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out f);
             yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉
@@ -139,9 +139,9 @@ public class StageCore : SingleGameObject<StageCore> {
             var item = brick1.item as Treasure;
             var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
-            GameProperty property;
+            float[] f;
 
-            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out property);
+            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out f);
             yield return Player.moveComponent.MoveTo(brick1, time);
 
             //吃掉

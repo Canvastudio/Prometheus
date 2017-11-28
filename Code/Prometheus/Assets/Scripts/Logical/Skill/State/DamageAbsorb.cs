@@ -14,8 +14,8 @@ public class DamageAbsorb : StateEffectIns
     public DamageAbsorb(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = config.stateArgs[index].ec[0];
-        GameProperty property;
-        absorb_damage = passive ? -1f : Rpn.CalculageRPN(config.stateArgs[index].rpn.ToArray(0), null, null, out property);
+        float[] f;
+        absorb_damage = passive ? -1f : Rpn.CalculageRPN(config.stateArgs[index].rpn.ToArray(0), null, null, out f);
         stateType = StateEffectType.OnTakenDamage;
         times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
     }

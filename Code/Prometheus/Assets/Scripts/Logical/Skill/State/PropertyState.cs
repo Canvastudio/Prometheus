@@ -52,20 +52,20 @@ public class Property : StateEffectIns
         {
             for (int i = 0; i < stateConfig.stateArgs[index].rpn.Count(); ++i)
             {
-                GameProperty property;
+                float[] f;
 
                 if (stateConfig != null)
                 {
                     var value = Rpn.CalculageRPN(
                         stateConfig.stateArgs[index].rpn.ToArray(i),
                         owner, source,
-                        out property, null, skillDamage);
-
+                        out f, null, skillDamage);
+                    GameProperty property = (GameProperty)(f[0]);
                     float origin_value = owner.Property.GetFloatProperty(property);
                     float change = value - origin_value;
 
 
-                    if (property != GameProperty.nhp)
+                    if (property != GameProperty.nhp && property != GameProperty.mhp)
                     {
                         owner.Property.SetFloatProperty(property, value);
                         changes.Add(property, change);

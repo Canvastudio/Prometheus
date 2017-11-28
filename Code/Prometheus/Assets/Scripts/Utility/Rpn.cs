@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Rpn {
 
-    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out GameProperty valueType, 
+    public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out float[] value, 
         ActiveSkillsConfig skillsConfig = null, float skillDamage = 0)
     {
         Stack<float> stack = new Stack<float>();
 
+        value = new float[2];
         float[] fv = new float[2];
 
         SuperTool.GetValue(damage_values[damage_values.Length - 1], ref fv);
 
-        valueType = (GameProperty)fv[0];
+        value[0] = fv[0];
+        value[1] = fv[1];
 
         for (int i = 0; i < damage_values.Length - 1; ++i)
         {
