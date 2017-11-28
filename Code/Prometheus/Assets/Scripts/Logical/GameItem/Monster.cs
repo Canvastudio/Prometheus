@@ -170,8 +170,12 @@ public class Monster : LiveItem
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(0);
-            Debug.Log("被发现时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
-            StartCoroutine(fightComponet.DoActiveSkill(skill_list));
+            if (skill_list[0] > 0)
+            {
+                Debug.Log("被发现时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
+                ActiveSkillsConfig config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_list[0]);
+                StartCoroutine(fightComponet.DoActiveSkill(config));
+            }
         }
     }
 
@@ -226,14 +230,15 @@ public class Monster : LiveItem
         if (AIConfig.forceSkills != null)
         {
             var skill_list = AIConfig.forceSkills.ToArray(1);
-
             if (skill_list[0] > 0)
             {
-                yield return fightComponet.DoActiveSkill(skill_list);
+                Debug.Log("死亡时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
+                ActiveSkillsConfig config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_list[0]);
+                yield return (fightComponet.DoActiveSkill(config));
             }
         }
 
-        base.OnDead(damageInfo);
+        yield return base.OnDead(damageInfo);
 
         Debug.Log("怪物死亡：" + gameObject.name);
 

@@ -309,8 +309,13 @@ public abstract class LiveItem : GameItemBase
         {
             if (cur_hp == 0)
             {
-                Damage damage = new Damage(int.MaxValue, null, this, DamageType.Physical);
-               StartCoroutine(OnDead(damage));
+                //有可能这里本身就由ondead发起得一次属性改变，所以无需再重复一次
+                if (gameObject.activeInHierarchy)
+                {
+                    Damage damage = new Damage(int.MaxValue, null, this, DamageType.Physical);
+
+                    StartCoroutine(OnDead(damage));
+                }
             }
             if (hp_value != null)
             {
@@ -345,7 +350,20 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator OnDead(Damage damageInfo)
     {
-        StageCore.Instance.UnRegisterItem(this);
+        var list = state.state_list;
+
+        foreach (var state in list)
+        {
+            foreach (var ins in state.stateEffects)
+            {
+                if (ins.stateType == StateEffectType.OnDeadth)
+                {
+                    ins.ApplyState(damageInfo);
+                }
+            }
+        }
+
+       StageCore.Instance.UnRegisterItem(this);
 
         isAlive = false;
 

@@ -88,7 +88,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
             CoroCore.Instance.ExStartCoroutine(InitData(name, source, count, Instantiate));
 
-            Debug.Log("Qx: Ini Pool: " + name + ", cast: " + (Time.realtimeSinceStartup - t1).ToString());
+            //Debug.Log("Qx: Ini Pool: " + name + ", cast: " + (Time.realtimeSinceStartup - t1).ToString());
         }
         else
         {

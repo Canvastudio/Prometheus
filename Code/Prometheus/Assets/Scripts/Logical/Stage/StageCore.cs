@@ -67,23 +67,30 @@ public class StageCore : SingleGameObject<StageCore> {
 
     public void RegisterItem(GameItemBase gameItemBase)
     {
-        tagMgr.AddEntity(gameItemBase
-            , ETag.GetETag(gameItemBase.GetType().ToString()));
-
         if (gameItemBase is Player)
         {
             Player = gameItemBase as Player;
         }
         else if (gameItemBase is Monster)
         {
-            tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.ENEMY, ST.UNDISCOVER));
+            Monster monster = gameItemBase as Monster;
+
+            if (monster.Side == LiveItemSide.SIDE0)
+            {
+                tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.MONSTER, ST.SIDE0, ST.UNDISCOVER));
+            }
+            else
+            {
+                tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.MONSTER, ST.SIDE1, ST.UNDISCOVER));
+            }
+        }
+        else
+        {
+            tagMgr.AddEntity(gameItemBase, ETag.GetETag(gameItemBase.GetType().ToString()));
         }
 
         allItems.Add(gameItemBase);
     }
-
-
-
 
     public void UnRegisterItem(GameItemBase gameItem)
     {
@@ -289,6 +296,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
     IEnumerator MovePlayer()
     {
+        GContext.Instance.JustdiscoverMonster = false;
+
         while (!Instance.Player.moveComponent.MoveEnd())
         {
             yield return StageCore.Instance.Player.moveComponent.MoveToNext();
@@ -300,7 +309,7 @@ public class StageCore : SingleGameObject<StageCore> {
         //autoMove = false;
         StageView.Instance.CancelPahtNode();
 
-        GContext.Instance.JustdiscoverMonster = false;
+
     }
     
     IEnumerator PlayerMeleeAction(Brick brick1)

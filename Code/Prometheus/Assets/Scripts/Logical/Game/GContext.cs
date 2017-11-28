@@ -85,6 +85,8 @@ public class GContext : SingleGameObject<GContext> {
             {
                 JustdiscoverMonster = true;
             }
+
+            _lastDiscoverMonster = value;
         }
     }
 

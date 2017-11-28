@@ -458,6 +458,9 @@ public class FightComponet : MonoBehaviour
         //扣除消耗
         if (ownerObject is Player)
         {
+            //使用技能之后就不符合just的状态了
+            GContext.Instance.JustdiscoverMonster = false;
+
             var stuff = config.stuffCost.stuffs.ToArray();
             var count = config.stuffCost.values.ToArray();
             Player player = ownerObject as Player;
@@ -466,9 +469,6 @@ public class FightComponet : MonoBehaviour
             {
                 player.inventory.ChangeStuffCount(stuff[n], -count[n]);
             }
-
-            //使用技能之后就不符合just的状态了
-            GContext.Instance.JustdiscoverMonster = false;
         }
 
 
@@ -774,6 +774,27 @@ public class FightComponet : MonoBehaviour
                     Debug.Log("为：" + item.gameObject.name + " 添加状态: " + state_config.name);
                     (item as LiveItem).state.AddStateIns(ins);
 
+                    break;
+                case SpecialEffect.StateAtTarget:
+
+                    Brick _b = item as Brick;
+
+                    if (_b.realBrickType == BrickType.PLAYER || _b.realBrickType == BrickType.MONSTER)
+                    {
+                        LiveItem live = _b.item as LiveItem;
+
+                        state_id = args[i].u[0];
+                        var _state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
+                        StateIns _ins = new StateIns(_state_config, live, false, ownerObject);
+                        _ins.ActiveIns();
+
+                        Debug.Log("为：" + live.gameObject.name + " 添加状态: " + _state_config.name);
+                        live.state.AddStateIns(_ins);
+                    }
+                    else
+                    {
+                        Debug.LogError("StateAtTarget: 对象错误...");
+                    }
                     break;
                 case SpecialEffect.Property:
 
