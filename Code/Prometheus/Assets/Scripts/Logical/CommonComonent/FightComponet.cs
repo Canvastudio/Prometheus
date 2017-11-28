@@ -40,6 +40,8 @@ public class FightComponet : MonoBehaviour
     /// </summary>
     public List<SummonSkillsConfig> summonSkillConfigs = new List<SummonSkillsConfig>();
 
+    public bool has_kill = false;
+
     private void Awake()
     {
         wuf = new WaitUntil(() => targetAttackFinsh == apply_list.Count);
@@ -279,7 +281,9 @@ public class FightComponet : MonoBehaviour
                 var bricks = BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, config.carry.ToArray()[1]);
                 for (int i = bricks.Count - 1; i >= 0; --i)
                 {
-                    if (!bricks[i].isDiscovered && bricks[i].pathNode.Distance(ownerObject.standBrick.pathNode) >= config.carry.ToArray()[0])
+                    if (!bricks[i].isDiscovered 
+                        && bricks[i].pathNode.Distance(ownerObject.standBrick.pathNode) >= config.carry.ToArray()[0]
+                        && bricks[i].realBrickType != BrickType.OBSTACLE)
                     {
                         target_list.Add(bricks[i]);
                     }
@@ -417,7 +421,7 @@ public class FightComponet : MonoBehaviour
             }
             else
             {
-                Debug.Log("技能找不到符合条件的目标..");
+                PopTipView.Instance.Show("target_none");
             }
         }
 
@@ -440,14 +444,13 @@ public class FightComponet : MonoBehaviour
         Debug.Log("伤害公式: " + config.damage);
 
         ownerObject.OnActionBegin();
-
+        has_kill = false;
         targetAttackFinsh = 0;
 
         yield return FindAndConfrimTarget(config);
 
         if (apply_list.Count <= 0)
         {
-            PopTipView.Instance.Show("target_none");
             ownerObject.OnActionEnd();
             yield break;
         }
@@ -507,10 +510,7 @@ public class FightComponet : MonoBehaviour
 
         bool successEffect = true;
 
-        if (use_fxlock)
-        {
-            ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
-        }
+
 
         for (int i = 0; i < apply_list.Count; ++i)
         {
@@ -528,7 +528,7 @@ public class FightComponet : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("SuccessRate的技能的目标不是玩家也不是怪物?????");
+                    r = 100;
                 }
 
                 if (r <= Random.Range(0f, 1f))
@@ -714,11 +714,16 @@ public class FightComponet : MonoBehaviour
 
                     if (realDamages.TryGetValue(item.itemId, out v))
                     {
-                        realDamages[item.itemId] = v + (item as LiveItem as LiveItem).TakeDamage(damageInfo);
+                        realDamages[item.itemId] = v + (item as LiveItem ).TakeDamage(damageInfo);
                     }
                     else
                     {
-                        realDamages.Add(item.itemId, (item as LiveItem as LiveItem).TakeDamage(damageInfo));
+                        realDamages.Add(item.itemId, (item as LiveItem).TakeDamage(damageInfo));
+                    }
+
+                    if((item as LiveItem).cur_hp == 0)
+                    {
+                        has_kill = true;
                     }
                 }
 
@@ -734,7 +739,14 @@ public class FightComponet : MonoBehaviour
 
             foreach (var item in items)
             {
-                ApplyEffect(config, config.afterArgs, effects2, item, realDamages[item.itemId]);
+                float rd;
+
+                if (!realDamages.TryGetValue(item.itemId, out rd))
+                {
+                    rd = 0;
+                }
+
+                ApplyEffect(config, config.afterArgs, effects2, item, rd);
             }
         }
 
@@ -790,6 +802,7 @@ public class FightComponet : MonoBehaviour
                     }
                     break;
                 case SpecialEffect.PropertyAtTarget:
+
                     if (item is Brick)
                     {
                         Brick cur_brick = item as Brick;
@@ -813,6 +826,11 @@ public class FightComponet : MonoBehaviour
                                 _property = (GameProperty)(f[0]);
 
                                 (t_item as LiveItem).Property.SetFloatProperty(_property, value);
+
+                                if (_property == GameProperty.nhp && value == 0)
+                                {
+                                    has_kill = true;
+                                }
                             }
                         }
                     }
@@ -853,9 +871,10 @@ public class FightComponet : MonoBehaviour
 
                     break;
                 case SpecialEffect.HalfCostReturn:
+
                     condition = args[i].ec[0];
 
-                    if (CheckEffectCondition(condition, item, config.damageType))
+                    if (has_kill && CheckEffectCondition(condition, item, config.damageType))
                     {
                         if (ownerObject is Player)
                         {
@@ -1018,6 +1037,11 @@ public class FightComponet : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (use_fxlock)
+        {
+            ObjPool<ParticleSystem>.Instance.RecyclePool(FxCore.Instance.str_fxlock);
         }
     }
 

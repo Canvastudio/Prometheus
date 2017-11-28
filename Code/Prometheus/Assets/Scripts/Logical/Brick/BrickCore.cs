@@ -375,7 +375,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         for (int i = -distance; i <= distance; ++i)
         {
-            for (int m = -distance; m <= distance; ++i)
+            for (int m = -distance; m <= distance; ++m)
             {
                 if (Mathf.Abs(i) + Mathf.Abs(m) <= distance)
                 {

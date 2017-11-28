@@ -103,7 +103,7 @@ public class Monster : LiveItem
 
                 if (!isDiscovered)
                 {
-                    standBrick.OnDiscoverd();
+                    StartCoroutine(standBrick.OnDiscoverd());
                 }
             }
 
@@ -130,6 +130,8 @@ public class Monster : LiveItem
         StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
 
 
+        player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
+
         if (standBrick != null)
         {
             if (player_distance <= 1)
@@ -148,16 +150,14 @@ public class Monster : LiveItem
 
         if (discover_howl > 0)
         {
-            var nearby_list = BrickCore.Instance.GetNearbyNode(standBrick.row, standBrick.column, discover_howl);
+            Debug.Log("Monster discover_howl: " + discover_howl);
+            var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, discover_howl);
 
             foreach(var n in nearby_list)
             {
-                Brick brick = (n.behavirour as Brick);
-
-                if (brick.brickType == BrickType.MONSTER
-                    && brick.item.isDiscovered == false)
+                if (!n.isDiscovered)
                 {
-                    yield return brick.item.OnDiscoverd();
+                    yield return n.standBrick.item.OnDiscoverd();
                 }
             }
         }
@@ -211,16 +211,13 @@ public class Monster : LiveItem
 
         if (dead_howl > 0)
         {
-            var nearby_list = BrickCore.Instance.GetNearbyNode(standBrick.row, standBrick.column, dead_howl);
+            var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, dead_howl);
 
             foreach (var n in nearby_list)
             {
-                Brick brick = (n.behavirour as Brick);
-
-                if (brick.brickType == BrickType.MONSTER
-                    && brick.item.isDiscovered == false)
+                if (!n.isDiscovered)
                 {
-                    StartCoroutine(brick.OnDiscoverd());
+                    StartCoroutine(n.standBrick.OnDiscoverd());
                 }
 
             }

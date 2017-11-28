@@ -24,4 +24,25 @@ public class HelpFunction  {
 
         return atlas.GetSprite(icon_name);
     }
+
+    public static DamageType EcToDamageType(EffectCondition ec)
+    {
+        if (ec == EffectCondition.DamageTypeMelee)
+        {
+            return DamageType.Physical;
+        }
+        else if (ec == EffectCondition.DamageTypeLaser)
+        {
+            return DamageType.Laser;
+        }
+        else if (ec == EffectCondition.DamageTypeCartridge)
+        {
+            return DamageType.Cartridge;
+        }
+        else
+        {
+            return DamageType.None;
+        }
+
+    }
 }
