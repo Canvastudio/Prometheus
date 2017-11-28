@@ -275,7 +275,15 @@ public class FightComponet : MonoBehaviour
                 }
                 break;
             case TargetType.DarkBlock:
-                target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.UNDISCOVER, ST.BRICK));
+                //target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.UNDISCOVER, ST.BRICK));
+                var bricks = BrickCore.Instance.GetNearbyBrick(ownerObject.standBrick, config.carry.ToArray()[1]);
+                for (int i = bricks.Count - 1; i >= 0; --i)
+                {
+                    if (!bricks[i].isDiscovered && bricks[i].pathNode.Distance(ownerObject.standBrick.pathNode) >= config.carry.ToArray()[0])
+                    {
+                        target_list.Add(bricks[i]);
+                    }
+                }
                 break;
             case TargetType.ObstructBlock:
                 target_list = StageCore.Instance.tagMgr.GetEntity(ref target_list, ETag.GetETag(ST.OBSTACLE));
