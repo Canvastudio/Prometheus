@@ -930,8 +930,25 @@ public class FightComponet : MonoBehaviour
                     }
                     break;
                 case SpecialEffect.TransferTarget:
-                    brick = apply_list[0] as Brick;
-                    StartCoroutine((ownerObject as LiveItem).moveComponent.Transfer(brick));
+                    LiveItem _live = apply_list[0] as LiveItem;
+
+                    var bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.BRICK, ST.DISCOVER));
+
+                    for (int k = bricks.Count - 1; k >= 0; --k)
+                    {
+                        if (bricks[k].realBrickType != BrickType.EMPTY)
+                        {
+                            bricks.RemoveAt(k);
+                        }
+                    }
+
+                    if (bricks.Count > 0)
+                    {
+                        int _ii = Random.Range(0, bricks.Count);
+                        Debug.Log("random trans: " + _ii.ToString());
+                        var _brick = bricks[_ii];
+                        StartCoroutine(_live.moveComponent.Transfer(_brick));
+                    }
                     break;
                 case SpecialEffect.OffensiveDisperse:
                     remove_count = (int)args[i].f[0];

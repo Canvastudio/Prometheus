@@ -180,7 +180,7 @@ public abstract class LiveItem : GameItemBase
         {
             if (_moveComponet == null)
             {
-                _moveComponet = GetComponent<MoveComponet>();
+                _moveComponet = transform.GetOrAddComponet<MoveComponet>();
                 _moveComponet.owner = this;
             }
 

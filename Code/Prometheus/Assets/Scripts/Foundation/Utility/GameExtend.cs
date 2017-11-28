@@ -20,6 +20,34 @@ public static class GameExtend  {
         }
     }
 
+    public static T GetOrAddComponet<T>(this MonoBehaviour component) where T : Component
+    {
+        T res;
+
+        if ((res = component.GetComponent<T>()) == null)
+        {
+            return component.gameObject.AddComponent<T>();
+        }
+        else
+        {
+            return res;
+        }
+    }
+
+    public static T GetOrAddComponet<T>(this GameObject component) where T : Component
+    {
+        T res;
+
+        if ((res = component.GetComponent<T>()) == null)
+        {
+            return component.gameObject.AddComponent<T>();
+        }
+        else
+        {
+            return res;
+        }
+    }
+
     public static T GetValueFromeDic<T>(this Dictionary<string, T> dic, string key)
     {
         T result;

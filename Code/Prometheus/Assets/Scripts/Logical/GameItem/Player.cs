@@ -71,7 +71,8 @@ public class Player : LiveItem {
         base.OnSetStandBrick(brick);
 
         brick.brickType = BrickType.PLAYER;
-        brick.brickExplored = BrickExplored.EXPLORED;
+
+        StartCoroutine(brick.OnDiscoverd());
     }
 
     public override void Recycle()

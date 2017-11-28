@@ -156,10 +156,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
         item.dangerousLevels = item.AIConfig.dangerous_levels;
 
-        if (bornBrick.brickExplored == BrickExplored.EXPLORED)
-        {
-            CoroCore.Instance.StartCoroutine(item.OnDiscoverd());
-        }
+
 
         bornBrick.item = item;
 
@@ -182,6 +179,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 #if UNITY_EDITOR
         item.name += "_" + config.m_name;
 #endif
+        if (bornBrick.brickExplored == BrickExplored.EXPLORED)
+        {
+            CoroCore.Instance.StartCoroutine(item.OnDiscoverd());
+        }
     }
 
     /// <summary>

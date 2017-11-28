@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StageCore : SingleGameObject<StageCore> {
 
+    public bool gaming = false;
+
     List<GameItemBase> allItems = new List<GameItemBase>();
 
     delegate IEnumerator LoopAction();
@@ -86,7 +88,14 @@ public class StageCore : SingleGameObject<StageCore> {
         }
         else
         {
-            tagMgr.AddEntity(gameItemBase, ETag.GetETag(gameItemBase.GetType().ToString()));
+            if (gameItemBase is Brick)
+            {
+                tagMgr.AddEntity(gameItemBase, ETag.GetETag(ST.BRICK, ST.UNDISCOVER));
+            }
+            else
+            {
+                tagMgr.AddEntity(gameItemBase, ETag.GetETag(gameItemBase.GetType().ToString()));
+            }
         }
 
         allItems.Add(gameItemBase);
@@ -168,6 +177,8 @@ public class StageCore : SingleGameObject<StageCore> {
     public IEnumerator RunLoop()
     {
         isLooping = true;
+
+        gaming = true;
 
         while (isLooping)
         {

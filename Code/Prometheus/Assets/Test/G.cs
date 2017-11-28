@@ -6,10 +6,16 @@ public class G : MonoBehaviour {
 
     public StateEffectIns[] a;
     // Use this for initialization
-	void Start () {
-        co = StartCoroutine(Go());
+	void Awake () {
+        a = new StateEffectIns[2];
     }
 
+
+    private void Update()
+    {
+
+        Debug.Log(Random.Range(0, a.Length));
+    }
     IEnumerator ie;
     Coroutine co;
 

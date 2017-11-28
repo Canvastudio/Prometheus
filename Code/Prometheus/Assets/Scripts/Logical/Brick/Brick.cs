@@ -173,9 +173,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         isDiscovered = true;
 
-        if (!item.isDiscovered)
+        if (item != null)
         {
-            yield return item.OnDiscoverd();
+            if (!item.isDiscovered)
+            {
+                yield return item.OnDiscoverd();
+            }
         }
 
         if (realBrickType != BrickType.OBSTACLE)

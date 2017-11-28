@@ -78,8 +78,6 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
 
     }
 
-
-
     public virtual IEnumerator OnDiscoverd()
     {
         //Debug.Log("发现: " + gameObject.name);
@@ -92,6 +90,10 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
         }
 
         CheckViewArea();
+
+        StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
+        StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
+
         return null;
     }
 

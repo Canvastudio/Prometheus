@@ -116,6 +116,13 @@ public class Monster : LiveItem
         //ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 
+    protected override void OnSetStandBrick(Brick brick)
+    {
+        base.OnSetStandBrick(brick);
+
+        brick.brickType = BrickType.MONSTER;
+    }
+
     public override IEnumerator OnDiscoverd()
     {
         base.OnDiscoverd();
@@ -125,10 +132,6 @@ public class Monster : LiveItem
 
         GContext.Instance.discover_monster += 1;
         GContext.Instance.lastDiscoverMonster = this;
-
-        StageCore.Instance.tagMgr.RemoveEntityTag(this, ETag.Tag(ST.UNDISCOVER));
-        StageCore.Instance.tagMgr.AddEntity(this, ETag.Tag(ST.DISCOVER));
-
 
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 

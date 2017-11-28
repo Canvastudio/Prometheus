@@ -30,7 +30,7 @@ public class Alarm : StateEffectIns
             {
                 var monster = bricks[i].item as Monster;
                 monster.dangerousLevels = DangerousLevels.Hostility;
-                monster.OnDiscoverd();
+                CoroCore.Instance.StartCoroutine(bricks[i].OnDiscoverd());
             }
         }
     }
