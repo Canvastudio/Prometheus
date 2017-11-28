@@ -54,9 +54,19 @@ MonoBehaviour:
   eventlist:
   - time: 0
     fxname: fuyoua1xing_fly
-    ishit: 1
+    ishit: 0
     isendpos: 0
     ishitevent: 0
+  - time: 0.3
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
+  - time: 0.7
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
   destroy_time: 5
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}

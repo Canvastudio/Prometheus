@@ -54,7 +54,20 @@ MonoBehaviour:
   eventlist:
   - time: 0
     fxname: xuanguangshexian_hit
-    ishit: 1
+    ishit: 0
     isendpos: 0
+    ishitevent: 0
+  - time: 0.2
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
+  - time: 0.6
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
   destroy_time: 5
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
   ishit: 0
