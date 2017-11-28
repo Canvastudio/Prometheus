@@ -73,34 +73,44 @@ public class StateIns
 
     public void ActiveIns()
     {
-        foreach(var effect in stateEffects)
+        if (!active)
         {
-            effect.Active();
-        }
+            active = true;
 
-        if (!passive)
-        {
-            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
+            foreach (var effect in stateEffects)
+            {
+                effect.Active();
+            }
+
+            if (!passive)
+            {
+                Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
+            }
         }
     }
 
     public void DeactiveIns()
     {
-        if (stateEffects != null)
+        if (active)
         {
-            foreach (var effect in stateEffects)
-            {
-                effect.Deactive();
-            }
-        }
-        else
-        {
-            Debug.LogError("stateEffects为空: " + stateConfig.name);
-        }
+            active = false;
 
-        if (!passive)
-        {
-            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+            if (stateEffects != null)
+            {
+                foreach (var effect in stateEffects)
+                {
+                    effect.Deactive();
+                }
+            }
+            else
+            {
+                Debug.LogError("stateEffects为空: " + stateConfig.name);
+            }
+
+            if (!passive)
+            {
+                Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+            }
         }
     }
     

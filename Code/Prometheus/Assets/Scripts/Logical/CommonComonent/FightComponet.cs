@@ -21,7 +21,13 @@ public class FightComponet : MonoBehaviour
     /// <summary>
     /// 是否激活使用技能
     /// </summary>
-    public bool skillActive = false;
+    [SerializeField]
+    protected bool _skillActive = false;
+    public bool skillActive
+    {
+        get { return _skillActive; }
+    }
+
 
     [SerializeField]
     protected bool activePassive = false;
@@ -83,12 +89,12 @@ public class FightComponet : MonoBehaviour
     /// </summary>
     public virtual void ActiveSkill()
     {
-
+        _skillActive = true;
     }
 
     public virtual void DeactiveSkill()
     {
-
+        _skillActive = false;
     }
 
     public virtual void ActivePassive()

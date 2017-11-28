@@ -62,6 +62,11 @@ public class PropertyData
 
     public PropertyData SetFloatProperty(GameProperty id, float value)
     {
+        if (id == GameProperty.nhp)
+        {
+            value = Mathf.Min(data[GameProperty.mhp], value);
+        }
+
         data[id] = value;
 
         if (changeCallback != null)

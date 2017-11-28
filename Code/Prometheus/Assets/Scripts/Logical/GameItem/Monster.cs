@@ -109,7 +109,7 @@ public class Monster : LiveItem
 
             if (dangerousLevels == DangerousLevels.Neutral)
             {
-                fightComponet.skillActive = true;
+                fightComponet.ActiveSkill();
             }
         }
 
@@ -167,7 +167,7 @@ public class Monster : LiveItem
 
         if (dangerousLevels == DangerousLevels.Hostility)
         {
-            fightComponet.skillActive = true;
+            fightComponet.ActiveSkill();
         }
 
         if (AIConfig.forceSkills != null)
@@ -250,7 +250,7 @@ public class Monster : LiveItem
 
     public override float TakeDamage(Damage damageInfo)
     {
-        fightComponet.skillActive = true;
+        fightComponet.ActiveSkill();
 
         return base.TakeDamage(damageInfo);
     }

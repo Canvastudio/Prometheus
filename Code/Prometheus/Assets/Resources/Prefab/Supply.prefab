@@ -44,6 +44,7 @@ MonoBehaviour:
   isDiscovered: 0
   inViewArea: 0
   icon: {fileID: 0}
+  canvasGroup: {fileID: 0}
   _stanbBrick: {fileID: 0}
 --- !u!114 &114950792208918696
 MonoBehaviour:
@@ -64,7 +65,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 51a285a681799ab4c804690d3f3286a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 496c6e1839fa947eb80a69360192175d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

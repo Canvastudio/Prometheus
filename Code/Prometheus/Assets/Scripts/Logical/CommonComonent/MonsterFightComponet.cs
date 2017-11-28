@@ -69,12 +69,8 @@ public class MonsterFightComponet : FightComponet {
 
     public override void ActiveSkill()
     {
-        base.ActiveSkill();
-
         if (!skillActive)
         {
-            skillActive = true;
-
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Active();
@@ -84,14 +80,14 @@ public class MonsterFightComponet : FightComponet {
         }
 
         ReorderSkill();
+
+        base.ActiveSkill();
     }
 
     public override void DeactiveSkill()
     {
         if (skillActive)
         {
-            skillActive = false;
-
             foreach (var ins in monsterActiveInsList)
             {
                 ins.Deactive();
@@ -99,6 +95,8 @@ public class MonsterFightComponet : FightComponet {
 
             Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeCast);
         }
+
+        base.DeactiveSkill();
     }
 
     private void OnTimeCast(float time)
