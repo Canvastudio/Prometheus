@@ -789,6 +789,34 @@ public class FightComponet : MonoBehaviour
                         }
                     }
                     break;
+                case SpecialEffect.PropertyAtTarget:
+                    if (item is Brick)
+                    {
+                        Brick cur_brick = item as Brick;
+
+                        if (cur_brick.item != null && cur_brick.item is LiveItem)
+                        {
+                            var t_item = cur_brick.item as LiveItem;
+
+                            GameProperty _property;
+
+                            int _arg_count = args[i].rpn.Count();
+
+                            for (int m = 0; m < _arg_count; ++m)
+                            {
+                                long[] rpn_values = args[i].rpn.ToArray(m);
+
+                                float[] f;
+
+                                var value = Rpn.CalculageRPN(rpn_values, ownerObject, t_item, out f, config, skillDamage);
+
+                                _property = (GameProperty)(f[0]);
+
+                                (t_item as LiveItem).Property.SetFloatProperty(_property, value);
+                            }
+                        }
+                    }
+                    break;
                 case SpecialEffect.Transfiguration:
                     //TODO
                     Monster liveItem = item as Monster;
