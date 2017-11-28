@@ -307,16 +307,21 @@ public abstract class LiveItem : GameItemBase
     {
         if (property == GameProperty.nhp)
         {
+            if (cur_hp == 0)
+            {
+                Damage damage = new Damage(int.MaxValue, null, this, DamageType.Physical);
+               StartCoroutine(OnDead(damage));
+            }
             if (hp_value != null)
             {
-                hp_value.text = cur_hp.ToString();
+                hp_value.FloatText(cur_hp);
             }
         }
         else if (property == GameProperty.melee)
         {
             if (atk_value != null)
             {
-                atk_value.text = melee.ToString();
+                atk_value.FloatText(melee);
             }
         }
     }

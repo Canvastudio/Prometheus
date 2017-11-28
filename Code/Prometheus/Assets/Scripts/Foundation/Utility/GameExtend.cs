@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Text;
 
 public static class GameExtend  {
@@ -74,6 +75,18 @@ public static class GameExtend  {
     public static void Clean(this StringBuilder sb)
     {
         sb.Remove(0, sb.Length);
+    }
+
+    public static void FloatText(this Text text, float value)
+    {
+        if (GameTestData.Instance.infoDetail)
+        {
+            text.text = value.ToString();
+        }
+        else
+        {
+            text.text = Mathf.CeilToInt(value).ToString();
+        }
     }
 }
 

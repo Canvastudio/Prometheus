@@ -8,6 +8,7 @@ public class GameTestData : SingleGameObject<GameTestData> {
     public bool SuperMonster;
     public bool SuperPlayer;
     public bool alwaysShow;
+    public bool infoDetail;
 
     public string[] AddChips;
     public int[] Add_4_Stuff;
