@@ -19,6 +19,11 @@ public class HaloComponent : MonoBehaviour {
     {
         if (liveItem != null)
         {
+            foreach(var halo in liveItem.state.halo_list)
+            {
+                halo.RefreshEffectItem();
+            }
+
             var halos = liveItem.state.halo_list;
 
             for (int i = halos.Count - 1; i >= 0; --i)

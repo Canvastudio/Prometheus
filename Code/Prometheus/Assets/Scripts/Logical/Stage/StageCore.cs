@@ -384,7 +384,7 @@ public class StageCore : SingleGameObject<StageCore> {
             }
         }
 
-        if (just)
+        if (just && ins != null)
         {
             ins.ResetChange();
         }

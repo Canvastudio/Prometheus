@@ -28,16 +28,12 @@ public class HaloInfo  {
         owner = _owner;
 
         id = _id++;
-    }
-
-    public void Deactive()
-    {
 
     }
 
     public void Active()
     {
-
+        RefreshEffectItem();
     }
 
     public void Remove()
@@ -48,9 +44,11 @@ public class HaloInfo  {
         }
     }
 
-    private void RefreshEffectItem(float f)
+    public void RefreshEffectItem()
     {
         var bricks = BrickCore.Instance.GetNearbyBrick(owner.standBrick, range);
+
+        bricks.Add(owner.standBrick);
 
         foreach(var brick in bricks)
         {

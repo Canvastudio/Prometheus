@@ -6,12 +6,18 @@ public class TimeEffect : Property
     float interval;
     [UnityEngine.SerializeField]
     float t;
-    [SerializeField]
-    float total;
 
     public TimeEffect(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
-        interval = stateConfig.stateArgs[index].f[0];
+        if (stateConfig.stateArgs[index].f != null)
+        {
+            interval = stateConfig.stateArgs[index].f[0];
+        }
+        else
+        {
+            Debug.Log("TimeEffect: " + config.name + " f is null!");
+            interval = 1;
+        }
     }
 
     public override void Active()
@@ -32,8 +38,9 @@ public class TimeEffect : Property
                 ApplyChange();
 
                 t -= interval;
-                total += interval;
             }
+
+            total += time;
         }
     }
 }

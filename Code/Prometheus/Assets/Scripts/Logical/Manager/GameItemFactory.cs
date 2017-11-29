@@ -62,7 +62,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
     }
 
-    public void CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
+    public Monster CreateMonster(int pwr, ulong id, int lv, Brick bornBrick)
     {
         if (GameTestData.Instance.SuperMonster)
         {
@@ -185,6 +185,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         {
             CoroCore.Instance.StartCoroutine(item.OnDiscoverd());
         }
+
+        return item;
     }
 
     /// <summary>

@@ -12,6 +12,8 @@ public class PassiveSkillIns  {
     public StateConfig stateConfig;
     public PassiveSkillsConfig passiveConfig;
     public SkillPoint point;
+    public StateType type = StateType.Normal;
+    public int range;
 
     public PassiveSkillIns(ulong skill_id, SkillPoint _point, LiveItem owner)
     {
@@ -20,11 +22,13 @@ public class PassiveSkillIns  {
         stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(passiveConfig.bindState);
         point = _point;
         this.owner = owner;
-       
+        stateIns = new StateIns(stateConfig, owner, true);
+        owner.state.AddStateIns(stateIns);
+        type = passiveConfig.stateType;
 
-        if (passiveConfig.stateType == StateType.Halo && passiveConfig.stateArg.f[0] > 0)
+        if (type == StateType.Halo)
         {
-            int range = Mathf.FloorToInt(passiveConfig.stateArg.f[0]);
+            range = Mathf.FloorToInt(passiveConfig.stateArg.f[0]);
             LiveItemSide side = 0;
             if (passiveConfig.stateArg.b[0])
             {
@@ -40,10 +44,6 @@ public class PassiveSkillIns  {
 
             haloInfo = new HaloInfo(range, side, owner, this);
         }
-   
-        stateIns = new StateIns(stateConfig, owner, true);
-
-        owner.state.AddStateIns(stateIns);
     }
 
     public void Active()
@@ -57,12 +57,12 @@ public class PassiveSkillIns  {
     {
         stateIns.DeactiveIns();
 
-        if (haloInfo != null) haloInfo.Deactive();
+        //if (haloInfo != null) haloInfo.Deactive();
     }
 
     public void Remove()
     {
         owner.state.RemoveStateIns(stateIns);
-        if (haloInfo != null) haloInfo.Deactive();
+        //if (haloInfo != null) haloInfo.Deactive();
     }
 }

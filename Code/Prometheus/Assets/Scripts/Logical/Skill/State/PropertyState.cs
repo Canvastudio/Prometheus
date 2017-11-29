@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Property : StateEffectIns
 {
+    [SerializeField]
+    protected float total;
+
     protected Dictionary<GameProperty, float> changes = new Dictionary<GameProperty, float>();
 
     /// <summary>
@@ -59,7 +62,7 @@ public class Property : StateEffectIns
                     var value = Rpn.CalculageRPN(
                         stateConfig.stateArgs[index].rpn.ToArray(i),
                         owner, source,
-                        out f, null, skillDamage);
+                        out f, null, skillDamage, total);
                     GameProperty property = (GameProperty)(f[0]);
                     float origin_value = owner.Property.GetFloatProperty(property);
                     float change = value - origin_value;

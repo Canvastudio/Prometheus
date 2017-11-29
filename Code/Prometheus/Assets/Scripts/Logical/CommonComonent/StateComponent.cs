@@ -100,14 +100,12 @@ public class StateComponent : MonoBehaviour {
     public void RemoveHalo(HaloInfo halo)
     {
         RemoveStateIns(halo.passive.stateIns);
-
         halo_list.Remove(halo);
     }
 
     public void AddHalo(HaloInfo halo)
     {
         AddStateIns(halo.passive.stateIns);
-
         halo_list.Add(halo);
     }
 }
