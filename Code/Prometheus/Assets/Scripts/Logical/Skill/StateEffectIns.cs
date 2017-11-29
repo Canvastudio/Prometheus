@@ -17,6 +17,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
     protected bool passive;
     public LiveItem owner;
     public float skillDamage;
+
     private bool _out_data = false;
     public bool out_data
     {

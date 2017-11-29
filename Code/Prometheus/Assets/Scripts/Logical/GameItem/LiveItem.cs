@@ -383,6 +383,17 @@ public abstract class LiveItem : GameItemBase
 
             Damage damageInfo = new Damage(damage, this, target, DamageType.Physical);
 
+            foreach (var state in state.state_list)
+            {
+                foreach (var ins in state.stateEffects)
+                {
+                    if (ins.stateType == StateEffectType.OnGenerateDamage)
+                    {
+                        ins.ApplyState(damageInfo);
+                    }
+                }
+            }
+
             yield return target.MeleeAttackByOther(this, damageInfo);
         }
     }

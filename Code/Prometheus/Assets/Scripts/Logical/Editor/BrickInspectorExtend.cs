@@ -5,9 +5,9 @@ using UnityEditor;
 public class BrickInspectorExtend : Editor
 {
 
-    string id = "id";
-    string power = "power";
-    string lv = "lv";
+    string id = "1000001";
+    string power = "0";
+    string lv = "1";
 
     public override void OnInspectorGUI()
     {

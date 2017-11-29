@@ -9,6 +9,7 @@ public class GameTestData : SingleGameObject<GameTestData> {
     public bool SuperPlayer;
     public bool alwaysShow;
     public bool infoDetail;
+    public bool NoMonster;
 
     public string[] AddChips;
     public int[] Add_4_Stuff;

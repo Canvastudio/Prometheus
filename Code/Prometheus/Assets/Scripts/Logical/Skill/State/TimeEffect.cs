@@ -40,7 +40,7 @@ public class TimeEffect : Property
                 t -= interval;
             }
 
-            total += time;
+            totalTime += time;
         }
     }
 }

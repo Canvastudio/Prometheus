@@ -208,7 +208,10 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                                 int lv_max = next_Map.enemy_level[1];
                                 int lv = Random.Range(lv_min, lv_max + 1);
 
-                                _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+                                if (!GameTestData.Instance.NoMonster)
+                                {
+                                    _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+                                }
                             }
                         }
                         else

@@ -20,5 +20,6 @@ public class Damage  {
         isTransfer = _isTransfer;
         isRebound = _isRebound;
         attach_state = _attach_state;
+        damageType = _type;
     }
 }

@@ -72,6 +72,8 @@ public class DamageBoost : StateEffectIns
         if (active && FightComponet.CheckEffectCondition(condition, null, damage.damageType))
         {
             damage.damage = damage.damage * (1 + total_extra);
+
+            total_extra = 0;
         }
     }
 }

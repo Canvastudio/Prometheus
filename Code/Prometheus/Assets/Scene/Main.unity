@@ -183,16 +183,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoSroll: 0
-  SuperMonster: 1
+  SuperMonster: 0
   SuperPlayer: 0
   alwaysShow: 1
   infoDetail: 1
+  NoMonster: 1
   AddChips:
-  - 100121
-  - 100086
+  - 100006
+  - 100001
   - 100041
   Add_4_Stuff: 32000000320000003200000032000000
-  AddSkills: c1c62d0000000000
+  AddSkills: c7c62d0000000000
 --- !u!4 &13273353
 Transform:
   m_ObjectHideFlags: 0

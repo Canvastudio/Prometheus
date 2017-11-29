@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rpn {
 
     public static float CalculageRPN(long[] damage_values, GameItemBase rpn_source, GameItemBase rpn_target, out float[] value,
-        ActiveSkillsConfig skillsConfig = null, float skillDamage = 0, float passTime = 0)
+        ActiveSkillsConfig skillsConfig = null, float skillDamage = 0, float passTime = 0, float moveBrick = 0)
     {
         Stack<float> stack = new Stack<float>();
 
