@@ -364,10 +364,10 @@ public class StageCore : SingleGameObject<StageCore> {
                 yield return monster.MeleeAttackTarget(Player);
             }
 
-            //if (Player != null && Player.cur_hp > 0 && player_Speed >= monster_Speed * 1.5f)
-            //{
-            //    yield return Player.MeleeAttackTarget(monster);
-            //}
+            if (Player != null && Player.cur_hp > 0 && player_Speed >= monster_Speed * 1.5f)
+            {
+                yield return Player.MeleeAttackTarget(monster);
+            }
         }
         else
         {

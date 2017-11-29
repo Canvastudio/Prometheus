@@ -229,6 +229,10 @@ public class EntitysTag<E> where E : ITagable
 
                 break;
             }
+            else
+            {
+                break;
+            }
         }
 
         return res;

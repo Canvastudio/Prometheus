@@ -223,8 +223,6 @@ public class Monster : LiveItem
      
     public override IEnumerator OnDead(Damage damageInfo)
     {
-        GContext.Instance.discover_monster -= 1;
-
         if (standBrick != null)
         {
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
@@ -233,8 +231,6 @@ public class Monster : LiveItem
         {
             Debug.LogError("怪物阵亡时发现: standbrick 为空");
         }
-
-        Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
 
         if (dead_howl > 0)
         {
@@ -264,6 +260,8 @@ public class Monster : LiveItem
         yield return base.OnDead(damageInfo);
 
         Debug.Log("怪物死亡：" + gameObject.name);
+
+        Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
 
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }

@@ -8,6 +8,7 @@ public enum LiveItemSide
 {
     SIDE0,
     SIDE1,
+    Nil,
 }
 
 
@@ -152,7 +153,7 @@ public abstract class LiveItem : GameItemBase
     /// 在哪边, 0是敌对，1是玩家这边
     /// </summary>
     [SerializeField]
-    private LiveItemSide _side = LiveItemSide.SIDE0;
+    private LiveItemSide _side = LiveItemSide.Nil;
     public LiveItemSide Side
     {
         get { return _side; }
@@ -215,9 +216,14 @@ public abstract class LiveItem : GameItemBase
                     value = 0;
                 }
 
-                Property.SetFloatProperty(GameProperty.nhp, value);
+                Property.SetFloatProperty(GameProperty.nhp, value, false);
 
                 _cur_hp = value;
+
+                if (hp_value != null)
+                {
+                    hp_value.text = _cur_hp.ToString();
+                }
             }
         }
     }
@@ -305,14 +311,14 @@ public abstract class LiveItem : GameItemBase
         {
             if (cur_hp == 0)
             {
-                //有可能这里本身就由ondead发起得一次属性改变，所以无需再重复一次
-                if (gameObject.activeInHierarchy)
+                if (gameObject.activeInHierarchy && isAlive)
                 {
                     Damage damage = new Damage(int.MaxValue, null, this, DamageType.Physical);
 
                     StartCoroutine(OnDead(damage));
                 }
             }
+
             if (hp_value != null)
             {
                 hp_value.FloatText(cur_hp);
@@ -451,7 +457,6 @@ public abstract class LiveItem : GameItemBase
         }
         else
         {
-
             Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
         }
 

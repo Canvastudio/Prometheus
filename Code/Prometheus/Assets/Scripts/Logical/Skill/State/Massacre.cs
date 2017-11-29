@@ -61,11 +61,11 @@ public class Massacre : StateEffectIns
 
     private void OnMonsterDead(Damage damage)
     {
-        if (active && damage.damageType == DamageType.Physical && damage.damageSource.itemId == owner.itemId)
+        if (active && damage.damageSource.itemId == owner.itemId)
         {
             if (FightComponet.CheckEffectCondition(condition1, damage.damageTarget, damage.damageType))
             {
-                total_extra = Mathf.Max(max_extra, total_extra + extra);
+                total_extra = Mathf.Min(max_extra, total_extra + extra);
             }
         }
     }

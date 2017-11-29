@@ -53,7 +53,10 @@ public class SkillPointInfo : MonoBehaviour
     public void Set(PassiveSkillIns ins)
     {
         skillName.text = ins.passiveConfig.name;
-        pointCount.text = string.Format(strPointCount, ins.point.count.ToString());
+        if (ins.point != null)
+        {
+            pointCount.text = string.Format(strPointCount, ins.point.count.ToString());
+        }
         sb.Clean();
         var limit = ins.point.updateLimit;
 

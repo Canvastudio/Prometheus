@@ -60,7 +60,7 @@ public class PropertyData
     //    return this;
     //}
 
-    public PropertyData SetFloatProperty(GameProperty id, float value)
+    public PropertyData SetFloatProperty(GameProperty id, float value, bool callback = true)
     {
         if (id == GameProperty.nhp)
         {
@@ -69,7 +69,7 @@ public class PropertyData
 
         data[id] = value;
 
-        if (changeCallback != null)
+        if (changeCallback != null && callback)
         {
             changeCallback.Invoke(id);
         }

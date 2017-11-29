@@ -554,14 +554,13 @@ public class FightComponet : MonoBehaviour
             StartCoroutine (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
         }
 
-        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
-
-
         yield return wuf;
 
         ownerObject.OnActionEnd();
 
         Debug.Log("技能释放完毕: " + name);
+
+        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
     }
 
     static WaitUntil wuf;
