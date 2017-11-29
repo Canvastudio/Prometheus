@@ -1,13 +1,16 @@
 ﻿
-public class Just : StateEffectIns
+public class Just : Property
 {
     public Just(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         stateType = StateEffectType.JustPropertyChange;
     }
 
-    protected override void Apply(object param)
+    public override void Active()
     {
+    }
 
+    public override void Deactive()
+    {
     }
 }

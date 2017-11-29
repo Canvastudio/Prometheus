@@ -176,6 +176,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.monsterName.text = config.m_name;
 
+        item.Side = LiveItemSide.SIDE0;
+
 #if UNITY_EDITOR
         item.name += "_" + config.m_name;
 #endif
@@ -252,7 +254,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         player.Side = LiveItemSide.SIDE1;
 
-        player.isDiscovered = true;
+        player.OnDiscoverd();
 
         return player;
     }

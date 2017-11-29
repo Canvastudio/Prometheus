@@ -61,8 +61,6 @@ public class Player : LiveItem {
 
     public override float TakeDamage(Damage damageInfo)
     {
-        Messenger.Invoke(SA.PlayHpChange);
-
         return base.TakeDamage(damageInfo);
     }
 
@@ -80,17 +78,17 @@ public class Player : LiveItem {
         base.Recycle();
     }
 
-    //public override void AddStateIns(StateIns ins)
-    //{
-    //    base.AddStateIns(ins);
+    public override void AddStateUI(StateIns ins)
+    {
+        base.AddStateUI(ins);
 
-    //    Messenger<StateIns>.Invoke(SA.PlayerAddState, ins);
-    //}
+        StageView.Instance.upUIView.OnStateAdd(ins);
+    }
 
-    //public override void RemoveStateIns(StateIns ins)
-    //{
-    //    base.RemoveStateIns(ins);
+    public override void RemoveStateUI(StateIns ins)
+    {
+        base.RemoveStateUI(ins);
 
-    //    Messenger<StateIns>.Invoke(SA.PlayerRemoveState, ins);
-    //}
+        StageView.Instance.upUIView.OnStateRemove(ins);
+    }
 }

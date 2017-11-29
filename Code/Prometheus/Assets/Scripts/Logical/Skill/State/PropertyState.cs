@@ -26,7 +26,7 @@ public class Property : StateEffectIns
         ResetChange();
     }
 
-    protected void ResetChange()
+    public void ResetChange()
     {
         if (owner.isAlive)
         {
@@ -46,7 +46,7 @@ public class Property : StateEffectIns
         }
     }
 
-    protected void ApplyChange()
+    public void ApplyChange()
     {
         if (owner.isAlive)
         {

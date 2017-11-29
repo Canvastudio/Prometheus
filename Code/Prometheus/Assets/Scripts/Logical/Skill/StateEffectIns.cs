@@ -77,8 +77,6 @@ public class StateEffectIns : IEquatable<StateEffectIns>
 
     public virtual void OnOutData()
     {
-        stateConfig = null;
-
         if (active)
         {
             Deactive();

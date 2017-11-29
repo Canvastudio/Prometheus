@@ -84,6 +84,26 @@ public class Monster : LiveItem
 
     public ArtPop artPop;
 
+    public override void AddStateUI(StateIns ins)
+    {
+        base.AddStateUI(ins);
+
+        if (ins.stateConfig.iShow)
+        {
+            artPop.Add(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
+        }
+    }
+
+    public override void RemoveStateUI(StateIns ins)
+    {
+        base.RemoveStateUI(ins);
+
+        if (ins.stateConfig.iShow)
+        {
+            artPop.Remove(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
+        }
+    }
+
     public void CheckDistance()
     {
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);

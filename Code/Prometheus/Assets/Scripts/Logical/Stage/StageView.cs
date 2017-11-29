@@ -40,6 +40,9 @@ public class StageView : MuiSingleBase<StageView>
     [SerializeField]
     Button skillInfoButton;
 
+    [SerializeField]
+    public UpUIView upUIView;
+
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {

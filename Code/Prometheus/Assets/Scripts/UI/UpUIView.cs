@@ -23,14 +23,12 @@ public class UpUIView : MonoBehaviour {
     {
         ObjPool<UpBuff>.Instance.InitOrRecyclePool(pname, buff);
 
-        Messenger<StateIns>.AddListener(SA.PlayerAddState, OnStateAdd);
-        Messenger<StateIns>.AddListener(SA.PlayerRemoveState, OnStateRemove);
         Messenger.AddListener(SA.PlayHpChange, OnHpChange);
 
         OnHpChange();
     }
 
-    private void OnStateAdd(StateIns state)
+    public void OnStateAdd(StateIns state)
     {
         int id;
         var ub = ObjPool<UpBuff>.Instance.GetObjFromPoolWithID(out id, pname);
@@ -40,7 +38,7 @@ public class UpUIView : MonoBehaviour {
         ub.transform.localPosition = new Vector3(buff.transform.localPosition.x + 60 * (list.Count - 1), buff.transform.localPosition.y, buff.transform.localPosition.z);
     }
 
-    private void OnStateRemove(StateIns state)
+    public void OnStateRemove(StateIns state)
     {
 
     }

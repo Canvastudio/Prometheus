@@ -53,6 +53,12 @@ public class GameInit : IState
             {
                 StageCore.Instance.Player.inventory.ChangeStuffCount((Stuff)i, GameTestData.Instance.Add_4_Stuff[i]);
             }
+
+            foreach(var value in GameTestData.Instance.AddSkills)
+            {
+                StageCore.Instance.Player.fightComponet.AddSkill(value);
+            }
+
         }
     }
 

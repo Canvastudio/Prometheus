@@ -195,6 +195,8 @@ public class StageCore : SingleGameObject<StageCore> {
                 //如果没有处于自动状态，则等待并处理玩家点击事件
                 yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
 
+                Debug.Log("主循执行.....: " + waitMsg.result.msg);
+
                 if (waitMsg.result.msg == SA.PlayerClickBrick)
                 {
                     brick1 = waitMsg.result.para as Brick;
@@ -329,10 +331,26 @@ public class StageCore : SingleGameObject<StageCore> {
 
         var monster = brick1.item as Monster;
 
+        Just ins = null;
+
         if (GContext.Instance.JustdiscoverMonster && monster.itemId == GContext.Instance.lastDiscoverMonster.itemId)
         {
             just = true;
+
+            foreach (var s in Player.state.state_list)
+            {
+                foreach (var ss in s.stateEffects)
+                {
+                    if (ss.stateType == StateEffectType.JustPropertyChange && ss.active)
+                    {
+                        ins = ss as Just;
+                        ins.ApplyChange();
+                    }
+                }
+            }
         }
+
+
 
         var player_Speed = Player.Property.GetFloatProperty(GameProperty.speed);
         var monster_Speed = monster.Property.GetFloatProperty(GameProperty.speed);
@@ -368,7 +386,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         if (just)
         {
-
+            ins.ResetChange();
         }
 
         GContext.Instance.JustdiscoverMonster = false;

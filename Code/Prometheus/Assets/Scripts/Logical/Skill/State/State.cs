@@ -120,6 +120,8 @@ public class StateIns
         {
             effect.out_data = true;
         }
+
+        DeactiveIns();
     }
 
     public void Silent(bool silent)

@@ -67,10 +67,9 @@ public class StateComponent : MonoBehaviour {
             }
         }
 
-        if (ins.stateConfig.iShow)
-        {
-            owner.artPop.Add(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
-        }
+        if (owner != null)
+            owner.AddStateUI(ins);
+        
     }
 
     public virtual void RemoveStateIns(StateIns ins)
@@ -88,10 +87,9 @@ public class StateComponent : MonoBehaviour {
             }
         }
 
-        if (ins.stateConfig.iShow)
-        {
-            owner.artPop.Remove(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
-        }
+        if (owner != null)
+            owner.RemoveStateUI(ins);
+        
     }
 
     public void RemoveStateBuff(int count, bool helpful)

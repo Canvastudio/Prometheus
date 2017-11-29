@@ -12,4 +12,6 @@ public class GameTestData : SingleGameObject<GameTestData> {
 
     public string[] AddChips;
     public int[] Add_4_Stuff;
+
+    public ulong[] AddSkills;
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TimeEffect : Property
 {
@@ -8,6 +6,8 @@ public class TimeEffect : Property
     float interval;
     [UnityEngine.SerializeField]
     float t;
+    [SerializeField]
+    float total;
 
     public TimeEffect(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
     {
@@ -28,9 +28,11 @@ public class TimeEffect : Property
 
             if (t > interval)
             {
+                ResetChange();
                 ApplyChange();
 
                 t -= interval;
+                total += interval;
             }
         }
     }

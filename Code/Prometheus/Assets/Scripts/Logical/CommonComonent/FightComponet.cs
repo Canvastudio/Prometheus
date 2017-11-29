@@ -390,7 +390,14 @@ public class FightComponet : MonoBehaviour
             {
                 if (st == SelectType.One)
                 {
-                    yield return LightAndWaitSelect();
+                    if (ownerObject is Player)
+                    {
+                        yield return LightAndWaitSelect();
+                    }
+                    else
+                    {
+                        apply_list.Add(target_list[0]);
+                    }
                 }
                 else if (st == SelectType.RA)
                 {

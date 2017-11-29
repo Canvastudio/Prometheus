@@ -26,7 +26,7 @@ public class MonsterFightComponet : FightComponet {
     };
 
     [SerializeField]
-    public new List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
+    public List<MonsterActiveSkillIns> monsterActiveInsList = new List<MonsterActiveSkillIns>(2);
 
     public override void Clean()
     {
@@ -117,7 +117,4 @@ public class MonsterFightComponet : FightComponet {
             ReorderSkill();
         }
     }
-
-
-
 }

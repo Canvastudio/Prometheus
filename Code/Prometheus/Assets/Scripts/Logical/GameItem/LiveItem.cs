@@ -163,7 +163,8 @@ public abstract class LiveItem : GameItemBase
             bool b = (value == LiveItemSide.SIDE0);
 
             StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE0), b);
-            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE1), b);
+            StageCore.Instance.tagMgr.SetEntityTag(this, ETag.Tag(ST.SIDE1), !b);
+
             _side = value;
         }
     }
@@ -217,11 +218,6 @@ public abstract class LiveItem : GameItemBase
                 Property.SetFloatProperty(GameProperty.nhp, value);
 
                 _cur_hp = value;
-
-                if (hp_value != null)
-                {
-                    hp_value.text = value.ToString();
-                }
             }
         }
     }
@@ -328,6 +324,11 @@ public abstract class LiveItem : GameItemBase
             {
                 atk_value.FloatText(melee);
             }
+        }
+
+        if (this is Player)
+        {
+            Messenger.Invoke(SA.PlayHpChange);
         }
     }
 
@@ -444,6 +445,16 @@ public abstract class LiveItem : GameItemBase
         }
 
         return damageInfo.damage;
+    }
+
+    public  virtual void AddStateUI(StateIns ins)
+    {
+
+    }
+
+    public virtual void RemoveStateUI(StateIns ins)
+    {
+
     }
 
     public override void Recycle()
