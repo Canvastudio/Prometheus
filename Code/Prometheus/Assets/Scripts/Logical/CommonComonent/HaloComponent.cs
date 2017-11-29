@@ -36,7 +36,7 @@ public class HaloComponent : MonoBehaviour {
 
             for (int i = 0; i < halo_list.Count; ++i)
             {
-                if (!halos.Contains(halo_list[i]))
+                if (!halos.Contains(halo_list[i]) && liveItem.Side == halo_list[i].Side)
                 {
                     liveItem.state.AddHalo(halo_list[i]);
                 }

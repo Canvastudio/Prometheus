@@ -36,6 +36,11 @@ public class HaloInfo  {
         RefreshEffectItem();
     }
 
+    public void Deactive()
+    {
+
+    }
+
     public void Remove()
     {
         foreach(var brick in effectBricks)

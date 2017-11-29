@@ -150,6 +150,17 @@ public class Monster : LiveItem
         RefreshActiveSKillState();
         RefreshPassiveSKillState();
 
+        foreach(var state in state.state_list)
+        {
+            if (!state.active)
+            {
+                foreach(var se in state.stateEffects)
+                {
+                    se.Active();
+                }
+            }
+        }
+
         GContext.Instance.discover_monster += 1;
         GContext.Instance.lastDiscoverMonster = this;
 

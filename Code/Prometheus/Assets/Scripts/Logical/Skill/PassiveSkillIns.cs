@@ -50,14 +50,14 @@ public class PassiveSkillIns  {
     {
         stateIns.ActiveIns();
   
-        if (haloInfo != null) haloInfo.Active();
+        if (type == StateType.Halo) haloInfo.Active();
     }
 
     public void Deactive()
     {
         stateIns.DeactiveIns();
 
-        //if (haloInfo != null) haloInfo.Deactive();
+        if (type == StateType.Halo) haloInfo.Deactive();
     }
 
     public void Remove()
