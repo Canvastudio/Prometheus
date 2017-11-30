@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class GameItemBase : MonoBehaviour, ITagable {
+public class GameItemBase : MonoBehaviour, ITagable {
 
     public int itemId = 0;
 
@@ -103,6 +103,12 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
     /// <returns></returns>
     public bool CheckViewArea()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.Log("没有激活的物体参与了checkViewArea? : " + gameObject.name);
+            return false;
+        }
+
         bool in_area = false;
 
         var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
@@ -147,14 +153,16 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
         ResetValues();
     }
 
-    protected virtual void OnEnable()
+    public virtual void ListenInit()
     {
+        Debug.Log("Add listener GameitemBase: " + gameObject.name);
         Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
         Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     private void RemoveLister()
     {
+        Debug.Log("Remove listener GameitemBase: " + gameObject.name);
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
         Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
@@ -169,14 +177,14 @@ public abstract class GameItemBase : MonoBehaviour, ITagable {
         CheckViewArea();
     }
 
-    protected virtual void PlayerMoveEnd()
+    public void PlayerMoveEnd()
     {
         CheckViewArea();
     }
 
 
 
-    public virtual void ResetValues()
+    public void ResetValues()
     {
         isDiscovered = false;
         inViewArea = false;

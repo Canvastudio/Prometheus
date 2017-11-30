@@ -435,7 +435,10 @@ public class FightComponet : MonoBehaviour
             }
             else
             {
-                PopTipView.Instance.Show("target_none");
+                if (ownerObject is Player)
+                {
+                    PopTipView.Instance.Show("target_none");
+                }                                                   
             }
         }
 

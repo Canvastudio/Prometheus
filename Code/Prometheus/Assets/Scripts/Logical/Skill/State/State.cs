@@ -91,7 +91,7 @@ public class StateIns
     {
         if (active)
         {
-            Debug.Log("Deactive stateins: id: " + id);
+            //Debug.Log("Deactive stateins: id: " + id);
 
             active = false;
 

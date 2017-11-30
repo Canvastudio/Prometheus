@@ -106,6 +106,11 @@ public class Monster : LiveItem
 
     public void CheckDistance()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.Log("没有激活的物体参与了checkDistance? : " + gameObject.name);
+        }
+
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 
         if (!isDiscovered && player_distance <= AIConfig.warning)
@@ -246,9 +251,13 @@ public class Monster : LiveItem
 
             foreach (var n in nearby_list)
             {
-                if (!n.isDiscovered)
+                if (!n.isDiscovered && n.isAlive)
                 {
                     StartCoroutine(n.standBrick.OnDiscoverd());
+                }
+                else
+                {
+                    Debug.Log("一个死亡的怪物 但是brick缺米有打开？");
                 }
 
             }
@@ -284,7 +293,7 @@ public class Monster : LiveItem
     public override void Recycle()
     {
         base.Recycle();
-
+        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 }

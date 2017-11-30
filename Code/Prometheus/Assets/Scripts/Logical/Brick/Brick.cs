@@ -157,10 +157,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     private Node _pathNode;
 
 
-    protected override void OnEnable()
+    void Awake()
     {
-        base.OnEnable();
-
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
     }

@@ -178,6 +178,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.Side = LiveItemSide.SIDE0;
 
+        item.ListenInit();
+
 #if UNITY_EDITOR
         item.name += "_" + config.m_name;
 #endif
@@ -233,7 +235,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             player.Property.InitBaseProperty(
                 config.mhp,
                 config.speed,
-                1,//config.melee,
+                config.melee,
                 config.laser,
                 config.cartridge
             );
@@ -291,6 +293,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             item.canvasGroup.alpha = 0;
         }
 
+        item.ListenInit();
+
         return item;
     }
 
@@ -321,6 +325,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         {
             item.canvasGroup.alpha = 0;
         }
+
+        item.ListenInit();
 
         return item;
     }
@@ -354,6 +360,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         {
             item.canvasGroup.alpha = 0;
         }
+
+        item.ListenInit();
 
         return item;
     }
@@ -393,6 +401,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             item.canvasGroup.alpha = 0;
         }
 
+        item.ListenInit();
+
         return item;
     }
 
@@ -412,6 +422,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.transform.position = bornBrick.transform.position;
         item.gameObject.SetActive(true);
+
+        item.ListenInit();
 
         return item;
     }

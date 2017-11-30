@@ -53,11 +53,6 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         }
     }
 
-    private void OnEnable()
-    {
-        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnConstructPowerGrid);
-    }
-
     private void OnConstructPowerGrid()
     {
         depth = int.MaxValue;
@@ -102,6 +97,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
     private void Awake()
     {
         HudEvent.Get(button.gameObject).onLongPress = OnLongPress;
+        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnConstructPowerGrid);
     }
 
     private void OnLongPress()

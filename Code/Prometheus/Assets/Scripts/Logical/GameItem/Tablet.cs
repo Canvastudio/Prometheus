@@ -134,7 +134,7 @@ public class Tablet : GameItemBase {
                 break;
             case TotemType.Resurgence:
                 activeRound = int.Parse(config.arg);
-                Messenger<Monster>.AddListener(SA.MonsterDead, OnMonsterDead);
+                Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
                 CheckFunc = HaveMonsterDead;
                 break;
             case TotemType.Renew:
@@ -166,10 +166,10 @@ public class Tablet : GameItemBase {
         return lastDeadMonster != null;
     }
 
-    private void OnMonsterDead(Monster monster)
+    private void OnMonsterDead(Damage damageInfo)
     {
         round = 0;
-        lastDeadMonster = monster;
+        lastDeadMonster = damageInfo.damageTarget as Monster;
     }
 
     public override void Recycle()
@@ -179,7 +179,7 @@ public class Tablet : GameItemBase {
         ObjPool<Tablet>.Instance.RecycleObj(GameItemFactory.Instance.tablet_pool, itemId);
         if (config.totemType == TotemType.Resurgence)
         {
-            Messenger<Monster>.RemoveListener(SA.MonsterDead, OnMonsterDead);
+            Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);
         }
     }
 }
