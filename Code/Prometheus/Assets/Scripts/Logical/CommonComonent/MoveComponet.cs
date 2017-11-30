@@ -73,6 +73,10 @@ public class MoveComponet : MonoBehaviour {
 
         float time = Rpn.CalculageRPN(rpn, owner, null, out f);
 
+        float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
+
+        time *= rate;
+
         if (!IsNextBlock())
         {
             yield return MoveTo(brick, time);
@@ -90,7 +94,7 @@ public class MoveComponet : MonoBehaviour {
 
     public IEnumerator Open(Brick brick, float time)
     {
-        StageCore.Instance.TimeCast(1);
+        StageCore.Instance.TimeCast(time);
 
         yield return BrickCore.Instance.OpenBrick(brick);
 

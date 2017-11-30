@@ -140,12 +140,16 @@ public class StageCore : SingleGameObject<StageCore> {
         else if (type == BrickType.SUPPLY)
         {
             var item = brick1.item as Supply;
+
             var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
             float[] f;
 
             float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out f);
-            yield return Player.moveComponent.MoveTo(brick1, time);
+
+            float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
+
+            yield return Player.moveComponent.MoveTo(brick1, time * rate);
 
             //吃掉
             item.Reactive();
