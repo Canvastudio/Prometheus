@@ -129,7 +129,14 @@ public class Rpn {
                         target = rpn_target as LiveItem;
                     }
 
-                    stack.Push(target.Property.GetFloatProperty(property));
+                    try
+                    {
+                        stack.Push(target.Property.GetFloatProperty(property));
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogError("RPn exceptiong: " + e);
+                    }
                 }
             }
         }

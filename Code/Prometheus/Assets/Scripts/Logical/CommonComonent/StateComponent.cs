@@ -144,7 +144,7 @@ public class StateComponent : MonoBehaviour {
            
         if (halo.owner.itemId != owner.itemId)
         {
-            var stateIns = new StateIns(halo.passive.stateConfig, owner, halo.passive);
+            var stateIns = new StateIns(halo.passive.stateConfig, owner, halo.passive, halo.owner);
 
             AddStateIns(stateIns);
 

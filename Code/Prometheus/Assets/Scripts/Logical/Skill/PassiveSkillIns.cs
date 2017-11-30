@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PassiveSkillIns  {
+public class PassiveSkillIns
+{
 
     static int _id = int.MinValue;
 
@@ -28,8 +29,7 @@ public class PassiveSkillIns  {
         stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(passiveConfig.bindState);
         point = _point;
         this.owner = owner;
-        stateIns = new StateIns(stateConfig, owner, this);
-        owner.state.AddStateIns(stateIns);
+
         type = passiveConfig.stateType;
 
         if (type == StateType.Halo)
@@ -40,7 +40,7 @@ public class PassiveSkillIns  {
 
             if (passiveConfig.stateArg.b[0])
             {
-                if (owner.Side == LiveItemSide.SIDE0 )
+                if (owner.Side == LiveItemSide.SIDE0)
                 {
                     side = LiveItemSide.SIDE1;
                 }
@@ -54,25 +54,46 @@ public class PassiveSkillIns  {
 
             owner.state.AddHalo(haloInfo);
         }
+        else
+        {
+            stateIns = new StateIns(stateConfig, owner, this, owner);
+            owner.state.AddStateIns(stateIns);
+        }
     }
 
     public void Active()
     {
-        stateIns.ActiveIns();
-  
-        if (type == StateType.Halo) haloInfo.Active();
+        if (type == StateType.Normal)
+        {
+            stateIns.ActiveIns();
+        }
+        else
+        {
+            if (type == StateType.Halo) haloInfo.Active();
+        }
     }
 
     public void Deactive()
     {
-        stateIns.DeactiveIns();
-
-        if (type == StateType.Halo) haloInfo.Deactive();
+        if (type == StateType.Normal)
+        {
+            stateIns.DeactiveIns();
+        }
+        else
+        {
+            if (type == StateType.Halo) haloInfo.Deactive();
+        }
     }
 
     public void Remove()
     {
-        owner.state.RemoveStateIns(stateIns);
-        if (type == StateType.Halo) haloInfo.Remove();
+        if (type == StateType.Normal)
+        {
+            owner.state.RemoveStateIns(stateIns);
+        }
+        else
+        {
+            if (type == StateType.Halo) haloInfo.Remove();
+        }
     }
 }

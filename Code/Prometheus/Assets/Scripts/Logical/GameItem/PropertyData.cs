@@ -49,6 +49,7 @@ public class PropertyData
         }
         else
         {
+            Debug.LogError("尝试获取不存在的属性： " + id.ToString());
             return 0;
         }
     }
@@ -68,7 +69,10 @@ public class PropertyData
         }
         else if (id == GameProperty.mhp)
         {
-            data[GameProperty.nhp] = Math.Min(data[GameProperty.nhp], value);
+            if (data.ContainsKey(GameProperty.nhp))
+            {
+                data[GameProperty.nhp] = Math.Min(data[GameProperty.nhp], value);
+            }
         }
 
         data[id] = value;

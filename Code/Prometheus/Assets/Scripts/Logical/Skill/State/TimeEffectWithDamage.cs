@@ -33,6 +33,8 @@ public class TimeEffectWithDamage : StateEffectIns
                 float d = Rpn.CalculageRPN(stateConfig.stateArgs[index].rpn.ToArray(0), source, owner, out v, null, skillDamage);
                 Damage damage = new Damage(d, source, owner, dt);
                 owner.TakeDamage(damage);
+
+                t -= interval;
             }
         }
     }
