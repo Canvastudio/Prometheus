@@ -279,9 +279,6 @@ public class StageCore : SingleGameObject<StageCore> {
                                             goto BrickLogical;
                                         }
                                     }
-
-
-
                                 }
                                 break;
                         }

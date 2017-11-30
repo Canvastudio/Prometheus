@@ -5,17 +5,30 @@ using UnityEngine;
 public class G : MonoBehaviour {
 
     public StateEffectIns[] a;
+    System.Delegate d1;
+
     // Use this for initialization
 	void Awake () {
         a = new StateEffectIns[2];
+
+        d1 = (Callback)d1 + dd;
+        d1 = (Callback)d1 + dd;
+
+        var cb = d1 as Callback;
+        cb.Invoke();
     }
 
 
-    private void Update()
+    public void dd()
     {
-
-        Debug.Log(Random.Range(0, a.Length));
+        Debug.Log("123");
     }
+
+    //private void Update()
+    //{
+
+    //    Debug.Log(Random.Range(0, a.Length));
+    //}
     IEnumerator ie;
     Coroutine co;
 
