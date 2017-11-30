@@ -136,25 +136,22 @@ public class StateComponent : MonoBehaviour {
     {
         foreach(var h in halo_list)
         {
-            if (h.id == halo.id || h.passive.passiveConfig.id == halo.passive.passiveConfig.id)
+            if (h.id == halo.id)
             {
                 return;
             }
         }
            
-        if (halo.owner.itemId != owner.itemId)
+
+        var stateIns = new StateIns(halo.passive.stateConfig, owner, halo.passive, halo.owner);
+
+        AddStateIns(stateIns);
+
+        if (owner.isDiscovered)
         {
-            var stateIns = new StateIns(halo.passive.stateConfig, owner, halo.passive, halo.owner);
-
-            AddStateIns(stateIns);
-
-            if (owner.isDiscovered)
-            {
-                stateIns.ActiveIns();
-            }
+            stateIns.ActiveIns();
         }
 
         halo_list.Add(halo);
-        
     }
 }

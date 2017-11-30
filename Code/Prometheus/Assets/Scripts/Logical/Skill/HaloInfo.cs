@@ -33,17 +33,20 @@ public class HaloInfo  {
 
     public void Active()
     {
+        active = true;
         RefreshEffectItem();
     }
 
     public void Deactive()
     {
-
+        active = false;
     }
 
     public void Remove()
     {
-        foreach(var brick in effectBricks)
+        active = false;
+
+        foreach (var brick in effectBricks)
         {
             brick.haloComponent.RemoveHalo(this);
         }

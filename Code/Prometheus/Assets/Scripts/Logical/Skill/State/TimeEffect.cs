@@ -22,6 +22,7 @@ public class TimeEffect : Property
 
     public override void Active()
     {
+        active = true;
     }
 
     public override void OnTimeChange(float time)

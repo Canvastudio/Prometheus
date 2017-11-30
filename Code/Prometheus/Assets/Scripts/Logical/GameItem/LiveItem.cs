@@ -234,7 +234,7 @@ public abstract class LiveItem : GameItemBase
     {
         get
         {
-             _fmax_hp = Property.GetFloatProperty(GameProperty.mhp) * (1 + Property.GetFloatProperty(GameProperty.mhp_percent));
+            _fmax_hp = Property.GetFloatProperty(GameProperty.mhp); // * (1 + Property.GetFloatProperty(GameProperty.mhp_percent));
 
             return _fmax_hp.Value;
         }
@@ -322,6 +322,11 @@ public abstract class LiveItem : GameItemBase
             if (hp_value != null)
             {
                 hp_value.FloatText(cur_hp);
+            }
+
+            if (this is Player)
+            {
+                Messenger.Invoke(SA.PlayHpChange);
             }
         }
         else if (property == GameProperty.melee)

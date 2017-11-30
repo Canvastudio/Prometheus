@@ -52,7 +52,7 @@ public class PassiveSkillIns
 
             haloInfo = new HaloInfo(range, side, owner, this);
 
-            owner.state.AddHalo(haloInfo);
+            //owner.state.AddHalo(haloInfo);
         }
         else
         {

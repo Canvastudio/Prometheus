@@ -233,7 +233,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             player.Property.InitBaseProperty(
                 config.mhp,
                 config.speed,
-                config.melee,
+                1,//config.melee,
                 config.laser,
                 config.cartridge
             );
