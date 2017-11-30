@@ -8,9 +8,11 @@ public class Just : Property
 
     public override void Active()
     {
+        active = true;
     }
 
     public override void Deactive()
     {
+        active = false;
     }
 }
