@@ -7,7 +7,7 @@ public class DeathMark : StateEffectIns
     [UnityEngine.SerializeField]
     int count = 0;
 
-    public DeathMark(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public DeathMark(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         count = Mathf.FloorToInt(stateConfig.stateArgs[index].f[0]);
         stateType = StateEffectType.OnDeadth;

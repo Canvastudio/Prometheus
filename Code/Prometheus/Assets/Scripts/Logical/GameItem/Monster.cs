@@ -154,10 +154,7 @@ public class Monster : LiveItem
         {
             if (!state.active)
             {
-                foreach(var se in state.stateEffects)
-                {
-                    se.Active();
-                }
+                state.ActiveIns();
             }
         }
 
@@ -274,7 +271,7 @@ public class Monster : LiveItem
 
         Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
 
-        ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
+        Recycle();
     }
 
     public override float TakeDamage(Damage damageInfo)

@@ -11,7 +11,7 @@ public class Bang : StateEffectIns
     [UnityEngine.SerializeField]
     ulong state_id;
 
-    public Bang(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Bang(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = stateConfig.stateArgs[index].ec[0];
         stateType = StateEffectType.OnGenerateDamage;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Disarm : StateEffectIns
 {
-    public Disarm(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Disarm(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
     }
 

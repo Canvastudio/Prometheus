@@ -11,7 +11,7 @@ public class Critical : StateEffectIns
     [UnityEngine.SerializeField]
     EffectCondition condition;
 
-    public Critical(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Critical(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         probability = stateConfig.stateArgs[index].f[0];
         multiply = stateConfig.stateArgs[index].f[1];

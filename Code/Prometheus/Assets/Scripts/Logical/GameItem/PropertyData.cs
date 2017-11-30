@@ -66,6 +66,10 @@ public class PropertyData
         {
             value = Mathf.Min(data[GameProperty.mhp], value);
         }
+        else if (id == GameProperty.mhp)
+        {
+            data[GameProperty.nhp] = Math.Min(data[GameProperty.nhp], value);
+        }
 
         data[id] = value;
 

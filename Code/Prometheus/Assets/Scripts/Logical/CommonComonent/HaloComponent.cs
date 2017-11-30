@@ -65,7 +65,11 @@ public class HaloComponent : MonoBehaviour {
         if (owner.IsLiveItemBrick())
         {
             LiveItem item = owner.item as LiveItem;
-            item.state.AddHalo(halo);
+
+            if (item.Side == halo.Side)
+            {
+                item.state.AddHalo(halo);
+            }
         }
 
         halo_list.Add(halo);

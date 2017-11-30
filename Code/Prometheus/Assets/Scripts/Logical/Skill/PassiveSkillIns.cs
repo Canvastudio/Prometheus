@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveSkillIns  {
 
+    static int _id = int.MinValue;
+
+    public int id;
+
     public ulong skillId;
     public StateIns stateIns;
     public HaloInfo haloInfo;
@@ -17,19 +21,23 @@ public class PassiveSkillIns  {
 
     public PassiveSkillIns(ulong skill_id, SkillPoint _point, LiveItem owner)
     {
+        id = _id++;
+
         skillId = skill_id;
         passiveConfig = ConfigDataBase.GetConfigDataById<PassiveSkillsConfig>(skill_id);
         stateConfig = ConfigDataBase.GetConfigDataById<StateConfig>(passiveConfig.bindState);
         point = _point;
         this.owner = owner;
-        stateIns = new StateIns(stateConfig, owner, true);
+        stateIns = new StateIns(stateConfig, owner, this);
         owner.state.AddStateIns(stateIns);
         type = passiveConfig.stateType;
 
         if (type == StateType.Halo)
         {
             range = Mathf.FloorToInt(passiveConfig.stateArg.f[0]);
+
             LiveItemSide side = 0;
+
             if (passiveConfig.stateArg.b[0])
             {
                 if (owner.Side == LiveItemSide.SIDE0 )
@@ -43,6 +51,8 @@ public class PassiveSkillIns  {
             }
 
             haloInfo = new HaloInfo(range, side, owner, this);
+
+            owner.state.AddHalo(haloInfo);
         }
     }
 
@@ -63,6 +73,6 @@ public class PassiveSkillIns  {
     public void Remove()
     {
         owner.state.RemoveStateIns(stateIns);
-        //if (haloInfo != null) haloInfo.Deactive();
+        if (type == StateType.Halo) haloInfo.Remove();
     }
 }

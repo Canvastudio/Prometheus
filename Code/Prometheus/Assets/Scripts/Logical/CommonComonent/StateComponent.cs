@@ -14,11 +14,11 @@ public class StateComponent : MonoBehaviour {
 
     public List<HaloInfo> halo_list = new List<HaloInfo>(4);
 
-    public Monster owner;
+    public LiveItem owner;
 
-    public void OnEnable()
+    public void Awake()
     {
-        owner = GetComponent<Monster>();
+        owner = GetComponent<LiveItem>();
 
         t = 0;
     }
@@ -27,7 +27,6 @@ public class StateComponent : MonoBehaviour {
 
     private void Update()
     {
-
         if (owner != null && owner.isDiscovered && owner.isAlive && state_list.Count > 0)
         {
             t += Time.deltaTime;
@@ -36,7 +35,7 @@ public class StateComponent : MonoBehaviour {
             {
                 t -= 1;
 
-                owner.artPop.OnNext();
+                //owner.artPop.OnNext();
             }
         }
     }
@@ -87,25 +86,75 @@ public class StateComponent : MonoBehaviour {
             }
         }
 
-        if (owner != null)
-            owner.RemoveStateUI(ins);
+
         
     }
 
     public void RemoveStateBuff(int count, bool helpful)
     {
+        state_list.Reverse();
 
+        for (int i = state_list.Count - 1; i >= 0; --i)
+        {
+            if (state_list[i].passive == null)
+            {
+                if (state_list[i].stateConfig.isBuff == helpful)
+                {
+                    state_list[i].DeactiveIns();
+                    state_list.RemoveAt(i);
+                }
+            }
+        }
     }
 
     public void RemoveHalo(HaloInfo halo)
     {
-        RemoveStateIns(halo.passive.stateIns);
-        halo_list.Remove(halo);
+        for (int i = state_list.Count - 1; i >= 0; --i)
+        {
+            if (state_list[i].passive != null)
+            {
+                if (state_list[i].passive.id == halo.passive.id)
+                {
+                    owner.RemoveStateUI(state_list[i]);
+                    state_list[i].DeactiveIns();
+                    //state_list.RemoveAt(i);
+                }
+            }
+        }
+
+        for (int i = 0; i < halo_list.Count; ++i)
+        {
+            if (halo_list[i].id == halo.id)
+            {
+                halo_list.RemoveAt(i);
+            }
+        }
+
     }
 
     public void AddHalo(HaloInfo halo)
     {
-        AddStateIns(halo.passive.stateIns);
+        foreach(var h in halo_list)
+        {
+            if (h.id == halo.id || h.passive.passiveConfig.id == halo.passive.passiveConfig.id)
+            {
+                return;
+            }
+        }
+           
+        if (halo.owner.itemId != owner.itemId)
+        {
+            var stateIns = new StateIns(halo.passive.stateConfig, owner, halo.passive);
+
+            AddStateIns(stateIns);
+
+            if (owner.isDiscovered)
+            {
+                stateIns.ActiveIns();
+            }
+        }
+
         halo_list.Add(halo);
+        
     }
 }

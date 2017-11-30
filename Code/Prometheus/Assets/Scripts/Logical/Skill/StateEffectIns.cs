@@ -14,7 +14,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
 
     public LiveItem source;
     public int index;
-    protected bool passive;
+    public PassiveSkillIns passive;
     public LiveItem owner;
     public float skillDamage;
 
@@ -35,7 +35,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
     /// </summary>
     public float exist_time = 0;
 
-    public StateEffectIns(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source)
+    public StateEffectIns(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source)
     {
         this.owner = owner;
         this.stateConfig = config;
@@ -98,7 +98,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
         }
     }
 
-    public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, bool passive, LiveItem source)
+    public static StateEffectIns GenerateStateEffects(StateConfig config, int i, LiveItem owner, PassiveSkillIns passive, LiveItem source)
     {
         StateEffectIns ins = null;
         Type t = null;

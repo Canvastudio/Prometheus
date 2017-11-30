@@ -153,6 +153,8 @@ public class StageView : MuiSingleBase<StageView>
 
         //刷新下位置
         Messenger.Invoke(SA.RefreshGameItemPos);
+
+        upUIView.Init();
     }
 
     private void ShowSkillInfo()

@@ -8,7 +8,7 @@ public class FuelDetonation : StateEffectIns
     public float distance;
     public float additive;
 
-    public FuelDetonation(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public FuelDetonation(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = stateConfig.stateArgs[index].ec[0];
         distance = stateConfig.stateArgs[index].f[0];

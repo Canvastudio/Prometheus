@@ -16,9 +16,9 @@ public class DamageTransfer : StateEffectIns
     [UnityEngine.SerializeField]
     List<Monster> list = new List<Monster>(8);
 
-    public DamageTransfer(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public DamageTransfer(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
-        times = passive ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
+        times = passive != null ? -1 : Mathf.FloorToInt(config.stateArgs[index].f[0]);
         condition = config.stateArgs[index].ec[0];
         range = Mathf.FloorToInt(config.stateArgs[index].f[1]);
         stateType = StateEffectType.OnTakenDamage;
@@ -29,7 +29,7 @@ public class DamageTransfer : StateEffectIns
         var damageInfo = _damageInfo as Damage;
         if (!damageInfo.isTransfer && FightComponet.CheckEffectCondition(condition, owner, damageInfo.damageType))
         {
-            if (!passive) { times -= 1; }
+            if (passive == null) { times -= 1; }
 
             StageCore.Instance.GetMonsterInRange(owner.standBrick, range, ref list);
 

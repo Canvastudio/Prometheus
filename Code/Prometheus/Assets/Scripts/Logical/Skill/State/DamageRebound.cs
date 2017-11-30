@@ -9,7 +9,7 @@ public class DamageRebound : StateEffectIns
     [UnityEngine.SerializeField]
     float percent = 0;
 
-    public DamageRebound(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public DamageRebound(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         condition = config.stateArgs[index].ec[0];
         percent = config.stateArgs[index].f[0];

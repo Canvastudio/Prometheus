@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PerbrickEffect : Property
 {
-    public PerbrickEffect(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public PerbrickEffect(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
 
     }

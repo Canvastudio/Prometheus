@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Freeze : StateEffectIns
 {
-    public Freeze(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Freeze(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         Debug.Log("Frezz");
     }

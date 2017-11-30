@@ -447,7 +447,7 @@ public abstract class LiveItem : GameItemBase
         if (damageInfo.attach_state > 0)
         {
             var config = StateConfig.GetConfigDataById<StateConfig>(damageInfo.attach_state);
-            StateIns ins = new StateIns(config, this, false);
+            StateIns ins = new StateIns(config, this, null);
             state.AddStateIns(ins);
         }
 

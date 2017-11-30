@@ -18,7 +18,7 @@ public class Rapidly : StateEffectIns
 {
     float extra;
 
-    public Rapidly(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Rapidly(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         extra = -stateConfig.stateArgs[index].f[0];
 

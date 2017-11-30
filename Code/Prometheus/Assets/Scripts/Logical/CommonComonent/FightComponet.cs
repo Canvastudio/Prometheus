@@ -781,7 +781,7 @@ public class FightComponet : MonoBehaviour
 
                     state_id = args[i].u[0];
                     var state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                    StateIns ins = new StateIns(state_config, item as LiveItem, false, ownerObject);
+                    StateIns ins = new StateIns(state_config, item as LiveItem, null, ownerObject);
                     ins.ActiveIns();
 
                     Debug.Log("为：" + item.gameObject.name + " 添加状态: " + state_config.name);
@@ -798,7 +798,7 @@ public class FightComponet : MonoBehaviour
 
                         state_id = args[i].u[0];
                         var _state_config = ConfigDataBase.GetConfigDataById<StateConfig>(state_id);
-                        StateIns _ins = new StateIns(_state_config, live, false, ownerObject);
+                        StateIns _ins = new StateIns(_state_config, live, null, ownerObject);
                         _ins.ActiveIns();
 
                         Debug.Log("为：" + live.gameObject.name + " 添加状态: " + _state_config.name);
@@ -971,7 +971,7 @@ public class FightComponet : MonoBehaviour
                     break;
                 case SpecialEffect.AddStateToSelf:
                     state_id = args[i].u[0];
-                    ownerObject.state.AddStateIns(new StateIns(ConfigDataBase.GetConfigDataById<StateConfig>(state_id), ownerObject, false));
+                    ownerObject.state.AddStateIns(new StateIns(ConfigDataBase.GetConfigDataById<StateConfig>(state_id), ownerObject, null));
                     break;
                 case SpecialEffect.Disperse:
                     remove_count = (int)args[i].f[0];

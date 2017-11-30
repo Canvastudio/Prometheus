@@ -40,7 +40,6 @@ public class BrickInspectorExtend : Editor
 
         if (GUILayout.Button("Create Monster"))
         {
-            Debug.Log("[CustomEditor(typeof(Brick): " + row + " " + column);
             GameItemFactory.Instance.CreateMonster(int.Parse(power), ulong.Parse(id), int.Parse(lv), brick);
         }
 

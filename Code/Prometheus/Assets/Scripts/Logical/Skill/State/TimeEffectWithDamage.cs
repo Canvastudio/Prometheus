@@ -12,7 +12,7 @@ public class TimeEffectWithDamage : StateEffectIns
     [UnityEngine.SerializeField]
     float t;
 
-    public TimeEffectWithDamage(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public TimeEffectWithDamage(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         var ec = stateConfig.stateArgs[index].ec[0];
         dt = HelpFunction.EcToDamageType(ec);

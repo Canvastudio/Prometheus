@@ -21,7 +21,7 @@ public class DamageStore : StateEffectIns
     [UnityEngine.SerializeField]
     EffectCondition condition;
 
-    public DamageStore(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public DamageStore(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         store_times = Mathf.FloorToInt(config.stateArgs[index].f[0]);
         multiply = config.stateArgs[index].f[1];
@@ -42,7 +42,7 @@ public class DamageStore : StateEffectIns
             {
                 owner.AddHp(total_store * multiply);
 
-                if (passive)
+                if (passive != null)
                 {
                     store_times = Mathf.FloorToInt(stateConfig.stateArgs[index].f[0]);
                 }
@@ -50,7 +50,7 @@ public class DamageStore : StateEffectIns
                 {
                     out_data = true;
                 }
-                
+
             }
 
             damageInfo.damage = 0;

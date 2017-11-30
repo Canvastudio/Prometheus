@@ -10,7 +10,7 @@ public class Vjua : StateEffectIns {
 
     EffectCondition condition;
 
-    public Vjua(LiveItem owner, StateConfig config, int index, bool passive, LiveItem source) : base(owner, config, index, passive, source)
+    public Vjua(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         stateType = StateEffectType.OnGenerateDamage;
         floor = stateConfig.stateArgs[index].f[0];

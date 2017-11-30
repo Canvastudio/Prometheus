@@ -43,7 +43,7 @@ public class StateIns
 
     public ulong state_id;
 
-    public bool passive;
+    public PassiveSkillIns passive;
     public bool active;
     public float exist_time;
     private bool _out_data = false;
@@ -54,12 +54,13 @@ public class StateIns
         set { if (value) OnOutData(); _out_data = value; }
     }
 
-    public StateIns(StateConfig stateConfig, LiveItem owner, bool passive, LiveItem source = null, float _skillDamage = 0)
+    public StateIns(StateConfig stateConfig, LiveItem owner, PassiveSkillIns passive, LiveItem source = null, float _skillDamage = 0)
     {
         int effect_count = stateConfig.stateEffects.Count();
         skillDamage = _skillDamage;
         this.stateConfig = stateConfig;
         stateEffects = new StateEffectIns[effect_count];
+        this.passive = passive;
 
         for (int i = 0; i < effect_count; ++i)
         {
@@ -82,10 +83,7 @@ public class StateIns
                 effect.Active();
             }
 
-            if (!passive)
-            {
-                Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
-            }
+            Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
         }
     }
 
@@ -93,6 +91,8 @@ public class StateIns
     {
         if (active)
         {
+            Debug.Log("Deactive stateins: id: " + id);
+
             active = false;
 
             if (stateEffects != null)
@@ -107,10 +107,8 @@ public class StateIns
                 Debug.LogError("stateEffects为空: " + stateConfig.name);
             }
 
-            if (!passive)
-            {
-                Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
-            }
+
+            Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
         }
     }
     
@@ -122,26 +120,6 @@ public class StateIns
         }
 
         DeactiveIns();
-    }
-
-    public void Silent(bool silent)
-    {
-        if (!passive) return;
-
-        if (silent)
-        {
-            foreach(var effect in stateEffects)
-            {
-                effect.Deactive();
-            }
-        }
-        else
-        {
-            foreach (var effect in stateEffects)
-            {
-                effect.Active();
-            }
-        }
     }
 
     protected virtual void OnTimeChange(float time)
