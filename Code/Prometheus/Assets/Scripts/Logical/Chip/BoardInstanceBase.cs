@@ -5,30 +5,7 @@ using UnityEngine;
 
 public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
 
-
     public int uid;
-    [SerializeField]
-    private int _isPower;
-    public int Power
-    {
-        get
-        {
-            return _isPower;
-        }
-        set
-        {
-#if UNITY_EDITOR
-
-            OnSetPowerState(value);
-#endif
-            _isPower = value;
-        }
-    }
-
-    protected virtual void OnSetPowerState(int value)
-    {
-
-    }
 
     public int row = int.MinValue;
     public int col = int.MinValue;
@@ -77,16 +54,7 @@ public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
     /// </summary>
     public float powerSupply = 0;
 
-    private void OnEnable()
-    {
-        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnConstructPowerGrid);
-    }
 
-    private void OnConstructPowerGrid()
-    {
-        depth = int.MaxValue;
-        _isPower = 0;
-    }
 
     public bool Equals(BoardInstanceBase other)
     {

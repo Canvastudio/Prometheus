@@ -27,6 +27,43 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     public bool hasPut = false;
 
+    [SerializeField]
+    private int _isPower;
+    public int Power
+    {
+        get
+        {
+            if (GameTestData.Instance.ignoreChipColor)
+            {
+                return _isPower;
+            }
+            else
+            {
+                if (chipGridMeet) return _isPower;
+                else return 0;
+            }
+        }
+        set
+        {
+            _isPower = value;
+#if UNITY_EDITOR
+
+            OnSetPowerState(value);
+#endif
+        }
+    }
+
+    private void OnEnable()
+    {
+        Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnConstructPowerGrid);
+    }
+
+    private void OnConstructPowerGrid()
+    {
+        depth = int.MaxValue;
+        _isPower = 0;
+    }
+
     public void Init(ChipInventory _chipInventory)
     {
         chipInventory = _chipInventory;
@@ -148,10 +185,8 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
         pwr.text = depth.ToString();
     }
 
-    protected override void OnSetPowerState(int value)
+    protected void OnSetPowerState(int value)
     {
-        base.OnSetPowerState(value);
-
         if (value == 1)
         {
             pwr.color = Color.blue;

@@ -552,7 +552,9 @@ public class ChipView : MuiSingleBase<ChipView> {
                     {
                         pg.powerGridCastPower += instance.castPower;
                         list.RemoveAt(m);
-                        instance.Power = 1;
+
+                        (instance as ChipBoardInstance) .Power = 1;
+
                         List<BoardInstanceBase> list1;
                         if (pg.activeDic.TryGetValue(depth_list.Key, out list1))
                         {
