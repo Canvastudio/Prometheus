@@ -31,7 +31,7 @@ public class PropertyData
 
         if (data.TryGetValue(id, out result))
         {
-            return Mathf.FloorToInt(result);
+            return Mathf.CeilToInt(result);
         }
         else
         {
@@ -53,6 +53,7 @@ public class PropertyData
             return 0;
         }
     }
+
 
     //public PropertyData SetIntProperty(GameProperty id, int value)
     //{

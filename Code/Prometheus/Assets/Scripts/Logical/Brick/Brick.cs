@@ -242,6 +242,16 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public void OnLongPress()
     {
         Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
+
+        if (realBrickType == BrickType.MONSTER)
+        {
+            var monster = item as Monster;
+
+            if (GameTestData.Instance.alwaysShow || monster.isDiscovered)
+            {
+                 StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
+            }
+        }
     }
 
     public void Init(int row, int column)

@@ -9,6 +9,7 @@ public class UiName
     public static string strSkillInfoView = "SkillInfoView";
     public static string strStageView = "StageView";
     public static string strChipDetailVew = "ChipDetailView";
+    public static string strMonsterInfoView = "MonsterInfoView";
 
     //public static string strStageUIView = "StageUIView";
 }
