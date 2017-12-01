@@ -32,7 +32,14 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
     [SerializeField]
     Text monDescr;
     [SerializeField]
+    Text monName;
+    [SerializeField]
     Image monIcon;
+
+    [SerializeField]
+    GameObject ironType;
+    [SerializeField]
+    GameObject organicType;
 
     private string s1 = "skillItem";
     private string s2 = "stateItem";
@@ -96,7 +103,14 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
         laser.SetPropertyText(mon, GameProperty.laser);
         cartridge.SetPropertyText(mon, GameProperty.cartridge);
         monDescr.text = mon.config.describe;
+        monName.text = mon.config.m_name;
+
         monIcon.SetItemIcon(mon.config.icon);
+
+
+
+        ironType.SetActive(mon.config.monsterType == MonsterType.Iron);
+        organicType.SetActive(mon.config.monsterType == MonsterType.Organisms);
 
         return null;
     }
