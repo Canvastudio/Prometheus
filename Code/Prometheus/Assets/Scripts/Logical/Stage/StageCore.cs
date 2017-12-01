@@ -262,25 +262,36 @@ public class StageCore : SingleGameObject<StageCore> {
                                     else
                                     {
                                         //等待玩家点击确认
-                                        yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString());
+                                        yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
 
-                                        brick2 = waitMsg.result.para as Brick;
-
-                                        if (brick1 == brick2)
+                                        if (waitMsg.result.msg == SA.PlayerClickBrick)
                                         {
-                                            //确认成功
-                                            //yield return StageCore.Instance.Player.moveComponent.Go(list);
-                                            Player.moveComponent.SetPaht(list);
+                                            brick2 = waitMsg.result.para as Brick;
 
-                                            yield return MovePlayer();
+                                            if (brick1 == brick2)
+                                            {
+                                                //确认成功
+                                                //yield return StageCore.Instance.Player.moveComponent.Go(list);
+                                                Player.moveComponent.SetPaht(list);
 
-                                            if (need_action)
-                                                yield return DoNearByBrickSpecialAction(brick1);
+                                                yield return MovePlayer();
+
+                                                if (need_action)
+                                                    yield return DoNearByBrickSpecialAction(brick1);
+                                            }
+                                            else
+                                            {
+                                                brick1 = brick2;
+                                                goto BrickLogical;
+                                            }
                                         }
-                                        else
+                                        else if (waitMsg.result.msg == SA.PlayerClickSkill)
                                         {
-                                            brick1 = brick2;
-                                            goto BrickLogical;
+                                            StageView.Instance.CancelPahtNode();
+
+                                            ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
+
+                                            yield return DoPlayerSkill(skill_id);
                                         }
                                     }
                                 }
@@ -294,9 +305,7 @@ public class StageCore : SingleGameObject<StageCore> {
                 {
                     ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
 
-                    Debug.Log("使用技能id: " + skill_id);
-
-                    yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
+                    yield return DoPlayerSkill(skill_id);
 
                     Debug.Log("技能结束, 回到主循环..");
                 }
@@ -306,6 +315,14 @@ public class StageCore : SingleGameObject<StageCore> {
             //等待玩家动作结束信号
             yield return AllActionFinish;
         }
+    }
+
+    IEnumerator DoPlayerSkill(ulong skill_id)
+    {
+
+        Debug.Log("使用技能id: " + skill_id);
+
+        yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
     }
 
     IEnumerator MovePlayer()
@@ -350,8 +367,6 @@ public class StageCore : SingleGameObject<StageCore> {
                 }
             }
         }
-
-
 
         var player_Speed = Player.Property.GetFloatProperty(GameProperty.speed);
         var monster_Speed = monster.Property.GetFloatProperty(GameProperty.speed);

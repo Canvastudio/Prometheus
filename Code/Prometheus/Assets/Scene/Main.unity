@@ -187,13 +187,14 @@ MonoBehaviour:
   SuperPlayer: 0
   alwaysShow: 1
   infoDetail: 1
-  NoMonster: 1
+  noMonster: 0
+  ignoreChipColor: 0
   AddChips:
   - 100006
   - 100001
   - 100041
   Add_4_Stuff: 32000000320000003200000032000000
-  AddSkills: 724d2f0000000000
+  AddSkills: 41420f0000000000
 --- !u!4 &13273353
 Transform:
   m_ObjectHideFlags: 0
@@ -1140,7 +1141,179 @@ MonoBehaviour:
     id: 0
     stateEffects: []
     state_id: 0
-    passive: 0
+    passive:
+      id: 0
+      skillId: 0
+      stateIns:
+        id: 0
+        stateEffects: []
+        state_id: 0
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        active: 0
+        exist_time: 0
+        skillDamage: 0
+      haloInfo:
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        id: 0
+        owner: {fileID: 0}
+        Side: 0
+        effectBricks: []
+        active: 0
+      owner: {fileID: 0}
+      type: 0
+      range: 0
     active: 0
     exist_time: 0
     skillDamage: 0
