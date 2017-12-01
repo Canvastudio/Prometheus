@@ -155,14 +155,12 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual void ListenInit()
     {
-        Debug.Log("Add listener GameitemBase: " + gameObject.name);
         Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
         Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }
 
     private void RemoveLister()
     {
-        Debug.Log("Remove listener GameitemBase: " + gameObject.name);
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
         Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
     }

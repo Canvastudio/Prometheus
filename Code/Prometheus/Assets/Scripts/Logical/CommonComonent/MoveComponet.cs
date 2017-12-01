@@ -67,23 +67,13 @@ public class MoveComponet : MonoBehaviour {
     {
         Brick brick = _path[_pathIndex].behavirour as Brick;
 
-        var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
-
-        float[] f;
-
-        float time = Rpn.CalculageRPN(rpn, owner, null, out f);
-
-        float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
-
-        time *= rate;
-
         if (!IsNextBlock())
         {
-            yield return MoveTo(brick, time);
+            yield return MoveTo(brick, Rpn.GetMoveTime());
         }
         else
         {
-            yield return Open(brick, time);
+            yield return Open(brick, Rpn.GetMoveTime());
             blocking = true;
         }
     }

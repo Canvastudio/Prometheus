@@ -141,15 +141,7 @@ public class StageCore : SingleGameObject<StageCore> {
         {
             var item = brick1.item as Supply;
 
-            var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
-
-            float[] f;
-
-            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out f);
-
-            float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
-
-            yield return Player.moveComponent.MoveTo(brick1, time * rate);
+            yield return Player.moveComponent.MoveTo(brick1, Rpn.GetMoveTime());
 
             //吃掉
             item.Reactive();
@@ -157,19 +149,20 @@ public class StageCore : SingleGameObject<StageCore> {
         else if (type == BrickType.TREASURE)
         {
             var item = brick1.item as Treasure;
-            var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
 
-            float[] f;
-
-            float time = Rpn.CalculageRPN(rpn, Instance.Player, null, out f);
-            yield return Player.moveComponent.MoveTo(brick1, time);
+            yield return Player.moveComponent.MoveTo(brick1, Rpn.GetMoveTime());
 
             //吃掉
             item.Reactive();
         }
         else if (type == BrickType.MAINTENANCE)
         {
- 
+            TimeCast(Rpn.GetMoveTime());
+
+            var item = brick1.item as Maintenance;
+
+            //吃掉
+            item.Reactive();
         }
 
     }
@@ -332,6 +325,7 @@ public class StageCore : SingleGameObject<StageCore> {
         while (!Instance.Player.moveComponent.MoveEnd())
         {
             yield return StageCore.Instance.Player.moveComponent.MoveToNext();
+
             Messenger.Invoke(SA.PlayerMoveEnd);
         }
 

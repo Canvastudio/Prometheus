@@ -145,4 +145,18 @@ public class Rpn {
 
         return 0;
     }
+
+    public static float GetMoveTime()
+    {
+        var rpn = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).motorizedFormula.ToArray();
+
+        float[] f;
+
+        float time = CalculageRPN(rpn, StageCore.Instance.Player, null, out f);
+
+        float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
+
+        return time * rate;
+
+    }
 }

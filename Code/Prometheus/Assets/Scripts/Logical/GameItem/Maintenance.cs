@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Maintenance : GameItemBase{
+public class Maintenance : GameItemBase
+{
 
     public override void Recycle()
     {
@@ -12,4 +13,8 @@ public class Maintenance : GameItemBase{
     }
 
 
+    public void Reactive()
+    {
+        MuiCore.Instance.Open(UiName.strSkillInfoView);
+    }
 }
