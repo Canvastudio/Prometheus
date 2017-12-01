@@ -27,7 +27,7 @@ public class Explode : StateEffectIns
 
         Damage damageInfo = new Damage(damage, owner, StageCore.Instance.Player, DamageType.Physical);
 
-        StageCore.Instance.Player.MeleeAttackByOther(owner, damageInfo);
+        CoroCore.Instance.StartCoroutine(StageCore.Instance.Player.MeleeAttackByOther(owner, damageInfo));
 
         Damage d = new Damage(999999, owner, owner, DamageType.Physical);
 
