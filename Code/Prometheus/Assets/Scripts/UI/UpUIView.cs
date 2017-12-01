@@ -14,6 +14,8 @@ public class UpUIView : MonoBehaviour {
     Slider hpSlider;
     [SerializeField]
     UpBuff buff;
+    [SerializeField]
+    Button roleButton;
     StringBuilder sb = new StringBuilder(10);
 
     List<UpBuff> list = new List<UpBuff>();
@@ -22,10 +24,15 @@ public class UpUIView : MonoBehaviour {
     public void Init()
     {
         ObjPool<UpBuff>.Instance.InitOrRecyclePool(pname, buff);
-
+        HudEvent.Get(roleButton).onClick = OnRole;
         Messenger.AddListener(SA.PlayHpChange, OnHpChange);
 
         OnHpChange();
+    }
+
+    private void OnRole()
+    {
+        StartCoroutine(MuiCore.Instance.AddOpen(UiName.strRoleInfoView));
     }
 
     public void OnStateAdd(StateIns state)

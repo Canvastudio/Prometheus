@@ -13,6 +13,11 @@ public class StateItem : MonoBehaviour {
     Text stateDuration;
     [SerializeField]
     Image stateIcon;
+    [SerializeField]
+    Image stateBg;
+
+    private string buffBgName = "item_buff_bg";
+    private string debuffBgName = "item_debuff_bg";
 
     public void ShowStateInfo(StateIns ins)
     {
@@ -27,6 +32,15 @@ public class StateItem : MonoBehaviour {
         else
         {
             stateDuration.text = ins.stateConfig.time.ToString();
+        }
+
+        if (ins.stateConfig.isBuff)
+        {
+            AtlasCore.Instance.Load("MainUI").GetSprite(buffBgName);
+        }
+        else
+        {
+            AtlasCore.Instance.Load("MainUI").GetSprite(debuffBgName);
         }
     }
 }

@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Chip_Atlas
+  m_Name: Chip
   m_EditorData:
     textureSettings:
       serializedVersion: 2
@@ -28,11 +28,11 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 6f23a0de90a9fea9f6d0c38e9012b900
+      Hash: 42af18d3c150a50caeaa4e4337d39aa3
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 6f23a0de90a9fea9f6d0c38e9012b900
+    hashString: 42af18d3c150a50caeaa4e4337d39aa3
     totalSpriteSurfaceArea: 49681
     packables:
     - {fileID: 102900000, guid: d98bb82ec6cf24c4eb374e1f3672a52e, type: 3}
@@ -89,5 +89,5 @@ SpriteAtlas:
   - chip_bg
   - chipline_45
   - chipline_90
-  m_Tag: Chip_Atlas
+  m_Tag: Chip
   m_IsVariant: 0

@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: InGmae_Atlas
+  m_Name: InGmae
   m_EditorData:
     textureSettings:
       serializedVersion: 2
@@ -37,11 +37,11 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: dbc33764a67583833d674b70f1402044
+      Hash: e94781243da5a49c9908b9ad6c2a4f42
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 47
-    hashString: dbc33764a67583833d674b70f1402044
+    hashString: e94781243da5a49c9908b9ad6c2a4f42
     totalSpriteSurfaceArea: 588024
     packables:
     - {fileID: 102900000, guid: 9181d79d39fec8a46bac83bfdbb789a2, type: 3}
@@ -88,5 +88,5 @@ SpriteAtlas:
   - box_0_light
   - stone_0_light
   - stone_0_dark
-  m_Tag: InGmae_Atlas
+  m_Tag: InGmae
   m_IsVariant: 0

@@ -97,7 +97,7 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
             item.ShowStateInfo(ins);
         }
 
-        hp.text = string.Format(hpft, mon.Property.GetIntProperty(GameProperty.nhp), mon.Property.GetIntProperty(GameProperty.mhp));
+        hp.SetHpText(mon);
         moto.SetPropertyText(mon, GameProperty.motorized);
         melee.SetPropertyText(mon, GameProperty.melee);
         laser.SetPropertyText(mon, GameProperty.laser);
@@ -106,8 +106,6 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
         monName.text = mon.config.m_name;
 
         monIcon.SetItemIcon(mon.config.icon);
-
-
 
         ironType.SetActive(mon.config.monsterType == MonsterType.Iron);
         organicType.SetActive(mon.config.monsterType == MonsterType.Organisms);

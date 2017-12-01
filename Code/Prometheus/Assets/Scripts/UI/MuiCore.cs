@@ -10,6 +10,7 @@ public class UiName
     public static string strStageView = "StageView";
     public static string strChipDetailVew = "ChipDetailView";
     public static string strMonsterInfoView = "MonsterInfoView";
+    public static string strRoleInfoView = "RoleInfoView";
 
     //public static string strStageUIView = "StageUIView";
 }
@@ -35,13 +36,22 @@ public class MuiCore : SingleGameObject<MuiCore> {
         }
         else
         {
-            ui = GameObject.Find(name).GetComponent<MuiBase>();
+            var go = GameObject.Find(name);
 
-            if (ui == null)
+            if (go == null)
             {
                 ui = GameObject.Instantiate<GameObject>(Resources.Load(resourcePaht + name) as GameObject).GetComponent<MuiBase>();
             }
+            else
+            {
+                ui = go.GetComponent<MuiBase>();
+            }
 
+
+            if (ui == null)
+            {
+                Debug.LogError("1");
+            }
             dictionary.Add(name, ui);
         }
 

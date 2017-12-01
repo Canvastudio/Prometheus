@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Skill_Atlas
+  m_Name: Skill
   m_EditorData:
     textureSettings:
       serializedVersion: 2
@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 0ed0b34db798a81b1665fbcca051b6f9
+      Hash: feebd3b32d38c14a993543ef86cafb8e
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 0ed0b34db798a81b1665fbcca051b6f9
-    totalSpriteSurfaceArea: 0
+    hashString: feebd3b32d38c14a993543ef86cafb8e
+    totalSpriteSurfaceArea: 750200
     packables:
     - {fileID: 102900000, guid: 96f81deedc7a4456794755c451a61856, type: 3}
     packedSpriteRenderDataKeys:
@@ -226,5 +226,5 @@ SpriteAtlas:
   - skill1050
   - skill1002
   - skill1051
-  m_Tag: Skill_Atlas
+  m_Tag: Skill
   m_IsVariant: 0

@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MainUI
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    packedHash:
+      serializedVersion: 2
+      Hash: 697c6fa3fe97511883edb77d5f86c04c
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 697c6fa3fe97511883edb77d5f86c04c
+    totalSpriteSurfaceArea: 1877723
+    packables:
+    - {fileID: 102900000, guid: 454689885ecab4fddbaf680089bfa7ad, type: 3}
+    packedSpriteRenderDataKeys:
+    - dedbf25aba37445148d21fcc0b894f35: 21300000
+    - 3487cc2f2e6374e6fbc8e2c765a606df: 21300000
+    - f6c81e816e4b1458fa5091fc3a08db82: 21300000
+    - df6c4d65a8e2f43e3bb1fe8f5f4c741d: 21300000
+    - 66fb7730f5f4f453fb21a16c5e86a6b8: 21300000
+    - 2a4825799f6084425ab0b5b4eb25bfbe: 21300000
+    - 0e384c7a3e644494794909fb80218807: 21300000
+    - e4076bbb4a1394cf3aa5327e7d391fa0: 21300000
+    - 5086234d32d3743d7b08736a4ab9caf5: 21300000
+    - 5352f255cf834436abf72a95d36ba0f5: 21300000
+    - 23b2aec8fa84148928d1ea6169bf48b5: 21300000
+    - eec170c0c4ade42c39ea7fbeeba4e336: 21300000
+    - 1b479a0dadbca4eacb01b0e59a3ea030: 21300000
+    - 026b5f6678d8b435e8430dbc57e4b5fa: 21300000
+    - 3bbd1b3f572ae4e538c122176c9e9a11: 21300000
+    - a866ffb095fb74d3ba7cfcad18e772c4: 21300000
+    - 4fbf0b5df4fa74b0fa990c0eca8d01a9: 21300000
+    - 689505bd0363c41ac8082fe60bce5415: 21300000
+    - b1f263ec88c524a53995cc014e84c552: 21300000
+    - beeffa178ebd34cea802461e7891e226: 21300000
+    - 915b8e74fdec4461d8221fde6e94187a: 21300000
+    - f7ed315a7d56e4e0a94eafa12e8bdc5f: 21300000
+    - 10891b2e9f03a214b8a1b5977247a1e6: 21300000
+    - 84d88dd2859a04ea1af19a949fa6eea7: 21300000
+    - 7dfc48ecc208e4b17a17e5c827566b5b: 21300000
+    - 735425bb878f64f3cad2c4e67d6c6e3b: 21300000
+    - ccf5e8c3bb7ca42af8d54362f83356c0: 21300000
+    - 256aaf92b8d484a7ca990c5091df7700: 21300000
+    - 36dd0539dd711409dbede7b6fbed07df: 21300000
+    - 82e239019643447948b712ef5c1e6ea4: 21300000
+    - e16c07bdcb7c74f5da2fb498697ac1c4: 21300000
+    - d94f5d1c35e034d4097dade259ccf8ea: 21300000
+    - 21a5b56b677cf4b47ad78d633b962aeb: 21300000
+    - 28f2a856214534521b585ce10de963b1: 21300000
+    - 556b9cf925f864482933407887af7f14: 21300000
+    - ed1b9810363fe42d4ba68730368c6b12: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: dedbf25aba37445148d21fcc0b894f35, type: 3}
+  - {fileID: 21300000, guid: 3487cc2f2e6374e6fbc8e2c765a606df, type: 3}
+  - {fileID: 21300000, guid: f6c81e816e4b1458fa5091fc3a08db82, type: 3}
+  - {fileID: 21300000, guid: df6c4d65a8e2f43e3bb1fe8f5f4c741d, type: 3}
+  - {fileID: 21300000, guid: 66fb7730f5f4f453fb21a16c5e86a6b8, type: 3}
+  - {fileID: 21300000, guid: 2a4825799f6084425ab0b5b4eb25bfbe, type: 3}
+  - {fileID: 21300000, guid: 0e384c7a3e644494794909fb80218807, type: 3}
+  - {fileID: 21300000, guid: e4076bbb4a1394cf3aa5327e7d391fa0, type: 3}
+  - {fileID: 21300000, guid: 5086234d32d3743d7b08736a4ab9caf5, type: 3}
+  - {fileID: 21300000, guid: 5352f255cf834436abf72a95d36ba0f5, type: 3}
+  - {fileID: 21300000, guid: 23b2aec8fa84148928d1ea6169bf48b5, type: 3}
+  - {fileID: 21300000, guid: eec170c0c4ade42c39ea7fbeeba4e336, type: 3}
+  - {fileID: 21300000, guid: 1b479a0dadbca4eacb01b0e59a3ea030, type: 3}
+  - {fileID: 21300000, guid: 026b5f6678d8b435e8430dbc57e4b5fa, type: 3}
+  - {fileID: 21300000, guid: 3bbd1b3f572ae4e538c122176c9e9a11, type: 3}
+  - {fileID: 21300000, guid: a866ffb095fb74d3ba7cfcad18e772c4, type: 3}
+  - {fileID: 21300000, guid: 4fbf0b5df4fa74b0fa990c0eca8d01a9, type: 3}
+  - {fileID: 21300000, guid: 689505bd0363c41ac8082fe60bce5415, type: 3}
+  - {fileID: 21300000, guid: b1f263ec88c524a53995cc014e84c552, type: 3}
+  - {fileID: 21300000, guid: beeffa178ebd34cea802461e7891e226, type: 3}
+  - {fileID: 21300000, guid: 915b8e74fdec4461d8221fde6e94187a, type: 3}
+  - {fileID: 21300000, guid: f7ed315a7d56e4e0a94eafa12e8bdc5f, type: 3}
+  - {fileID: 21300000, guid: 10891b2e9f03a214b8a1b5977247a1e6, type: 3}
+  - {fileID: 21300000, guid: 84d88dd2859a04ea1af19a949fa6eea7, type: 3}
+  - {fileID: 21300000, guid: 7dfc48ecc208e4b17a17e5c827566b5b, type: 3}
+  - {fileID: 21300000, guid: 735425bb878f64f3cad2c4e67d6c6e3b, type: 3}
+  - {fileID: 21300000, guid: ccf5e8c3bb7ca42af8d54362f83356c0, type: 3}
+  - {fileID: 21300000, guid: 256aaf92b8d484a7ca990c5091df7700, type: 3}
+  - {fileID: 21300000, guid: 36dd0539dd711409dbede7b6fbed07df, type: 3}
+  - {fileID: 21300000, guid: 82e239019643447948b712ef5c1e6ea4, type: 3}
+  - {fileID: 21300000, guid: e16c07bdcb7c74f5da2fb498697ac1c4, type: 3}
+  - {fileID: 21300000, guid: d94f5d1c35e034d4097dade259ccf8ea, type: 3}
+  - {fileID: 21300000, guid: 21a5b56b677cf4b47ad78d633b962aeb, type: 3}
+  - {fileID: 21300000, guid: 28f2a856214534521b585ce10de963b1, type: 3}
+  - {fileID: 21300000, guid: 556b9cf925f864482933407887af7f14, type: 3}
+  - {fileID: 21300000, guid: ed1b9810363fe42d4ba68730368c6b12, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - detail_chip_bg
+  - detail_role_bg
+  - detail_t_bg
+  - top_m_bg_0
+  - item_prop_bg
+  - item_skill_bg
+  - item_buff_bg
+  - item_debuff_bg
+  - item_chip_bg
+  - top_t_bg_0
+  - bottom_m_bg_0
+  - skill_bar_bg
+  - buff_bar_bg
+  - bottom_b_bg_0
+  - btn_back_bg
+  - title_bg
+  - role_t_engine_boder
+  - role_t_fresh_boder
+  - side_line
+  - chip_icon
+  - skill_icon_bg
+  - prop_icon_bg
+  - chip_bg
+  - buff_icon_bg
+  - head
+  - image_skill
+  - box_r_0
+  - Image_buff
+  - role_bound_engine_fx
+  - role_bound_fresh_fx
+  - btn_normal
+  - role_t_fresh
+  - role_t_engine
+  - Text_role_type_fresh
+  - Text_role_type_engine
+  - 358H1px
+  m_Tag: MainUI
+  m_IsVariant: 0

@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 222018780999364380}
   - component: {fileID: 114671868337730204}
   - component: {fileID: 114412249161460412}
+  - component: {fileID: 114825616357177692}
   m_Layer: 5
   m_Name: Buff
   m_TagString: Untagged
@@ -160,6 +161,23 @@ GameObject:
   - component: {fileID: 114424153435603656}
   m_Layer: 5
   m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1135591953835730
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224624871161167960}
+  - component: {fileID: 222176573696390652}
+  - component: {fileID: 114413010374837684}
+  m_Layer: 5
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,6 +489,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1533428333570616
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224420916430118340}
+  - component: {fileID: 222664149791917582}
+  - component: {fileID: 114622871252901694}
+  - component: {fileID: 114697074272869148}
+  m_Layer: 5
+  m_Name: RoleInfoButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1618179241239646
 GameObject:
   m_ObjectHideFlags: 1
@@ -652,6 +688,7 @@ GameObject:
   - component: {fileID: 222654378929874442}
   - component: {fileID: 114863400201579636}
   - component: {fileID: 114612901926665256}
+  - component: {fileID: 114713851903880734}
   m_Layer: 5
   m_Name: OpenChipUpdate_Btn
   m_TagString: Untagged
@@ -1147,11 +1184,216 @@ MonoBehaviour:
     id: 0
     stateEffects: []
     state_id: 0
-    passive: 0
+    passive:
+      id: 0
+      skillId: 0
+      stateIns:
+        id: 0
+        stateEffects: []
+        state_id: 0
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        active: 0
+        exist_time: 0
+        skillDamage: 0
+      haloInfo:
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        id: 0
+        owner: {fileID: 0}
+        Side: 0
+        effectBricks: []
+        active: 0
+      owner: {fileID: 0}
+      type: 0
+      range: 0
     active: 0
     exist_time: 0
     skillDamage: 0
   id: 0
+--- !u!114 &114413010374837684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135591953835730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Button
 --- !u!114 &114424153435603656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1343,6 +1585,33 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114622871252901694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533428333570616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114626416941478208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1525,6 +1794,47 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114697074272869148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533428333570616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 114622871252901694}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114700296964933032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1554,6 +1864,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114713851903880734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1964166456925312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ec39ab5b7d4f74bb80c9c026e68426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OpenChipUpdate_Btn: {fileID: 114612901926665256}
 --- !u!114 &114723318074610674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1715,6 +2037,199 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114825616357177692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111310717915310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d17abc83dc5ba74b97a7c3d7ad1a004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 114671868337730204}
+  ins:
+    id: 0
+    stateEffects: []
+    state_id: 0
+    passive:
+      id: 0
+      skillId: 0
+      stateIns:
+        id: 0
+        stateEffects: []
+        state_id: 0
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        active: 0
+        exist_time: 0
+        skillDamage: 0
+      haloInfo:
+        passive:
+          id: 0
+          skillId: 0
+          stateIns:
+            id: 0
+            stateEffects: []
+            state_id: 0
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            active: 0
+            exist_time: 0
+            skillDamage: 0
+          haloInfo:
+            passive:
+              id: 0
+              skillId: 0
+              stateIns:
+                id: 0
+                stateEffects: []
+                state_id: 0
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                active: 0
+                exist_time: 0
+                skillDamage: 0
+              haloInfo:
+                passive:
+                  id: 0
+                  skillId: 0
+                  type: 0
+                  range: 0
+                id: 0
+                owner: {fileID: 0}
+                Side: 0
+                effectBricks: []
+                active: 0
+              owner: {fileID: 0}
+              type: 0
+              range: 0
+            id: 0
+            owner: {fileID: 0}
+            Side: 0
+            effectBricks: []
+            active: 0
+          owner: {fileID: 0}
+          type: 0
+          range: 0
+        id: 0
+        owner: {fileID: 0}
+        Side: 0
+        effectBricks: []
+        active: 0
+      owner: {fileID: 0}
+      type: 0
+      range: 0
+    active: 0
+    exist_time: 0
+    skillDamage: 0
+  id: 0
 --- !u!114 &114853635816052616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1817,6 +2332,7 @@ MonoBehaviour:
   hpText: {fileID: 114389722617022956}
   hpSlider: {fileID: 114343516786315390}
   buff: {fileID: 114412249161460412}
+  roleButton: {fileID: 114697074272869148}
 --- !u!114 &114879481958444666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1954,6 +2470,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978362122925836}
+--- !u!222 &222176573696390652
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135591953835730}
 --- !u!222 &222219632385442066
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -2038,6 +2560,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1964166456925312}
+--- !u!222 &222664149791917582
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533428333570616}
 --- !u!222 &222680217695475650
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -2474,6 +3002,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224420916430118340
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533428333570616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -59.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224624871161167960}
+  m_Father: {fileID: 224899133842137376}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -59.1, y: 0}
+  m_SizeDelta: {x: -118.2, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224465032371019306
 RectTransform:
   m_ObjectHideFlags: 1
@@ -2617,6 +3164,24 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224770037789037370}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224624871161167960
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135591953835730}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224420916430118340}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2886,6 +3451,7 @@ RectTransform:
   - {fileID: 224865755986251518}
   - {fileID: 224200357955986000}
   - {fileID: 224357985046886228}
+  - {fileID: 224420916430118340}
   m_Father: {fileID: 224715801858945144}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

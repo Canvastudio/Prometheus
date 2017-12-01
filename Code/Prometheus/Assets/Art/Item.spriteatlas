@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Item_Atlas
+  m_Name: Item
   m_EditorData:
     textureSettings:
       serializedVersion: 2
@@ -28,11 +28,11 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 47ff1eb64ad9d22080839bb855bc2711
+      Hash: 71568a86919da5e57336bea314e36bb8
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 47ff1eb64ad9d22080839bb855bc2711
+    hashString: 71568a86919da5e57336bea314e36bb8
     totalSpriteSurfaceArea: 706652
     packables:
     - {fileID: 102900000, guid: b4d8ebb997dad4a1e892e564a75ab7db, type: 3}
@@ -212,5 +212,5 @@ SpriteAtlas:
   - mask_pop
   - spaceship_0
   - spaceship_1
-  m_Tag: Item_Atlas
+  m_Tag: Item
   m_IsVariant: 0

@@ -59,25 +59,7 @@ public static class GameExtend  {
         
     }
 
-    public static void SetSkillIcon(this Image image, string name)
-    {
-        image.sprite = StageView.Instance.skillAtals.GetSprite(name);
-    }
 
-    public static void SetStateIcon(this Image image, string name)
-    {
-        image.sprite = StageView.Instance.stateAtlas.GetSprite(name);
-    }
-
-    public static void SetItemIcon(this Image image, string name)
-    {
-        image.sprite = StageView.Instance.itemAtlas.GetSprite(name);
-    }
-
-    public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
-    {
-        t.text = item.Property.GetIntProperty(property).ToString();
-    }
 
     public static RectTransform Rt(this GameObject go)
     {

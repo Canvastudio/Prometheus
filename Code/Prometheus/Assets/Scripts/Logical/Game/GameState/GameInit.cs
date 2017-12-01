@@ -35,6 +35,8 @@ public class GameInit : IState
 
         yield return MuiCore.Instance.Init(UiName.strMonsterInfoView);
 
+        yield return MuiCore.Instance.Init(UiName.strRoleInfoView);
+
         //测试代码
         {
             foreach (var value in GameTestData.Instance.AddChips)

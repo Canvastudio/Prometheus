@@ -19,8 +19,6 @@ public class StateComponent : MonoBehaviour {
     public void Awake()
     {
         owner = GetComponent<LiveItem>();
-
-        t = 0;
     }
 
     float t;

@@ -5,7 +5,7 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: State_Atlas
+  m_Name: State
   m_EditorData:
     textureSettings:
       serializedVersion: 2
@@ -28,11 +28,11 @@ SpriteAtlas:
       enableTightPacking: 1
     packedHash:
       serializedVersion: 2
-      Hash: 43a618abe4c8b82cc3622c5f55b389f9
+      Hash: 7716e207183b1917d2a784064f077eb5
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 43a618abe4c8b82cc3622c5f55b389f9
+    hashString: 7716e207183b1917d2a784064f077eb5
     totalSpriteSurfaceArea: 786500
     packables:
     - {fileID: 102900000, guid: 1e04abb7878b64de1ab89916a7dd2663, type: 3}
@@ -235,5 +235,5 @@ SpriteAtlas:
   - buff_30
   - buff_62
   - buff_31
-  m_Tag: State_Atlas
+  m_Tag: State
   m_IsVariant: 0
