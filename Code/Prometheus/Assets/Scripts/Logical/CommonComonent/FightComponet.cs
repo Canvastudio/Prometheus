@@ -441,8 +441,6 @@ public class FightComponet : MonoBehaviour
                 }                                                   
             }
         }
-
-
     }
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
@@ -508,7 +506,9 @@ public class FightComponet : MonoBehaviour
                     }
                 }
             }
+
             time_cost = rangeSkillCost.cost;
+
             StageCore.Instance.TimeCast(time_cost);
         }
 
