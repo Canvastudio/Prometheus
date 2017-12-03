@@ -411,18 +411,18 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator MeleeAttackByOther<T>(T other, Damage damageInfo) where T : LiveItem
     {
-        Debug.Log("被攻击： " + damageInfo.damageTarget);
+        //Debug.Log("被攻击： " + damageInfo.damageTarget);
 
-        LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
+        //LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
 
-        yield return waitForSeconds;
+        yield return 0;
 
         TakeDamage(damageInfo);
     }
 
     public virtual float TakeDamage(Damage damageInfo)
     {
-        Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
+        //Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
 
         Sleep = false;
 

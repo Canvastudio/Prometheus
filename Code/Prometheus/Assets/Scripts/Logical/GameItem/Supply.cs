@@ -14,7 +14,7 @@ public class Supply : GameItemBase, IReactive {
 
         standBrick.brickType = BrickType.EMPTY;
 
-        ObjPool<Supply>.Instance.RecycleObj(GameItemFactory.Instance.supply_pool, itemId);
+        Recycle();
     }
 
     public override void Recycle()

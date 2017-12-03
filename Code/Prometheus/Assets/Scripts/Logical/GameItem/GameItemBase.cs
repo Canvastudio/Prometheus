@@ -64,10 +64,14 @@ public class GameItemBase : MonoBehaviour, ITagable {
     /// <summary>
     /// 不手动修改，如果写在entity那边 又需要一个字典 没有必要
     /// </summary>
+    private HashSet<ETag> _etag = new HashSet<ETag>();
     public HashSet<ETag> Etag
     {
-        get;
-        set;
+        get
+        {
+            return _etag;
+        }
+        set { _etag = value; }
     }
 
     [SerializeField]
@@ -111,12 +115,12 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
         bool in_area = false;
 
-        var screen_Pos = RectTransformUtility.WorldToScreenPoint(StageView.Instance.show_camera, transform.position);
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(GameManager.Instance.UiCamera, transform.position);
 
         in_area = RectTransformUtility.RectangleContainsScreenPoint(
-            StageView.Instance.viewArea,
+            StageUIView.Instance.viewArea,
             screen_Pos,
-            StageView.Instance.show_camera);
+            GameManager.Instance.UiCamera);
 
         if (in_area)
         {

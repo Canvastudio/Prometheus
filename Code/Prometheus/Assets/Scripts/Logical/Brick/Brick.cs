@@ -410,7 +410,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickExplored = BrickExplored.UNEXPLORED;
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
 
-        //Debug.Log("回收砖块: row: " + row + " col: " + column);
+        Debug.Log("回收砖块: row: " + row + " col: " + column);
 
         if (isDiscovered)
         {
@@ -423,8 +423,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         if (column == 0)
         {
-            BrickCore.Instance.BrickRowRecycle(row);
             BrickCore.Instance.RemoveRowIndata(this);
+            BrickCore.Instance.BrickRowRecycle(row);
+
+            Debug.Log("回收砖块行: row: " + row);
         }
     }
 

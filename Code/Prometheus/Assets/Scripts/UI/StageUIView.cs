@@ -12,6 +12,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
     [SerializeField]
     public UpUIView upUIView;
 
+    public RectTransform viewArea;
+
     public override IEnumerator Close(object param = null)
     {
         throw new System.NotImplementedException();

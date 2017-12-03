@@ -298,7 +298,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
     public void CancelBlockNearbyBrick(int row, int column)
     {
-        Debug.Log("取消block: " + row + " " + column);
+        //Debug.Log("取消block: " + row + " " + column);
 
         for (int n = -1; n <= 1; ++n)
         {

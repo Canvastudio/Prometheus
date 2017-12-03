@@ -33,7 +33,7 @@ public class StageView : MuiSingleBase<StageView>
     public int column_per_row = 6;
     public string brickName = "brick";
     public Camera show_camera;
-    public RectTransform viewArea;
+
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
@@ -81,6 +81,8 @@ public class StageView : MuiSingleBase<StageView>
         }
 
         if (_brick.canvasGroup == null) _brick.canvasGroup = _brick.GetOrAddComponet<CanvasGroup>();
+
+        _brick.ListenInit();
 
         return _brick;
     }

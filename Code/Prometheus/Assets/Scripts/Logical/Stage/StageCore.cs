@@ -271,7 +271,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
                                                 yield return MovePlayer();
 
-                                                if (need_action)
+                                                if (need_action && Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
                                                     yield return DoNearByBrickSpecialAction(brick1);
                                             }
                                             else

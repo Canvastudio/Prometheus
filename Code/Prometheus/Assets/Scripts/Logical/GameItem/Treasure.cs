@@ -32,7 +32,7 @@ public class Treasure : GameItemBase, IReactive {
                 break;
         }
 
-        ObjPool<Treasure>.Instance.RecycleObj(GameItemFactory.Instance.treasure_pool, itemId);
+        Recycle();
     }
 
     public void Init()
@@ -69,6 +69,6 @@ public class Treasure : GameItemBase, IReactive {
     {
         base.Recycle();
 
-        GameObject.Destroy(this.gameObject);
+        ObjPool<Treasure>.Instance.RecycleObj(GameItemFactory.Instance.treasure_pool, itemId);
     }
 }
