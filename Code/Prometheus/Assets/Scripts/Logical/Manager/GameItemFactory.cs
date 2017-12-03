@@ -392,7 +392,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
         }
 
-        if (GameTestData.Instance.alwaysShow)
+        if (true)//(GameTestData.Instance.alwaysShow)
         {
             item.canvasGroup.alpha = 1;
         }
@@ -400,6 +400,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         {
             item.canvasGroup.alpha = 0;
         }
+
+
+        CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
 
         item.ListenInit();
 

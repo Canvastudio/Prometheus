@@ -211,11 +211,20 @@ public class StageCore : SingleGameObject<StageCore> {
                         //停止监听砖块点击事件
                         switch (type)
                         {
+                            case BrickType.SUPPLY:
+                                Supply item = brick1.item as Supply;
+                                item.Reactive();
+                                break;
+                            case BrickType.TREASURE:
+                                Treasure _item = brick1.item as Treasure;
+                                _item.Reactive();
+                                break;
+
                             case BrickType.EMPTY:
                             case BrickType.UNKNOWN:
                             case BrickType.MONSTER:
-                            case BrickType.SUPPLY:
-                            case BrickType.TREASURE:
+                            //case BrickType.SUPPLY:
+                            //case BrickType.TREASURE:
                             case BrickType.MAINTENANCE:
 
                                 int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
