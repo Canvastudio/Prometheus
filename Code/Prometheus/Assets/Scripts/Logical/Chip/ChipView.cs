@@ -111,7 +111,10 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     private void ShowDetail()
     {
-        MuiCore.Instance.Open(UiName.strChipDetailVew);
+        CheckSkillPointAndProperty();
+        StageCore.Instance.Player.RefreshSkillPointStateToSkill();
+
+        StartCoroutine(MuiCore.Instance.AddOpen(UiName.strChipDetailVew));
     }
 
     public void CalculteChipBoardBound()
@@ -174,6 +177,13 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     private IEnumerator InitChipList()
     {
+        RefreshChipList();
+
+        return null;
+    }
+
+    public void RefreshChipList()
+    {
         int id;
 
         ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
@@ -188,7 +198,7 @@ public class ChipView : MuiSingleBase<ChipView> {
             chip.gameObject.SetActive(true);
             chip.id = id;
 
-            yield return (chip.InitItem(chipList[i]));
+            chip.InitItem(chipList[i]);
         }
     }
 

@@ -29,6 +29,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     [SerializeField]
     private int _isPower;
+
     public int Power
     {
         get

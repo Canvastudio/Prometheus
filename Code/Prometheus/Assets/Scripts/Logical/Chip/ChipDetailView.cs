@@ -9,37 +9,42 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
     SkillPointInfo pointItem;
     [SerializeField]
     Transform pointRoot;
-    [SerializeField]
-    MergeOption option;
+    //[SerializeField]
+    public ChipItem chipItem;
     [SerializeField]
     Transform chipRoot;
     [SerializeField]
     Button backButton;
 
-    string pname = "cspi";
-    string cname = "OPN";
+    string pname = "SkillPointInfo";
+    string cname = "ChipItem";
 
     public override IEnumerator Init(object param = null)
     {
         ObjPool<SkillPointInfo>.Instance.InitOrRecyclePool(pname, pointItem);
-        ObjPool<MergeOption>.Instance.InitOrRecyclePool(cname, option);
+        ObjPool<ChipItem>.Instance.InitOrRecyclePool(cname, chipItem);
+        pointItem.gameObject.SetActive(false);
+        chipItem.gameObject.SetActive(false);
         HudEvent.Get(backButton).onClick = OnClose;
         return null;
     }
 
     private void OnClose()
     {
-        MuiCore.Instance.Open(UiName.strChipView);
+        //MuiCore.Instance.Open(UiName.strChipView);
+        MuiCore.Instance.HideTop();
     }
 
     public override IEnumerator Open(object param = null)
     {
         ObjPool<SkillPointInfo>.Instance.RecyclePool(pname);
-        ObjPool<SkillPointInfo>.Instance.RecyclePool(cname);
+        ObjPool<ChipItem>.Instance.RecyclePool(cname);
 
         var ai = StageCore.Instance.Player.fightComponet.activeInsList;
         var pi = StageCore.Instance.Player.fightComponet.passiveInsList;
+
         int id;
+
         for (int i = 0;  i < ai.Count; ++i)
         {
             var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
@@ -48,6 +53,7 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
             info.Set(ai[i]);
             info.gameObject.SetActive(true);
         }
+
         for (int i = 0; i < pi.Count; ++i)
         {
             var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
@@ -58,15 +64,14 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
         }
 
         var ci = StageCore.Instance.Player.inventory.GetChipList();
+        Debug.Log("芯片数量: " + ci.Count);
         for (int i = 0; i < ci.Count; ++i)
         {
-            if (ci[i].boardInstance == null)
-            {
-                var chip = ObjPool<MergeOption>.Instance.GetObjFromPoolWithID(out id, cname);
-                chip.SetParentAndNormalize(chipRoot);
-                chip.Init(ci[i], id, OnChipClick);
-                chip.gameObject.SetActive(true);
-            }
+ 
+            var chip = ObjPool<ChipItem>.Instance.GetObjFromPoolWithID(out id, cname);
+            chip.SetParentAndNormalize(chipRoot);
+            chip.ShowChipInfo(ci[i], id);
+            chip.gameObject.SetActive(true);
         }
 
         yield return 0;
@@ -74,11 +79,17 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
         gameObject.SetActive(true);
     }
 
-    private void OnChipClick(MergeOption op)
+    public void OnChipClick(ChipItem item)
     {
-        if (ChipView.Instance.CreateBoardInstance(op.chip) != null)
+        if (item.chip.boardInstance == null)
         {
-            ObjPool<MergeOption>.Instance.RecycleObj(cname, op.id);
+            if (ChipView.Instance.CreateBoardInstance(item.chip) != null)
+            {
+                ObjPool<MergeOption>.Instance.RecycleObj(cname, item.id);
+                ChipView.Instance.RefreshChipList();
+            }
+
+            OnClose();
         }
     }
 

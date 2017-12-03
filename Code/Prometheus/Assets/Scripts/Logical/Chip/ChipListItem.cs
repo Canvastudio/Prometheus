@@ -23,12 +23,10 @@ public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     public ChipBoardInstance boardInstance;
     private Color color;
 
-    public IEnumerator InitItem(ChipInventory chipInventory)
+    public void InitItem(ChipInventory chipInventory)
     {
         this.chipInventory = chipInventory;
         chipInventory.listItem = this;
-
-        yield return GameGlobalVariable.waitForEndOfFrame;
 
         HudEvent.Get(btn).onLongPress = OnLongPress;
         HudEvent.Get(btn).onClick = OnClick;

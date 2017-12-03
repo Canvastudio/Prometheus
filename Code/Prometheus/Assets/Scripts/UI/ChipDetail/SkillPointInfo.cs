@@ -22,6 +22,11 @@ public class SkillPointInfo : MonoBehaviour
 
     static StringBuilder sb = new StringBuilder(12);
 
+    private void Awake()
+    {
+        //gameObject.SetActive(false);
+    }
+
     public void Set(ActiveSkillIns ins)
     {
         skillName.text = ins.config.name;
