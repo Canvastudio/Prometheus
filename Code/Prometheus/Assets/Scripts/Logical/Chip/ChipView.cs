@@ -262,16 +262,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
             if (change_power != 0)
             {
-                var sp = ins.chipInventory.config.skillPoint;
-                int c = sp.Count();
-                {
-                    for (int m = 0; m < c; ++m)
-                    {
-                        ulong skill_id = (ulong)sp[m, 0];
-                        int count = sp[m, 1];
-                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
-                    }
-                }
+                CalculateChipSkillPointAndProperty(ins.chipInventory.config, change_power);
             }
         }
 
@@ -283,16 +274,42 @@ public class ChipView : MuiSingleBase<ChipView> {
 
             if (change_power != 0)
             {
-                var sp = pair.Value.config.skillPoint;
-                int c = sp.Count();
+                CalculateChipSkillPointAndProperty(pair.Value.config, change_power);
+            }
+        }
+    }
+
+    private void CalculateChipSkillPointAndProperty(ChipConfig config, int change_power)
+    {
+        var sp =config.skillPoint;
+
+        if (sp != null)
+        {
+            int c = sp.Count();
+            {
+                for (int m = 0; m < c; ++m)
                 {
-                    for (int m = 0; m < c; ++m)
-                    {
-                        ulong skill_id = (ulong)sp[m, 0];
-                        int count = sp[m, 1];
-                        StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
-                    }
+                    ulong skill_id = (ulong)sp[m, 0];
+                    int count = sp[m, 1];
+                    StageCore.Instance.Player.skillPointsComponet.ChangeSkillPointCount(skill_id, count * change_power);
                 }
+            }
+        }
+
+        var p = config.propertyAddition;
+
+        if (p != null)
+        {
+            var ps = p.gamePropertys.ToArray();
+            var vs = p.values.ToArray();
+
+            int c = ps.Length;
+
+            for (int m = 0; m < c; ++m)
+            {
+                GameProperty property = ps[m];
+                float value = vs[m];
+                StageCore.Instance.Player.Property.AddFloatProperty(property, value * change_power);
             }
         }
     }

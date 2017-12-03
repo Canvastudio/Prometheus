@@ -86,4 +86,13 @@ public class PropertyData
         return this;
     }
 
+    public PropertyData AddFloatProperty(GameProperty id, float value, bool callback = true)
+    {
+        float v = GetFloatProperty(id);
+
+        SetFloatProperty(id, v + value, callback);
+
+        return this;
+    }
+
 }
