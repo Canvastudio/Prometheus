@@ -21,13 +21,14 @@ public class UpUIView : MonoBehaviour {
     List<UpBuff> list = new List<UpBuff>();
 
     string pname = "upbuff";
+
     public void Init()
     {
         ObjPool<UpBuff>.Instance.InitOrRecyclePool(pname, buff);
         HudEvent.Get(roleButton).onClick = OnRole;
-        Messenger.AddListener(SA.PlayHpChange, OnHpChange);
+        Messenger.AddListener(SA.PlayHpChange, RefreshHpUI);
 
-        OnHpChange();
+        //OnHpChange();
     }
 
     private void OnRole()
@@ -50,18 +51,21 @@ public class UpUIView : MonoBehaviour {
 
     }
 
-    private void OnHpChange()
+    public void RefreshHpUI()
     {
-        sb.Remove(0, sb.Length);
-        int curHp = Mathf.RoundToInt(StageCore.Instance.Player.cur_hp);
-        int maxHp = Mathf.RoundToInt(StageCore.Instance.Player.fmax_hp);
+        if (StageCore.Instance.Player != null)
+        {
+            sb.Remove(0, sb.Length);
+            int curHp = Mathf.RoundToInt(StageCore.Instance.Player.cur_hp);
+            int maxHp = Mathf.RoundToInt(StageCore.Instance.Player.fmax_hp);
 
-        sb.Append(curHp.ToString());
-        sb.Append("/");
-        sb.Append(maxHp.ToString());
+            sb.Append(curHp.ToString());
+            sb.Append("/");
+            sb.Append(maxHp.ToString());
 
-        hpText.text = sb.ToString();
+            hpText.text = sb.ToString();
 
-        hpSlider.value = StageCore.Instance.Player.cur_hp / StageCore.Instance.Player.fmax_hp;
+            hpSlider.value = StageCore.Instance.Player.cur_hp / StageCore.Instance.Player.fmax_hp;
+        }
     }
 }

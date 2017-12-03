@@ -21,6 +21,8 @@ public class GameInit : IState
 
         yield return FxCore.Instance.PreLoadStageFx();
 
+        yield return MuiCore.Instance.Init(UiName.strStageUIView);
+
         yield return MuiCore.Instance.Init(UiName.strStageView);
 
         yield return MuiCore.Instance.OpenIE(UiName.strStageView);

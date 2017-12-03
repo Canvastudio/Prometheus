@@ -173,6 +173,8 @@ public class StageCore : SingleGameObject<StageCore> {
     /// <returns></returns>
     public IEnumerator RunLoop()
     {
+        StageUIView.Instance.upUIView.RefreshHpUI();
+
         isLooping = true;
 
         gaming = true;

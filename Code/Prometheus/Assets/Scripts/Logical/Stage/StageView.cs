@@ -22,8 +22,6 @@ public class StageView : MuiSingleBase<StageView>
     public Transform NonliveItemRoot;
     public Transform brickRoot;
 
-    public GameObject stageGo;
-
     [Space(5)]
     public SpriteAtlas itemAtlas;
     public SpriteAtlas skillAtals;
@@ -36,13 +34,6 @@ public class StageView : MuiSingleBase<StageView>
     public string brickName = "brick";
     public Camera show_camera;
     public RectTransform viewArea;
-
-    [SerializeField]
-    Button skillInfoButton;
-
-    [SerializeField]
-    public UpUIView upUIView;
-
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
@@ -139,10 +130,6 @@ public class StageView : MuiSingleBase<StageView>
     {
         ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
 
-        ObjPool<SkillListItem>.Instance.InitOrRecyclePool(skillListItemName, _skillListItemPrefab);
-
-        HudEvent.Get(skillInfoButton).onClick = ShowSkillInfo;
-
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
 
@@ -154,7 +141,6 @@ public class StageView : MuiSingleBase<StageView>
         //刷新下位置
         Messenger.Invoke(SA.RefreshGameItemPos);
 
-        upUIView.Init();
     }
 
     private void ShowSkillInfo()
@@ -166,7 +152,7 @@ public class StageView : MuiSingleBase<StageView>
     {
         gameObject.SetActive(true);
 
-        yield return 0;
+        yield return MuiCore.Instance.AddOpen(UiName.strStageUIView);
     }
 
     public override IEnumerator Close(object param)
@@ -177,50 +163,5 @@ public class StageView : MuiSingleBase<StageView>
     public override void Hide(object param)
     {
         gameObject.SetActive(false);
-    }
-
-    [SerializeField]
-    SkillListItem _skillListItemPrefab;
-    public string skillListItemName = "SLIN";
-    private List<SkillListItem> skillItemList = new List<SkillListItem>(10);
-    public Transform skillListRoot;
-
-    public void AddSkillIntoSkillList(ulong uid)
-    {
-#if UNITY_EDITOR
-        foreach (var item in skillItemList)
-        {
-            if (item.skill_id == uid)
-            {
-                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + uid.ToString());
-            }
-        }
-#endif
-
-        if (uid > 0 && FightComponet.IdToSkillType(uid) == SkillType.Active)
-        {
-            int _id;
-            var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
-            list_item.id = _id;
-            list_item.SetInfo(uid);
-            list_item.SetParentAndNormalize(skillListRoot);
-            skillItemList.Add(list_item);
-        }
-    }
-
-    public void RemoveSkillFromSkillList(ulong uid)
-    {
-        if (FightComponet.IdToSkillType(uid) == SkillType.Active)
-        {
-            for (int i = 0; i < skillItemList.Count; ++i)
-            {
-                if (skillItemList[i].skill_id == uid)
-                {
-                    ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
-                    skillItemList.RemoveAt(i);
-                    return;
-                }
-            }
-        }
     }
 }

@@ -30,7 +30,7 @@ public class Player : LiveItem {
                 if (skill_point.skillId > 0)
                 {
                     fightComponet.RemoveSkill(skill_point.skillId);
-                    StageView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
+                    StageUIView.Instance.RemoveSkillFromSkillList(skill_point.skillId);
                 }
 
                 ulong new_skillId = skill_point.GetNewSkillId();
@@ -81,13 +81,13 @@ public class Player : LiveItem {
     {
         base.AddStateUI(ins);
 
-        StageView.Instance.upUIView.OnStateAdd(ins);
+        StageUIView.Instance.upUIView.OnStateAdd(ins);
     }
 
     public override void RemoveStateUI(StateIns ins)
     {
         base.RemoveStateUI(ins);
 
-        StageView.Instance.upUIView.OnStateRemove(ins);
+        StageUIView.Instance.upUIView.OnStateRemove(ins);
     }
 }

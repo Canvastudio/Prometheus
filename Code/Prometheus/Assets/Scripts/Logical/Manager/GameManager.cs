@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : SingleGameObject<GameManager> {
 
+    public Camera UiCamera;
+
     protected override void Init()
     {
         base.Init();

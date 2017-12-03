@@ -2686,7 +2686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHide: 0
-  backButton: {fileID: 114513144442528814}
+  backButton: {fileID: 114212050794190890}
   skillRoot: {fileID: 224619151369610952}
   stateRoot: {fileID: 224619151369610952}
   skillItem: {fileID: 114864407902411056}
@@ -2789,7 +2789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2965,6 +2965,7 @@ MonoBehaviour:
   stateName: {fileID: 114897927396283102}
   stateDuration: {fileID: 114197420206563830}
   stateIcon: {fileID: 114501736429634754}
+  stateBg: {fileID: 0}
 --- !u!114 &114966339272192612
 MonoBehaviour:
   m_ObjectHideFlags: 1

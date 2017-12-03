@@ -148,7 +148,7 @@ public class FightComponet : MonoBehaviour
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
         activeInsList.Add(new ActiveSkillIns(aconfig, ownerObject, point));
-        StageView.Instance.AddSkillIntoSkillList(id);
+        StageUIView.Instance.AddSkillIntoSkillList(id);
     }
 
     public virtual void RemoveSkill(ulong id)

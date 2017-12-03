@@ -10,26 +10,14 @@ public abstract class MuiSingleBase<T> : MuiBase where T : Component
     {
         get
         {
-            //if (_instance == null)
-            //{
-            //    var go = (GameObject.FindObjectOfType(typeof(T)) as GameObject);
-
-            //    if (go != null)
-            //    {
-            //        _instance = go.GetComponent<T>();
-            //    }
-            //    else
-            //    {
-            //        _instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
-            //    }
-            //}
-
             return _instance;
         }
     }
 
-    protected virtual void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         if (_instance == null)
         {
             _instance = GetComponent<T>();

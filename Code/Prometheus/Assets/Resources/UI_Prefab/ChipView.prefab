@@ -1484,12 +1484,14 @@ MonoBehaviour:
     type: 2}
   closeBtn: {fileID: 114765529605048170}
   deleteBtn: {fileID: 114310560282105446}
+  detailButton: {fileID: 114290822583238794}
   camera: {fileID: 0}
   powerGridArray:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  itemName: CI
   powerGridUid: 0
   normalSpirte: {fileID: 21300000, guid: 17a70ef816075465ca7b89198a8ac5ba, type: 3}
   positiveSprite: {fileID: 21300000, guid: f6fbb2cbd12de4b0d982f3c014358902, type: 3}
@@ -1933,7 +1935,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1479418102286766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -296.275, y: 0, z: 0}
+  m_LocalPosition: {x: -888.82495, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224609645943313242}
@@ -1944,7 +1946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -592.55, y: 0}
+  m_AnchoredPosition: {x: -1185.1, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224243133236565696
