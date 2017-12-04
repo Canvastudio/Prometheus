@@ -26,9 +26,10 @@ public class SkillListItem : DragableScrollItem
 
     public void SetInfo(ulong id)
     {
+        gameObject.SetActive(true);
         skill_id = id;
         config = ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(id);
-        button.image.sprite = HelpFunction.GetSkillIcon(id, StageView.Instance.skillAtals);
+        icon.SetSkillIcon(config.icon);
     }
 
     public void OnLongPress()

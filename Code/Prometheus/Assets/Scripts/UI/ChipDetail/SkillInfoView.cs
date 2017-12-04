@@ -8,7 +8,7 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
     [SerializeField]
     Transform contentRoot;
     [SerializeField]
-    SkillDetailItem item;
+    SkillItem item;
     [SerializeField]
     Button asButton;
     [SerializeField]
@@ -18,7 +18,7 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
     [SerializeField]
     Button closeButton;
 
-    private string pname = "sdip";
+    private string pname = "skillItem";
 
     /// <summary>
     /// 0显示主动 1 显示被动
@@ -31,14 +31,14 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
         {
             show_state = 0;
 
-            ObjPool<SkillDetailItem>.Instance.RecyclePool(pname);
+            ObjPool<SkillItem>.Instance.RecyclePool(pname);
 
             foreach (var ins in StageCore.Instance.Player.fightComponet.activeInsList)
             {
-                var item = ObjPool<SkillDetailItem>.Instance.GetObjFromPool(pname);
+                var item = ObjPool<SkillItem>.Instance.GetObjFromPool(pname);
                 item.SetParentAndNormalize(contentRoot);
                 item.gameObject.SetActive(true);
-                item.Set(ins.config);
+                item.ShowSkillInfo(ins);
             }
         }
     }
@@ -48,14 +48,14 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
         if (show_state != 1)
         {
             show_state = 1;
-            ObjPool<SkillDetailItem>.Instance.RecyclePool(pname);
+            ObjPool<SkillItem>.Instance.RecyclePool(pname);
 
             foreach (var ins in StageCore.Instance.Player.fightComponet.passiveInsList)
             {
-                var item = ObjPool<SkillDetailItem>.Instance.GetObjFromPool(pname);
+                var item = ObjPool<SkillItem>.Instance.GetObjFromPool(pname);
                 item.SetParentAndNormalize(contentRoot);
                 item.gameObject.SetActive(true);
-                item.Set(ins.passiveConfig);
+                //item.ShowSkillInfo(ins);
             }
 
         }
@@ -63,7 +63,7 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
 
     public override IEnumerator Init(object param)
     {
-        ObjPool<SkillDetailItem>.Instance.InitOrRecyclePool(pname, item);
+        ObjPool<SkillItem>.Instance.InitOrRecyclePool(pname, item);
         HudEvent.Get(asButton).onClick = ShowAcitveList;
         HudEvent.Get(psButton).onClick = ShowPassiveList;
         HudEvent.Get(chipButton).onClick = ShowChipView;
