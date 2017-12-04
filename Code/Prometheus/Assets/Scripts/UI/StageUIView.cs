@@ -10,6 +10,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
     [SerializeField]
     Button skillInfoButton;
     [SerializeField]
+    Button chipButton;
+    [SerializeField]
     public UpUIView upUIView;
 
     public RectTransform viewArea;
@@ -29,10 +31,16 @@ public class StageUIView : MuiSingleBase<StageUIView>
         ObjPool<SkillListItem>.Instance.InitOrRecyclePool(skillListItemName, _skillListItemPrefab);
 
         HudEvent.Get(skillInfoButton).onClick = ShowSkillInfo;
+        HudEvent.Get(chipButton).onClick = OnChipButton;
 
         upUIView.Init();
 
         return null;
+    }
+
+    private void OnChipButton()
+    {
+        MuiCore.Instance.Open(UiName.strChipView);
     }
 
     public override IEnumerator Open(object param = null)
