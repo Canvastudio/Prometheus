@@ -8,9 +8,16 @@ public class SkillListItem : DragableScrollItem
     Button button;
     [SerializeField]
     ActiveSkillsConfig config;
+    [SerializeField]
+    Image icon;
     public int id;
 
     public ulong skill_id;
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void Start()
     {
