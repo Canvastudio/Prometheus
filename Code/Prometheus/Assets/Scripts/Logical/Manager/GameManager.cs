@@ -10,10 +10,6 @@ public class GameManager : SingleGameObject<GameManager> {
     {
         base.Init();
 
-        int w = Screen.width;
-        float ch = w * 1334f / 750f / 2 / 100;
-        //StageView.Instance.show_camera.orthographicSize = ch;
-
         DontDestroyOnLoad(this);
     }
 

@@ -109,6 +109,14 @@ public class MoveComponet : MonoBehaviour {
         Messenger<Brick>.Invoke(SA.PlayerMoveStep, brick);
     }
 
+
+    private void LateUpdate()
+    {
+        if (owner is Player)
+        {
+
+        }
+    }
     public void OnMoveFinish()
     {
         move_Finish = true;

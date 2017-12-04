@@ -173,6 +173,8 @@ public class StageCore : SingleGameObject<StageCore> {
     /// <returns></returns>
     public IEnumerator RunLoop()
     {
+        Messenger.Invoke(SA.GameStart);
+
         StageUIView.Instance.upUIView.RefreshHpUI();
 
         isLooping = true;
@@ -490,6 +492,9 @@ public static class SA
 
     public const string DiscoverBrickChange = "DBC";
     public const string DarkBrickChange = "DKBC";
+
+    public const string GameStart = "GST";
+    public const string GameEnd = "GSE";
 }
 
 public static class ST

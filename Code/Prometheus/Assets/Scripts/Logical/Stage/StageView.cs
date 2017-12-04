@@ -130,6 +130,14 @@ public class StageView : MuiSingleBase<StageView>
 
     public override IEnumerator Init(object param)
     {
+        int w = Screen.width;
+        int h = Screen.height;
+        float size = h * 750f / (w * 200f);
+
+        GameManager.Instance.UiCamera.orthographicSize = size;
+
+        transform.Rt().sizeDelta = new Vector2(750f, h * 750f / w);
+
         ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
 
         //生成地图，怪物
