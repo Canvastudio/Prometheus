@@ -362,6 +362,8 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator OnDead(Damage damageInfo)
     {
+        Debug.Log("LiveItem OnDead: " + gameObject.name);
+
         var list = state.state_list;
 
         foreach (var state in list)
@@ -456,7 +458,7 @@ public abstract class LiveItem : GameItemBase
             state.AddStateIns(ins);
         }
 
-        if (cur_hp == 0 && isAlive)
+        if (cur_hp == 0)
         {
            StartCoroutine(OnDead(damageInfo));
         }
