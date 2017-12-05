@@ -11,6 +11,8 @@ public class ChipListItem : DragableScrollItem {
     private Color color;
     public ChipConnectionItem connectionItem;
     [SerializeField]
+    Text chipName;
+    [SerializeField]
     Button button;
     [Space(5)]
     public ChipBoardInstance boardInstance;
@@ -30,6 +32,7 @@ public class ChipListItem : DragableScrollItem {
 
     public void ShowChip(ChipInventory chip)
     {
+        chipName.text = chip.config.name;
         gameObject.SetActive(true);
         chipInventory = chip;
         connectionItem.ShowChipConnection(chip, true);

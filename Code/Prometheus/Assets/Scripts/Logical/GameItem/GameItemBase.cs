@@ -115,12 +115,12 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
         bool in_area = false;
 
-        var screen_Pos = RectTransformUtility.WorldToScreenPoint(GameManager.Instance.UiCamera, transform.position);
+        var screen_Pos = RectTransformUtility.WorldToScreenPoint(GameManager.Instance.GCamera, transform.position);
 
         in_area = RectTransformUtility.RectangleContainsScreenPoint(
             StageUIView.Instance.viewArea,
             screen_Pos,
-            GameManager.Instance.UiCamera);
+            GameManager.Instance.GCamera);
 
         if (in_area)
         {

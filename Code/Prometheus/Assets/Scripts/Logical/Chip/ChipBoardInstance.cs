@@ -8,9 +8,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     public ChipGrid chipGrid;
     public ChipInventory chipInventory;
-
-    [SerializeField]
-    List<BoardInstanceNode> itemsList;
+    public ChipConnectionItem connectionItem;
     [SerializeField]
     UnityEngine.UI.Button button;
     [SerializeField]
@@ -57,29 +55,13 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
     private void OnConstructPowerGrid()
     {
         depth = int.MaxValue;
-        _isPower = 0;
+        Power = 0;
     }
 
     public void Init(ChipInventory _chipInventory)
     {
         chipInventory = _chipInventory;
-        Color color = SuperTool.CreateColor(chipInventory.config.color);
-        chipInventory.boardInstance = this;
-
-        for (int i = 0; i < itemsList.Count; ++i)
-        {
-            int v = chipInventory.model[i];
-
-            itemsList[i].Set(v, color);
-
-            if (v == 2)
-            {
-                positiveIndex = i;
-            }
-
-            else if (v == 3) negativeIndex = i;
-        }
-
+        connectionItem.ShowChipConnection(_chipInventory, false);
         castPower = chipInventory.cost;
         Messenger.AddListener(ChipBoardEvent.CheckPowerState, OnPowerGridRefresh);
     }
@@ -179,18 +161,18 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
     {
         base.SetDepth(depth);
 
-        pwr.text = depth.ToString();
+        //pwr.text = depth.ToString();
     }
 
     protected void OnSetPowerState(int value)
     {
         if (value == 1)
         {
-            pwr.color = Color.blue;
+            connectionItem.SetLight(true);
         }
         else
         {
-            pwr.color = Color.red;
+            connectionItem.SetLight(false);
         }
     }
 }

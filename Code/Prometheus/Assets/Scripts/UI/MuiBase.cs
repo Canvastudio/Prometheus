@@ -17,7 +17,7 @@ public abstract class MuiBase : MonoBehaviour {
 
         if (canvas.worldCamera == null)
         {
-            canvas.worldCamera = GameManager.Instance.UiCamera;
+            canvas.worldCamera = GameManager.Instance.GCamera;
         }
     }
 

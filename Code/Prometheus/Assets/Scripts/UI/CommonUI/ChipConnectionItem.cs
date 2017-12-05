@@ -17,6 +17,7 @@ public class ChipConnectionItem : MonoBehaviour {
     [SerializeField]
     Image slop;
 
+
     [SerializeField]
     Transform connectRoot;
 
@@ -42,10 +43,18 @@ public class ChipConnectionItem : MonoBehaviour {
         horVer.gameObject.SetActive(false);
     }
 
+    public void SetLight(bool powered)
+    {
+        foreach (var light in lights)
+        {
+            light.gameObject.SetActive(powered);
+        }
+    }
+
     public void ShowChipConnection(ChipInventory chip, bool powered)
     {
         chipInventory = chip;
-
+  
         foreach(var light in lights)
         {
             light.gameObject.SetActive(powered);
@@ -66,19 +75,19 @@ public class ChipConnectionItem : MonoBehaviour {
 
                     if (v == 2)
                     {
-                        points[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("positive_point");
-                        lights[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("positive_point_l");
+                        points[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("positive_point");
+                        lights[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("positive_point_l");
                     }
                     else
                     {
-                        points[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("negative_point");
-                        lights[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("negative_point_l");
+                        points[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("negative_point");
+                        lights[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("negative_point_l");
                     }
                 }
                 else
                 {
-                    points[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("point_bg");
-                    lights[i].sprite = AtlasCore.Instance.Load("ChipCon").GetSprite("point_bg_l");
+                    points[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("point_bg");
+                    lights[i].sprite = AtlasCore.Instance.Load("Chip").GetSprite("point_bg_l");
                     colors[i].gameObject.SetActive(true);
                 }
 

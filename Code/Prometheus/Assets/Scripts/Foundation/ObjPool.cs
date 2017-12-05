@@ -75,6 +75,8 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         base.Init();
 
         transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
+
+        transform.gameObject.hideFlags = HideFlags.HideAndDontSave;
     }
 
     private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();
@@ -120,12 +122,11 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             if (Instantiate)
             {
-                o = GameObject.Instantiate<T>(source);
+                o = GameObject.Instantiate<T>(source, transform);
 
                 o.name = o.name + i.ToString();
 
                 (o.gameObject).SetActive(false);
-                (o.gameObject).transform.SetParent(transform);
             }
             else
             {

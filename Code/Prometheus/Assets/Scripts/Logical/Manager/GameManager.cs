@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class GameManager : SingleGameObject<GameManager> {
 
-    public Camera UiCamera;
+    public Camera GCamera;
 
     protected override void Init()
     {
         base.Init();
 
         int w = Screen.width;
-        float ch = w * 1334f / 750f / 2 / 100;
-        //StageView.Instance.show_camera.orthographicSize = ch;
+        int h = Screen.height;
+        float size = h * 750f / (w * 200f);
+
+        Instance.GCamera.orthographicSize = size;
 
         DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
+        GO();
+    }
+
+    private void GO()
+    {
         SuperTimer.Instance.CreatAndBound(this, 30, true);
 
-        CoroCore.Instance.ExStartCoroutine(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
+        StartCoroutine(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
     }
 }

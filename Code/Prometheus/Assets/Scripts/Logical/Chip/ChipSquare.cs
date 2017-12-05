@@ -80,14 +80,14 @@ public class ChipSquare : MonoBehaviour {
 
         set
         {
-            if (value != ChipSquareState.Free)
-            {
-                image.color = Color.red;
-            }
-            else 
-            {
-                image.color = Color.white;
-            }
+            //if (value != ChipSquareState.Free)
+            //{
+            //    image.color = Color.red;
+            //}
+            //else 
+            //{
+            //    image.color = Color.white;
+            //}
 
             _state = value;
         }
@@ -102,7 +102,7 @@ public class ChipSquare : MonoBehaviour {
     {
         this.chipGrid = chipGrid;
 
-        image.sprite = ChipView.Instance.spriteAtlas.GetSprite(ChipGridTypeToSpriteName(chipGrid));
+        image.color = new Color(1, 1, 1, 0);
     }
 
     private void OnCheckPowerState()

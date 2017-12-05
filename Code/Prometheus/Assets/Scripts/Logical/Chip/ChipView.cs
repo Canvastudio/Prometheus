@@ -100,15 +100,6 @@ public class ChipView : MuiSingleBase<ChipView> {
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
     private Dictionary<int, ChipTempData> _temp_listInstance = new Dictionary<int, ChipTempData>();
 
-    //private void Start()
-    //{
-    //    HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
-    //    HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
-    //    HudEvent.Get(detailButton).onClick = ShowDetail;
-    //    ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
-    //    ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
-    //}
-
     private void ShowDetail()
     {
         CheckSkillPointAndProperty();
@@ -1065,7 +1056,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     {
         gameObject.SetActive(true);
 
-        camera = GameManager.Instance.UiCamera;
+        camera = GameManager.Instance.GCamera;
 
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
         HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
