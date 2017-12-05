@@ -49,11 +49,11 @@ public class ChipSquare : MonoBehaviour {
 
     public static string[] chipSquareSpriteName = new string[]
     {
-        "black_chipsquare",
+        "chip_block",
         "white_chipsquare",
-        "blue_chipsquare",
-        "red_chipsquare",
-        "yellow_chipsquare",
+        "blue_area",
+        "red_area",
+        "yellow_area",
         "white_chipsquare",//"green_chipsquare",
     };
 
@@ -102,7 +102,15 @@ public class ChipSquare : MonoBehaviour {
     {
         this.chipGrid = chipGrid;
 
-        image.color = new Color(1, 1, 1, 0);
+        if (chipGrid != ChipGrid.Normal && chipGrid != ChipGrid.Power)
+        {
+            image.enabled = true;
+            image.sprite = AtlasCore.Instance.Load("Chip").GetSprite(ChipGridTypeToSpriteName(chipGrid));
+        }
+        else
+        {
+            image.enabled = false;
+        }
     }
 
     private void OnCheckPowerState()
