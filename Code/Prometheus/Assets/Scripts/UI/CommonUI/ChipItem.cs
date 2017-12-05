@@ -17,6 +17,7 @@ public class ChipItem : DragableScrollItem {
     [SerializeField]
     Button button;
     [SerializeField]
+    ChipConnectionItem connectionItem;
 
     public ChipInventory chip;
     public int id;
@@ -38,6 +39,7 @@ public class ChipItem : DragableScrollItem {
     public void ShowChipInfo(ChipInventory chip,int id)
     {
         this.chip = chip;
+        connectionItem.ShowChipConnection(chip, true);
         chipName.text = chip.config.name;
         isUsed = chip.boardInstance != null;
         chipUse.gameObject.SetActive(isUsed);

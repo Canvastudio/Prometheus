@@ -45,6 +45,8 @@ public class ChipView : MuiSingleBase<ChipView> {
     RectTransform chipListRoot;
     [SerializeField]
     RectTransform chipInstanceRoot;
+    [SerializeField]
+    RectTransform bottomRect;
 
     [Space(5)]
     [SerializeField]
@@ -58,9 +60,11 @@ public class ChipView : MuiSingleBase<ChipView> {
     Button deleteBtn;
     [SerializeField]
     Button detailButton;
+    [SerializeField]
+    Button bottomButton;
 
     float itemWidth = 50f;
-
+    int bottomState = 0;
     public Camera camera;
 
     private ChipDiskConfig config;
@@ -1052,6 +1056,20 @@ public class ChipView : MuiSingleBase<ChipView> {
         return list;
     }
 
+    private void OnBottom()
+    {
+        if (bottomState == 0)
+        {
+            bottomRect.anchoredPosition = new Vector2(0, 105);
+            bottomState = 1;
+        }
+        else
+        {
+            bottomRect.anchoredPosition = new Vector2(0, -30);
+            bottomState = 0;
+        }
+    }
+
     public override IEnumerator Init(object param)
     {
         gameObject.SetActive(true);
@@ -1061,6 +1079,7 @@ public class ChipView : MuiSingleBase<ChipView> {
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
         HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
         HudEvent.Get(detailButton).onClick = ShowDetail;
+        HudEvent.Get(bottomButton).onClick = OnBottom;
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
 
@@ -1111,8 +1130,6 @@ public class ChipView : MuiSingleBase<ChipView> {
             yield return 0;
         }
 
-
-
         CalculteChipBoardBound();
 
         gameObject.SetActive(false);
@@ -1134,8 +1151,9 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public override void Hide(object param)
     {
+        bottomRect.anchoredPosition = new Vector2(0, -30);
+        bottomState = 0;
         gameObject.SetActive(false);
-
         CheckSkillPointAndProperty();
         StageCore.Instance.Player.RefreshSkillPointStateToSkill();
     }
