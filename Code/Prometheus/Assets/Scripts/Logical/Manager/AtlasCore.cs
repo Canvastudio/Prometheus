@@ -24,8 +24,15 @@ public class AtlasCore : SingleGameObject<AtlasCore> {
     {
         SpriteAtlas atlas = null;
 
-        atlasData.TryGetValue(name, out atlas);
-
-        return atlas;
+        if (atlasData.TryGetValue(name, out atlas))
+        {
+            return atlas;
+        }
+        else
+        {
+            var newAtlas = Resources.Load<SpriteAtlas>("Atlas/" + name);
+            atlasData.Add(name, newAtlas);
+            return newAtlas;
+        }
     }
 }

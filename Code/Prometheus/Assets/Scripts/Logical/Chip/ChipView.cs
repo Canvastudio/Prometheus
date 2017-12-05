@@ -197,8 +197,7 @@ public class ChipView : MuiSingleBase<ChipView> {
             chip.transform.localScale = Vector3.one;
             chip.gameObject.SetActive(true);
             chip.id = id;
-
-            chip.InitItem(chipList[i]);
+            chip.ShowChip(chipList[i]);
         }
     }
 

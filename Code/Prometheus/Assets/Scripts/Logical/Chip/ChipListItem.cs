@@ -4,77 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ChipListItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler  {
+public class ChipListItem : DragableScrollItem {
 
     public int id;
 
-    [SerializeField]
-    List<Image> itemsList;
-    [SerializeField]
-    GameObject btn;
-    [SerializeField]
-    GameObject positive;
-    [SerializeField]
-    GameObject negative;
-    [SerializeField]
-    ScrollRect scrollRect;
-
-    public ChipInventory chipInventory;
-    public ChipBoardInstance boardInstance;
     private Color color;
+    public ChipConnectionItem connectionItem;
+    [SerializeField]
+    Button button;
+    [Space(5)]
+    public ChipBoardInstance boardInstance;
+    public ChipInventory chipInventory;
 
-    public void InitItem(ChipInventory chipInventory)
+
+    private void Awake()
     {
-        this.chipInventory = chipInventory;
-        chipInventory.listItem = this;
-
-        HudEvent.Get(btn).onLongPress = OnLongPress;
-        HudEvent.Get(btn).onClick = OnClick;
-
-        color = SuperTool.CreateColor(chipInventory.config.color);
-
-        for (int i = 0; i < itemsList.Count; ++i)
-        {
-            int v = chipInventory.model[i];
-
-            if (v > 0)
-            {
-                itemsList[i].color = color;
-
-                if (v == 2)
-                {
-                    positive.transform.position = itemsList[i].transform.position;
-                }
-                else if (v == 3)
-                {
-                    negative.transform.position = itemsList[i].transform.position;
-                }
-            }
-            else
-            {
-                itemsList[i].color = Color.white;
-            }
-        }
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        scrollRect.OnBeginDrag(eventData);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        scrollRect.OnDrag(eventData);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        scrollRect.OnEndDrag(eventData);
+        HudEvent.Get(button).onClick = OnClick;
+        gameObject.SetActive(false);
     }
 
     private void OnLongPress()
     {
 
+    }
+
+    public void ShowChip(ChipInventory chip)
+    {
+        gameObject.SetActive(true);
+        chipInventory = chip;
+        connectionItem.ShowChipConnection(chip, true);
+    }
+
+    private void OnDisable()
+    {
+        connectionItem.CleanConnectImage();
     }
 
     /// <summary>
