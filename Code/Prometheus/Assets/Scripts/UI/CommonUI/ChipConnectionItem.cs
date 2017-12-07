@@ -51,8 +51,9 @@ public class ChipConnectionItem : MonoBehaviour {
         }
     }
 
-    public void ShowChipConnection(ChipInventory chip, bool powered)
+    public void ShowChipConnection(ChipInventory chip, bool powered = true)
     {
+        CleanConnectImage();
         chipInventory = chip;
   
         foreach(var light in lights)
