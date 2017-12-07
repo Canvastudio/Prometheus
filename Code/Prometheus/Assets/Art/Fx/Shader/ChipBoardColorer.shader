@@ -5,6 +5,7 @@
         Color1 ("Deactive", Color) = (1,1,1,1)
 		Color2 ("Preactive", Color) = (1,1,1,1)
 		U ("R", Float) = 0
+		C ("C", Float) = 1
 
 	}
 	SubShader
@@ -30,6 +31,7 @@
 			fixed4 Color1;
 			fixed4 Color2;
 			float U;
+			float C;
 		
 
 			struct appdata
@@ -72,7 +74,7 @@
 				}
 				else if (i.uv.x < 0.5 + h2 && i.uv.x > 0.5 - h2 && i.uv.y < 0.5 + v2 && i.uv.y > 0.5 - v2)
 				{
-					col = Color2;
+					col = Color2 * C + Color1 * (abs(C - 1));
 				}
 				else
 				{

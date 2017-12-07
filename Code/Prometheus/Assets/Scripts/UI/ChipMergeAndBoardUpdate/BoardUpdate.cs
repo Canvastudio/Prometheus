@@ -24,12 +24,16 @@ public class BoardUpdate : MonoBehaviour {
     int[] cost;
     MaterialPropertyBlock prop;
     int Rid;
-
+    int Cid;
+    int radius;
     public void Init()
     {
         Rid = Shader.PropertyToID("U");
+        Cid = Shader.PropertyToID("C");
+
         HudEvent.Get(updateButton).onClick = OnUpdate;
         prop = new MaterialPropertyBlock();
+        radius = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).initRadius;
     }
 
     public void Show()
@@ -92,8 +96,9 @@ public class BoardUpdate : MonoBehaviour {
         //prop.SetFloat("v2", 0.25f);
 
         ////升级0次得时候 偏移得格子数量是4
-        float n1 = ChipCore.Instance.chipBoardUpdate + 3.3f;
+        float n1 = ChipCore.Instance.chipBoardUpdate + radius + 0.3f;
         graphics.materialForRendering.SetFloat(Rid, n1);
+        graphics.materialForRendering.SetFloat(Cid, 1);
     }
      
     public void Hide()
