@@ -5,6 +5,7 @@ using UnityEngine;
 public class Supply : GameItemBase, IReactive {
 
     public SupplyConfig config;
+    public string pool_name;
 
     public void Reactive()
     {
@@ -21,6 +22,8 @@ public class Supply : GameItemBase, IReactive {
     {
         base.Recycle();
 
-        ObjPool<Supply>.Instance.RecycleObj(GameItemFactory.Instance.supply_pool, itemId);
+        ObjPool<Supply>.Instance.RecycleObj(pool_name, itemId);
     }
+
+
 }
