@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tablet : GameItemBase {
 
     public TotemConfig config;
-
+    public string poolName;
     private delegate bool BoolReturn();
 
     private BoolReturn CheckFunc;
@@ -176,7 +176,7 @@ public class Tablet : GameItemBase {
     {
         base.Recycle();
 
-        ObjPool<Tablet>.Instance.RecycleObj(GameItemFactory.Instance.tablet_pool, itemId);
+        ObjPool<Tablet>.Instance.RecycleObj(poolName, itemId);
         if (config.totemType == TotemType.Resurgence)
         {
             Messenger<Damage>.RemoveListener(SA.MonsterDead, OnMonsterDead);

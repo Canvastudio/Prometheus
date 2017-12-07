@@ -14,7 +14,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     public string treasure_pool3 = "TRP3";
     public string treasure_pool4 = "TRP4";
 
-    public string tablet_pool = "TAT";
+    public string tablet_pool1 = "TAT1";
+    public string tablet_pool2 = "TAT2";
+    public string tablet_pool3 = "TAT3";
+    public string tablet_pool4 = "TAT4";
     public string maintenance_pool = "MTE";
     public string supply1_pool = "SUY1";
     public string supply2_pool = "SUY2";
@@ -37,14 +40,23 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var treasure3 = treasure_go3.GetComponent<Treasure>();
         var treasure_go4 = Resources.Load("Prefab/Treasure4") as GameObject;
         var treasure4 = treasure_go4.GetComponent<Treasure>();
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool1, treasure1, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool2, treasure2, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool3, treasure3, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool4, treasure4, 2);
 
-        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool1, treasure1, 3);
-        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool2, treasure2, 3);
-        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool3, treasure3, 3);
-        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool4, treasure4, 3);
-
-        var tablet_go = Resources.Load("Prefab/Tablet") as GameObject;
-        var tablet = tablet_go.GetComponent<Tablet>();
+        var tablet_go1 = Resources.Load("Prefab/Tablet1") as GameObject;
+        var tablet1 = tablet_go1.GetComponent<Tablet>();
+        var tablet_go2 = Resources.Load("Prefab/Tablet2") as GameObject;
+        var tablet2 = tablet_go2.GetComponent<Tablet>();
+        var tablet_go3 = Resources.Load("Prefab/Tablet3") as GameObject;
+        var tablet3 = tablet_go3.GetComponent<Tablet>();
+        var tablet_go4 = Resources.Load("Prefab/Tablet4") as GameObject;
+        var tablet4 = tablet_go4.GetComponent<Tablet>();
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool1, tablet1, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool2, tablet2, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool3, tablet3, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool4, tablet4, 2);
 
         var maintenance_go = Resources.Load("Prefab/Maintenance") as GameObject;
         var maintenance = maintenance_go.GetComponent<Maintenance>();
@@ -55,15 +67,14 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var supply2 = supply2_go.GetComponent<Supply>();
         var supply3_go = Resources.Load("Prefab/Supply3") as GameObject;
         var supply3 = supply3_go.GetComponent<Supply>();
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply1_pool, supply1, 2);
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply2_pool, supply2, 2);
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply3_pool, supply3, 2);
 
         ObjPool<Monster>.Instance.InitOrRecyclePool(monster_pool, monster, 6);
         ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
- 
-        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool, tablet, 3);
         ObjPool<Maintenance>.Instance.InitOrRecyclePool(maintenance_pool, maintenance, 3);
-        ObjPool<Supply>.Instance.InitOrRecyclePool(supply1_pool, supply1, 3);
-        ObjPool<Supply>.Instance.InitOrRecyclePool(supply2_pool, supply2, 3);
-        ObjPool<Supply>.Instance.InitOrRecyclePool(supply3_pool, supply3, 3);
+
     }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)
@@ -359,8 +370,24 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     public Tablet CreateTablet(ulong uid, Brick bornBrick)
     {
         int tid;
+        Tablet item = null;
 
-        var item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool);
+        if (uid == 1)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool1);
+        }
+        else if (uid == 2)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool2);
+        }
+        else if (uid == 3)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool3);
+        }
+        else 
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool4);
+        }
 
         item.itemId = tid;
 
