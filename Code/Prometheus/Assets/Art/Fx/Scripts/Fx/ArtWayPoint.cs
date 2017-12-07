@@ -8,19 +8,19 @@ public class ArtWayPoint : MonoBehaviour {
 
 	public ParticleSystem endParticle;
 
-	public Vector3[] test_point;
+	//public Vector3[] test_point;
 
-	// Use this for initialization
-	void Start () {
+	//// Use this for initialization
+	//void Start () {
 
-		SetWayPoints(test_point);
+	//	SetWayPoints(test_point);
 		
-	}
+	//}
 	
-	// Update is called once per frame
-	void Update () {
+	//// Update is called once per frame
+	//void Update () {
 		
-	}
+	//}
 
 	public void SetWayPoints(Vector3[] ways) {
 	

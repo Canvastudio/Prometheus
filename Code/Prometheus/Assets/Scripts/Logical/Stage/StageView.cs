@@ -15,6 +15,8 @@ public class StageView : MuiSingleBase<StageView>
     [Space(5)]
     [SerializeField]
     Brick _brickPrefab;
+    [SerializeField]
+    ArtWayPoint wayPoint;
 
 
     [Space(5)]
@@ -91,26 +93,35 @@ public class StageView : MuiSingleBase<StageView>
 
     public void SetNodeAsPath(List<Pathfinding.Node> list)
     {
-        pathBrick.Clear();
+        //pathBrick.Clear();
 
-        foreach (var node in list)
+        //foreach (var node in list)
+        //{
+        //    var brick = node.behavirour as Brick;
+
+        //    brick.SetAsPathNode();
+
+        //    pathBrick.Add(brick);
+        //}
+        wayPoint.gameObject.SetActive(true);
+        Vector3[] vectors = new Vector3[list.Count + 1];
+        vectors[0] = StageCore.Instance.Player.transform.position;
+        for (int i = 0; i < list.Count; ++i)
         {
-            var brick = node.behavirour as Brick;
-
-            brick.SetAsPathNode();
-
-            pathBrick.Add(brick);
+            vectors[i + 1] = list[i].behavirour.transform.position;
         }
+        wayPoint.SetWayPoints(vectors);
     }
 
     public void CancelPahtNode()
     {
-        for (int i = 0; i < pathBrick.Count; ++i)
-        {
-            pathBrick[i].CancelAsPathNode();
-        }
+        //for (int i = 0; i < pathBrick.Count; ++i)
+        //{
+        //    pathBrick[i].CancelAsPathNode();
+        //}
 
-        pathBrick.Clear();
+        //pathBrick.Clear();
+        wayPoint.gameObject.SetActive(false);
     }
 
     public void MoveDownMap(float distance)
