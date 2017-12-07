@@ -460,21 +460,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ///宝箱比较复杂，需要去初始化一些东西
         item.Init();
 
-        if (item.canvasGroup == null)
-        {
-            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (true)//(GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
-        }
-
-
         CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
 
         item.ListenInit();

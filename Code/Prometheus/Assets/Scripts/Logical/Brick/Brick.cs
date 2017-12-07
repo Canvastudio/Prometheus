@@ -424,7 +424,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         if (column == 0)
         {
             BrickCore.Instance.RemoveRowIndata(this);
-            BrickCore.Instance.BrickRowRecycle(row);
+            BrickCore.Instance.CreateBrickRow();
 
             Debug.Log("回收砖块行: row: " + row);
         }

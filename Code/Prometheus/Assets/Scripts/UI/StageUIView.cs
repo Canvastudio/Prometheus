@@ -13,6 +13,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
     Button chipButton;
     [SerializeField]
     public UpUIView upUIView;
+    [SerializeField]
+    public Transform playerCeiling;
 
     public RectTransform viewArea;
 

@@ -93,16 +93,7 @@ public class StageView : MuiSingleBase<StageView>
 
     public void SetNodeAsPath(List<Pathfinding.Node> list)
     {
-        //pathBrick.Clear();
 
-        //foreach (var node in list)
-        //{
-        //    var brick = node.behavirour as Brick;
-
-        //    brick.SetAsPathNode();
-
-        //    pathBrick.Add(brick);
-        //}
         wayPoint.gameObject.SetActive(true);
         Vector3[] vectors = new Vector3[list.Count + 1];
         vectors[0] = StageCore.Instance.Player.transform.position;
@@ -115,12 +106,6 @@ public class StageView : MuiSingleBase<StageView>
 
     public void CancelPahtNode()
     {
-        //for (int i = 0; i < pathBrick.Count; ++i)
-        //{
-        //    pathBrick[i].CancelAsPathNode();
-        //}
-
-        //pathBrick.Clear();
         wayPoint.gameObject.SetActive(false);
     }
 
@@ -130,12 +115,8 @@ public class StageView : MuiSingleBase<StageView>
         {
             if (StageCore.Instance.totalTime >= 4)
             {
-                LeanTween.moveLocalY(
-                    show_camera.gameObject,
-                   show_camera.transform.localPosition.y + (brickWidth * .5f * distance / 100), distance);
+                GCamera.Instance.MoveDown(distance);
             }
-
-            Messenger.Invoke(SA.MapMoveDown);
         }
     }
 
