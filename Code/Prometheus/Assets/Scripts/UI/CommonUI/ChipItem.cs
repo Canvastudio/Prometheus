@@ -66,6 +66,6 @@ public class ChipItem : DragableScrollItem {
         {
             chipQuality.gameObject.SetActive(false);
         }
-        chipDescribe.text = chip.config.descrip;
+        chipDescribe.SetChipDescrible(chip.config);
     }
 }

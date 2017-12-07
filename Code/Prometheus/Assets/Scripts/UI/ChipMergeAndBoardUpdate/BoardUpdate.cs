@@ -17,12 +17,7 @@ public class BoardUpdate : MonoBehaviour {
     Text curLv;
     [SerializeField]
     Text nextLv;
-    [SerializeField]
-    RectTransform center;
-    [SerializeField]
-    RectTransform[] flashs;
-    [SerializeField]
-    RectTransform[] darks;
+
     [SerializeField]
     Image graphics;
 
@@ -32,7 +27,7 @@ public class BoardUpdate : MonoBehaviour {
 
     public void Init()
     {
-        Rid = Shader.PropertyToID("R");
+        Rid = Shader.PropertyToID("U");
         HudEvent.Get(updateButton).onClick = OnUpdate;
         prop = new MaterialPropertyBlock();
     }
@@ -45,8 +40,8 @@ public class BoardUpdate : MonoBehaviour {
 
         int t = ChipCore.Instance.chipBoardUpdate + 1;
 
-        curLv.text = ChipCore.Instance.chipBoardUpdate.ToString();
-        nextLv.text = t.ToString();
+        curLv.text = t.ToString();
+        nextLv.text = (t+1).ToString();
 
         if (t <= GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).maxUpdateCount)
         {
@@ -92,16 +87,15 @@ public class BoardUpdate : MonoBehaviour {
 
     private void ShowGraphic()
     {
-        graphics.GetComponent<Renderer>().GetPropertyBlock(prop);
+
         //prop.SetFloat("v1", 0.5f);
         //prop.SetFloat("v2", 0.25f);
 
         ////升级0次得时候 偏移得格子数量是4
         float n1 = ChipCore.Instance.chipBoardUpdate + 3.3f;
-
-        prop.SetFloat(Rid, n1);
+        graphics.materialForRendering.SetFloat(Rid, n1);
     }
-
+     
     public void Hide()
     {
         updateButton.gameObject.SetActive(false);

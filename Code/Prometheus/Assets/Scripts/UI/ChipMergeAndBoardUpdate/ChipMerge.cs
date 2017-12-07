@@ -151,13 +151,13 @@ public class ChipMerge : MonoBehaviour {
 
         if (chips[0] != null)
         {
-            mergedDescribe.text = chips[0].config.descrip;
+            mergedDescribe.SetChipDescrible(chips[0].config);
             mergedDescribe.gameObject.SetActive(true);
         }
         else
         if (chips[1] != null)
         {
-            mergedDescribe.text = chips[1].config.descrip;
+            mergedDescribe.SetChipDescrible(chips[1].config);
             mergedDescribe.gameObject.SetActive(true);
         }
         else
@@ -185,7 +185,7 @@ public class ChipMerge : MonoBehaviour {
 
             resultName.text = mergeConfig.name;
             resultCost.text = mergeCost.ToString();
-            resultDescr.text = mergeConfig.descrip;
+            resultDescr.SetChipDescrible(mergeConfig);
 
             result.SetActive(true);
 
