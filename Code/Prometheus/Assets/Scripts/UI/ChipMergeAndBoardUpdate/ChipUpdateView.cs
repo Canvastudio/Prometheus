@@ -11,12 +11,12 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     Button mergeButon;
     [SerializeField]
     Button boardButton;
-
-
+    [SerializeField]
+    MaterialsInfo stuff;
 
     public BoardUpdate board;
     public ChipMerge chipMerge;
-    public string optionName = "OPN";
+    public string optionName = "chipItem";
 
     int state = 0;
 
@@ -48,6 +48,7 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
 
     private void OnMerge()
     {
+        board.Hide();
         chipMerge.ShowMergeBtns();
         chipMerge.gameObject.SetActive(true);
         board.gameObject.SetActive(false);
@@ -74,7 +75,8 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
         chipMerge.gameObject.SetActive(true);
         chipMerge.ShowMergeBtns();
         board.gameObject.SetActive(false);
-
+        stuff.RefreshOwned();
+        stuff.CleanCost();
         return null;
     }
 }

@@ -63,9 +63,11 @@ public class Inventory {
         return GetStuffCount(id);
     }
 
-    public void AddChip(ulong id, int cost = -1)
+    public ChipInventory AddChip(ulong id, int cost = -1)
     {
-        chipList.Add(new ChipInventory(id, cost));
+        ChipInventory chip = new ChipInventory(id, cost);
+        chipList.Add(chip);
+        return chip;
     }
 
 

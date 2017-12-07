@@ -10,8 +10,6 @@ public class BoardUpdate : MonoBehaviour {
     [SerializeField]
     Button updateButton;
 
-    [SerializeField]
-    Text lvText;
     int[] cost;
 
     public void Init()
@@ -22,10 +20,11 @@ public class BoardUpdate : MonoBehaviour {
 
     public void Show()
     {
+        updateButton.gameObject.SetActive(true);
+
         mat.RefreshOwned();
 
         int t = ChipCore.Instance.chipBoardUpdate + 1;
-        lvText.text = t.ToString();
 
         if (t <= GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).maxUpdateCount)
         {
@@ -53,8 +52,11 @@ public class BoardUpdate : MonoBehaviour {
         {
             updateButton.interactable = false;
         }
+    }
 
-
+    public void Hide()
+    {
+        updateButton.gameObject.SetActive(false);
     }
 
     public void OnUpdate()
