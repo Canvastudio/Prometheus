@@ -40,8 +40,18 @@ public class StageUIView : MuiSingleBase<StageUIView>
             itemInfo.ShowSupplyInfo(brick.item as Supply);
             itemInfo.gameObject.SetActive(true);
         }
+        else if (brick.realBrickType == BrickType.TABLET)
+        {
+            itemInfo.ShowTabletInfo(brick.item as Tablet);
+            itemInfo.gameObject.SetActive(true);
+        }
+        else if (brick.realBrickType == BrickType.TREASURE)
+        {
+            itemInfo.ShowTreasureInfo(brick.item as Treasure);
+            itemInfo.gameObject.SetActive(true);
+        }
 
- 
+
     }
 
     public void HideItemInfo()

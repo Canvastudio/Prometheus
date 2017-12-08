@@ -24,6 +24,11 @@ public static class UIExtend {
         image.sprite = StageView.Instance.itemAtlas.GetSprite(name);
     }
 
+    public static void SetStageItemIcon(this Image image, string name)
+    {
+        image.sprite = AtlasCore.Instance.Load("Stage").GetSprite(name);
+    }
+
     public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
     {
         t.text = item.Property.GetIntProperty(property).ToString();

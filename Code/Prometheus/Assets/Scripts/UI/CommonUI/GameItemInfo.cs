@@ -15,6 +15,24 @@ public class GameItemInfo : MonoBehaviour {
     public void ShowSupplyInfo(Supply supply)
     {
         var config = supply.config;
+        itemIcon.SetStageItemIcon(supply.config.prefab);
+        itemName.text = config.name;
+        itemDescribe.text = config.describe;
+    }
+
+    public void ShowTabletInfo(Tablet item)
+    {
+        var config = item.config;
+        itemIcon.SetStageItemIcon(config.prefab);
+        itemName.text = config.name;
+        itemDescribe.text = config.describe;
+    }
+
+
+    public void ShowTreasureInfo(Treasure item)
+    {
+        var config = item.config;
+        itemIcon.SetStageItemIcon(config.prefab);
         itemName.text = config.name;
         itemDescribe.text = config.describe;
     }
