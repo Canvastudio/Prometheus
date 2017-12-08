@@ -46,7 +46,7 @@ public class ArtSkill {
 
 			if (eventFlow.ishit) {
 				yield return true;
-				Debug.Log(objskill.name + "____finished");
+				//Debug.Log(objskill.name + "____finished");
 				break;
 			} else
 				yield return null;
