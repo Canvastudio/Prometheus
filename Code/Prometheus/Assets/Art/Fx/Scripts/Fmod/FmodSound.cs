@@ -19,6 +19,7 @@ public class FmodSound : MonoBehaviour {
 		//SoundCore.PlayOneShot(event_name);
 
 		soundEvent = FMODUnity.RuntimeManager.CreateInstance(event_name);
+
 		soundEvent.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
 		soundEvent.start();
 		soundEvent.release();
