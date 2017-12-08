@@ -26,7 +26,8 @@ public class GCamera : SingleGameObject<GCamera> {
 
             if (y2 > y1)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z);
+                //transform.position = new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z), 0.07f);
             }
         }
     }

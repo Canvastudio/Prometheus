@@ -333,6 +333,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
     IEnumerator MovePlayer()
     {
+        StageView.Instance.CancelPahtNode();
+
         GContext.Instance.JustdiscoverMonster = false;
 
         while (!Instance.Player.moveComponent.MoveEnd())
