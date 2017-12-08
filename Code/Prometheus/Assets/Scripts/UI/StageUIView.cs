@@ -15,8 +15,39 @@ public class StageUIView : MuiSingleBase<StageUIView>
     public UpUIView upUIView;
     [SerializeField]
     public Transform playerCeiling;
+    [SerializeField]
+    GameItemInfo itemInfo;
+    [SerializeField]
+    Transform bottomInfoPos;
+    [SerializeField]
+    Transform topInfoPos;
 
     public RectTransform viewArea;
+
+    public void ShowItemInfo(Brick brick)
+    {
+        if (RectTransformUtility.WorldToScreenPoint(GameManager.Instance.GCamera, brick.transform.position).y > Screen.height / 2)
+        {
+            itemInfo.transform.position = bottomInfoPos.transform.position;
+        }
+        else
+        {
+            itemInfo.transform.position = topInfoPos.transform.position;
+        }
+
+        if (brick.realBrickType == BrickType.SUPPLY)
+        {
+            itemInfo.ShowSupplyInfo(brick.item as Supply);
+            itemInfo.gameObject.SetActive(true);
+        }
+
+ 
+    }
+
+    public void HideItemInfo()
+    {
+        itemInfo.gameObject.SetActive(false);
+    }
 
     public override IEnumerator Close(object param = null)
     {

@@ -18,6 +18,8 @@ public class HudEvent : EventTrigger {
 
 	public Callback onClick = null;
     public Callback onLongPress = null;
+    public Callback onLongPressReleas = null;
+
 
     public float pressTriggerTime = 0.4f;
         
@@ -137,6 +139,14 @@ public class HudEvent : EventTrigger {
 
         CommonEvent();
 		if(onUp != null) onUp(gameObject);
+
+        if (isLongPressTriggerd)
+        {
+            if (onLongPressReleas != null)
+            {
+                onLongPressReleas.Invoke();
+            }
+        }
 	}
 	public override void OnSelect (BaseEventData eventData){
 

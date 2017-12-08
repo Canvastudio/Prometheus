@@ -161,6 +161,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
+        HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
+    }
+
+    public void LongPressRelease()
+    {
+        StageUIView.Instance.HideItemInfo();
     }
 
     public override IEnumerator OnDiscoverd()
@@ -251,6 +257,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             {
                  StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
             }
+        }
+        else
+        {
+            StageUIView.Instance.ShowItemInfo(this);
         }
     }
 
