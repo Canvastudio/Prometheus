@@ -16,6 +16,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     Image pathMask;
     [SerializeField]
     Image blockMask;
+    [SerializeField]
+    Cover cover;
 
     public bool last_row;
 
@@ -61,24 +63,24 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             if (value == BrickExplored.UNEXPLORED)
             {
-                icon.sprite  = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetUnExploredBrickName());
+                //icon.sprite  = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetUnExploredBrickName());
             }
             else
             if (value == BrickExplored.EXPLORED)
             {
-                if (column == 0)
-                {
-                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
-                }
-                else if (column == 5)
-                {
-                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
-                    icon.transform.localScale = new Vector3(-1, 1, 1);
-                }
-                else
-                {
-                    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetExploredBrickName());
-                }
+                //if (column == 0)
+                //{
+                //    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
+                //}
+                //else if (column == 5)
+                //{
+                //    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetSideBrickName());
+                //    icon.transform.localScale = new Vector3(-1, 1, 1);
+                //}
+                //else
+                //{
+                //    icon.sprite = StageView.Instance.itemAtlas.GetSprite(BrickNameCore.Instance.GetExploredBrickName());
+                //}
             }
 
             _brickExplored = value;
@@ -177,6 +179,16 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         isDiscovered = true;
 
+
+        if (cover != null)
+        {
+            yield return cover.OnDiscoverd();
+        }
+        else
+        {
+            Debug.Log("砖块OnDiscover的时候,cover不存在？");
+        }
+
         if (item != null)
         {
             if (!item.isDiscovered)
@@ -184,6 +196,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 yield return item.OnDiscoverd();
             }
         }
+
 
         if (realBrickType != BrickType.OBSTACLE)
         {
@@ -366,6 +379,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         GameItemFactory.Instance.CreateObstacle(this);
         brickType = BrickType.OBSTACLE;
+        return this;
+    }
+
+    public Brick CreateCover()
+    {
+        this.cover = GameItemFactory.Instance.CreateCover(this);
         return this;
     }
     #endregion

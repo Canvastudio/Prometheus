@@ -22,6 +22,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     public string supply1_pool = "SUY1";
     public string supply2_pool = "SUY2";
     public string supply3_pool = "SUY3";
+
+    public string cover_pool = "CER";
+
     protected override void Init()
     {
         base.Init();
@@ -40,6 +43,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var treasure3 = treasure_go3.GetComponent<Treasure>();
         var treasure_go4 = Resources.Load("Prefab/Treasure4") as GameObject;
         var treasure4 = treasure_go4.GetComponent<Treasure>();
+
         ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool1, treasure1, 2);
         ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool2, treasure2, 2);
         ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool3, treasure3, 2);
@@ -67,6 +71,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var supply2 = supply2_go.GetComponent<Supply>();
         var supply3_go = Resources.Load("Prefab/Supply3") as GameObject;
         var supply3 = supply3_go.GetComponent<Supply>();
+
         ObjPool<Supply>.Instance.InitOrRecyclePool(supply1_pool, supply1, 2);
         ObjPool<Supply>.Instance.InitOrRecyclePool(supply2_pool, supply2, 2);
         ObjPool<Supply>.Instance.InitOrRecyclePool(supply3_pool, supply3, 2);
@@ -75,6 +80,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
         ObjPool<Maintenance>.Instance.InitOrRecyclePool(maintenance_pool, maintenance, 3);
 
+        var cover_go = Resources.Load("Prefab/BrickCover") as GameObject;
+        var cover = cover_go.GetComponent<Cover>();
+
+        ObjPool<Cover>.Instance.InitOrRecyclePool(cover_pool, cover, 50);
     }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)
@@ -113,7 +122,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         go.SetActive(true);
 
-        go.transform.SetParent(StageView.Instance.liveItemRoot);
+        go.transform.SetParent(StageView.Instance.uper);
+        go.transform.SetAsFirstSibling();
 
         go.transform.localScale = Vector3.one;
 
@@ -321,16 +331,16 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
 
-        item.transform.SetSiblingIndex(2);
+        item.transform.SetAsFirstSibling();
 
         item.standBrick = bornBrick;
 
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
 
         item.ListenInit();
-
+        item.icon.SetNativeSize();
         return item;
     }
 
@@ -342,9 +352,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
 
-        item.transform.SetSiblingIndex(2);
+        item.transform.SetAsFirstSibling();
 
         item.standBrick = bornBrick;
 
@@ -363,7 +373,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         item.ListenInit();
-
+        item.icon.SetNativeSize();
         return item;
     }
 
@@ -391,9 +401,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
 
-        item.transform.SetSiblingIndex(2);
+        item.transform.SetAsFirstSibling();
 
         item.standBrick = bornBrick;
 
@@ -414,7 +424,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         item.ListenInit();
-
+        item.icon.SetNativeSize();
         return item;
     }
 
@@ -447,9 +457,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.SetParentAndNormalize(bornBrick.transform);
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
 
-        item.transform.SetSiblingIndex(2);
+        item.transform.SetAsLastSibling();
 
         item.standBrick = bornBrick;
 
@@ -463,7 +473,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
 
         item.ListenInit();
-
+        item.icon.SetNativeSize();
         return item;
     }
 
@@ -478,12 +488,37 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.transform.position = bornBrick.transform.position;
 
         //item.transform.SetParent(StageView.Instance.NonliveItemRoot);
-        item.transform.SetParent(bornBrick.transform);
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
+        item.transform.SetAsFirstSibling();
         item.transform.localScale = Vector3.one;
         item.standBrick = bornBrick;
 
         item.transform.position = bornBrick.transform.position;
         item.gameObject.SetActive(true);
+
+        item.ListenInit();
+        item.icon.SetNativeSize();
+        return item;
+    }
+
+    public Cover CreateCover(Brick bornBrick)
+    {
+        int tid;
+
+        var item = ObjPool<Cover>.Instance.GetObjFromPoolWithID(out tid, cover_pool);
+
+        item.itemId = tid;
+
+        item.transform.position = bornBrick.transform.position;
+
+        item.transform.SetParentAndNormalize(StageView.Instance.uper);
+        item.transform.SetAsFirstSibling();
+        item.transform.localScale = Vector3.one;
+        //item.standBrick = bornBrick;
+        item.coverBrick = bornBrick;
+        item.transform.position = bornBrick.transform.position;
+        item.gameObject.SetActive(true);
+        item.icon.SetNativeSize();
 
         item.ListenInit();
 

@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -103,10 +103,10 @@ MonoBehaviour:
   itemId: 0
   isDiscovered: 0
   inViewArea: 0
-  icon: {fileID: 0}
+  icon: {fileID: 114693978943908238}
   canvasGroup: {fileID: 0}
   _stanbBrick: {fileID: 0}
-  uiEffect: {fileID: 0}
+  pool_name: 
 --- !u!114 &114950792208918696
 MonoBehaviour:
   m_ObjectHideFlags: 1

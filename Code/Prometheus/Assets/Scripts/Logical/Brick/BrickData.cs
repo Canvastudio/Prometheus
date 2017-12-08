@@ -101,32 +101,6 @@ public class BrickData {
     /// <returns></returns>
     public Brick GetFirstRowEmpty()
     {
-        //:-0 娱乐写法
-        //int v = Random.Range(1, 61); 
-
-        //int tmp = v;
-
-        //var row_Bricks = bricks[0];
-
-        //int m = 0;
-
-        //while (true)
-        //{ 
-        //    if (row_Bricks[m % 6].brickType == BrickType.EMPTY)
-        //    {
-        //        v -= 1;
-
-        //        if (v == 0)
-        //            break;
-        //    }
-
-
-        //    ++m;
-        //    if (m > 6 && tmp =)
-        //}
-
-        //return row_Bricks[m];
-
         int[] emptyIndex = new int[6];
 
         var row_Bricks = bricks[0];

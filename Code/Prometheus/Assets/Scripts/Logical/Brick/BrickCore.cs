@@ -131,9 +131,11 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
             Brick _brick = null;
 
+            _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, total_row, col);
+
             if (string.IsNullOrEmpty(brick_Desc))
             {
-                _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId);
+                _brick = _brick.CreateCover();
             }
             else
             {
@@ -143,11 +145,11 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                 if ("o" == prefix)
                 {
-                    _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId).CreateObstacle();
+                    _brick = _brick.CreateObstacle();
                 }
                 else
                 {
-                    _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId);
+                    _brick = _brick.CreateCover();
 
                     if ("x" == prefix)
                     {
@@ -170,6 +172,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         {
                             _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), total_row);
                         }
+ 
 
                     }
                     else if ("g" == prefix)
@@ -180,6 +183,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         {
                             _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
                         }
+
                     }
                     else if ("r" == prefix)
                     {
@@ -201,6 +205,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                             {
                                 _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
                             }
+
                         }
                     }
                     else
@@ -282,9 +287,11 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                 real_Row = row + distance;
 
+                _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateCover();
+
                 if (string.IsNullOrEmpty(brick_Desc))
                 {
-                    _brick = StageView.Instance.CreateBrick(moduel_id, level_Id);
+     
                 }
                 else
                 {

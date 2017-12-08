@@ -18,6 +18,10 @@ public class StageView : MuiSingleBase<StageView>
     [SerializeField]
     ArtWayPoint wayPoint;
 
+    [SerializeField]
+    public Transform lower;
+    [SerializeField]
+    public Transform uper;
 
     [Space(5)]
     public Transform liveItemRoot;
@@ -82,9 +86,10 @@ public class StageView : MuiSingleBase<StageView>
             _brick.haloComponent = _brick.GetOrAddComponet<HaloComponent>();
         }
 
-        if (_brick.canvasGroup == null) _brick.canvasGroup = _brick.GetOrAddComponet<CanvasGroup>();
-
         _brick.ListenInit();
+
+        _brick.icon.SetStageItemIcon("box_l_0");
+        _brick.icon.SetNativeSize();
 
         return _brick;
     }

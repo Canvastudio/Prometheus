@@ -9,7 +9,10 @@ public class GCamera : SingleGameObject<GCamera> {
 
     public void MoveDown(float distance)
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + distance, transform.localPosition.z);
+        if (!GameTestData.Instance.NoSroll)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + distance, transform.localPosition.z);
+        }
     }
 
     public void Update()

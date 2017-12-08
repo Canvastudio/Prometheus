@@ -84,7 +84,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual IEnumerator OnDiscoverd()
     {
-        //Debug.Log("发现: " + gameObject.name);
+        Debug.Log("发现: " + gameObject.name);
 
         isDiscovered = true;
 

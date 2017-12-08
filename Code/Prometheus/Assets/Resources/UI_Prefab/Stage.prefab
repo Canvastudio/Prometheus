@@ -243,13 +243,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRender: {fileID: 120349826322522990}
   endParticle: {fileID: 198095303975222144}
-  test_point:
-  - {x: 0, y: -1.8, z: 0}
-  - {x: 0.47, y: -1.8, z: 0}
-  - {x: 0.47, y: -0.92, z: 0}
-  - {x: 1.47, y: -0.92, z: 0}
-  - {x: 2.27, y: -0.92, z: 0}
-  - {x: 2.27, y: -0.32, z: 0}
 --- !u!114 &114448441278406778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,6 +337,9 @@ MonoBehaviour:
   isHide: 0
   _brickPrefab: {fileID: 114317811207022196, guid: a6481a8d07c70c74a86237663733c2b0,
     type: 2}
+  wayPoint: {fileID: 0}
+  lower: {fileID: 0}
+  uper: {fileID: 0}
   liveItemRoot: {fileID: 224775885469619674}
   NonliveItemRoot: {fileID: 224556302351854118}
   brickRoot: {fileID: 224566999872530134}
