@@ -948,7 +948,7 @@ public class FightComponet : MonoBehaviour
                 case SpecialEffect.TransferTarget:
                     LiveItem _live = apply_list[0] as LiveItem;
 
-                    var bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.BRICK, ST.DISCOVER));
+                    var bricks = StageCore.Instance.tagMgr.GetEntity<Brick>(ETag.GetETag(ST.DISCOVER, ST.BRICK));
 
                     for (int k = bricks.Count - 1; k >= 0; --k)
                     {

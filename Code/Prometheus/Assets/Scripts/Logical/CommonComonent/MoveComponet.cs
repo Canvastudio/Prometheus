@@ -140,11 +140,14 @@ public class MoveComponet : MonoBehaviour {
 
             owner.standBrick = brick;
 
-            owner.transform.localPosition = brick.transform.localPosition;
-        }
-        else
-        {
-    
+            owner.transform.position = brick.transform.position;
+
+            if (owner is Monster)
+            {
+                var monster = (owner as Monster);
+                monster.block_other = false;
+                monster.CheckDistance();
+            }
         }
     }
 

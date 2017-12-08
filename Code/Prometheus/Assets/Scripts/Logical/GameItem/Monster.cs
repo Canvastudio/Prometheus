@@ -35,7 +35,7 @@ public class Monster : LiveItem
     /// </summary>
     public AIConfig AIConfig;
 
-    private bool block_other = false;
+    public bool block_other = false;
 
     public int discover_howl;
 
