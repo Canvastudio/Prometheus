@@ -3,7 +3,7 @@
 public class Treasure : GameItemBase, IReactive {
 
     public BoxConfig config;
-
+    public string pool_name;
     public int distance;
 
     BoxDropConfig cur_drop;
@@ -69,6 +69,6 @@ public class Treasure : GameItemBase, IReactive {
     {
         base.Recycle();
 
-        ObjPool<Treasure>.Instance.RecycleObj(GameItemFactory.Instance.treasure_pool, itemId);
+        ObjPool<Treasure>.Instance.RecycleObj(pool_name, itemId);
     }
 }

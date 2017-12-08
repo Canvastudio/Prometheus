@@ -15,6 +15,8 @@ public class StageView : MuiSingleBase<StageView>
     [Space(5)]
     [SerializeField]
     Brick _brickPrefab;
+    [SerializeField]
+    ArtWayPoint wayPoint;
 
 
     [Space(5)]
@@ -91,26 +93,20 @@ public class StageView : MuiSingleBase<StageView>
 
     public void SetNodeAsPath(List<Pathfinding.Node> list)
     {
-        pathBrick.Clear();
 
-        foreach (var node in list)
+        wayPoint.gameObject.SetActive(true);
+        Vector3[] vectors = new Vector3[list.Count + 1];
+        vectors[0] = StageCore.Instance.Player.transform.position;
+        for (int i = 0; i < list.Count; ++i)
         {
-            var brick = node.behavirour as Brick;
-
-            brick.SetAsPathNode();
-
-            pathBrick.Add(brick);
+            vectors[i + 1] = list[i].behavirour.transform.position;
         }
+        wayPoint.SetWayPoints(vectors);
     }
 
     public void CancelPahtNode()
     {
-        for (int i = 0; i < pathBrick.Count; ++i)
-        {
-            pathBrick[i].CancelAsPathNode();
-        }
-
-        pathBrick.Clear();
+        wayPoint.gameObject.SetActive(false);
     }
 
     public void MoveDownMap(float distance)
@@ -119,12 +115,8 @@ public class StageView : MuiSingleBase<StageView>
         {
             if (StageCore.Instance.totalTime >= 4)
             {
-                LeanTween.moveLocalY(
-                    show_camera.gameObject,
-                   show_camera.transform.localPosition.y + (brickWidth * .5f * distance / 100), distance);
+                GCamera.Instance.MoveDown(distance);
             }
-
-            Messenger.Invoke(SA.MapMoveDown);
         }
     }
 

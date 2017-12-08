@@ -46,7 +46,7 @@ public class MergeOption : DragableScrollItem {
             good.text = null;
         }
 
-        chipDescribe.text = chip.config.descrip;
+        chipDescribe.SetChipDescrible(chip.config);
         id = _id;
 
         if (_callback != null)

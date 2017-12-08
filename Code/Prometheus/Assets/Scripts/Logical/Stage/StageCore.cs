@@ -440,17 +440,12 @@ public class StageCore : SingleGameObject<StageCore> {
             if (turnTime > 0)
             {
                 turnTime = Mathf.Max(0, turnTime - Time.deltaTime);
-                TimeCastSoMoveDown(Time.deltaTime);
+                StageView.Instance.MoveDownMap(Time.deltaTime);
                 Messenger<float>.Invoke(SA.StageTimeCast, Time.deltaTime);
             }
 
             yield return 0;
         }
-    }
-
-    public void TimeCastSoMoveDown(float time)
-    {
-        StageView.Instance.MoveDownMap(time);
     }
 
     public void  GetMonsterInRange(Brick stand_brick, int range, ref List<Monster> list)

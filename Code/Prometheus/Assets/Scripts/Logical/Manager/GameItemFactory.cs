@@ -8,11 +8,20 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public string monster_pool = "MPI";
     public string obstacle_pool = "OBE";
-    public string treasure_pool = "TRP";
-    public string tablet_pool = "TAT";
-    public string maintenance_pool = "MTE";
-    public string supply_pool = "SUY";
 
+    public string treasure_pool1 = "TRP1";
+    public string treasure_pool2 = "TRP2";
+    public string treasure_pool3 = "TRP3";
+    public string treasure_pool4 = "TRP4";
+
+    public string tablet_pool1 = "TAT1";
+    public string tablet_pool2 = "TAT2";
+    public string tablet_pool3 = "TAT3";
+    public string tablet_pool4 = "TAT4";
+    public string maintenance_pool = "MTE";
+    public string supply1_pool = "SUY1";
+    public string supply2_pool = "SUY2";
+    public string supply3_pool = "SUY3";
     protected override void Init()
     {
         base.Init();
@@ -23,24 +32,49 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var obstacle_go = Resources.Load("Prefab/Obstacle") as GameObject;
         var obstacle = obstacle_go.GetComponent<Obstacle>();
 
-        var treasure_go = Resources.Load("Prefab/Treasure") as GameObject;
-        var treasure = treasure_go.GetComponent<Treasure>();
+        var treasure_go1 = Resources.Load("Prefab/Treasure1") as GameObject;
+        var treasure1 = treasure_go1.GetComponent<Treasure>();
+        var treasure_go2 = Resources.Load("Prefab/Treasure2") as GameObject;
+        var treasure2 = treasure_go2.GetComponent<Treasure>();
+        var treasure_go3 = Resources.Load("Prefab/Treasure3") as GameObject;
+        var treasure3 = treasure_go3.GetComponent<Treasure>();
+        var treasure_go4 = Resources.Load("Prefab/Treasure4") as GameObject;
+        var treasure4 = treasure_go4.GetComponent<Treasure>();
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool1, treasure1, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool2, treasure2, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool3, treasure3, 2);
+        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool4, treasure4, 2);
 
-        var tablet_go = Resources.Load("Prefab/Tablet") as GameObject;
-        var tablet = tablet_go.GetComponent<Tablet>();
+        var tablet_go1 = Resources.Load("Prefab/Tablet1") as GameObject;
+        var tablet1 = tablet_go1.GetComponent<Tablet>();
+        var tablet_go2 = Resources.Load("Prefab/Tablet2") as GameObject;
+        var tablet2 = tablet_go2.GetComponent<Tablet>();
+        var tablet_go3 = Resources.Load("Prefab/Tablet3") as GameObject;
+        var tablet3 = tablet_go3.GetComponent<Tablet>();
+        var tablet_go4 = Resources.Load("Prefab/Tablet4") as GameObject;
+        var tablet4 = tablet_go4.GetComponent<Tablet>();
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool1, tablet1, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool2, tablet2, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool3, tablet3, 2);
+        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool4, tablet4, 2);
 
         var maintenance_go = Resources.Load("Prefab/Maintenance") as GameObject;
         var maintenance = maintenance_go.GetComponent<Maintenance>();
 
-        var supply_go = Resources.Load("Prefab/Supply") as GameObject;
-        var supply = supply_go.GetComponent<Supply>();
+        var supply1_go = Resources.Load("Prefab/Supply1") as GameObject;
+        var supply1 = supply1_go.GetComponent<Supply>();
+        var supply2_go = Resources.Load("Prefab/Supply2") as GameObject;
+        var supply2 = supply2_go.GetComponent<Supply>();
+        var supply3_go = Resources.Load("Prefab/Supply3") as GameObject;
+        var supply3 = supply3_go.GetComponent<Supply>();
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply1_pool, supply1, 2);
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply2_pool, supply2, 2);
+        ObjPool<Supply>.Instance.InitOrRecyclePool(supply3_pool, supply3, 2);
 
         ObjPool<Monster>.Instance.InitOrRecyclePool(monster_pool, monster, 6);
         ObjPool<Obstacle>.Instance.InitOrRecyclePool(obstacle_pool, obstacle, 6);
-        ObjPool<Treasure>.Instance.InitOrRecyclePool(treasure_pool, treasure, 3);
-        ObjPool<Tablet>.Instance.InitOrRecyclePool(tablet_pool, tablet, 3);
         ObjPool<Maintenance>.Instance.InitOrRecyclePool(maintenance_pool, maintenance, 3);
-        ObjPool<Supply>.Instance.InitOrRecyclePool(supply_pool, supply, 3);
+
     }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)
@@ -267,7 +301,23 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         int tid;
 
-        var item = ObjPool<Supply>.Instance.GetObjFromPoolWithID(out tid, supply_pool);
+        Supply item;
+
+        if (uid == 101)
+        {
+            item = ObjPool<Supply>.Instance.GetObjFromPoolWithID(out tid, supply1_pool);
+            item.pool_name = supply1_pool;
+        }
+        else if (uid == 102)
+        {
+            item = ObjPool<Supply>.Instance.GetObjFromPoolWithID(out tid, supply2_pool);
+            item.pool_name = supply2_pool;
+        }
+        else
+        {
+            item = ObjPool<Supply>.Instance.GetObjFromPoolWithID(out tid, supply3_pool);
+            item.pool_name = supply3_pool;
+        }
 
         item.itemId = tid;
 
@@ -278,20 +328,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.standBrick = bornBrick;
 
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
-
-        if (item.canvasGroup == null)
-        {
-            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
-        }
 
         item.ListenInit();
 
@@ -334,8 +370,24 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     public Tablet CreateTablet(ulong uid, Brick bornBrick)
     {
         int tid;
+        Tablet item = null;
 
-        var item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool);
+        if (uid == 1)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool1);
+        }
+        else if (uid == 2)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool2);
+        }
+        else if (uid == 3)
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool3);
+        }
+        else 
+        {
+            item = ObjPool<Tablet>.Instance.GetObjFromPoolWithID(out tid, tablet_pool4);
+        }
 
         item.itemId = tid;
 
@@ -370,7 +422,28 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         int tid;
 
-        var item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool);
+        Treasure item;
+
+        if (uid == 201)
+        {
+            item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool1);
+            item.pool_name = treasure_pool1;
+        }
+        else if (uid == 202)
+        {
+            item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool2);
+            item.pool_name = treasure_pool2;
+        }
+        else if (uid == 203)
+        {
+            item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool3);
+            item.pool_name = treasure_pool3;
+        }
+        else 
+        {
+            item = ObjPool<Treasure>.Instance.GetObjFromPoolWithID(out tid, treasure_pool4);
+            item.pool_name = treasure_pool4;
+        }
 
         item.itemId = tid;
 
@@ -386,21 +459,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         ///宝箱比较复杂，需要去初始化一些东西
         item.Init();
-
-        if (item.canvasGroup == null)
-        {
-            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (true)//(GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
-        }
-
 
         CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
 
@@ -419,7 +477,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.transform.position = bornBrick.transform.position;
 
-        item.transform.SetParent(StageView.Instance.NonliveItemRoot);
+        //item.transform.SetParent(StageView.Instance.NonliveItemRoot);
+        item.transform.SetParent(bornBrick.transform);
         item.transform.localScale = Vector3.one;
         item.standBrick = bornBrick;
 

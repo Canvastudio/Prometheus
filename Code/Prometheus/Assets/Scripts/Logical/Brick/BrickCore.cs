@@ -9,8 +9,7 @@ using System.Linq;
 /// </summary>
 public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
-    [SerializeField]
-    ulong curLevelId = 0;
+
 
     WeightSection _weightSection;
 
@@ -18,7 +17,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     /// 当前一共创建到多少row了
     /// </summary>
     [SerializeField]
-    int _row = 0;
+    int total_row = 0;
 
     /// <summary>
     /// 保存了砖块数据
@@ -34,18 +33,22 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     protected override void Init()
     {
         base.Init();
+
+        map_Data = MapConfig.GetConfigDataList<MapConfig>();
     }
+
+    int max_Distance = 0;
 
     public void CreatePrimitiveStage()
     {
         //初始生成的行数
-        int max_Distance = StageView.Instance.viewBrickRow;
+        max_Distance = Mathf.FloorToInt(StageView.Instance.transform.Rt().sizeDelta.y / StageView.Instance.brickWidth);
 
-        _row = 0;
+        total_row = 0;
 
-        while (_row < max_Distance)
+        while (total_row < max_Distance)
         {
-            CreateBrickModuel();
+            CreateBrickRow();
         }
     }
 
@@ -74,20 +77,157 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 	}
 
     List<MapConfig> map_Data;
+    MapConfig curMapData;
+    ModuleConfig curModule;
+    ulong curLevelId = 0;
+    ulong moduel_id = 0;
+    int distance = 0;
+    int curRowInModule = 0;
+    int moduelRowCount = 0;
 
-    public void BrickRowRecycle(int brick_row)
+    public void CreateBrickRow()
     {
-       if (_row - brick_row < StageView.Instance.viewBrickRow)
+        ///如果
+        if (curModule == null)
         {
-            CreateBrickModuel();
+            ulong level_Id = 0;
+
+            for (int i = 0; i < map_Data.Count; ++i)
+            {
+                if (map_Data[i].distance > distance)
+                {
+                    level_Id = map_Data[i].id;
+                    curMapData = map_Data[i];
+                    break;
+                }
+            }
+
+            var moduels = curMapData.map_models.ToList();
+
+            if (curLevelId != level_Id)
+            {
+                _weightSection = WeightSection.CreatePrimitive(moduels.Count);
+                curLevelId = level_Id;
+            }
+
+            //随机到了模块ID
+            int select_Moduel = _weightSection.RanPoint();
+
+            //调整和检查权重
+            _weightSection.ScaleWeightExOne(select_Moduel).CheckBound();
+
+            moduel_id = moduels[select_Moduel];
+
+            curModule = ModuleConfig.GetConfigDataById<ModuleConfig>(moduel_id);
+
+            curRowInModule = 0;
+           
+            moduelRowCount = curModule.contents.Count();
+        }
+
+        for (int col = 0; col < 6; ++col)
+        {
+            var brick_Desc = curModule.GetBrickInfo(curRowInModule, col);
+
+            Brick _brick = null;
+
+            if (string.IsNullOrEmpty(brick_Desc))
+            {
+                _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId);
+            }
+            else
+            {
+                string[] infos = brick_Desc.Split('_');
+
+                string prefix = infos[0];
+
+                if ("o" == prefix)
+                {
+                    _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId).CreateObstacle();
+                }
+                else
+                {
+                    _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId);
+
+                    if ("x" == prefix)
+                    {
+                        _brick = _brick.CreateMaintence();
+                    }
+                    else if ("y" == prefix)
+                    {
+                        float prob = float.Parse(infos[2]);
+
+                        if (prob > Random.Range(0f, 1f))
+                        {
+                            _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
+                        }
+                    }
+                    else if ("b" == prefix)
+                    {
+                        float prob = float.Parse(infos[2]);
+
+                        if (prob > Random.Range(0f, 1f))
+                        {
+                            _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), total_row);
+                        }
+
+                    }
+                    else if ("g" == prefix)
+                    {
+                        float prob = float.Parse(infos[2]);
+
+                        if (prob > Random.Range(0f, 1f))
+                        {
+                            _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
+                        }
+                    }
+                    else if ("r" == prefix)
+                    {
+                        var monster_Desc = brick_Desc.Split('_');
+
+                        var probility = float.Parse(monster_Desc[2]);
+
+                        if (Random.Range(0f, 1f) <= probility)
+                        {
+                            var enemys = curMapData.enemys.ToArray();
+                            var enemy_Index = Random.Range(0, enemys.Length);
+                            var enemy_Id = enemys[enemy_Index];
+
+                            int lv_min = curMapData.enemy_level[0];
+                            int lv_max = curMapData.enemy_level[1];
+                            int lv = Random.Range(lv_min, lv_max + 1);
+
+                            if (!GameTestData.Instance.noMonster)
+                            {
+                                _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
+                    }
+
+
+                }
+            }
+
+            data.PushBrick(total_row, col, _brick);
+        }
+
+        //下一行
+        curRowInModule += 1;
+        total_row += 1;
+
+        if (curRowInModule == moduelRowCount)
+        {
+            curModule = null;
         }
     }
 
     public int CreateBrickModuel()
     {
-        int distance = _row;
-
-        map_Data = MapConfig.GetConfigDataList<MapConfig>();
+        int distance = total_row;
 
         MapConfig next_Map = null;
 
@@ -237,7 +377,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         }
 
-        _row += moduel_RowCount;
+        total_row += moduel_RowCount;
 
         return moduel_RowCount;
     }

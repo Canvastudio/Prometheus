@@ -15,16 +15,13 @@ public class ChipMerge : MonoBehaviour {
     [SerializeField]
     Button mergeButton;
     [SerializeField]
-    Button backButton;
+    Button backMerge;
 
     [Space(5)]
     [SerializeField]
     RectTransform optionalRoot;
     [SerializeField]
-    MergeOption optionItem;
-
-    [SerializeField]
-    MergeOption[] chipInfo;
+    ChipItem optionItem;
 
     [SerializeField]
     GameObject result;
@@ -36,28 +33,76 @@ public class ChipMerge : MonoBehaviour {
     Text resultDescr;
 
     [SerializeField]
+    Image stateBackground;
+
+    [SerializeField]
     MaterialsInfo matInfo;
+
+    [SerializeField]
+    Sprite state1;
+    [SerializeField]
+    Sprite state2;
+    [SerializeField]
+    Sprite state3;
+
+    [SerializeField]
+    ChipConnectionItem con1;
+    [SerializeField]
+    ChipConnectionItem con2;
+    [SerializeField]
+    ChipConnectionItem con3;
+
+    [SerializeField]
+    GameObject icon1;
+    [SerializeField]
+    GameObject icon2;
+    [SerializeField]
+    GameObject icon3;
+    [SerializeField]
+    Text mergedDescribe;
+
+    [SerializeField]
+    GameObject mergeLight;
+    [SerializeField]
+    GameObject chipList;
+    [SerializeField]
+    GameObject chipSelect;
+
 
     int state = 0;
     int index = 0;
 
     bool firstShow = true;
 
+    private string str1 = "合成芯片";
+    private string str2 = "返回";
+    private string str3 = "升级芯片盘";
+
     ChipInventory[] chips = new ChipInventory[2];
 
     public void Init()
     {
-        ObjPool<MergeOption>.Instance.InitOrRecyclePool(ChipUpdateView.Instance.optionName, optionItem);
+        ObjPool<ChipItem>.Instance.InitOrRecyclePool(ChipUpdateView.Instance.optionName, optionItem);
 
         HudEvent.Get(chipButton1).onClick = OnChipButton1;
         HudEvent.Get(chipButton2).onClick = OnChipButton2;
+        //HudEvent.Get(mergeButton).onClick = OnMerge;
+        //HudEvent.Get(backButton).onClick = ShowMergeBtns;
         HudEvent.Get(mergeButton).onClick = OnMerge;
-        HudEvent.Get(backButton).onClick = ShowMergeBtns;
+        HudEvent.Get(backMerge).onClick = ShowMergeBtns;
 
         matInfo.RefreshOwned();
         matInfo.CleanCost();
+
+        stateBackground.sprite = state1;
     }
     
+    private void CleanChip1Chip2()
+    {
+        icon1.gameObject.SetActive(false);
+        icon2.gameObject.SetActive(false);
+    }
+
     private void OnChipButton1()
     {
         index = 0;
@@ -90,17 +135,37 @@ public class ChipMerge : MonoBehaviour {
     {
         chips[index] = chip;
 
-        if (chip != null)
+        CheckMergeResult();
+
+        if (index == 0)
         {
-            chipInfo[index].Init(chip, -1, OnMergeOptionClick);
-            chipInfo[index].gameObject.SetActive(true);
+            icon1.gameObject.SetActive(true);
+            con1.ShowChipConnection(chip, true);
         }
         else
         {
-            chipInfo[index].gameObject.SetActive(false);
+            icon2.gameObject.SetActive(true);
+            con2.ShowChipConnection(chip, true);
+        }
+        
+
+        if (chips[0] != null)
+        {
+            mergedDescribe.SetChipDescrible(chips[0].config);
+            mergedDescribe.gameObject.SetActive(true);
+        }
+        else
+        if (chips[1] != null)
+        {
+            mergedDescribe.SetChipDescrible(chips[1].config);
+            mergedDescribe.gameObject.SetActive(true);
+        }
+        else
+        {
+            mergedDescribe.gameObject.SetActive(false);
         }
 
-        CheckMergeResult();
+        mergeLight.gameObject.SetActive(false);
     }
 
     ChipConfig mergeConfig;
@@ -111,13 +176,16 @@ public class ChipMerge : MonoBehaviour {
     {
         matInfo.CleanCost();
 
+        icon3.gameObject.SetActive(false);
+        mergeLight.gameObject.SetActive(false);
+
         if (chips[0] != null && chips[1] != null)
         {
             mergeConfig = ChipCore.Instance.ChipMerge(chips[0], chips[1], out mergeCost);
 
             resultName.text = mergeConfig.name;
             resultCost.text = mergeCost.ToString();
-            resultDescr.text = mergeConfig.descrip;
+            resultDescr.SetChipDescrible(mergeConfig);
 
             result.SetActive(true);
 
@@ -131,7 +199,7 @@ public class ChipMerge : MonoBehaviour {
         }
         else
         {
- 
+            icon3.gameObject.SetActive(false);
             result.SetActive(false);
         }
 
@@ -154,10 +222,8 @@ public class ChipMerge : MonoBehaviour {
 
         StageCore.Instance.Player.inventory.RemoveChip(chips[0]);
         StageCore.Instance.Player.inventory.RemoveChip(chips[1]);
-        StageCore.Instance.Player.inventory.AddChip(mergeConfig.id, mergeCost);
+        var chip = StageCore.Instance.Player.inventory.AddChip(mergeConfig.id, mergeCost);
 
-        chipInfo[0].gameObject.SetActive(false);
-        chipInfo[1].gameObject.SetActive(false);
         chips[0] = null;
         chips[1] = null;
 
@@ -168,15 +234,24 @@ public class ChipMerge : MonoBehaviour {
 
         matInfo.RefreshOwned();
         matInfo.CleanCost();
+
+        stateBackground.sprite = state3;
+        icon3.gameObject.SetActive(true);
+        con3.ShowChipConnection(chip);
+
+        mergeLight.gameObject.SetActive(true);
+        CleanChip1Chip2();
     }
 
     private void ShowChipOption(ulong cid = 0)
     {
         if (state == 0)
         {
-            LeanTween.moveLocalX(this.gameObject, -750, 0.3f);
+            chipList.gameObject.SetActive(true);
 
-            ObjPool<MergeOption>.Instance.RecyclePool(ChipUpdateView.Instance.optionName);
+            LeanTween.moveLocalX(chipSelect, -750, 0.3f);
+            LeanTween.moveLocalX(chipList, 0, 0.3f);
+            ObjPool<ChipItem>.Instance.RecyclePool(ChipUpdateView.Instance.optionName);
 
             var list = StageCore.Instance.Player.inventory.GetChipList();
 
@@ -194,10 +269,13 @@ public class ChipMerge : MonoBehaviour {
                 }
 
                 int id;
-                var opt = ObjPool<MergeOption>.Instance.GetObjFromPoolWithID(out id, ChipUpdateView.Instance.optionName);
-                opt.Init(chip, id);
+                var opt = ObjPool<ChipItem>.Instance.GetObjFromPoolWithID(out id, ChipUpdateView.Instance.optionName);
+                opt.ShowChipInfo(chip, id, OnMergeOptionClick);
                 opt.SetParentAndNormalize(optionalRoot);
             }
+
+            mergeButton.gameObject.SetActive(false);
+            backMerge.gameObject.SetActive(true);
 
             state = 1;
         }
@@ -205,34 +283,42 @@ public class ChipMerge : MonoBehaviour {
 
     public void Clean()
     {
-        chipInfo[0].gameObject.SetActive(false);
-        chipInfo[1].gameObject.SetActive(false);
         chips[0] = null;
         chips[1] = null;
+        icon1.gameObject.SetActive(false);
+        icon2.gameObject.SetActive(false);
+        icon3.gameObject.SetActive(false);
         result.gameObject.SetActive(false);
     }
 
     public void ShowMergeBtns()
     {
-        if (state == 1)
-        {
-            LeanTween.moveLocalX(this.gameObject, 0, 0.3f);
+        LeanTween.moveLocalX(chipSelect, 0, 0.3f);
+        LeanTween.moveLocalX(chipList, 750f, 0.3f);
+        chipList.gameObject.SetActive(false);
+        mergeButton.gameObject.SetActive(true);
+        backMerge.gameObject.SetActive(false);
+        state = 0;
 
-            state = 0;
+        if (chips[0] != null && chips[1] != null)
+        {
+            mergeButton.interactable = true;
+        }
+        else
+        {
+            mergeButton.interactable = false;
         }
     }
+    
 
     public void Hide()
     {
-        if (state == 1)
-        {
-            LeanTween.moveLocalX(this.gameObject, 0, 0.3f);
-
-            state = 0;
-        }
+        ShowMergeBtns();
+        mergeButton.gameObject.SetActive(false);
+        backMerge.gameObject.SetActive(false);
     }
 
-    public void OnMergeOptionClick(MergeOption op)
+    public void OnMergeOptionClick(ChipItem op)
     {
         SetChip(op.chip);
         ShowMergeBtns();

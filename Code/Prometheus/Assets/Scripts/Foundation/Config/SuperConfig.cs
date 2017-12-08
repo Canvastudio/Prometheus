@@ -522,11 +522,17 @@ public class SuperConfig : SingleObject<SuperConfig>
         {
             if (!dataDic.ContainsKey(arg.z)) throw new ArgumentNullException("不存在的配置表：" + arg.z);
             List<ConfigDataBase> tempList = dataDic[arg.z];
-            ConfigDataBase t = tempList.Find(x => x.key == arg.w) ?? tempList.Find(x => x.id == ulong.Parse(arg.w));
-            arg.y.SetValue(arg.x, t, null);
+            try
+            {
+                ConfigDataBase t = tempList.Find(x => x.key == arg.w) ?? tempList.Find(x => x.id == ulong.Parse(arg.w));
+                arg.y.SetValue(arg.x, t, null);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("在<" + arg.z + ">中，不存在数据：" + arg.w);
+            }
         }
         postponeList.Clear();
-
     }
 }
 

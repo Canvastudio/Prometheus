@@ -70,7 +70,7 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
  
             var chip = ObjPool<ChipItem>.Instance.GetObjFromPoolWithID(out id, cname);
             chip.SetParentAndNormalize(chipRoot);
-            chip.ShowChipInfo(ci[i], id);
+            chip.ShowChipInfo(ci[i], id, OnChipClick);
             chip.gameObject.SetActive(true);
         }
 

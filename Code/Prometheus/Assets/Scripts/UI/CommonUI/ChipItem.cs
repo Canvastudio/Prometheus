@@ -25,6 +25,8 @@ public class ChipItem : DragableScrollItem {
     private string best = "极限";
     private string better = "优秀";
 
+    Callback<ChipItem> cb;
+
     public void Awake()
     {
         HudEvent.Get(button).onClick = OnClick;
@@ -33,12 +35,17 @@ public class ChipItem : DragableScrollItem {
 
     private void OnClick()
     {
-        ChipDetailView.Instance.OnChipClick(this);
+        if (cb != null)
+        {
+            cb.Invoke(this);
+        }
     }
 
-    public void ShowChipInfo(ChipInventory chip,int id)
+    public void ShowChipInfo(ChipInventory chip,int id, Callback<ChipItem> _cb)
     {
         this.chip = chip;
+        gameObject.SetActive(true);
+        cb = _cb;
         connectionItem.ShowChipConnection(chip, true);
         chipName.text = chip.config.name;
         isUsed = chip.boardInstance != null;
@@ -59,6 +66,6 @@ public class ChipItem : DragableScrollItem {
         {
             chipQuality.gameObject.SetActive(false);
         }
-        chipDescribe.text = chip.config.descrip;
+        chipDescribe.SetChipDescrible(chip.config);
     }
 }

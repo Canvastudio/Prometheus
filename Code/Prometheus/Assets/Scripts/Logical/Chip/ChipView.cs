@@ -114,8 +114,8 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public void CalculteChipBoardBound()
     {
-        rowNum = originHalfRowNum + ChipCore.Instance.chipBoardUpdate;
-        colNum = originHalfColNum + ChipCore.Instance.chipBoardUpdate;
+        rowNum = radius + ChipCore.Instance.chipBoardUpdate;
+        colNum = radius + ChipCore.Instance.chipBoardUpdate;
 
         powerSupplyList.Clear();
 
@@ -1070,12 +1070,35 @@ public class ChipView : MuiSingleBase<ChipView> {
         }
     }
 
+    int radius = 0;
+    int Rid;
+    int Cid;
+
+    private void Update()
+    {
+        ShowGraphic();
+    }
+    public Image graphics;
+
+    private void ShowGraphic()
+    {
+
+        //prop.SetFloat("v1", 0.5f);
+        //prop.SetFloat("v2", 0.25f);
+
+        ////升级0次得时候 偏移得格子数量是4
+        float n1 = ChipCore.Instance.chipBoardUpdate + radius + 0.3f;
+        graphics.materialForRendering.SetFloat(Rid, n1);
+        graphics.materialForRendering.SetFloat(Cid, 0);
+    }
+
     public override IEnumerator Init(object param)
     {
         gameObject.SetActive(true);
-
+        radius = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).initRadius;
         camera = GameManager.Instance.GCamera;
-
+        Rid = Shader.PropertyToID("U");
+        Cid = Shader.PropertyToID("C");
         HudEvent.Get(closeBtn.gameObject).onClick = CloseChipBoard;
         HudEvent.Get(deleteBtn.gameObject).onClick = DeleteSelectChip;
         HudEvent.Get(detailButton).onClick = ShowDetail;

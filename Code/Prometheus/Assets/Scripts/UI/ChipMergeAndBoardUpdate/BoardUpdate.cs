@@ -9,23 +9,43 @@ public class BoardUpdate : MonoBehaviour {
     MaterialsInfo mat;
     [SerializeField]
     Button updateButton;
+    [SerializeField]
+    GameObject normal;
+    [SerializeField]
+    GameObject max;
+    [SerializeField]
+    Text curLv;
+    [SerializeField]
+    Text nextLv;
 
     [SerializeField]
-    Text lvText;
-    int[] cost;
+    Image graphics;
 
+    int[] cost;
+    MaterialPropertyBlock prop;
+    int Rid;
+    int Cid;
+    int radius;
     public void Init()
     {
-        HudEvent.Get(updateButton).onClick = OnUpdate;
+        Rid = Shader.PropertyToID("U");
+        Cid = Shader.PropertyToID("C");
 
+        HudEvent.Get(updateButton).onClick = OnUpdate;
+        prop = new MaterialPropertyBlock();
+        radius = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).initRadius;
     }
 
     public void Show()
     {
+        updateButton.gameObject.SetActive(true);
+
         mat.RefreshOwned();
 
         int t = ChipCore.Instance.chipBoardUpdate + 1;
-        lvText.text = t.ToString();
+
+        curLv.text = t.ToString();
+        nextLv.text = (t+1).ToString();
 
         if (t <= GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).maxUpdateCount)
         {
@@ -48,13 +68,42 @@ public class BoardUpdate : MonoBehaviour {
 
                 mat.SetCost(s, c);
             }
+
+            max.SetActive(false);
+            normal.SetActive(true);
+            graphics.gameObject.SetActive(true);
         }
         else
         {
+            normal.gameObject.SetActive(false);
             updateButton.interactable = false;
+            max.SetActive(true);
+            graphics.gameObject.SetActive(false);
         }
+    }
 
 
+
+    private void Update()
+    {
+        ShowGraphic();
+    }
+
+    private void ShowGraphic()
+    {
+
+        //prop.SetFloat("v1", 0.5f);
+        //prop.SetFloat("v2", 0.25f);
+
+        ////升级0次得时候 偏移得格子数量是4
+        float n1 = ChipCore.Instance.chipBoardUpdate + radius + 0.3f;
+        graphics.materialForRendering.SetFloat(Rid, n1);
+        graphics.materialForRendering.SetFloat(Cid, 1);
+    }
+     
+    public void Hide()
+    {
+        updateButton.gameObject.SetActive(false);
     }
 
     public void OnUpdate()

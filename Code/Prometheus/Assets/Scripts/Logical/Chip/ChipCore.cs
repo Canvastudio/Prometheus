@@ -7,7 +7,7 @@ public class ChipCore : SingleObject<ChipCore> {
     /// <summary>
     /// 芯片盘升级次数
     /// </summary>
-    private int _cbu = 8;
+    private int _cbu = 5;
     public int chipBoardUpdate
     {
         get
