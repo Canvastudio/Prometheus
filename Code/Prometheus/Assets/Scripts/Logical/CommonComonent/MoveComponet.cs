@@ -138,8 +138,12 @@ public class MoveComponet : MonoBehaviour {
         {
             yield return new WaitForSeconds(0.1f);
 
-            owner.standBrick = brick;
+            if (owner is Monster)
+            {
+                BrickCore.Instance.CancelBlockNearbyBrick(owner.standBrick.pathNode.x, owner.standBrick.pathNode.z);
+            }
 
+            owner.standBrick = brick;
             owner.transform.position = brick.transform.position;
 
             if (owner is Monster)
