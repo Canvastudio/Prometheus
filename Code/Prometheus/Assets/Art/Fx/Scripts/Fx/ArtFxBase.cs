@@ -105,6 +105,9 @@ public class ArtFxBase : MonoBehaviour {
 	
 		FxPool.Recover(this.gameObject);
 
+		m_time = 0;
+		OnHit = null;
+
 	}
 
 	#region set property 
