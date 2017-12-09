@@ -204,7 +204,7 @@ public class Monster : LiveItem
             Debug.Log("Monster discover_howl: " + discover_howl);
             //tartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
             string fname = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("叫醒").effectName;
-            ArtSkill.Show(fname, transform.position);
+            ArtSkill.Show(fname, transform.position, dead_howl);
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, discover_howl);
 
             foreach(var n in nearby_list)
@@ -267,7 +267,7 @@ public class Monster : LiveItem
         {
             //StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
             string fname = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("叫醒").effectName;
-            ArtSkill.Show(fname, transform.position);
+            ArtSkill.Show(fname, transform.position, dead_howl);
             yield return wait05s;
 
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, dead_howl);
