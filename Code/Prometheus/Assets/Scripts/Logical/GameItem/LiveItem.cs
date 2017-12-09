@@ -222,7 +222,7 @@ public abstract class LiveItem : GameItemBase
 
                 if (hp_value != null)
                 {
-                    hp_value.text = _cur_hp.ToString();
+                    hp_value.FloatText(_cur_hp.Value);
                 }
             }
         }
@@ -350,8 +350,8 @@ public abstract class LiveItem : GameItemBase
 
     public void AddHpPercent(float percent)
     {
-        cur_hp += fmax_hp * percent;
-        cur_hp = Mathf.Min(fmax_hp, cur_hp);
+        float v = cur_hp + fmax_hp * percent;
+        cur_hp = Mathf.Min(fmax_hp, v);
     }
 
     public void AddHp(float hp)
