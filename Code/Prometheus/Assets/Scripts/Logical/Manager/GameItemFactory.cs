@@ -330,15 +330,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         item.itemId = tid;
-
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
-
         item.transform.SetAsFirstSibling();
-
+        item.transform.position = bornBrick.transform.position;
         item.standBrick = bornBrick;
-
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
-
         item.ListenInit();
         item.icon.SetNativeSize();
         return item;
@@ -351,11 +347,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         var item = ObjPool<Maintenance>.Instance.GetObjFromPoolWithID(out tid, maintenance_pool);
 
         item.itemId = tid;
-
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
-
         item.transform.SetAsFirstSibling();
-
+        item.transform.position = bornBrick.transform.position;
         item.standBrick = bornBrick;
 
         if (item.canvasGroup == null)
@@ -400,11 +394,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         item.itemId = tid;
-
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
-
         item.transform.SetAsFirstSibling();
-
+        item.transform.position = bornBrick.transform.position;
         item.standBrick = bornBrick;
 
         item.config = ConfigDataBase.GetConfigDataById<TotemConfig>(uid);
@@ -456,11 +448,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
 
         item.itemId = tid;
-
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
-
-        item.transform.SetAsLastSibling();
-
+        item.transform.SetAsFirstSibling();
+        item.transform.position = bornBrick.transform.position;
         item.standBrick = bornBrick;
 
         item.distance = distance;
@@ -486,15 +476,11 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.itemId = tid;
 
         item.transform.position = bornBrick.transform.position;
-
-        //item.transform.SetParent(StageView.Instance.NonliveItemRoot);
+        item.itemId = tid;
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
         item.transform.SetAsFirstSibling();
-        item.transform.localScale = Vector3.one;
-        item.standBrick = bornBrick;
-
         item.transform.position = bornBrick.transform.position;
-        item.gameObject.SetActive(true);
+        item.standBrick = bornBrick;
 
         item.ListenInit();
         item.icon.SetNativeSize();
@@ -509,16 +495,20 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.position = bornBrick.transform.position;
-
         item.transform.SetParentAndNormalize(StageView.Instance.uper);
         item.transform.SetAsFirstSibling();
         item.transform.localScale = Vector3.one;
-        //item.standBrick = bornBrick;
-        item.coverBrick = bornBrick;
+
+        if (item.standBrick != null)
+        {
+            Debug.LogError("Cover已经被使用了吗？");
+        }
+
+        item.standBrick = bornBrick;
         item.transform.position = bornBrick.transform.position;
         item.gameObject.SetActive(true);
         item.icon.SetNativeSize();
+        bornBrick.cover = item;
 
         item.ListenInit();
 

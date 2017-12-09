@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameItemBase : MonoBehaviour, ITagable {
 
+    public Button brickBtn;
+
     public int itemId = 0;
 
     public bool isDiscovered = false;
@@ -37,6 +39,30 @@ public class GameItemBase : MonoBehaviour, ITagable {
         }
     }
 
+    void Awake()
+    {
+        HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
+        HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
+        HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
+    }
+
+    protected virtual void OnBrickClick()
+    {
+        standBrick.OnBrickClick();
+    }
+
+    protected virtual void OnLongPress()
+    {
+        standBrick.OnBrickClick();
+    }
+
+    protected virtual void LongPressRelease()
+    {
+        standBrick.OnBrickClick();
+    }
+
+
+
     /// <summary>
     /// 当前依附的砖块
     /// </summary>
@@ -57,7 +83,10 @@ public class GameItemBase : MonoBehaviour, ITagable {
             OnSetStandBrick(value);
 
             _stanbBrick = value;
-            _stanbBrick.item = this;
+            if (_stanbBrick != null)
+            {
+                _stanbBrick.item = this;
+            }
         }
     }
 

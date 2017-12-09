@@ -10,14 +10,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
     [SerializeField]
     Image picture;
-    [SerializeField]
-    Button brickBtn;
+
     [SerializeField]
     Image pathMask;
     [SerializeField]
     Image blockMask;
     [SerializeField]
-    Cover cover;
+    public Cover cover;
 
     public bool last_row;
 
@@ -29,7 +28,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         get
         {
-            if (brickExplored == BrickExplored.UNEXPLORED && realBrickType != BrickType.OBSTACLE)
+            if (brickExplored == BrickExplored.UNEXPLORED && _brickType != BrickType.OBSTACLE)
                 return BrickType.UNKNOWN;
             else
                 return _brickType;
@@ -166,7 +165,31 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
     }
 
-    public void LongPressRelease()
+    protected override void OnBrickClick()
+    {
+        Messenger<Brick>.Invoke(SA.PlayerClickBrick.ToString(), this);
+    }
+
+    protected override void OnLongPress()
+    {
+        Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
+
+        if (realBrickType == BrickType.MONSTER)
+        {
+            var monster = item as Monster;
+
+            if (GameTestData.Instance.alwaysShow || monster.isDiscovered)
+            {
+                StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
+            }
+        }
+        else
+        {
+            StageUIView.Instance.ShowItemInfo(this);
+        }
+    }
+
+    protected override void LongPressRelease()
     {
         StageUIView.Instance.HideItemInfo();
     }
@@ -253,29 +276,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
     }
 
-    public void OnBrickClick()
-    {
-        Messenger<Brick>.Invoke(SA.PlayerClickBrick.ToString(), this);
-    }
 
-    public void OnLongPress()
-    {
-        Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
-
-        if (realBrickType == BrickType.MONSTER)
-        {
-            var monster = item as Monster;
-
-            if (GameTestData.Instance.alwaysShow || monster.isDiscovered)
-            {
-                 StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
-            }
-        }
-        else
-        {
-            StageUIView.Instance.ShowItemInfo(this);
-        }
-    }
 
     public void Init(int row, int column)
     {
@@ -431,6 +432,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             item.Recycle();
             item = null;
+        }
+
+        if (cover != null)
+        {
+            cover.Recycle();
+            cover = null;
         }
 
         brickBlock = 0;
