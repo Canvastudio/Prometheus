@@ -324,7 +324,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
         item.ListenInit();
         item.icon.SetNativeSize();
-        CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
+        //CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
         return item;
     }
 
@@ -430,7 +430,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ///宝箱比较复杂，需要去初始化一些东西
         item.Init();
 
-        CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
+        //CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
 
         item.ListenInit();
         item.icon.SetNativeSize();

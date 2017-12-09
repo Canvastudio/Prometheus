@@ -163,6 +163,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         {
                             _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
                         }
+
+                        float tip = float.Parse(infos[3]);
+
+                        if (Random.Range(0f, 1f) <= tip)
+                        {
+                            _brick.ShowTipRich();
+                        }
                     }
                     else if ("b" == prefix)
                     {
@@ -172,8 +179,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         {
                             _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), total_row);
                         }
- 
 
+                        float tip = float.Parse(infos[3]);
+
+                        if (Random.Range(0f, 1f) <= tip)
+                        {
+                            _brick.ShowTipRich();
+                        }
                     }
                     else if ("g" == prefix)
                     {
@@ -182,6 +194,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         if (prob > Random.Range(0f, 1f))
                         {
                             _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
+                        }
+
+                        float tip = float.Parse(infos[3]);
+
+                        if (Random.Range(0f, 1f) <= tip)
+                        {
+                            _brick.ShowTipRich();
                         }
 
                     }
@@ -206,6 +225,12 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                                 _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
                             }
 
+                            float tip = float.Parse(monster_Desc[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipDanger();
+                            }
                         }
                     }
                     else
@@ -279,7 +304,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         for (int row = 0; row < moduel_RowCount; ++row)
         {
-            for(int col = 0; col < 6; ++col)
+            for (int col = 0; col < 6; ++col)
             {
                 var brick_Desc = moduel.GetBrickInfo(row, col);
 
@@ -291,7 +316,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                 if (string.IsNullOrEmpty(brick_Desc))
                 {
-     
+
                 }
                 else
                 {
@@ -319,6 +344,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                             {
                                 _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
                             }
+
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
                         }
                         else if ("b" == prefix)
                         {
@@ -329,6 +361,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                                 _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), real_Row);
                             }
 
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
+
                         }
                         else if ("g" == prefix)
                         {
@@ -337,6 +376,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                             if (prob > Random.Range(0f, 1f))
                             {
                                 _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
+                            }
+
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
                             }
                         }
                         else if ("r" == prefix)
@@ -358,37 +404,44 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                                 if (!GameTestData.Instance.noMonster)
                                 {
                                     _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+
+                                    float tip = float.Parse(monster_Desc[3]);
+
+                                    if (Random.Range(0f, 1f) <= tip)
+                                    {
+                                        _brick.ShowTipDanger();
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
-                        }
+                            else
+                            {
+                                Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
+                            }
 
 
+                        }
                     }
+
+                    if (row == moduel_RowCount - 1)
+                    {
+                        _brick.last_row = true;
+                    }
+                    else
+                    {
+                        _brick.last_row = false;
+                    }
+
+                    data.PushBrick(real_Row, col, _brick);
                 }
 
-                if (row == moduel_RowCount - 1)
-                {
-                    _brick.last_row = true;
-                }
-                else
-                {
-                    _brick.last_row = false;
-                }
-
-                data.PushBrick( real_Row, col, _brick);
             }
-
         }
 
         total_row += moduel_RowCount;
 
         return moduel_RowCount;
     }
-
+    
     public void OpenNearbyBrick(int row, int column, bool explored_self = true)
     {
         if (explored_self)

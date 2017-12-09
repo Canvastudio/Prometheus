@@ -197,7 +197,7 @@ public class StageView : MuiSingleBase<StageView>
 
     public IEnumerator ShowFx(Brick brick, string fxName)
     {
-        Debug.Log("尝试播放关卡啊特效: " + fxName);
+        Debug.Log("尝试播放关卡特效: " + fxName);
         List<ParticleSystem> fxs;
         ParticleSystem fx;
         float time = 0;
@@ -224,9 +224,57 @@ public class StageView : MuiSingleBase<StageView>
         fx.gameObject.SetActive(true);
         fx.transform.position = brick.transform.position;
 
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time + 2f);
 
         fx.gameObject.SetActive(false);
         fxs.Add(fx);
     }
+
+    public ParticleSystem ShowFxLoop(Brick brick, string fxName)
+    {
+        Debug.Log("尝试播放循环关卡特效: " + fxName);
+        List<ParticleSystem> fxs;
+        ParticleSystem fx;
+
+        if (!fxData.TryGetValue(fxName, out fxs))
+        {
+            string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>(fxName).effectName;
+            fx = GameObject.Instantiate<GameObject>(Resources.Load("Fx/" + name) as GameObject).GetComponent<ParticleSystem>();
+            fxs = new List<ParticleSystem>();
+        }
+        else
+        {
+            if (fxs.Count > 0)
+            {
+                fx = fxs[0];
+            }
+            else
+            {
+                fx = GameObject.Instantiate<GameObject>(Resources.Load("Fx/" + name) as GameObject).GetComponent<ParticleSystem>();
+            }
+        }
+
+        fx.gameObject.SetActive(true);
+        fx.transform.position = brick.transform.position;
+
+
+        //fx.gameObject.SetActive(false);
+        //fxs.Add(fx);
+
+        return fx;
+    }
+
+    public void RecycleFx(string fxName, ParticleSystem fx)
+    {
+        fx.gameObject.SetActive(false);
+        List<ParticleSystem> fxs;
+        if (!fxData.TryGetValue(fxName, out fxs))
+        {
+            Debug.LogError("找不到Fx池子！？");
+        }
+
+        fxs.Add(fx);
+    }
+
+
 }

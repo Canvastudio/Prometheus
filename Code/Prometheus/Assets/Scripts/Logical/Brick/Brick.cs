@@ -161,6 +161,31 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
     }
 
+    string fxName;
+    ParticleSystem loopFx;
+
+    public void ShowTipDanger()
+    {
+        if (loopFx != null)
+        {
+            Debug.LogError("一个格子上面有2个提示特效?");
+        }
+
+        fxName = "格子怪物提示";
+        loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+    }
+
+    public void ShowTipRich()
+    {
+        if (loopFx != null)
+        {
+            Debug.LogError("一个格子上面有2个提示特效?");
+        }
+
+        fxName = "格子宝物提示";
+        loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+    }
+
     protected override void OnBrickClick()
     {
         Messenger<Brick>.Invoke(SA.PlayerClickBrick.ToString(), this);
@@ -198,6 +223,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickExplored = BrickExplored.EXPLORED;
 
         isDiscovered = true;
+
+        if (loopFx != null)
+        {
+            StageView.Instance.RecycleFx(fxName, loopFx);
+        }
 
         StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
 
@@ -442,6 +472,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public override void Recycle()
     {
         base.Recycle();
+
+        if (loopFx != null)
+        {
+            StageView.Instance.RecycleFx(fxName, loopFx);
+        }
 
         if (realBrickType != BrickType.EMPTY && item != null)
         {
