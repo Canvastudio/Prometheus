@@ -162,7 +162,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
 
     string fxName;
-    ParticleSystem loopFx;
+    ArtFxBase loopFx;
 
     public void ShowTipDanger()
     {
@@ -172,7 +172,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
 
         fxName = "格子怪物提示";
-        loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>(fxName).effectName;
+        //loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+
+        loopFx = ArtSkill.Show(name, transform.position);
     }
 
     public void ShowTipRich()
@@ -183,7 +186,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
 
         fxName = "格子宝物提示";
-        loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+        //loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+
+        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>(fxName).effectName;
+        //loopFx = StageView.Instance.ShowFxLoop(this, fxName);
+
+        loopFx = ArtSkill.Show(name, transform.position);
     }
 
     protected override void OnBrickClick()
@@ -226,10 +234,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         if (loopFx != null)
         {
-            StageView.Instance.RecycleFx(fxName, loopFx);
+            loopFx.OnEnd();
         }
 
-        StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
+        //StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
+
+        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("格子翻开").effectName;
+        ArtSkill.Show(name, transform.position);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -475,7 +486,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         if (loopFx != null)
         {
-            StageView.Instance.RecycleFx(fxName, loopFx);
+            loopFx.OnEnd();
         }
 
         if (realBrickType != BrickType.EMPTY && item != null)

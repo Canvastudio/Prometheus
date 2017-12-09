@@ -157,7 +157,9 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
-        StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+        //StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
+        ArtSkill.Show(name, transform.position);
 
         yield return wait05s;
 
@@ -200,7 +202,9 @@ public class Monster : LiveItem
         if (discover_howl > 0)
         {
             Debug.Log("Monster discover_howl: " + discover_howl);
-            StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
+            //tartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
+            string fname = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("叫醒").effectName;
+            ArtSkill.Show(fname, transform.position);
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, discover_howl);
 
             foreach(var n in nearby_list)
@@ -261,8 +265,9 @@ public class Monster : LiveItem
 
         if (dead_howl > 0)
         {
-            StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
-
+            //StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
+            string fname = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("叫醒").effectName;
+            ArtSkill.Show(fname, transform.position);
             yield return wait05s;
 
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, dead_howl);
@@ -299,7 +304,10 @@ public class Monster : LiveItem
 
         Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
 
-        StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物死亡"));
+        //StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物死亡"));
+        string ffname = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物死亡").effectName;
+        ArtSkill.Show(ffname, transform.position);
+        yield return wait05s;
 
         Recycle();
     }

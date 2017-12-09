@@ -162,14 +162,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         if (prob > Random.Range(0f, 1f))
                         {
                             _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
+
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
                         }
 
-                        float tip = float.Parse(infos[3]);
-
-                        if (Random.Range(0f, 1f) <= tip)
-                        {
-                            _brick.ShowTipRich();
-                        }
                     }
                     else if ("b" == prefix)
                     {
@@ -178,14 +179,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         if (prob > Random.Range(0f, 1f))
                         {
                             _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), total_row);
+
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
                         }
 
-                        float tip = float.Parse(infos[3]);
-
-                        if (Random.Range(0f, 1f) <= tip)
-                        {
-                            _brick.ShowTipRich();
-                        }
                     }
                     else if ("g" == prefix)
                     {
@@ -194,15 +196,14 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         if (prob > Random.Range(0f, 1f))
                         {
                             _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
+
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
                         }
-
-                        float tip = float.Parse(infos[3]);
-
-                        if (Random.Range(0f, 1f) <= tip)
-                        {
-                            _brick.ShowTipRich();
-                        }
-
                     }
                     else if ("r" == prefix)
                     {
@@ -223,14 +224,16 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                             if (!GameTestData.Instance.noMonster)
                             {
                                 _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+
+
+                                float tip = float.Parse(monster_Desc[3]);
+
+                                if (Random.Range(0f, 1f) <= tip)
+                                {
+                                    _brick.ShowTipDanger();
+                                }
                             }
 
-                            float tip = float.Parse(monster_Desc[3]);
-
-                            if (Random.Range(0f, 1f) <= tip)
-                            {
-                                _brick.ShowTipDanger();
-                            }
                         }
                     }
                     else
