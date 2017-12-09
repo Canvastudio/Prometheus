@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4149655985057456}
   - component: {fileID: 198459996961881682}
   - component: {fileID: 199682981702280890}
+  - component: {fileID: 114967387876466410}
   m_Layer: 0
   m_Name: dead_monster
   m_TagString: Untagged
@@ -52,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1483492726442468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 289, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4358764333491156}
@@ -72,6 +73,31 @@ Transform:
   m_Father: {fileID: 4149655985057456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114967387876466410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483492726442468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90ed80436adf4ed498957831cc2d35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
+  tran: {fileID: 0}
+  total_time: 2
+  m_time: 0
+  fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  particls:
+  - {fileID: 198459996961881682}
+  - {fileID: 198244520088444684}
+  layername: StageView
 --- !u!198 &198244520088444684
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -132,7 +158,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1518741783
+  randomSeed: -205264811
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3398,7 +3424,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1200138160
+  randomSeed: -1046649493
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6727,8 +6753,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2114422657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

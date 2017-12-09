@@ -107,6 +107,22 @@ public class ArtFxBase : MonoBehaviour {
 
 	}
 
+	#region set property 
+
+	public ParticleSystem[] particls;
+
+	public void SetSize(float size) {
+
+		for (int i = 0; i < particls.Length; i++) {
+
+			ParticleSystem.MainModule main = particls[i].main;
+			main.startSizeMultiplier = size;
+
+		}
+
+	}
+
+	#endregion
 
 	#region set layer
 
@@ -129,6 +145,8 @@ public class ArtFxBase : MonoBehaviour {
 	public void OnDrawGizmos() {
 	
 		SetLayer("StageView");
+
+		particls = this.GetComponentsInChildren<ParticleSystem>(true);
 	
 	}
 

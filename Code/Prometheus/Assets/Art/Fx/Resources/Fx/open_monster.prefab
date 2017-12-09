@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114312270596563064}
   - component: {fileID: 114926149430606720}
   - component: {fileID: 199304487410382536}
+  - component: {fileID: 114902427545497852}
   m_Layer: 0
   m_Name: open_monster
   m_TagString: Untagged
@@ -57,6 +58,30 @@ MonoBehaviour:
   particle: {fileID: 198145611512139872}
   min_time: 1.1
   max_time: 2.1
+--- !u!114 &114902427545497852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1701279918516874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90ed80436adf4ed498957831cc2d35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
+  tran: {fileID: 0}
+  total_time: 1.3
+  m_time: 0
+  fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  particls:
+  - {fileID: 198145611512139872}
+  layername: StageView
 --- !u!114 &114926149430606720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: event:/Skill/
-  event_name: event:/Skill/open_box
+  event_name: event:/Skill/open_monster
   stop_parameter: 
 --- !u!198 &198145611512139872
 ParticleSystem:
@@ -131,7 +156,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1721159173
+  randomSeed: -1307694749
   InitialModule:
     serializedVersion: 3
     enabled: 1

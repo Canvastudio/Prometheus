@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4276076540805976}
   - component: {fileID: 198145611512139872}
-  - component: {fileID: 114312270596563064}
   - component: {fileID: 114926149430606720}
   - component: {fileID: 199304487410382536}
+  - component: {fileID: 114260023613521738}
   m_Layer: 0
   m_Name: pain_blood_state
   m_TagString: Untagged
@@ -43,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114312270596563064
+--- !u!114 &114260023613521738
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -51,12 +51,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1701279918516874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5430d209d9200452e83f61d60914e6b2, type: 3}
+  m_Script: {fileID: 11500000, guid: a90ed80436adf4ed498957831cc2d35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 198145611512139872}
-  min_time: 1.1
-  max_time: 2.1
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
+  tran: {fileID: 0}
+  total_time: 2
+  m_time: 0
+  fxend: 
+  islookat: 0
+  iscenter: 0
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  particls:
+  - {fileID: 198145611512139872}
+  layername: StageView
 --- !u!114 &114926149430606720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: event:/Skill/
-  event_name: event:/Skill/open_box
+  event_name: event:/Skill/pain_blood_state
   stop_parameter: 
 --- !u!198 &198145611512139872
 ParticleSystem:
@@ -131,7 +141,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1721159173
+  randomSeed: 684640186
   InitialModule:
     serializedVersion: 3
     enabled: 1

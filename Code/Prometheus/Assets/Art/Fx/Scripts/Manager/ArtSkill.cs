@@ -54,4 +54,27 @@ public class ArtSkill {
 
 	}
 
+	public static ArtFxBase Show(string name, Vector3 pos) {
+
+		GameObject objskill = FxPool.Get(FxEnum.Fx, name);
+
+		objskill.transform.position = pos;
+
+		return objskill.GetComponent<ArtFxBase>();
+
+	}
+
+	public static ArtFxBase Show(string name, Vector3 pos, float size) {
+
+		ArtFxBase fx =  Show(name, pos);
+
+		if (fx != null)
+			fx.SetSize(size);
+
+		return fx;
+	
+	}
+
+
+
 }
