@@ -40,6 +40,12 @@ public class StageView : MuiSingleBase<StageView>
     public string brickName = "brick";
     public Camera show_camera;
 
+    private string strblockMask = "blockMask";
+
+    [SerializeField]
+    Transform blockMask;
+    [SerializeField]
+    Transform maskRoot;
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
@@ -124,6 +130,21 @@ public class StageView : MuiSingleBase<StageView>
         }
     }
 
+    public int AddBlockMask(Brick brick, ref Transform mask)
+    {
+        int _id;
+        mask = ObjPool<Transform>.Instance.GetObjFromPoolWithID(out _id, strblockMask);
+        mask.SetParentAndNormalize(maskRoot);
+        mask.gameObject.SetActive(true);
+        mask.position = brick.transform.position;
+        return _id;
+    }
+
+    public void RemoveBlockMask(int id)
+    {
+        ObjPool<Transform>.Instance.RecycleObj(strblockMask, id);
+    }
+
     public override IEnumerator Init(object param)
     {
         int w = Screen.width;
@@ -132,6 +153,7 @@ public class StageView : MuiSingleBase<StageView>
         transform.Rt().sizeDelta = new Vector2(750f, h * 750f / w);
 
         ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
+        ObjPool<Transform>.Instance.InitOrRecyclePool(strblockMask, blockMask);
 
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();

@@ -12,14 +12,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     Image picture;
 
     [SerializeField]
-    Image pathMask;
-    [SerializeField]
-    Image blockMask;
-    [SerializeField]
     public Cover cover;
 
     public bool last_row;
-
+    Transform blockMask;
     public int uid;
     public ulong moduel_id = 0;
     public ulong level_id = 0;
@@ -238,15 +234,43 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             GContext.Instance.dark_brick += 1;
         }
     }
+
+    int bid;
+
+    private void ShowBlock()
+    {
+        if (blockMask == null)
+        {
+            bid = StageView.Instance.AddBlockMask(this, ref blockMask);
+        }
+
+        blockMask.gameObject.SetActive(true);
+    }
+
+    private void HideBlock()
+    {
+        if (blockMask != null)
+        {
+            blockMask.gameObject.SetActive(false);
+        }
+    }
+
+    private void RecycBlock()
+    {
+        if (blockMask != null)
+        {
+            StageView.Instance.RemoveBlockMask(bid);
+        }
+    }
+
+
     public void RefreshWalkableAndBlockState()
     {
-        blockMask.gameObject.SetActive(false);
-
         if (brickType == BrickType.EMPTY)
         {
             if (brickBlock > 0)
             {
-                blockMask.gameObject.SetActive(true);
+                ShowBlock();
                 pathNode.isWalkable = false;
             }
             else
@@ -261,11 +285,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 if (brickBlock == 0)
                 {
                     pathNode.isWalkable = true;
-                    blockMask.gameObject.SetActive(false);
+                    HideBlock();
                 }
                 else
                 {
-                    blockMask.gameObject.SetActive(true);
+                    ShowBlock();
                     pathNode.isWalkable = false;
                 }
             }
@@ -275,8 +299,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             }
         }
     }
-
-
 
     public void Init(int row, int column)
     {
@@ -306,8 +328,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         };
 
         brickType = BrickType.EMPTY;
-
-        CancelAsPathNode();
     }
 
     #region Add Item
@@ -395,16 +415,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         return (item != null && item is LiveItem);
     }
 
-    public void SetAsPathNode()
-    {
-        pathMask.gameObject.SetActive(true);
-    }
-
-    public void CancelAsPathNode()
-    {
-        pathMask.gameObject.SetActive(false);
-    }
-
     public bool Equals(Brick other)
     {
         return pathNode == other.pathNode;
@@ -441,7 +451,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
 
         brickBlock = 0;
-        blockMask.gameObject.SetActive(false);
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
@@ -456,6 +465,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             GContext.Instance.dark_brick -= 1;
         }
+
+        RecycBlock();
 
         if (column == 0)
         {

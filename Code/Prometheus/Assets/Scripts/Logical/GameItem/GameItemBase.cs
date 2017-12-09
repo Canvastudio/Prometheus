@@ -39,7 +39,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         }
     }
 
-    void Awake()
+    void Start()
     {
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
@@ -74,15 +74,10 @@ public class GameItemBase : MonoBehaviour, ITagable {
         }
         set
         {
-            if (_stanbBrick != null)
-            {
-                _stanbBrick.item = null;
-                _stanbBrick.brickType = BrickType.EMPTY;
-            }
-
             OnSetStandBrick(value);
 
             _stanbBrick = value;
+
             if (_stanbBrick != null)
             {
                 _stanbBrick.item = this;

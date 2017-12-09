@@ -193,30 +193,14 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.cid = id;
         item.lv = lv;
 
-        item.icon.sprite = StageView.Instance.itemAtlas.GetSprite(config.icon);
+        item.icon.SetStageItemIcon(config.icon);
 
         ulong AI_Id = config.ai[pwr];
 
         item.AIConfig = ConfigDataBase.GetConfigDataById<AIConfig>(AI_Id);
         item.dangerousLevels = item.AIConfig.dangerous_levels;
 
-
-
         bornBrick.item = item;
-
-        if (item.canvasGroup == null)
-        {
-            item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
-        }
 
         item.monsterName.text = config.m_name;
 
@@ -337,6 +321,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.config = ConfigDataBase.GetConfigDataById<SupplyConfig>(uid);
         item.ListenInit();
         item.icon.SetNativeSize();
+        CoroCore.Instance.StartCoroutine(item.standBrick.OnDiscoverd());
         return item;
     }
 
@@ -355,15 +340,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         if (item.canvasGroup == null)
         {
             item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
         }
 
         item.ListenInit();
@@ -404,15 +380,6 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         if (item.canvasGroup == null)
         {
             item.canvasGroup = item.GetOrAddComponet<CanvasGroup>();
-        }
-
-        if (GameTestData.Instance.alwaysShow)
-        {
-            item.canvasGroup.alpha = 1;
-        }
-        else
-        {
-            item.canvasGroup.alpha = 0;
         }
 
         item.ListenInit();
@@ -483,7 +450,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.standBrick = bornBrick;
 
         item.ListenInit();
-        item.icon.SetNativeSize();
+        item.icon.SetBlockIcon(bornBrick.row, bornBrick.column);
+
         return item;
     }
 
@@ -507,10 +475,15 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.standBrick = bornBrick;
         item.transform.position = bornBrick.transform.position;
         item.gameObject.SetActive(true);
-        item.icon.SetNativeSize();
+        item.icon.SetCoverIcon(bornBrick.row, bornBrick.column);
         bornBrick.cover = item;
 
         item.ListenInit();
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            item.icon.color = new Color(1, 1, 1, 0.5f);
+        }
 
         return item;
     }

@@ -99,7 +99,8 @@ public class MoveComponet : MonoBehaviour {
 
         StageCore.Instance.TimeCast(time);
 
-        LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time).setOnComplete(OnMoveFinish);
+        LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time)
+            .setOnComplete(OnMoveFinish);
 
         while (!move_Finish)
         {
@@ -120,8 +121,17 @@ public class MoveComponet : MonoBehaviour {
     public void OnMoveFinish()
     {
         move_Finish = true;
-
+        owner.standBrick.CleanItem();
         owner.standBrick = _brick;
+
+        if (owner is Player)
+        {
+            owner.standBrick.brickType = BrickType.PLAYER;
+        }
+        else
+        {
+            Debug.LogError("除了玩家类型还有其他类型可以使用Move?");
+        }
 
         _pathIndex++;
 
@@ -143,6 +153,7 @@ public class MoveComponet : MonoBehaviour {
                 BrickCore.Instance.CancelBlockNearbyBrick(owner.standBrick.pathNode.x, owner.standBrick.pathNode.z);
             }
 
+            owner.standBrick.CleanItem();
             owner.standBrick = brick;
             owner.transform.position = brick.transform.position;
 
@@ -151,6 +162,15 @@ public class MoveComponet : MonoBehaviour {
                 var monster = (owner as Monster);
                 monster.block_other = false;
                 monster.CheckDistance();
+                owner.standBrick.brickType = BrickType.MONSTER;
+            }
+            else if (owner is Player)
+            {
+                owner.standBrick.brickType = BrickType.PLAYER;
+            }
+            else
+            {
+                Debug.LogError("除了玩家和怪物类型还有其他类型可以使用Transfer?");
             }
         }
     }

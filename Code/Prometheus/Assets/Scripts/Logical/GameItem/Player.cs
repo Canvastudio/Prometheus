@@ -69,7 +69,10 @@ public class Player : LiveItem {
 
         brick.brickType = BrickType.PLAYER;
 
-        StartCoroutine(brick.OnDiscoverd());
+        if (!brick.isDiscovered)
+        {
+            StartCoroutine(brick.OnDiscoverd());
+        }
     }
 
     public override void Recycle()

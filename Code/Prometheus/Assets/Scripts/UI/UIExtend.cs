@@ -26,7 +26,7 @@ public static class UIExtend {
 
     public static void SetStageItemIcon(this Image image, string name)
     {
-        image.sprite = AtlasCore.Instance.Load("Stage").GetSprite(name);
+        image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("stage", name);
     }
 
     public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
@@ -58,6 +58,20 @@ public static class UIExtend {
     public static void SetBrickIcon(this Image image, int row, int col)
     {
         string name = RuleBox.GetBox(row, col);
+        image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.SetNativeSize();
+    }
+
+    public static void SetBlockIcon(this Image image, int row, int col)
+    {
+        string name = RuleBox.GetBlock(row, col);
+        image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.SetNativeSize();
+    }
+
+    public static void SetCoverIcon(this Image image, int row, int col)
+    {
+        string name = RuleBox.GetUnExplored(row, col);
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
         image.SetNativeSize();
     }
