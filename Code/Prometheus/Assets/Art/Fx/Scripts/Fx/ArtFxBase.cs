@@ -129,11 +129,9 @@ public class ArtFxBase : MonoBehaviour {
 
 	#region set layer
 
-	public string layername = "StageUI";
+	public string layername = "StageView";
 
 	public void SetLayer(string _layername) {
-	
-		layername = _layername;
 
 		ParticleSystemRenderer[] prenders = this.GetComponentsInChildren<ParticleSystemRenderer>(true);
 
@@ -147,7 +145,7 @@ public class ArtFxBase : MonoBehaviour {
 
 	public void OnDrawGizmos() {
 	
-		SetLayer("StageView");
+		SetLayer(layername);
 
 		particls = this.GetComponentsInChildren<ParticleSystem>(true);
 	
