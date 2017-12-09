@@ -28,6 +28,7 @@ public class RuleBox {
 	private static List<string> box_d_list = new List<string>() {
 	
 		"box_d_0",
+		"box_d_1",
 	
 	};
 
