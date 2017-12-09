@@ -199,7 +199,9 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
         isDiscovered = true;
 
+        StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
 
+        yield return new WaitForSeconds(0.5f);
 
         if (cover != null)
         {

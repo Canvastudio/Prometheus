@@ -42,7 +42,7 @@ public class StageView : MuiSingleBase<StageView>
 
     private string strblockMask = "blockMask";
 
-    Dictionary<string, ParticleSystem> fxData = new Dictionary<string, ParticleSystem>();
+
 
 
     [SerializeField]
@@ -193,19 +193,33 @@ public class StageView : MuiSingleBase<StageView>
         gameObject.SetActive(false);
     }
 
+    Dictionary<string, List<ParticleSystem>> fxData = new Dictionary<string, List<ParticleSystem>>();
+
     public IEnumerator ShowFx(Brick brick, string fxName)
     {
+        Debug.Log("尝试播放关卡啊特效: " + fxName);
+        List<ParticleSystem> fxs;
         ParticleSystem fx;
         float time = 0;
 
-        if (!fxData.TryGetValue(fxName, out fx))
+        if (!fxData.TryGetValue(fxName, out fxs))
         {
             string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>(fxName).effectName;
             fx = GameObject.Instantiate<GameObject>(Resources.Load("Fx/" + name) as GameObject).GetComponent<ParticleSystem>();
-            fxData.Add(fxName, fx);
+            fxs = new List<ParticleSystem>();
+        }
+        else
+        {
+            if (fxs.Count > 0)
+            {
+                fx = fxs[0];
+            }
+            else
+            {
+                fx = GameObject.Instantiate<GameObject>(Resources.Load("Fx/" + name) as GameObject).GetComponent<ParticleSystem>();
+            }
         }
 
-        
         time = fx.main.startLifetime.constant;
         fx.gameObject.SetActive(true);
         fx.transform.position = brick.transform.position;
@@ -213,5 +227,6 @@ public class StageView : MuiSingleBase<StageView>
         yield return new WaitForSeconds(time);
 
         fx.gameObject.SetActive(false);
+        fxs.Add(fx);
     }
 }

@@ -108,7 +108,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual IEnumerator OnDiscoverd()
     {
-        Debug.Log("发现: " + gameObject.name);
+        //Debug.Log("发现: " + gameObject.name);
 
         isDiscovered = true;
 
@@ -133,7 +133,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
     {
         if (!gameObject.activeInHierarchy)
         {
-            Debug.Log("没有激活的物体参与了checkViewArea? : " + gameObject.name);
+            //Debug.Log("没有激活的物体参与了checkViewArea? : " + gameObject.name);
             return false;
         }
 

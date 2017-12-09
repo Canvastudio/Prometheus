@@ -6,9 +6,11 @@ public class Cover : GameItemBase {
 
     public override IEnumerator OnDiscoverd()
     {
-        Debug.Log("去除Cover: " + gameObject.name);
+        //Debug.Log("去除Cover: " + gameObject.name);
         Recycle();
-        return base.OnDiscoverd();
+        base.OnDiscoverd();
+
+        return null;
     }
 
     public override void Recycle()

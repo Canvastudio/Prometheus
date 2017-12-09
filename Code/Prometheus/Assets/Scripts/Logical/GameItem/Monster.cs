@@ -153,9 +153,13 @@ public class Monster : LiveItem
         brick.brickType = BrickType.MONSTER;
     }
 
+    WaitForSeconds wait05s = new WaitForSeconds(0.5f);
+
     public override IEnumerator OnDiscoverd()
     {
         StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+
+        yield return wait05s;
 
         //icon.gameObject.SetActive(true);
 
@@ -196,6 +200,7 @@ public class Monster : LiveItem
         if (discover_howl > 0)
         {
             Debug.Log("Monster discover_howl: " + discover_howl);
+            StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, discover_howl);
 
             foreach(var n in nearby_list)
@@ -256,13 +261,18 @@ public class Monster : LiveItem
 
         if (dead_howl > 0)
         {
+            StartCoroutine(StageView.Instance.ShowFx(standBrick, "叫醒"));
+
+            yield return wait05s;
+
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, dead_howl);
 
             foreach (var n in nearby_list)
             {
-                if (!n.isDiscovered && n.isAlive)
+                if (!n.isDiscovered) if(n.isAlive)
                 {
-                    StartCoroutine(n.standBrick.OnDiscoverd());
+                    if (n.isAlive)
+                        StartCoroutine(n.standBrick.OnDiscoverd());
                 }
                 else
                 {
@@ -288,6 +298,8 @@ public class Monster : LiveItem
         Debug.Log("怪物死亡：" + gameObject.name);
 
         Messenger<Damage>.Invoke(SA.MonsterDead, damageInfo);
+
+        StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物死亡"));
 
         Recycle();
     }

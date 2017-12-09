@@ -208,6 +208,9 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.ListenInit();
 
+        item.standBrick.item = item;
+        item.standBrick.brickType = BrickType.MONSTER;
+
 #if UNITY_EDITOR
         item.name += "_" + config.m_name;
 #endif

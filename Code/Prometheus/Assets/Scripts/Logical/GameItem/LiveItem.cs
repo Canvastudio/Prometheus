@@ -362,7 +362,7 @@ public abstract class LiveItem : GameItemBase
 
     public virtual IEnumerator OnDead(Damage damageInfo)
     {
-        Debug.Log("LiveItem OnDead: " + gameObject.name);
+        //Debug.Log("LiveItem OnDead: " + gameObject.name);
 
         var list = state.state_list;
 
