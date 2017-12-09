@@ -43,13 +43,6 @@ public class RuleBox {
 	
 	};
 
-
-	public static void GameInit() {
-	
-
-	
-	}
-
 	public static string GetBox(int row, int column) {
 	
 		if (column == 0 || column == 5 && Random.value > 0.95f)
@@ -58,6 +51,18 @@ public class RuleBox {
 
 		return box_l_list[Random.Range(0, box_l_list.Count - 1)];
 	
+	}
+
+	public static string GetBlock(int row, int column) {
+	
+		return box_b_list[Random.Range(0, box_b_list.Count - 1)];
+	
+	}
+
+	public static string GetUnExplored(int row, int clumn) {
+
+		return box_d_list[Random.Range(0, box_d_list.Count - 1)];
+
 	}
 
 }
