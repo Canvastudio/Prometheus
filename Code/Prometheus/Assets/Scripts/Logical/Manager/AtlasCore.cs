@@ -35,4 +35,14 @@ public class AtlasCore : SingleGameObject<AtlasCore> {
             return newAtlas;
         }
     }
+
+    public Sprite GetSpriteFormAtlas(string atlas, string sprite)
+    {
+        var res = Load(atlas).GetSprite(sprite);
+        if (res == null)
+        {
+            Debug.LogError("找不到对应的Sprite: " + sprite + ", 在atals: " + atlas);
+        }
+        return res;
+    }
 }

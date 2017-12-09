@@ -54,4 +54,11 @@ public static class UIExtend {
 
         t.text = stringBuilder.ToString();
     }
+
+    public static void SetBrickIcon(this Image image, int row, int col)
+    {
+        string name = RuleBox.GetBox(row, col);
+        image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.SetNativeSize();
+    }
 }

@@ -88,8 +88,7 @@ public class StageView : MuiSingleBase<StageView>
 
         _brick.ListenInit();
 
-        _brick.icon.SetStageItemIcon("box_l_0");
-        _brick.icon.SetNativeSize();
+        _brick.icon.SetBrickIcon(row, col);
 
         return _brick;
     }
