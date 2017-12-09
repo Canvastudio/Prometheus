@@ -53,12 +53,12 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     protected virtual void OnLongPress()
     {
-        standBrick.OnBrickClick();
+        standBrick.OnLongPress();
     }
 
     protected virtual void LongPressRelease()
     {
-        standBrick.OnBrickClick();
+        standBrick.LongPressRelease();
     }
 
 

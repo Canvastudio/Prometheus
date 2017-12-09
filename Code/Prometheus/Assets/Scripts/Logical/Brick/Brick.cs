@@ -170,6 +170,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
 
+
         if (realBrickType == BrickType.MONSTER)
         {
             var monster = item as Monster;
@@ -199,9 +200,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         isDiscovered = true;
 
 
+
         if (cover != null)
         {
-            yield return cover.OnDiscoverd();
+            IEnumerator ie = cover.OnDiscoverd();
         }
         else
         {
@@ -215,6 +217,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 yield return item.OnDiscoverd();
             }
         }
+
 
 
         if (realBrickType != BrickType.OBSTACLE)

@@ -42,6 +42,9 @@ public class StageView : MuiSingleBase<StageView>
 
     private string strblockMask = "blockMask";
 
+    Dictionary<string, ParticleSystem> fxData = new Dictionary<string, ParticleSystem>();
+
+
     [SerializeField]
     Transform blockMask;
     [SerializeField]
@@ -188,5 +191,27 @@ public class StageView : MuiSingleBase<StageView>
     public override void Hide(object param)
     {
         gameObject.SetActive(false);
+    }
+
+    public IEnumerator ShowFx(Brick brick, string fxName)
+    {
+        ParticleSystem fx;
+        float time = 0;
+
+        if (!fxData.TryGetValue(fxName, out fx))
+        {
+            string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>(fxName).effectName;
+            fx = GameObject.Instantiate<GameObject>(Resources.Load("Fx/" + name) as GameObject).GetComponent<ParticleSystem>();
+            fxData.Add(fxName, fx);
+        }
+
+        
+        time = fx.main.startLifetime.constant;
+        fx.gameObject.SetActive(true);
+        fx.transform.position = brick.transform.position;
+
+        yield return new WaitForSeconds(time);
+
+        fx.gameObject.SetActive(false);
     }
 }

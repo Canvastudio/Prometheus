@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 114950792208918696}
   - component: {fileID: 114317214844124038}
   - component: {fileID: 114383987626850076}
+  - component: {fileID: 114871601066900174}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -202,12 +203,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3590d7272073580488559d48b26a556f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brickBtn: {fileID: 114871601066900174}
   itemId: 0
   isDiscovered: 0
   inViewArea: 0
   icon: {fileID: 0}
+  canvasGroup: {fileID: 0}
   _stanbBrick: {fileID: 0}
   _silent: 0
+  monsterType: 0
+  state: {fileID: 0}
+  pwr: 0
   _freeze: 0
   activeSkillCanUsed: 0
   passiveSkillCanUsed: 0
@@ -215,10 +221,11 @@ MonoBehaviour:
   _disarm: 0
   fightComponet: {fileID: 0}
   _side: 0
+  isAlive: 1
   _moveComponet: {fileID: 114383987626850076}
   hp_value: {fileID: 114175957358966530}
   atk_value: {fileID: 114070289563845902}
-  typeId: 1
+  playerId: 1
   inventory:
     chipList: []
   skillPointsComponet: {fileID: 0}
@@ -234,6 +241,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 114317214844124038}
+--- !u!114 &114871601066900174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714161537929942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 114950792208918696}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114896924718665588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

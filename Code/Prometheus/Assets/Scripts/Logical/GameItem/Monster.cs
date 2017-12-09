@@ -84,6 +84,11 @@ public class Monster : LiveItem
 
     public ArtPop artPop;
 
+    private void OnEnable()
+    {
+        //icon.gameObject.SetActive(false);
+    }
+
     public override void AddStateUI(StateIns ins)
     {
         base.AddStateUI(ins);
@@ -150,6 +155,10 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
+        StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+
+        //icon.gameObject.SetActive(true);
+
         base.OnDiscoverd();
 
         RefreshActiveSKillState();
