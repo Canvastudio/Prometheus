@@ -10,6 +10,8 @@ public class SkillListItem : DragableScrollItem
     ActiveSkillsConfig config;
     [SerializeField]
     Image icon;
+    [SerializeField]
+    Text skillName;
     public int id;
 
     public ulong skill_id;
@@ -30,6 +32,7 @@ public class SkillListItem : DragableScrollItem
         skill_id = id;
         config = ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(id);
         icon.SetSkillIcon(config.icon);
+        skillName.text = config.name;
     }
 
     public void OnLongPress()
