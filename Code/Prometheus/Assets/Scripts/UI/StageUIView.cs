@@ -56,6 +56,22 @@ public class StageUIView : MuiSingleBase<StageUIView>
         }
     }
 
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+        {
+            HideItemInfo();
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            HideItemInfo();
+        }
+    }
+
     public void HideItemInfo()
     {
         itemInfo.gameObject.SetActive(false);
