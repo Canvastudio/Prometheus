@@ -157,9 +157,9 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
-        //StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
-        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
-        ArtSkill.Show(name, transform.position);
+        ////StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+        //string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
+        //ArtSkill.Show(name, transform.position);
 
         yield return wait05s;
 

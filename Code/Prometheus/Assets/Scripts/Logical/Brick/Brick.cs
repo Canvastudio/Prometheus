@@ -238,9 +238,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
 
         //StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
-
-        string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("格子翻开").effectName;
-        ArtSkill.Show(name, transform.position);
+        if (realBrickType != BrickType.MONSTER)
+        {
+            string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("格子翻开").effectName;
+            ArtSkill.Show(name, transform.position);
+        }
 
         yield return new WaitForSeconds(0.5f);
 
@@ -257,6 +259,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             if (!item.isDiscovered)
             {
+                if (realBrickType == BrickType.MONSTER)
+                {
+                    //StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
+                    string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
+                    ArtSkill.Show(name, transform.position);
+                }
+
                 yield return item.OnDiscoverd();
             }
         }
