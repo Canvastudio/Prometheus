@@ -99,6 +99,13 @@ public class MoveComponet : MonoBehaviour {
 
         StageCore.Instance.TimeCast(time);
 
+        if (!brick.isDiscovered)
+        {
+            StartCoroutine(brick.OnDiscoverd());
+        }
+
+        //yield return new WaitForSeconds(0.1f);
+
         LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time)
             .setOnComplete(OnMoveFinish);
 
