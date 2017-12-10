@@ -90,7 +90,15 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
             item.ShowSkillInfo(ins);
         }
 
-        foreach(var ins in mon.state.state_list)
+
+        foreach (var ins in mf.passiveInsList)
+        {
+            SkillItem item = ObjPool<SkillItem>.Instance.GetObjFromPool(s1);
+            item.SetParentAndNormalize(skillRoot);
+            item.ShowSkillInfo(ins);
+        }
+
+        foreach (var ins in mon.state.state_list)
         {
             StateItem item = ObjPool<StateItem>.Instance.GetObjFromPool(s2);
             item.SetParentAndNormalize(stateRoot);

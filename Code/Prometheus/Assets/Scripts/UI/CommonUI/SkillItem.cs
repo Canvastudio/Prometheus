@@ -44,8 +44,7 @@ public class SkillItem : MonoBehaviour
 
      public void ShowSkillInfo(ActiveSkillsConfig config)
     {
-        skillCooldown.gameObject.SetActive(false);
-
+        cd.gameObject.SetActive(false);
         describe.text = config.describe;
         skillName.text = config.name;
         skillIcon.SetSkillIcon(config.icon);
@@ -55,7 +54,8 @@ public class SkillItem : MonoBehaviour
 
     public void ShowSkillInfo(PassiveSkillIns ins)
     {
-        skillCooldown.gameObject.SetActive(false);
+        cd.gameObject.SetActive(false);
+
         describe.text = ins.passiveConfig.describe;
         skillName.text = ins.passiveConfig.name;
         skillIcon.SetSkillIcon(ins.passiveConfig.icon);
