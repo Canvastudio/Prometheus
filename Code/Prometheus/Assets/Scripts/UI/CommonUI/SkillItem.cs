@@ -14,6 +14,8 @@ public class SkillItem : MonoBehaviour
     Text skillCooldown;
     [SerializeField]
     Image skillIcon;
+    [SerializeField]
+    GameObject cd;
 
     private void Awake()
     {
@@ -25,12 +27,12 @@ public class SkillItem : MonoBehaviour
         if (ins is MonsterActiveSkillIns)
         {
             var mins = ins as MonsterActiveSkillIns;
-            skillCooldown.gameObject.SetActive(true);
+            cd.gameObject.SetActive(true);
             skillCooldown.text = mins.cooldown.ToString();
         }
         else
         {
-            skillCooldown.gameObject.SetActive(false);
+            cd.gameObject.SetActive(false);
         }
 
         describe.text = ins.config.describe;
@@ -39,6 +41,18 @@ public class SkillItem : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
+     public void ShowSkillInfo(ActiveSkillsConfig config)
+    {
+        skillCooldown.gameObject.SetActive(false);
+
+        describe.text = config.describe;
+        skillName.text = config.name;
+        skillIcon.SetSkillIcon(config.icon);
+
+        gameObject.SetActive(true);
+    }
+
     public void ShowSkillInfo(PassiveSkillIns ins)
     {
         skillCooldown.gameObject.SetActive(false);

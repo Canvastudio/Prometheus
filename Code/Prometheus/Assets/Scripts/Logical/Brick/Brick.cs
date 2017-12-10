@@ -158,7 +158,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
-        HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
+        HudEvent.Get(brickBtn.gameObject).onLongPressRelease = LongPressRelease;
     }
 
     string fxName;

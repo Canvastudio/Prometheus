@@ -43,7 +43,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
     {
         HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
         HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
-        HudEvent.Get(brickBtn.gameObject).onLongPressReleas = LongPressRelease;
+        HudEvent.Get(brickBtn.gameObject).onLongPressRelease = LongPressRelease;
     }
 
     protected virtual void OnBrickClick()

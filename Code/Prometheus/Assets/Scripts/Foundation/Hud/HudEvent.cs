@@ -18,7 +18,7 @@ public class HudEvent : EventTrigger {
 
 	public Callback onClick = null;
     public Callback onLongPress = null;
-    public Callback onLongPressReleas = null;
+    public Callback onLongPressRelease = null;
 
 
     public float pressTriggerTime = 0.4f;
@@ -142,9 +142,9 @@ public class HudEvent : EventTrigger {
 
         if (isLongPressTriggerd)
         {
-            if (onLongPressReleas != null)
+            if (onLongPressRelease != null)
             {
-                onLongPressReleas.Invoke();
+                onLongPressRelease.Invoke();
             }
         }
 	}

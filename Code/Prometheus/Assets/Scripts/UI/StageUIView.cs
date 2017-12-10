@@ -21,6 +21,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
     Transform bottomInfoPos;
     [SerializeField]
     Transform topInfoPos;
+    [SerializeField]
+    SkillItem skillItem;
 
     public RectTransform viewArea;
 
@@ -50,13 +52,21 @@ public class StageUIView : MuiSingleBase<StageUIView>
             itemInfo.ShowTreasureInfo(brick.item as Treasure);
             itemInfo.gameObject.SetActive(true);
         }
-
-
     }
 
     public void HideItemInfo()
     {
         itemInfo.gameObject.SetActive(false);
+    }
+
+    public void ShowSkillInfo(ActiveSkillsConfig config)
+    {
+        skillItem.ShowSkillInfo(config);
+    }
+
+    public void HideSkillInfo()
+    {
+        skillItem.gameObject.SetActive(false);
     }
 
     public override IEnumerator Close(object param = null)

@@ -24,6 +24,8 @@ public class SkillListItem : DragableScrollItem
     public void Start()
     {
         HudEvent.Get(button.gameObject).onClick = OnClick;
+        HudEvent.Get(button.gameObject).onLongPress = OnLongPress;
+        HudEvent.Get(button.gameObject).onLongPressRelease = OnLongPressRelease;
     }
 
     public void SetInfo(ulong id)
@@ -37,7 +39,12 @@ public class SkillListItem : DragableScrollItem
 
     public void OnLongPress()
     {
+        StageUIView.Instance.ShowSkillInfo(config);
+    }
 
+    public void OnLongPressRelease()
+    {
+        StageUIView.Instance.HideSkillInfo();
     }
 
     public void OnClick()
