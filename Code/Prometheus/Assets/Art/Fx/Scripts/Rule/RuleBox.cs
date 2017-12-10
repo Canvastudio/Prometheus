@@ -44,6 +44,12 @@ public class RuleBox {
 	
 	};
 
+	private static List<string> Gnat_list = new List<string>() {
+	
+		"open_bug",
+	
+	};
+
 	public static string GetBox(int row, int column) {
 	
 		if (column == 0 || column == 5 && Random.value > 0.95f)
@@ -64,6 +70,13 @@ public class RuleBox {
 
 		return box_d_list[Random.Range(0, box_d_list.Count - 1)];
 
+	}
+
+	public static void GetGnat(Vector3 pos) {
+	
+		if(Random.value > 0.95f)
+			ArtSkill.Show(Gnat_list[Random.Range(0, Gnat_list.Count - 1)], pos);
+	
 	}
 
 }
