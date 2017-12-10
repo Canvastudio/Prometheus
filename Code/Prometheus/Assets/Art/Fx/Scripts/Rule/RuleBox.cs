@@ -52,7 +52,7 @@ public class RuleBox {
 
 	public static string GetBox(int row, int column) {
 	
-		if (column == 0 || column == 5 && Random.value > 0.95f)
+		if ((column == 0 || column == 5) && Random.value > 0.95f)
 			return box_s_list[Random.Range(0, box_s_list.Count - 1)];
 
 
