@@ -489,7 +489,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                 var _brick = data.GetBrick(row + n, column + m);
 
-                if (_brick != null && _brick.realBrickType != BrickType.PLAYER 
+                if (_brick != null && _brick.realBrickType != BrickType.PLAYER  && !_brick.isDiscovered
                     && (_brick.brickExplored == BrickExplored.UNEXPLORED 
                     || _brick.realBrickType == BrickType.SUPPLY || _brick.realBrickType == BrickType.MAINTENANCE))
                 {
