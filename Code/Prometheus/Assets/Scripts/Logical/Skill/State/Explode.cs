@@ -17,24 +17,27 @@ public class Explode : StateEffectIns
 
     public override void OnOutData()
     {
-        Debug.Log("自爆! " + owner.name);
+        if (active)
+        {
+            Debug.Log("自爆! " + owner.name);
 
-        base.OnOutData();
+            base.OnOutData();
 
-        float[] f;
+            float[] f;
 
-        var rpn = stateConfig.stateArgs[index].rpn;
+            var rpn = stateConfig.stateArgs[index].rpn;
 
-        float damage = Rpn.CalculageRPN(rpn.ToArray(0), owner, StageCore.Instance.Player, out f);
+            float damage = Rpn.CalculageRPN(rpn.ToArray(0), owner, StageCore.Instance.Player, out f);
 
-        Damage damageInfo = new Damage(damage, owner, StageCore.Instance.Player, DamageType.Physical);
+            Damage damageInfo = new Damage(damage, owner, StageCore.Instance.Player, DamageType.Physical);
 
-        CoroCore.Instance.StartCoroutine(StageCore.Instance.Player.MeleeAttackByOther(owner, damageInfo));
+            CoroCore.Instance.StartCoroutine(StageCore.Instance.Player.MeleeAttackByOther(owner, damageInfo));
 
-        Damage d = new Damage(999999, owner, owner, DamageType.Physical);
+            Damage d = new Damage(999999, owner, owner, DamageType.Physical);
 
-        //TODO:自爆特效
+            //TODO:自爆特效
 
-        owner.StartCoroutine(owner.OnDead(d));
+            owner.StartCoroutine(owner.OnDead(d));
+        }
     }
 }

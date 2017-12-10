@@ -481,6 +481,8 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
     public void BlockNearbyBrick(int row, int column)
     {
+        Debug.Log("Block nearby: " + row + " : " + column);
+
         for (int n = -1; n <= 1; ++n)
         {
             for (int m = -1; m <= 1; ++m)

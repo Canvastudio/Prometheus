@@ -15,7 +15,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public Cover cover;
 
     public bool last_row;
-    Transform blockMask;
+    public Transform blockMask;
     public int uid;
     public ulong moduel_id = 0;
     public ulong level_id = 0;
@@ -235,6 +235,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         if (loopFx != null)
         {
             loopFx.OnEnd();
+            loopFx = null;
         }
 
         //StartCoroutine(StageView.Instance.ShowFx(this, "格子翻开"));
@@ -316,6 +317,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         {
             StageView.Instance.RemoveBlockMask(bid);
         }
+
+        blockMask = null;
     }
 
 
@@ -510,12 +513,19 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             cover = null;
         }
 
+        if (loopFx != null)
+        {
+            loopFx.OnEnd();
+            loopFx = null;
+        }
+
         brickBlock = 0;
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
 
-        Debug.Log("回收砖块: row: " + row + " col: " + column);
+        haloComponent.clean();
+        //Debug.Log("回收砖块: row: " + row + " col: " + column);
 
         if (isDiscovered)
         {

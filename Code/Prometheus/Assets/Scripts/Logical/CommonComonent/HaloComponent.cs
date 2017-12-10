@@ -15,6 +15,13 @@ public class HaloComponent : MonoBehaviour {
         owner = GetComponent<Brick>();
     }
 
+    public void clean()
+    {
+        halo_list.Clear();
+        oldLive = null;
+        owner.icon.color = Color.white;
+    }
+
     public void OnStandItemChange(LiveItem liveItem)
     {
         if (liveItem != null)
