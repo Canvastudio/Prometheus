@@ -164,6 +164,7 @@ public class Monster : LiveItem
         //yield return wait05s;
 
         //icon.gameObject.SetActive(true);
+        transform.SetParent(StageView.Instance.top, true);
 
         base.OnDiscoverd();
 

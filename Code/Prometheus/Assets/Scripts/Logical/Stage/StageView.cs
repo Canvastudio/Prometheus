@@ -48,7 +48,7 @@ public class StageView : MuiSingleBase<StageView>
     [SerializeField]
     Transform blockMask;
     [SerializeField]
-    Transform maskRoot;
+    public Transform top;
 
     public Brick CreateBrick(ulong select_Moduel, ulong select_level, int row = -1, int col = -1)
     {
@@ -137,7 +137,7 @@ public class StageView : MuiSingleBase<StageView>
     {
         int _id;
         mask = ObjPool<Transform>.Instance.GetObjFromPoolWithID(out _id, strblockMask);
-        mask.SetParentAndNormalize(maskRoot);
+        mask.SetParentAndNormalize(top);
         mask.gameObject.SetActive(true);
         mask.position = brick.transform.position;
         return _id;

@@ -3590,7 +3590,7 @@ MonoBehaviour:
   NoSroll: 1
   SuperMonster: 0
   SuperPlayer: 1
-  alwaysShow: 1
+  alwaysShow: 0
   infoDetail: 1
   noMonster: 0
   ignoreChipColor: 0
@@ -3894,7 +3894,7 @@ MonoBehaviour:
   brickName: brick
   show_camera: {fileID: 2105311307}
   blockMask: {fileID: 1962572328}
-  maskRoot: {fileID: 838148615}
+  top: {fileID: 838148615}
 --- !u!114 &283357958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4597,7 +4597,7 @@ GameObject:
   - component: {fileID: 838148615}
   - component: {fileID: 838148616}
   m_Layer: 8
-  m_Name: Fx
+  m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
