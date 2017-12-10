@@ -42,7 +42,8 @@ public class StageView : MuiSingleBase<StageView>
 
     private string strblockMask = "blockMask";
 
-
+    public string strPugong1 = null;
+    public string strPugong2 = null;
 
 
     [SerializeField]
@@ -154,6 +155,9 @@ public class StageView : MuiSingleBase<StageView>
         int h = Screen.height;
 
         transform.Rt().sizeDelta = new Vector2(750f, h * 750f / w);
+
+        strPugong1 = ConfigDataBase.GetConfigDataByKey<SpecialEffectConfig>("玩家近战").effectName;
+        strPugong2 = ConfigDataBase.GetConfigDataByKey<SpecialEffectConfig>("怪物近战").effectName;
 
         ObjPool<Brick>.Instance.InitOrRecyclePool(brickName, _brickPrefab);
         ObjPool<Transform>.Instance.InitOrRecyclePool(strblockMask, blockMask);

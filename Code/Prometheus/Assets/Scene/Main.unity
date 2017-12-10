@@ -3588,8 +3588,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoSroll: 1
-  SuperMonster: 0
-  SuperPlayer: 1
+  SuperMonster: 1
+  SuperPlayer: 0
   alwaysShow: 1
   infoDetail: 1
   noMonster: 0
@@ -3893,6 +3893,8 @@ MonoBehaviour:
   column_per_row: 6
   brickName: brick
   show_camera: {fileID: 2105311307}
+  strPugong1: 
+  strPugong2: 
   blockMask: {fileID: 1962572328}
   top: {fileID: 838148615}
 --- !u!114 &283357958

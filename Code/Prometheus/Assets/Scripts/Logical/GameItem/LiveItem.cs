@@ -406,20 +406,27 @@ public abstract class LiveItem : GameItemBase
                     }
                 }
             }
+            
+            if (this is Player)
+            {
+                ArtSkill.Show(StageView.Instance.strPugong1, target.transform.position);
+            }
+            else
+            {
+                ArtSkill.Show(StageView.Instance.strPugong2, target.transform.position);
+            }
 
             yield return target.MeleeAttackByOther(this, damageInfo);
         }
     }
 
+
+
     public virtual IEnumerator MeleeAttackByOther<T>(T other, Damage damageInfo) where T : LiveItem
     {
-        //Debug.Log("被攻击： " + damageInfo.damageTarget);
-
-        //LeanTween.scale(transform.Rt(), new Vector3(0.9f, 0.9f, 0.9f), 0.1f).setLoopPingPong(3);
+        TakeDamage(damageInfo);
 
         yield return 0;
-
-        TakeDamage(damageInfo);
     }
 
     public virtual float TakeDamage(Damage damageInfo)
