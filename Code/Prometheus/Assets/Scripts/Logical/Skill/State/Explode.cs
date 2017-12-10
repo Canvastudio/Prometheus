@@ -17,6 +17,8 @@ public class Explode : StateEffectIns
 
     public override void OnOutData()
     {
+        Debug.Log("自爆! " + owner.name);
+
         base.OnOutData();
 
         float[] f;
@@ -33,6 +35,6 @@ public class Explode : StateEffectIns
 
         //TODO:自爆特效
 
-        owner.OnDead(d);
+        owner.StartCoroutine(owner.OnDead(d));
     }
 }
