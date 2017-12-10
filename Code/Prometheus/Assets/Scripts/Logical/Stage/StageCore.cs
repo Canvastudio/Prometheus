@@ -176,6 +176,7 @@ public class StageCore : SingleGameObject<StageCore> {
         Messenger.Invoke(SA.GameStart);
 
         StageUIView.Instance.upUIView.RefreshHpUI();
+        StageUIView.Instance.IniMat();
 
         isLooping = true;
 

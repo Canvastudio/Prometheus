@@ -161,7 +161,7 @@ public class Monster : LiveItem
         //string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
         //ArtSkill.Show(name, transform.position);
 
-        yield return wait05s;
+        //yield return wait05s;
 
         //icon.gameObject.SetActive(true);
 

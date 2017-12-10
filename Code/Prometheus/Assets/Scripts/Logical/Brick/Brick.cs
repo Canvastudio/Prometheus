@@ -244,7 +244,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             ArtSkill.Show(name, transform.position);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         if (cover != null)
         {

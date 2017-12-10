@@ -23,6 +23,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
     Transform topInfoPos;
     [SerializeField]
     SkillItem skillItem;
+    [SerializeField]
+    public MaterialsInfo mat;
 
     public RectTransform viewArea;
 
@@ -89,6 +91,12 @@ public class StageUIView : MuiSingleBase<StageUIView>
         upUIView.Init();
 
         return null;
+    }
+
+    public void IniMat()
+    {
+        mat.CleanCost();
+        mat.RefreshOwned();
     }
 
     private void OnChipButton()

@@ -455,6 +455,16 @@ public class FightComponet : MonoBehaviour
             Debug.Log("奇怪？？？config 为空");
         }
 
+        if (ownerObject is Player)
+        {
+            var stuff = config.stuffCost.stuffs.ToArray();
+            var count = config.stuffCost.values.ToArray();
+            for (int n = 0; n < stuff.Length; ++n)
+            {
+                StageUIView.Instance.mat.SetCost(stuff[n], count[n]);
+            }
+        }
+
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         Debug.Log("伤害公式: " + config.damage);
 
@@ -467,6 +477,7 @@ public class FightComponet : MonoBehaviour
         if (apply_list.Count <= 0)
         {
             ownerObject.OnActionEnd();
+            StageUIView.Instance.IniMat();
             yield break;
         }
 
@@ -486,6 +497,7 @@ public class FightComponet : MonoBehaviour
             }
         }
 
+        StageUIView.Instance.IniMat();
 
         //时间消耗
         if (ownerObject is Player)
