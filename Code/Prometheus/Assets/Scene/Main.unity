@@ -3590,7 +3590,7 @@ MonoBehaviour:
   NoSroll: 1
   SuperMonster: 1
   SuperPlayer: 0
-  alwaysShow: 1
+  alwaysShow: 0
   infoDetail: 1
   noMonster: 0
   ignoreChipColor: 0
@@ -3599,7 +3599,7 @@ MonoBehaviour:
   - 100001
   - 100226
   Add_4_Stuff: 32000000320000003200000032000000
-  AddSkills: 41420f0000000000
+  AddSkills: d2c62d0000000000
 --- !u!4 &13273353
 Transform:
   m_ObjectHideFlags: 0
@@ -4598,6 +4598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 838148615}
   - component: {fileID: 838148616}
+  - component: {fileID: 838148617}
   m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
@@ -4646,6 +4647,22 @@ Canvas:
   m_SortingLayerID: -2114422657
   m_SortingOrder: -10
   m_TargetDisplay: 0
+--- !u!114 &838148617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 838148614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &989124027
 GameObject:
   m_ObjectHideFlags: 0

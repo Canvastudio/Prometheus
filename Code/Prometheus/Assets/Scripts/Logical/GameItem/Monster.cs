@@ -324,6 +324,7 @@ public class Monster : LiveItem
     {
         base.Recycle();
         block_other = false;
+
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }

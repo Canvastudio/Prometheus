@@ -232,7 +232,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         if (player_1 == null) player_1 = Resources.Load("Prefab/Player") as GameObject;
 
-        var go = GameObject.Instantiate(player_1, StageView.Instance.liveItemRoot) as GameObject;
+        var go = GameObject.Instantiate(player_1, StageView.Instance.top) as GameObject;
 
         go.transform.localScale = Vector3.one;
 

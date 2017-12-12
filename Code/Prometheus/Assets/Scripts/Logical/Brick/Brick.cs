@@ -154,13 +154,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     private Node _pathNode;
 
 
-    void Awake()
-    {
-        HudEvent.Get(brickBtn.gameObject).onClick = OnBrickClick;
-        HudEvent.Get(brickBtn.gameObject).onLongPress = OnLongPress;
-        HudEvent.Get(brickBtn.gameObject).onLongPressRelease = LongPressRelease;
-    }
-
     string fxName;
     ArtFxBase loopFx;
 

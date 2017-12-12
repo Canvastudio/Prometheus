@@ -383,7 +383,7 @@ public abstract class LiveItem : GameItemBase
 
         standBrick.CleanItem();
 
-        return null;
+        yield return 0;
     }
 
     WaitForSeconds waitForSeconds = new WaitForSeconds(0.8f);
