@@ -56,6 +56,22 @@ public abstract class LiveItem : GameItemBase
             _freeze = value;
 
             RefreshActiveSKillState();
+
+            if (this is Monster)
+            {
+                if ((this as Monster).block_other)
+                {
+                    if (value)
+                    {
+                        BrickCore.Instance.CancelBlockNearbyBrick(standBrick.row, standBrick.column);
+                    }
+                    else
+                    {
+                        BrickCore.Instance.BlockNearbyBrick(standBrick.row, standBrick.column);
+                    }
+                }
+
+            }
         }
     }
 
@@ -120,6 +136,22 @@ public abstract class LiveItem : GameItemBase
             _sleep = value;
 
             RefreshActiveSKillState();
+
+            if (this is Monster)
+            {
+                if ((this as Monster).block_other)
+                {
+                    if (value)
+                    {
+                        BrickCore.Instance.CancelBlockNearbyBrick(standBrick.row, standBrick.column);
+                    }
+                    else
+                    {
+                        BrickCore.Instance.BlockNearbyBrick(standBrick.row, standBrick.column);
+                    }
+                }
+
+            }
         }
     }
 
