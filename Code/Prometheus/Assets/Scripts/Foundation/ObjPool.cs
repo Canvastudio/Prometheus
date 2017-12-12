@@ -6,9 +6,9 @@ public class Obj<T>
 {
     public T obj;
 
-    public int id;
+    public ulong id;
 
-    public Obj(T o, int _id = int.MaxValue)
+    public Obj(T o, ulong _id = ulong.MaxValue)
     {
         obj = o;
         id = _id;
@@ -59,13 +59,6 @@ class UNode<T>
     public List<Obj<T>> uu = new List<Obj<T>>();
     public int capacity;
 }
-
-public class ObjPoolId
-{
-    public static int _id = int.MinValue;
-}
-
-
 public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
     public Transform transform;
@@ -76,7 +69,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
         transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
 
-        transform.gameObject.hideFlags = HideFlags.HideAndDontSave;
+        //transform.gameObject.hideFlags = HideFlags.HideAndDontSave;
     }
 
     private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();
@@ -133,7 +126,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 o = source;
             }
 
-            n.uu.Push(new Obj<T>(o, ObjPoolId._id++));
+            n.uu.Push(new Obj<T>(o, GlobalUid.Instance.GetUid()));
 
             ++m;
         }
@@ -145,7 +138,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
 
 
-    public T GetObjFromPoolWithID(out int id,string name, T source = null, Component componet = null, bool autoCreatePool = true)
+    public T GetObjFromPoolWithID(out ulong id,string name, T source = null, Component componet = null, bool autoCreatePool = true)
     {
         T res;
 
@@ -169,7 +162,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             var o = Data[name].uu.Pop();
 
-            o.id = ObjPoolId._id++;
+            o.id = GlobalUid.Instance.GetUid();
 
             res = o.obj;
 
@@ -178,12 +171,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 if (Data[name].instantiate)
                 {
                     res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                    Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                    Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
                 }
             }
 
@@ -196,12 +189,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
             }
 
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -243,12 +236,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                 {
                     if (Data[name].source != null)
                         res = GameObject.Instantiate(Data[name].source);
-                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                    Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
                 }
                 else
                 {
                     res = Data[name].source;
-                    Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                    Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
                 }
             }
 
@@ -259,12 +252,12 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
             if (Data[name].instantiate)
             {
                 res = GameObject.Instantiate(Data[name].source);
-                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
             }
             else
             {
                 res = Data[name].source;
-                Data[name].u.Push(new Obj<T>(res, ObjPoolId._id++));
+                Data[name].u.Push(new Obj<T>(res, GlobalUid.Instance.GetUid()));
             }
      
             Data[name].capacity = Data[name].u.Count + Data[name].uu.Count;
@@ -275,7 +268,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         return res;
     }
 
-    public Object RecycleObj(string poolName, int id)
+    public Object RecycleObj(string poolName, ulong id)
     {
         if (Data.ContainsKey(poolName))
         {
@@ -350,7 +343,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                     o = Data[name].source;
                 }
 
-                Data[name].uu.Push(new Obj<T>(o, ObjPoolId._id++));
+                Data[name].uu.Push(new Obj<T>(o, GlobalUid.Instance.GetUid()));
             }
         }
     }
@@ -388,8 +381,6 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
         {
             DiscardPool(names[i]);
         }
-
-        ObjPoolId._id = int.MinValue;
     }
 
     public override void ResetData()

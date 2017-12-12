@@ -21,6 +21,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
     WaitForMsg waitMsg = new WaitForMsg();
 
+    public bool monsterwakeup = false;
+
     /// <summary>
     /// 第一次点击的方块
     /// </summary>
@@ -321,6 +323,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
             //等待玩家动作结束信号
             yield return AllActionFinish;
+
+            monsterwakeup = false;
         }
     }
 
@@ -338,7 +342,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         GContext.Instance.JustdiscoverMonster = false;
 
-        while (!Instance.Player.moveComponent.MoveEnd())
+        while (!Instance.Player.moveComponent.MoveEnd() && ! monsterwakeup)
         {
             yield return StageCore.Instance.Player.moveComponent.MoveToNext();
 
@@ -484,7 +488,8 @@ public static class SA
     public const string StuffCountChange = "SCC";
     public const string PlayerMoveEnd = "PME";
     public const string PlayerMoveStep = "PMS";
-    public const string PlayerUseSkill = "PUS";
+    public const string LiveUseSkill = "PUS";
+    public const string LivePreuseSkill = "PRS";
     public const string ItemTakeDamage = "ITD";
 
     public const string PlayHpChange = "PIC";

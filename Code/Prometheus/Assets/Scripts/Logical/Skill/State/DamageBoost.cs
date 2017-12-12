@@ -28,28 +28,31 @@ public class DamageBoost : StateEffectIns
     {
         base.Active();
 
-        Messenger<ActiveSkillsConfig>.AddListener(SA.PlayerUseSkill, OnPlayUseSkill);
+        Messenger<SkillInfo>.AddListener(SA.LiveUseSkill, OnPlayUseSkill);
     }
 
     public override void Deactive()
     {
         base.Deactive();
 
-        Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
+        Messenger<SkillInfo>.RemoveListener(SA.LiveUseSkill, OnPlayUseSkill);
     }
 
     public override void Remove()
     {
         base.Remove();
 
-        Messenger<ActiveSkillsConfig>.RemoveListener(SA.PlayerUseSkill, OnPlayUseSkill);
+        Messenger<SkillInfo>.RemoveListener(SA.LiveUseSkill, OnPlayUseSkill);
     }
 
-    private void OnPlayUseSkill(ActiveSkillsConfig config)
+    private void OnPlayUseSkill(SkillInfo info)
     {
-        if (FightComponet.CheckEffectCondition(condition, null, config.damageType))
+        if (info.source.itemId == owner.itemId)
         {
-            total_extra = 0;
+            if (FightComponet.CheckEffectCondition(condition, null, info.config.damageType))
+            {
+                total_extra = 0;
+            }
         }
     }
 

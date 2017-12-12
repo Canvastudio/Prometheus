@@ -286,7 +286,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
     }
 
-    int bid;
+    ulong bid;
 
     private void ShowBlock()
     {

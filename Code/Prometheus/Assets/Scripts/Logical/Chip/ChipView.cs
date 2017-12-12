@@ -179,7 +179,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public void RefreshChipList()
     {
-        int id;
+        ulong id;
 
         ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
 
@@ -310,7 +310,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
     public ChipBoardInstance CreateBoardInstance(ChipInventory item)
     {
-        int id;
+        ulong id;
 
         var instance = ObjPool<ChipBoardInstance>.Instance.GetObjFromPoolWithID(out id, instanceName);
         instance.transform.SetParent(chipInstanceRoot);
@@ -1135,7 +1135,7 @@ public class ChipView : MuiSingleBase<ChipView> {
                     supply.Init(power);
                     supply.row = i;
                     supply.col = m;
-                    supply.uid = 1 << power_id;
+                    supply.uid = GlobalUid.Instance.GetUid();
                     chip.state = ChipSquareState.Power;
                     chip.supplyInstance = supply;
                 }

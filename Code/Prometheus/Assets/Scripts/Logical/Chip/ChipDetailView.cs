@@ -43,7 +43,7 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
         var ai = StageCore.Instance.Player.fightComponet.activeInsList;
         var pi = StageCore.Instance.Player.fightComponet.passiveInsList;
 
-        int id;
+        ulong id;
 
         for (int i = 0;  i < ai.Count; ++i)
         {

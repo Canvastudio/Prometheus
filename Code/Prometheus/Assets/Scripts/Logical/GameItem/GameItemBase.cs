@@ -7,7 +7,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public Button brickBtn;
 
-    public int itemId = 0;
+    public ulong itemId = 0;
 
     public bool isDiscovered = false;
 

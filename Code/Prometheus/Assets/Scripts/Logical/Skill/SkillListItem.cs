@@ -12,7 +12,7 @@ public class SkillListItem : DragableScrollItem
     Image icon;
     [SerializeField]
     Text skillName;
-    public int id;
+    public ulong id;
 
     public ulong skill_id;
 

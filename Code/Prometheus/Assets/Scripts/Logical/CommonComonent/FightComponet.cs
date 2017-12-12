@@ -50,7 +50,12 @@ public class FightComponet : MonoBehaviour
 
     private void Awake()
     {
-        wuf = new WaitUntil(() => targetAttackFinsh == apply_list.Count);
+        wuf = new WaitUntil(CheckFinish);
+    }
+
+    private bool CheckFinish()
+    {
+        return targetAttackFinsh == apply_list.Count;
     }
 
     private LiveItem _ownerObject;
@@ -446,6 +451,9 @@ public class FightComponet : MonoBehaviour
         }
     }
 
+
+    
+
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
         if (gameObject == null )
@@ -469,7 +477,7 @@ public class FightComponet : MonoBehaviour
         }
 
         Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
-        Debug.Log("伤害公式: " + config.damage);
+        //Debug.Log("伤害公式: " + config.damage);
 
         ownerObject.OnActionBegin();
         has_kill = false;
@@ -572,13 +580,14 @@ public class FightComponet : MonoBehaviour
             StartCoroutine (DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
         }
 
-        yield return wuf;
+        yield return new WaitUntil(CheckFinish);
 
         ownerObject.OnActionEnd();
 
         Debug.Log("技能释放完毕: " + name);
 
-        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerUseSkill, config);
+
+
     }
 
     static WaitUntil wuf;
@@ -703,7 +712,7 @@ public class FightComponet : MonoBehaviour
 
         var items = CheckFinalEffectItems(ShowTarget, config);
 
-        Debug.Log("技能： " + config.name + " 得造成伤害得目标数量为: " + items.Count);
+        //Debug.Log("技能： " + config.name + " 得造成伤害得目标数量为: " + items.Count);
 
         if (config.beforeSpecialEffect != null && specialEffect)
         {
@@ -712,11 +721,11 @@ public class FightComponet : MonoBehaviour
         }
 
 
-        Dictionary<int, float> realDamages = new Dictionary<int, float>();
+        Dictionary<ulong, float> realDamages = new Dictionary<ulong, float>();
 
         i = 0;
 
-        Debug.Log("播放技能特效: " + config.effect);
+        //Debug.Log("播放技能特效: " + config.effect);
 
         yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, ShowTarget.transform, () =>
         {
@@ -1003,7 +1012,7 @@ public class FightComponet : MonoBehaviour
             }
         }
     }
-    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list, Dictionary<int ,float> realDamages = null)
+    private void ApplyEffect(ActiveSkillsConfig config, SuperArrayObj<SkillArg> args, SpecialEffect[] effects, List<GameItemBase> apply_list, Dictionary<ulong, float> realDamages = null)
     {
         foreach(var item in apply_list)
         {

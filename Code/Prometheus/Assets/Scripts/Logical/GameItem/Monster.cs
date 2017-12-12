@@ -120,10 +120,13 @@ public class Monster : LiveItem
 
         if (!isDiscovered && player_distance <= AIConfig.warning)
         {
+            StageCore.Instance.monsterwakeup = true;
+            ///因为警戒而翻开
             StartCoroutine(standBrick.OnDiscoverd());
         }
         
 
+        ///如果贴身了 就执行阻挡
         if (player_distance <= 1 && isDiscovered)
         {
             if (!block_other)
@@ -272,7 +275,7 @@ public class Monster : LiveItem
             yield return wait05s;
 
             var nearby_list = BrickCore.Instance.GetNearbyLiveItem(standBrick.row, standBrick.column, dead_howl);
-
+             
             foreach (var n in nearby_list)
             {
                 if (!n.isDiscovered) if(n.isAlive)

@@ -38,7 +38,7 @@ public class UpUIView : MonoBehaviour {
 
     public void OnStateAdd(StateIns state)
     {
-        int id;
+        ulong id;
         var ub = ObjPool<UpBuff>.Instance.GetObjFromPoolWithID(out id, pname);
         ub.Init(state, id);
         ub.SetParentAndNormalize(this.transform);

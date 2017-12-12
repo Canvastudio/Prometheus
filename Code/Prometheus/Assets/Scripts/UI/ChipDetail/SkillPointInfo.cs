@@ -6,7 +6,7 @@ using System.Text;
 
 public class SkillPointInfo : MonoBehaviour
 {
-    public int uid;
+    public ulong uid;
 
     [SerializeField]
     Text skillName;

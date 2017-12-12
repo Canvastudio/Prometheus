@@ -268,7 +268,7 @@ public class ChipMerge : MonoBehaviour {
                     if (chips[1] != null && chip.uid == chips[1].uid) continue;
                 }
 
-                int id;
+                ulong id;
                 var opt = ObjPool<ChipItem>.Instance.GetObjFromPoolWithID(out id, ChipUpdateView.Instance.optionName);
                 opt.ShowChipInfo(chip, id, OnMergeOptionClick);
                 opt.SetParentAndNormalize(optionalRoot);

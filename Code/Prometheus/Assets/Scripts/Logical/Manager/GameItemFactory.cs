@@ -112,7 +112,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             pwr = 3;
         }
 
-        int tid;
+        ulong tid;
 
         var item = ObjPool<Monster>.Instance.GetObjFromPoolWithID(out tid, monster_pool);
 
@@ -246,6 +246,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         player.state = player.GetOrAddComponet<StateComponent>();
 
+        player.itemId = GlobalUid.Instance.GetUid();
+
         var config = ConfigDataBase.GetConfigDataById<PlayerInitConfig>(uid);
         
         player.config = config;
@@ -296,7 +298,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Supply CreateSupply(ulong uid, Brick bornBrick)
     {
-        int tid;
+        ulong tid;
 
         Supply item;
 
@@ -330,7 +332,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Maintenance CreateMaintenance(Brick bornBrick)
     {
-        int tid;
+        ulong tid;
 
         var item = ObjPool<Maintenance>.Instance.GetObjFromPoolWithID(out tid, maintenance_pool);
 
@@ -352,7 +354,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Tablet CreateTablet(ulong uid, Brick bornBrick)
     {
-        int tid;
+        ulong tid;
         Tablet item = null;
 
         if (uid == 1)
@@ -392,7 +394,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Treasure CreateTreasure(Brick bornBrick, ulong uid, int distance)
     {
-        int tid;
+        ulong tid;
 
         Treasure item;
 
@@ -439,7 +441,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Obstacle CreateObstacle(Brick bornBrick)
     {
-        int tid;
+        ulong tid;
 
         var item = ObjPool<Obstacle>.Instance.GetObjFromPoolWithID(out tid, obstacle_pool);
 
@@ -460,7 +462,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
     public Cover CreateCover(Brick bornBrick)
     {
-        int tid;
+        ulong tid;
 
         var item = ObjPool<Cover>.Instance.GetObjFromPoolWithID(out tid, cover_pool);
 
@@ -490,4 +492,5 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         return item;
     }
+
 }

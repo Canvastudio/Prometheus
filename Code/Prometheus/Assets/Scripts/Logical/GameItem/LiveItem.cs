@@ -456,25 +456,32 @@ public abstract class LiveItem : GameItemBase
             }
         }
 
-        cur_hp = cur_hp - damageInfo.damage;
-
-        if (damageInfo.attach_state > 0)
+        if (cur_hp != 0)
         {
-            var config = StateConfig.GetConfigDataById<StateConfig>(damageInfo.attach_state);
-            StateIns ins = new StateIns(config, this, null);
-            state.AddStateIns(ins);
-        }
+            cur_hp = cur_hp - damageInfo.damage;
 
-        if (cur_hp == 0)
-        {
-           StartCoroutine(OnDead(damageInfo));
+            if (damageInfo.attach_state > 0)
+            {
+                var config = StateConfig.GetConfigDataById<StateConfig>(damageInfo.attach_state);
+                StateIns ins = new StateIns(config, this, null);
+                state.AddStateIns(ins);
+            }
+
+            if (cur_hp == 0)
+            {
+                StartCoroutine(OnDead(damageInfo));
+            }
+            else
+            {
+                Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
+            }
+
+            return damageInfo.damage;
         }
         else
         {
-            Messenger<Damage>.Invoke(SA.ItemTakeDamage, damageInfo);
+            return 0;
         }
-
-        return damageInfo.damage;
     }
 
     public  virtual void AddStateUI(StateIns ins)

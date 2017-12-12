@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PopTipItem : MonoBehaviour {
 
-    public int uid;
+    public ulong uid;
 
     [SerializeField]
     Text tipText;
@@ -13,7 +13,7 @@ public class PopTipItem : MonoBehaviour {
     float duration;
     bool show;
 
-    public void Set(int id, float _duration = 0.8f, string text = null)
+    public void Set(ulong id, float _duration = 0.8f, string text = null)
     {
         if (text == null)
         {

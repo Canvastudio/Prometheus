@@ -5,10 +5,13 @@ using UnityEngine;
 public class SummonItem : LiveItem {
 
     SummonSkillsConfig config;
-
+    LiveItem owner;
     public void InitSummonItem(SummonSkillsConfig config, LiveItem owner)
     {
         Side = owner.Side;
+        this.owner = owner;
+        Property = owner.Property;
+        state = owner.state;
 
         if (config.specialAction == SpecialAction.NormalAttack)
         {
@@ -20,16 +23,29 @@ public class SummonItem : LiveItem {
         }
     }
 
+    private void OnPlayerUseSkill(SkillInfo info)
+    {
+        if (owner.itemId == info.source.itemId)
+        {
+            Debug.Log(gameObject.name + " 复制拥有着技能: " + info.config.name); 
+            StartCoroutine(fightComponet.DoActiveSkill(info.config));
+        }
+    }
+
     /// <summary>
     /// 被动技能被沉默之后，相应的召唤物也应该停止工作
     /// </summary>
     public void Deactive()
     {
         fightComponet.DeactiveSkill();
+
+        Messenger<SkillInfo>.RemoveListener(SA.LiveUseSkill, OnPlayerUseSkill);
     }
 
     public void Active()
     {
         fightComponet.ActiveSkill();
+
+        Messenger<SkillInfo>.AddListener(SA.LiveUseSkill, OnPlayerUseSkill);
     }
 }
