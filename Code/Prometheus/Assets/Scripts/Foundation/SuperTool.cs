@@ -5,8 +5,11 @@ using UnityEngine;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
-using UnityEditor;
 using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 using Random = UnityEngine.Random;
 
