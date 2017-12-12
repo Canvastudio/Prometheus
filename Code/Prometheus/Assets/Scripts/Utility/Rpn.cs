@@ -116,6 +116,10 @@ public class Rpn {
                 {
                     stack.Push(passTime);
                 }
+                else if (property == GameProperty.dis)
+                {
+                    stack.Push(rpn_source.standBrick.pathNode.Distance(rpn_target.standBrick.pathNode));
+                }
                 else
                 {
                     LiveItem target = null;
