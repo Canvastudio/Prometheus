@@ -26,7 +26,17 @@ public class FxPool {
 		
 		}
 
-		GameObject newObj = GameObject.Instantiate(Resources.Load(fxenum.ToString() + "/" + name)) as GameObject;
+		Object instObj = Resources.Load(fxenum.ToString() + "/" + name);
+
+		if(instObj == null) {
+
+			Debug.LogError("null fx name:" + name);
+			return new GameObject();
+
+		}
+		
+		GameObject newObj = GameObject.Instantiate(instObj) as GameObject;
+		
 		newObj.name = name;
 		newObj.SetActive(true);
 		return newObj;

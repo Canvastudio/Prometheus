@@ -93,6 +93,7 @@ MonoBehaviour:
   iscenter: 0
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
+  particls: []
   layername: StageView
 --- !u!114 &114778471272785646
 MonoBehaviour:
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: event:/Skill/
-  event_name: event:/Skill/nuyi_hit
+  event_name: event:/Skill/bianxing_hit
   stop_parameter: 
 --- !u!198 &198189656727351348
 ParticleSystem:
