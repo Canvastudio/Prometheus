@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ChipListItem : DragableScrollItem {
 
-    public int id;
+    public ulong id;
 
     private Color color;
     public ChipConnectionItem connectionItem;

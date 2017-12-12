@@ -152,7 +152,7 @@ public class StageUIView : MuiSingleBase<StageUIView>
 
         if (uid > 0 && FightComponet.IdToSkillType(uid) == SkillType.Active)
         {
-            int _id;
+            ulong _id;
             var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
             list_item.id = _id;
             list_item.SetInfo(uid);

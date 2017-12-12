@@ -17,7 +17,7 @@ public class PopTipView : SingleGameObject<PopTipView> {
 
     public void Show(string text = null, float _duration = 0.8f)
     {
-        int _id;
+        ulong _id;
         var item = ObjPool<PopTipItem>.Instance.GetObjFromPoolWithID(out _id, pname);
         item.SetParentAndNormalize(this.transform);
         item.transform.localPosition = new Vector3(0f, 275f, 0);

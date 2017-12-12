@@ -40,7 +40,13 @@ public class StateComponent : MonoBehaviour {
 
     public void Clean()
     {
+        foreach(var state in state_list)
+        {
+            state.DeactiveIns();
+        }
+
         state_list.Clear();
+
         halo_list.Clear();
     }
 

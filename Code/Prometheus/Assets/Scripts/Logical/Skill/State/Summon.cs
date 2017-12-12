@@ -33,7 +33,7 @@ public class Summon : StateEffectIns
                 go.SetActive(true);
                 item = go.GetComponent<SummonItem>();
                 item.InitSummonItem(summonConfig, owner);
-
+                item.itemId = GlobalUid.Instance.GetUid();
                 var range = summonConfig.carry.ToArray();
                 int min = range[0];
                 int max = range[1];
@@ -69,11 +69,7 @@ public class Summon : StateEffectIns
                 item.transform.position = owner.transform.position;
                 item.standBrick = StageCore.Instance.Player.standBrick;
             }
-
-
         }
-
-
 
         item.Active();
     }

@@ -68,7 +68,7 @@ public class StageView : MuiSingleBase<StageView>
             }
         }
 
-        int uid = 0;
+        ulong uid = 0;
 
         Brick _brick = ObjPool<Brick>.Instance.GetObjFromPoolWithID(out uid, brickName);
 
@@ -134,9 +134,9 @@ public class StageView : MuiSingleBase<StageView>
         }
     }
 
-    public int AddBlockMask(Brick brick, ref Transform mask)
+    public ulong AddBlockMask(Brick brick, ref Transform mask)
     {
-        int _id;
+        ulong _id;
         mask = ObjPool<Transform>.Instance.GetObjFromPoolWithID(out _id, strblockMask);
         mask.SetParentAndNormalize(top);
         mask.gameObject.SetActive(true);
@@ -144,7 +144,7 @@ public class StageView : MuiSingleBase<StageView>
         return _id;
     }
 
-    public void RemoveBlockMask(int id)
+    public void RemoveBlockMask(ulong id)
     {
         ObjPool<Transform>.Instance.RecycleObj(strblockMask, id);
     }

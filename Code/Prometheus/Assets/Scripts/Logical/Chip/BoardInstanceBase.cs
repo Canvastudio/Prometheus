@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoardInstanceBase : MonoBehaviour, IEquatable<BoardInstanceBase> {
 
-    public int uid;
+    public ulong uid;
 
     public int row = int.MinValue;
     public int col = int.MinValue;

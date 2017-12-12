@@ -20,7 +20,7 @@ public class ChipItem : DragableScrollItem {
     ChipConnectionItem connectionItem;
 
     public ChipInventory chip;
-    public int id;
+    public ulong id;
     public bool isUsed = false;
     private string best = "极限";
     private string better = "优秀";
@@ -41,7 +41,7 @@ public class ChipItem : DragableScrollItem {
         }
     }
 
-    public void ShowChipInfo(ChipInventory chip,int id, Callback<ChipItem> _cb)
+    public void ShowChipInfo(ChipInventory chip, ulong id, Callback<ChipItem> _cb)
     {
         this.chip = chip;
         gameObject.SetActive(true);
