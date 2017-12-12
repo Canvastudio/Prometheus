@@ -323,8 +323,8 @@ public class Monster : LiveItem
     public override void Recycle()
     {
         base.Recycle();
+        fightComponet.Clean();
         block_other = false;
-
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }

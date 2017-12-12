@@ -196,19 +196,21 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         Debug.Log(string.Format("显示砖块属性，{0}", gameObject.name));
 
-
-        if (realBrickType == BrickType.MONSTER)
+        if (GameTestData.Instance.alwaysShow || isDiscovered)
         {
-            var monster = item as Monster;
-
-            if (GameTestData.Instance.alwaysShow || monster.isDiscovered)
+            if (realBrickType == BrickType.MONSTER)
             {
-                StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
+                var monster = item as Monster;
+
+                if (GameTestData.Instance.alwaysShow || monster.isDiscovered)
+                {
+                    StartCoroutine(MuiCore.Instance.AddOpen(UiName.strMonsterInfoView, monster));
+                }
             }
-        }
-        else
-        {
-            StageUIView.Instance.ShowItemInfo(this);
+            else
+            {
+                StageUIView.Instance.ShowItemInfo(this);
+            }
         }
     }
 

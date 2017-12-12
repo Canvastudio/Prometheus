@@ -81,6 +81,9 @@ public class FightComponet : MonoBehaviour
             passiveInsList.RemoveAt(i);
         }
 
+        activePassive = false;
+        _skillActive = false;
+        has_kill = false;
         //summonSkillConfigs.Remove(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
     }
 
