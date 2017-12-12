@@ -100,9 +100,12 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
 
         foreach (var ins in mon.state.state_list)
         {
-            StateItem item = ObjPool<StateItem>.Instance.GetObjFromPool(s2);
-            item.SetParentAndNormalize(stateRoot);
-            item.ShowStateInfo(ins);
+            if (ins.stateConfig.iShow)
+            {
+                StateItem item = ObjPool<StateItem>.Instance.GetObjFromPool(s2);
+                item.SetParentAndNormalize(stateRoot);
+                item.ShowStateInfo(ins);
+            }
         }
 
         hp.SetHpText(mon);
