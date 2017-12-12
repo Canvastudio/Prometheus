@@ -7,11 +7,20 @@ using UnityEngine;
 /// </summary>
 public class GCamera : SingleGameObject<GCamera> {
 
+    float rate;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
+    }
+
     public void MoveDown(float distance)
     {
         if (!GameTestData.Instance.NoSroll)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + distance, transform.localPosition.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + (distance * rate), transform.localPosition.z);
         }
     }
 
