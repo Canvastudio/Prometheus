@@ -451,8 +451,63 @@ public class FightComponet : MonoBehaviour
         }
     }
 
+    public IEnumerator CopySkill(ActiveSkillsConfig config, List<GameItemBase> applys)
+    {
+        ownerObject.OnActionBegin();
+        has_kill = false;
+        targetAttackFinsh = 0;
 
-    
+        float[] successArray = null;
+        float[] apperanceArray = null;
+
+        if (config.damageArg != null)
+        {
+            apperanceArray = config.damageArg.ToArray();
+        }
+
+        if (config.successRate != null)
+        {
+            successArray = config.successRate.ToArray();
+        }
+
+        apply_list = applys;
+
+        bool successEffect = true;
+
+        for (int i = 0; i < apply_list.Count; ++i)
+        {
+            if (config.successRate != null)
+            {
+                float r = 0;
+
+                if (apply_list[i] is Player)
+                {
+                    r = successArray[0];
+                }
+                else if (apply_list[i] is Monster)
+                {
+                    r = successArray[(apply_list[i] as Monster).pwr];
+                }
+                else
+                {
+                    r = 100;
+                }
+
+                if (r <= Random.Range(0f, 1f))
+                {
+                    successEffect = false;
+                }
+            }
+
+            StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+        }
+
+        yield return new WaitUntil(CheckFinish);
+
+        ownerObject.OnActionEnd();
+
+        Debug.Log("技能释放完毕: " + name);
+    }
 
     public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
     {
@@ -500,7 +555,18 @@ public class FightComponet : MonoBehaviour
 
             var stuff = config.stuffCost.stuffs.ToArray();
             var count = config.stuffCost.values.ToArray();
+
             Player player = ownerObject as Player;
+
+
+            for (int n = 0; n < stuff.Length; ++n)
+            {
+                if (player.inventory.GetStuffCount(stuff[n]) < count[n])
+                {
+                    PopTipView.Instance.Show("deficient_resources");
+                    yield break;
+                }
+            }
 
             for (int n = 0; n < stuff.Length; ++n)
             {
@@ -509,6 +575,8 @@ public class FightComponet : MonoBehaviour
         }
 
         StageUIView.Instance.IniMat();
+        SkillInfo info = new SkillInfo(config, ownerObject, apply_list);
+        Messenger<SkillInfo>.Invoke(SA.LivePreuseSkill, info);
 
         //时间消耗
         if (ownerObject is Player)
@@ -585,15 +653,66 @@ public class FightComponet : MonoBehaviour
         ownerObject.OnActionEnd();
 
         Debug.Log("技能释放完毕: " + name);
-
-
-
     }
 
     static WaitUntil wuf;
 
     private int targetAttackFinsh = 0;
 
+    public IEnumerator CopySkill(SkillInfo skill)
+    {
+        var config = skill.config;
+
+        float[] successArray = null;
+        float[] apperanceArray = null;
+
+        if (config.damageArg != null)
+        {
+            apperanceArray = config.damageArg.ToArray();
+        }
+
+        if (config.successRate != null)
+        {
+            successArray = config.successRate.ToArray();
+        }
+
+        bool successEffect = true;
+
+
+        for (int i = 0; i < apply_list.Count; ++i)
+        {
+            if (config.successRate != null)
+            {
+                float r = 0;
+
+                if (apply_list[i] is Player)
+                {
+                    r = successArray[0];
+                }
+                else if (apply_list[i] is Monster)
+                {
+                    r = successArray[(apply_list[i] as Monster).pwr];
+                }
+                else
+                {
+                    r = 100;
+                }
+
+                if (r <= Random.Range(0f, 1f))
+                {
+                    successEffect = false;
+                }
+            }
+
+            StartCoroutine(DoSkillOnTarget(apply_list[i], config, successEffect, apperanceArray));
+        }
+
+        yield return new WaitUntil(CheckFinish);
+
+        ownerObject.OnActionEnd();
+
+        Debug.Log("技能释放完毕: " + name);
+    }
 
     public List<GameItemBase> CheckFinalEffectItems(GameItemBase target, ActiveSkillsConfig config)
     {

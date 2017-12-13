@@ -28,7 +28,7 @@ public class SummonItem : LiveItem {
         if (owner.itemId == info.source.itemId)
         {
             Debug.Log(gameObject.name + " 复制拥有着技能: " + info.config.name); 
-            StartCoroutine(fightComponet.DoActiveSkill(info.config));
+            StartCoroutine(fightComponet.CopySkill(info.config, info.targets));
         }
     }
 
@@ -39,13 +39,13 @@ public class SummonItem : LiveItem {
     {
         fightComponet.DeactiveSkill();
 
-        Messenger<SkillInfo>.RemoveListener(SA.LiveUseSkill, OnPlayerUseSkill);
+        Messenger<SkillInfo>.RemoveListener(SA.LivePreuseSkill, OnPlayerUseSkill);
     }
 
     public void Active()
     {
         fightComponet.ActiveSkill();
 
-        Messenger<SkillInfo>.AddListener(SA.LiveUseSkill, OnPlayerUseSkill);
+        Messenger<SkillInfo>.AddListener(SA.LivePreuseSkill, OnPlayerUseSkill);
     }
 }
