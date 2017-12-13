@@ -12,6 +12,7 @@ public class SummonItem : LiveItem {
         this.owner = owner;
         Property = owner.Property;
         state = owner.state;
+        fightComponet.ownerObject = this;
 
         if (config.specialAction == SpecialAction.NormalAttack)
         {

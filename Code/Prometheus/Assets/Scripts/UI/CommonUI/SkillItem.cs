@@ -16,6 +16,12 @@ public class SkillItem : MonoBehaviour
     Image skillIcon;
     [SerializeField]
     GameObject cd;
+    [SerializeField]
+    GameObject cost;
+    [SerializeField]
+    Text c1;
+    [SerializeField]
+    Text c2;
 
     private void Awake()
     {
@@ -30,21 +36,38 @@ public class SkillItem : MonoBehaviour
             cd.gameObject.SetActive(true);
             var cdv = (float)(Mathf.FloorToInt(mins.cooldown * 10f)) / 10f;
             skillCooldown.text = cdv.ToString();
+            cost.SetActive(false);
         }
         else
         {
+            int n = ins.config.stuffCost.stuffs.Count();
+            for (int i = 0; i < n; ++i)
+            {
+                c2.text = ins.config.stuffCost.values[i].ToString();
+            }
             cd.gameObject.SetActive(false);
+            cost.SetActive(true);
         }
 
         describe.text = ins.config.describe;
         skillName.text = ins.config.name;
         skillIcon.SetSkillIcon(ins.config.icon);
 
+
+
         gameObject.SetActive(true);
     }
 
      public void ShowSkillInfo(ActiveSkillsConfig config)
     {
+        int n = config.stuffCost.stuffs.Count();
+        for (int i = 0; i < n; ++i)
+        {
+            c2.text = config.stuffCost.values[i].ToString();
+        }
+        cd.gameObject.SetActive(false);
+        cost.SetActive(true);
+
         cd.gameObject.SetActive(false);
         describe.text = config.describe;
         skillName.text = config.name;
@@ -55,6 +78,7 @@ public class SkillItem : MonoBehaviour
 
     public void ShowSkillInfo(PassiveSkillIns ins)
     {
+        cost.SetActive(false);
         cd.gameObject.SetActive(false);
 
         describe.text = ins.passiveConfig.describe;
