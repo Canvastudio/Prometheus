@@ -180,6 +180,8 @@ public class StageCore : SingleGameObject<StageCore> {
         StageUIView.Instance.upUIView.RefreshHpUI();
         StageUIView.Instance.IniMat();
 
+        yield return Player.standBrick.OnDiscoverd();
+
         isLooping = true;
 
         gaming = true;
