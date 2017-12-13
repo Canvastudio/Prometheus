@@ -61,6 +61,10 @@ public class FightComponet : MonoBehaviour
     private LiveItem _ownerObject;
     public LiveItem ownerObject
     {
+        set
+        {
+            _ownerObject = value;
+        }
         get
         {
             if (_ownerObject == null)
@@ -824,11 +828,11 @@ public class FightComponet : MonoBehaviour
 
         return finalEffectItems;
     }
-
+    float[] _damageApperance;
     private IEnumerator DoSkillOnTarget(GameItemBase ShowTarget, ActiveSkillsConfig config, bool specialEffect, float[] damageApperance)
     {
         int i = 0;
-
+        _damageApperance = damageApperance;
         var items = CheckFinalEffectItems(ShowTarget, config);
 
         //Debug.Log("技能： " + config.name + " 得造成伤害得目标数量为: " + items.Count);
@@ -856,7 +860,20 @@ public class FightComponet : MonoBehaviour
 
                     var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, item, out value);
 
-                    Damage damageInfo = new Damage(damage * damageApperance[i], ownerObject, item as LiveItem, config.damageType);
+                    if (ownerObject == null)
+                    {
+                        Debug.LogError("ownerObject is null!");
+                    }
+                    if (damageApperance == null)
+                    {
+                        Debug.LogError("damageApperance is null!");
+                    }
+                    if (config == null)
+                    {
+                        Debug.LogError("config is null!");
+                    }
+
+                    Damage damageInfo = new Damage(damage * _damageApperance[i], ownerObject, item as LiveItem, config.damageType);
 
                     foreach (var state in ownerObject.state.state_list)
                     {

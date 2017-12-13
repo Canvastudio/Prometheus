@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Maintenance : GameItemBase
 {
-
     public override void Recycle()
     {
         base.Recycle();
@@ -15,6 +14,6 @@ public class Maintenance : GameItemBase
 
     public void Reactive()
     {
-        MuiCore.Instance.Open(UiName.strSkillInfoView);
+        MuiCore.Instance.Open(UiName.strChipUpdateView);
     }
 }
