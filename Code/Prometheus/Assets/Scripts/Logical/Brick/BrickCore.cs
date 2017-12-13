@@ -236,6 +236,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                         }
                     }
+                    else if ("j" == prefix)
+                    {
+                        ulong id = ulong.Parse(infos[1]);
+                        var probility = float.Parse(infos[2]);
+                        if (Random.Range(0f,1f) <= probility)
+                        {
+
+                        }
+                    }
                     else
                     {
                         Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);

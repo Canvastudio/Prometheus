@@ -493,4 +493,12 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         return item;
     }
 
+    public void CreateOrgan(ulong uid)
+    {
+        OperateConfig config = ConfigDataBase.GetConfigDataById<OperateConfig>(uid);
+
+
+    }
+
+
 }
