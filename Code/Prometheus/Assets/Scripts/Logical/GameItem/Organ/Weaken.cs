@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boost : MonoBehaviour {
+public class Weaken : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

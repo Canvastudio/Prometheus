@@ -497,7 +497,17 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     {
         OperateConfig config = ConfigDataBase.GetConfigDataById<OperateConfig>(uid);
 
+        string prefab = config.prefab;
 
+        var go = GameObject.Instantiate((Resources.Load("ground/" + prefab) as GameObject), StageView.Instance.uper);
+
+        switch(config.operate)
+        {
+            case Operate.Boost:
+                Boost boost = go.AddComponent<Boost>();
+                boost.stateConfig = config.arg3;
+                break;
+        }
     }
 
 
