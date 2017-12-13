@@ -314,11 +314,12 @@ public class StageCore : SingleGameObject<StageCore> {
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
                 {
-                    ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
-
-                    yield return DoPlayerSkill(skill_id);
-
-                    Debug.Log("技能结束, 回到主循环..");
+                    if (!StageCore.Instance.Player.Disarm)
+                    {
+                        ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
+                        yield return DoPlayerSkill(skill_id);
+                        Debug.Log("技能结束, 回到主循环..");
+                    }
                 }
 
             }

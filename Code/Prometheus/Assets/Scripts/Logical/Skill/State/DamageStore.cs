@@ -52,8 +52,6 @@ public class DamageStore : StateEffectIns
                 }
 
             }
-
-            damageInfo.damage = 0;
         }
     }
 }

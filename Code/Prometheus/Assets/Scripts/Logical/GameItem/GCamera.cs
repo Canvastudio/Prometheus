@@ -9,10 +9,8 @@ public class GCamera : SingleGameObject<GCamera> {
 
     float rate;
 
-    protected override void Init()
+    public void InitData()
     {
-        base.Init();
-
         rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
     }
 
