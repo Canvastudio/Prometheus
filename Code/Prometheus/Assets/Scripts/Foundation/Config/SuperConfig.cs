@@ -424,7 +424,7 @@ public class SuperConfig : SingleObject<SuperConfig>
     public T GetConfigDataById<T>(ulong id) where T : ConfigDataBase
     {
         string temp = typeof(T).ToString();
-        if (!dataDic.ContainsKey(temp)) throw new ArgumentNullException("不存在的配置表：" + temp);
+        if (!dataDic.ContainsKey(temp)) throw new ArgumentNullException("不存在的配置表，加载未完成？ →" + temp);
         List<ConfigDataBase> tempList = dataDic[temp];
         T t = tempList.Find(x => x.id == id) as T;
 #if UNITY_EDITOR
