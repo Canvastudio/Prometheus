@@ -9,6 +9,8 @@ public class ArtBezierMover : ArtMover {
 	public float total_time = 3;
 	public float bezierA;
 
+	public float real_total_time = 2;
+
 	public int k;
 	public int n = 4;
 
@@ -24,6 +26,11 @@ public class ArtBezierMover : ArtMover {
 		if (!isStart)
 			return;
 
+		m_time += Time.deltaTime / real_total_time;
+		m_time = Mathf.Min(m_time, 1);
+
+		bezierA = 1 - m_time;
+
 		before_pos = cur_pos;
 		cur_pos = Vector3.zero;
 
@@ -34,15 +41,12 @@ public class ArtBezierMover : ArtMover {
 		cur_pos.z = 0;
 
 		before_pos = tran.position;
-		tran.position = Vector3.Lerp(tran.position, cur_pos, Time.deltaTime * 10);
+		//tran.position = Vector3.Lerp(tran.position, cur_pos, Time.deltaTime * 10);
+		tran.position = cur_pos;
 
 		dir = tran.position - before_pos;
 		tran.rotation = ArtMath.LookAtZ(dir);
 
-		m_time += Time.deltaTime / total_time;
-		m_time = Mathf.Min(m_time, 1);
-
-		bezierA = 1 - m_time;
 
 		DetectEnd();
 
@@ -50,6 +54,8 @@ public class ArtBezierMover : ArtMover {
 
 	public override void SetPos(List<Vector3> _plist) {
 	
+		if(isStart) return;
+
 		plist = _plist;
 
 		m_time = 0;
@@ -60,6 +66,8 @@ public class ArtBezierMover : ArtMover {
 		cur_pos = plist[0];
 
 		isStart = true;
+
+		real_total_time = total_time + Random.Range(-0.5f, 0.5f);
 
 	}
 
@@ -75,6 +83,8 @@ public class ArtBezierMover : ArtMover {
 	public void DetectEnd() {
 
 		if (m_time == 1) {
+
+			isStart = false;	
 
 			OnEnd();
 
