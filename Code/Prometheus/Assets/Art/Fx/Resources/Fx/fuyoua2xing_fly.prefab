@@ -127,6 +127,7 @@ MonoBehaviour:
   iscenter: 0
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
+  particls: []
   layername: StageView
   mover: {fileID: 114780565932881722}
   plist:
@@ -163,7 +164,7 @@ MonoBehaviour:
   fxbase: {fileID: 114139660305713978}
   plist: []
   m_time: 0
-  total_time: 3
+  total_time: 1.7
   velocity: 1.3
   k: 0
   n: 4
