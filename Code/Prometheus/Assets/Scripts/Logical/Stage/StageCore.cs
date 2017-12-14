@@ -179,7 +179,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         StageUIView.Instance.upUIView.RefreshHpUI();
         StageUIView.Instance.IniMat();
-
+        List<Pathfinding.Node> list1 = new List<Pathfinding.Node>();
         yield return Player.standBrick.OnDiscoverd();
 
         isLooping = true;
@@ -260,9 +260,14 @@ public class StageCore : SingleGameObject<StageCore> {
                                     if (list.Count > 0)
                                     {
 
+                                        list1.Clear();
+                                        list1.AddRange(list);
+                                        list1.Add(brick1.pathNode);
+
                                         //标记路径
                                         StageView.Instance.CancelPahtNode();
-                                        StageView.Instance.SetNodeAsPath(list);
+                                        StageView.Instance.SetNodeAsPath(list1);
+
                                         //如果路径长度小于3，不需要确认直接移动
                                         if (list.Count < 3)
                                         {
