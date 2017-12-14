@@ -456,6 +456,13 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         return this;
     }
 
+    public Brick CreateOrgan(ulong uid)
+    {
+        GameItemFactory.Instance.CreateOrgan(uid, this);
+
+        return this;
+    }
+
     public Brick CreateCover()
     {
         this.cover = GameItemFactory.Instance.CreateCover(this);
@@ -572,6 +579,8 @@ public enum BrickType
     OTHERS,
     UNKNOWN,
     PLAYER,
+    Organ,
+    OrganProperty,
 }
 
 public enum BrickExplored

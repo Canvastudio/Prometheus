@@ -42,5 +42,6 @@ public class SummonOrgan : OrganBase
                 item.standBrick = obstacle.standBrick;
             }
         }
+        Clean();
     }
 }

@@ -9,5 +9,6 @@ public class AddSkillOrgan : OrganBase
     public override void Reactive()
     {
         StageCore.Instance.Player.inventory.AddLimitedSkill(config.id, count);
+        Clean();
     }
 }

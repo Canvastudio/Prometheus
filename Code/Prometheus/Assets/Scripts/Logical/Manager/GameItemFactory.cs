@@ -468,7 +468,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.itemId = tid;
 
-        item.transform.SetParentAndNormalize(StageView.Instance.uper);
+        item.transform.SetParentAndNormalize(StageView.Instance.cover);
         item.transform.SetAsFirstSibling();
         item.transform.localScale = Vector3.one;
 
@@ -493,7 +493,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         return item;
     }
 
-    public void CreateOrgan(ulong uid)
+    public void CreateOrgan(ulong uid, Brick bornBrick)
     {
         OperateConfig config = ConfigDataBase.GetConfigDataById<OperateConfig>(uid);
 
@@ -501,21 +501,33 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var go = GameObject.Instantiate((Resources.Load("ground/" + prefab) as GameObject), StageView.Instance.uper);
 
+#if UNITY_EDITOR
+        go.name = "Organ_" + config.operate.ToString();
+#endif
         switch(config.operate)
         {
             case Operate.ActiveSkills:
                 var organ = go.AddComponent<ActiveSkillOrgan>();
                 organ.config = config.arg1;
+                organ.standBrick = bornBrick;
+                bornBrick.brickType = BrickType.Organ;
+                bornBrick.item = organ;
                 break;
             case Operate.Radar:
                 var rader = go.AddComponent<RadarOrgan>();
                 int min = config.arg5[0];
                 int max = config.arg5[1];
                 rader.openCount = Random.Range(min, max);
+                rader.standBrick = bornBrick;
+                bornBrick.brickType = BrickType.Organ;
+                bornBrick.item = rader;
                 break;
             case Operate.Property:
                 var property = go.AddComponent<PropertyOrgan>();
                 property.config = config;
+                property.standBrick = bornBrick;
+                bornBrick.brickType = BrickType.OrganProperty;
+                bornBrick.item = property;
                 break;
             case Operate.AddSkill:
                 var add = go.AddComponent<AddSkillOrgan>();
@@ -523,15 +535,24 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 min = config.arg5[0];
                 max = config.arg5[1];
                 add.count = Random.Range(min, max);
+                add.standBrick = bornBrick;
+                bornBrick.brickType = BrickType.Organ;
+                bornBrick.item = add;
                 break;
             case Operate.SummonSkill:
                 var summon = go.AddComponent<SummonOrgan>();
                 summon.summonConfig = config.arg2;
+                summon.standBrick = bornBrick;
+                bornBrick.brickType = BrickType.Organ;
+                bornBrick.item = summon;
                 break;
             case Operate.Kelid:
 
                 break;
         }
+
+        go.transform.position = bornBrick.transform.position;
+        
     }
 
 

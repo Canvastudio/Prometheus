@@ -166,6 +166,13 @@ public class StageCore : SingleGameObject<StageCore> {
             //吃掉
             item.Reactive();
         }
+        else if (type == BrickType.Organ)
+        {
+            TimeCast(Rpn.GetMoveTime());
+
+            (brick1.item as OrganBase).Reactive();
+        }
+        
 
     }
 
@@ -226,14 +233,20 @@ public class StageCore : SingleGameObject<StageCore> {
                                 Treasure _item = brick1.item as Treasure;
                                 _item.Reactive();
                                 break;
-
+                            case BrickType.OrganProperty:
+                                if (brick1.item is PropertyOrgan)
+                                {
+                                    PropertyOrgan __item = brick1.item as PropertyOrgan;
+                                    __item.Reactive();
+                                }
+                                break;
                             case BrickType.EMPTY:
                             case BrickType.UNKNOWN:
                             case BrickType.MONSTER:
                             //case BrickType.SUPPLY:
                             //case BrickType.TREASURE:
                             case BrickType.MAINTENANCE:
-
+                            default:            
                                 int d = Player.standBrick.pathNode.Distance(brick1.pathNode);
 
                                 bool need_action = false;

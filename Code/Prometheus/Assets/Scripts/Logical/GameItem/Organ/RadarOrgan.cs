@@ -21,5 +21,6 @@ public class RadarOrgan : OrganBase
                 --openCount;
             }
         }
+        Clean();
     }
 }

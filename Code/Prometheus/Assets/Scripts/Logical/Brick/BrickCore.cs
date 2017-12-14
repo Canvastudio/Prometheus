@@ -242,7 +242,14 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         var probility = float.Parse(infos[2]);
                         if (Random.Range(0f,1f) <= probility)
                         {
+                            _brick.CreateOrgan(id);
 
+                            float tip = float.Parse(infos[3]);
+
+                            if (Random.Range(0f, 1f) <= tip)
+                            {
+                                _brick.ShowTipRich();
+                            }
                         }
                     }
                     else
