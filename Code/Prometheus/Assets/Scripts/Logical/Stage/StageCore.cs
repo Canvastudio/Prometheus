@@ -61,12 +61,20 @@ public class StageCore : SingleGameObject<StageCore> {
         tagMgr = new EntitysTag<GameItemBase>();
         records = new StageRecording();
 
-        AllActionFinish = new WaitUntil(() => action_item == 0);
+        AllActionFinish = new WaitUntil(() => 
+        {
+            return CanGoing();
+        });
 
         //监听一些重要事件
         Messenger<Damage>.AddListener(SA.MonsterDead, OnMonsterDead);
 
         CoroCore.Instance.ExStartCoroutine(CheckTurnTime());
+    }
+    
+    public bool CanGoing()
+    {
+        return action_item == 0 && GCamera.Instance.sliding == false;
     }
 
     public void RegisterItem(GameItemBase gameItemBase)

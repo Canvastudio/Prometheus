@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class GCamera : SingleGameObject<GCamera> {
 
+    public bool sliding = false;
     public float rate;
     public float distance;
     public void InitData()
@@ -23,10 +24,15 @@ public class GCamera : SingleGameObject<GCamera> {
     {
         if (!GameTestData.Instance.NoSroll && distance > 0)
         {
+            sliding = true;
             float d = rate * Time.deltaTime;
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + d, transform.localPosition.z);
             distance -= d;
             distance = Mathf.Max(0, distance);
+        }
+        else
+        {
+            sliding = false;
         }
     }
 
@@ -39,8 +45,11 @@ public class GCamera : SingleGameObject<GCamera> {
 
             if (y2 > y1)
             {
+                float d = y2 - y1;
                 //transform.position = new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z), 0.07f);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), 0.07f);
+                distance -= d;
+                distance = Mathf.Max(0, distance);
             }
         }
     }
