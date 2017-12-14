@@ -524,6 +524,13 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 max = config.arg5[1];
                 add.count = Random.Range(min, max);
                 break;
+            case Operate.SummonSkill:
+                var summon = go.AddComponent<SummonOrgan>();
+                summon.summonConfig = config.arg2;
+                break;
+            case Operate.Kelid:
+
+                break;
         }
     }
 

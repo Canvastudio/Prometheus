@@ -415,6 +415,8 @@ public abstract class LiveItem : GameItemBase
 
         standBrick.CleanItem();
 
+        ActiveReset();
+
         yield return 0;
     }
 

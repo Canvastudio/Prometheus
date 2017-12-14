@@ -74,21 +74,9 @@ public class Property : StateEffectIns
 
                     owner.Property.SetFloatProperty(property, value);
 
-                    if (property != GameProperty.nhp)
+                    if (property != GameProperty.nhp && change != 0)
                     {
                         changes.Add(property, change);
-                    }
-                    else
-                    {
-                        ////如果修改属性是修改当前血量，那么就判定为一次物理伤害
-                        //if (change < 0)
-                        //{
-                        //    owner.MeleeAttackByOther(owner, new Damage(-change, source, owner, DamageType.Physical));
-                        //}
-                        //else
-                        //{
-                        //    owner.Property.SetFloatProperty(property, value);
-                        //}
                     }
                 }
             }

@@ -31,10 +31,22 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public void OnActionEnd()
     {
-        action -= 1;
+        if (action > 0)
+        {
+            action -= 1;
+        }
             
         if (action == 0)
         {
+            StageCore.Instance.action_item -= 1;
+        }
+    }
+
+    public void ActiveReset()
+    {
+        if (action != 0)
+        {
+            action = 0;
             StageCore.Instance.action_item -= 1;
         }
     }

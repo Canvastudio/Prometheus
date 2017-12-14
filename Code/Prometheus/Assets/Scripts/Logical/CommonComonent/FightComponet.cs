@@ -860,19 +860,6 @@ public class FightComponet : MonoBehaviour
 
                     var damage = Rpn.CalculageRPN(config.damage.ToArray(), ownerObject, item, out value);
 
-                    if (ownerObject == null)
-                    {
-                        Debug.LogError("ownerObject is null!");
-                    }
-                    if (damageApperance == null)
-                    {
-                        Debug.LogError("damageApperance is null!");
-                    }
-                    if (config == null)
-                    {
-                        Debug.LogError("config is null!");
-                    }
-
                     Damage damageInfo = new Damage(damage * _damageApperance[i], ownerObject, item as LiveItem, config.damageType);
 
                     foreach (var state in ownerObject.state.state_list)

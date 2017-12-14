@@ -257,59 +257,66 @@ public class StageCore : SingleGameObject<StageCore> {
                                         list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
                                     }
 
-                                    //标记路径
-                                    StageView.Instance.CancelPahtNode();
-                                    StageView.Instance.SetNodeAsPath(list);
-                                    //如果路径长度小于3，不需要确认直接移动
-                                    if (list.Count < 3)
+                                    if (list.Count > 0)
                                     {
-                                        Player.moveComponent.SetPaht(list);
 
-                                        yield return MovePlayer();
+                                        //标记路径
+                                        StageView.Instance.CancelPahtNode();
+                                        StageView.Instance.SetNodeAsPath(list);
+                                        //如果路径长度小于3，不需要确认直接移动
+                                        if (list.Count < 3)
+                                        {
+                                            Player.moveComponent.SetPaht(list);
 
-                                        if (need_action)
-                                            yield return DoNearByBrickSpecialAction(brick1);
+                                            yield return MovePlayer();
+
+                                            if (need_action)
+                                                yield return DoNearByBrickSpecialAction(brick1);
+                                        }
+                                        else
+                                        {
+                                            //等待玩家点击确认
+                                            yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
+
+                                            if (waitMsg.result.msg == SA.PlayerClickBrick)
+                                            {
+                                                brick2 = waitMsg.result.para as Brick;
+
+                                                if (brick1 == brick2)
+                                                {
+                                                    //确认成功
+                                                    //yield return StageCore.Instance.Player.moveComponent.Go(list);
+                                                    Player.moveComponent.SetPaht(list);
+
+                                                    yield return MovePlayer();
+
+                                                    if (need_action && Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
+                                                        yield return DoNearByBrickSpecialAction(brick1);
+                                                }
+                                                else
+                                                {
+                                                    brick1 = brick2;
+                                                    goto BrickLogical;
+                                                }
+                                            }
+                                            else if (waitMsg.result.msg == SA.PlayerClickSkill)
+                                            {
+                                                StageView.Instance.CancelPahtNode();
+
+                                                ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
+
+                                                yield return DoPlayerSkill(skill_id);
+                                            }
+                                        }
                                     }
                                     else
                                     {
-                                        //等待玩家点击确认
-                                        yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
-
-                                        if (waitMsg.result.msg == SA.PlayerClickBrick)
-                                        {
-                                            brick2 = waitMsg.result.para as Brick;
-
-                                            if (brick1 == brick2)
-                                            {
-                                                //确认成功
-                                                //yield return StageCore.Instance.Player.moveComponent.Go(list);
-                                                Player.moveComponent.SetPaht(list);
-
-                                                yield return MovePlayer();
-
-                                                if (need_action && Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
-                                                    yield return DoNearByBrickSpecialAction(brick1);
-                                            }
-                                            else
-                                            {
-                                                brick1 = brick2;
-                                                goto BrickLogical;
-                                            }
-                                        }
-                                        else if (waitMsg.result.msg == SA.PlayerClickSkill)
-                                        {
-                                            StageView.Instance.CancelPahtNode();
-
-                                            ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
-
-                                            yield return DoPlayerSkill(skill_id);
-                                        }
+                                        Debug.Log("青鑫：无法到达指定的位置!");
                                     }
                                 }
+
                                 break;
                         }
-
-                      
                     }
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickSkill)
