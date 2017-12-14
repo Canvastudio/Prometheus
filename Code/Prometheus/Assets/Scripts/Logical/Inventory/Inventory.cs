@@ -10,6 +10,9 @@ public class Inventory {
     [SerializeField]
     List<ChipInventory> chipList = new List<ChipInventory>();
 
+    [SerializeField]
+    List<LimitedSkillIns> skillList = new List<LimitedSkillIns>();
+
     ulong[] ids = new ulong[]{ 1001, 1002, 1003, 1004 };
 
     public void ChangeStuffCount(ulong id, int count)
@@ -125,6 +128,29 @@ public class Inventory {
                 chipList.RemoveAt(i);
             }
         }
+    }
+
+    public void AddLimitedSkill(ulong id, int count)
+    {
+        foreach(var limitedskill in skillList)
+        {
+            if (limitedskill.skillId == id)
+            {
+                limitedskill.count += count;
+
+                //刷新UI
+                StageUIView.Instance.AddActiveSkillIntoSkillList(id, count);
+                return;
+            }
+        }
+
+        var skill = new LimitedSkillIns(id, count);
+        skillList.Add(skill);
+    }
+
+    public void RemoveLimitedSkil(ulong id)
+    {
+
     }
 }
 

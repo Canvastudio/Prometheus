@@ -28,7 +28,7 @@ public class SkillListItem : DragableScrollItem
         HudEvent.Get(button.gameObject).onLongPressRelease = OnLongPressRelease;
     }
 
-    public void SetInfo(ulong id)
+    public void SetInfo(ulong id, int count = 0)
     {
         gameObject.SetActive(true);
         skill_id = id;

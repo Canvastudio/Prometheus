@@ -155,7 +155,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
 
     string fxName;
-    ArtFxBase loopFx;
+    public ArtFxBase loopFx;
 
     public void ShowTipDanger()
     {

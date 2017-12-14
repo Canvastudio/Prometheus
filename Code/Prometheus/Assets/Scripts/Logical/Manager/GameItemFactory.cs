@@ -503,9 +503,26 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         switch(config.operate)
         {
-            case Operate.Boost:
-                Boost boost = go.AddComponent<Boost>();
-                boost.stateConfig = config.arg3;
+            case Operate.ActiveSkills:
+                var organ = go.AddComponent<ActiveSkillOrgan>();
+                organ.config = config.arg1;
+                break;
+            case Operate.Radar:
+                var rader = go.AddComponent<RadarOrgan>();
+                int min = config.arg5[0];
+                int max = config.arg5[1];
+                rader.openCount = Random.Range(min, max);
+                break;
+            case Operate.Property:
+                var property = go.AddComponent<PropertyOrgan>();
+                property.config = config;
+                break;
+            case Operate.AddSkill:
+                var add = go.AddComponent<AddSkillOrgan>();
+                add.config = config.arg1;
+                min = config.arg5[0];
+                max = config.arg5[1];
+                add.count = Random.Range(min, max);
                 break;
         }
     }

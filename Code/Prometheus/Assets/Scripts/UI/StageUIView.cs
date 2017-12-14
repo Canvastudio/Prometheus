@@ -161,6 +161,16 @@ public class StageUIView : MuiSingleBase<StageUIView>
         }
     }
 
+    public void AddActiveSkillIntoSkillList(ulong uid, int count)
+    {
+        ulong _id;
+        var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
+        list_item.id = _id;
+        list_item.SetInfo(uid);
+        list_item.SetParentAndNormalize(skillListRoot);
+        skillItemList.Add(list_item);
+    }
+
     public void RemoveSkillFromSkillList(ulong uid)
     {
         if (FightComponet.IdToSkillType(uid) == SkillType.Active)
