@@ -28,7 +28,7 @@ public class Treasure : GameItemBase, IReactive {
                 StageCore.Instance.Player.inventory.ChangeStuffCount(id, num);
                 break;
             case "Chip":
-                StageCore.Instance.Player.inventory.AddChip(id);
+                StageCore.Instance.Player.inventory.AddChip(id, num);
                 break;
         }
 

@@ -41,7 +41,7 @@ public class WeightSection
     {
         WeightSection arg = new WeightSection
         {
-            weightList = new float[list.Count],
+            weightList = list.ToArray(),
             rateList = new float[list.Count]
         };
 
