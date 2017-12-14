@@ -49,6 +49,11 @@ public class GContext : SingleGameObject<GContext> {
         {
             if (_discover_brick != value)
             {
+                if (_discover_brick > value)
+                {
+                    Messenger.Invoke(SA.OpenBrick);
+                }
+
                 _discover_brick = value;
                 Messenger.Invoke(SA.DiscoverBrickChange);
             }

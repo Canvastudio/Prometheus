@@ -76,7 +76,15 @@ public class Property : StateEffectIns
 
                     if (property != GameProperty.nhp && change != 0)
                     {
-                        changes.Add(property, change);
+                        float c;
+                        if (changes.TryGetValue(property, out c))
+                        {
+                            changes[property] = c + change;
+                        }
+                        else
+                        {
+                            changes.Add(property, change);
+                        }
                     }
                 }
             }
@@ -86,7 +94,7 @@ public class Property : StateEffectIns
     public override void Active()
     {
         base.Active();
-
+        ResetChange();
         ApplyChange();
     }
 

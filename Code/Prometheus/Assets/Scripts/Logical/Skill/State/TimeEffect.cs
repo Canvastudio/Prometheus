@@ -35,6 +35,7 @@ public class TimeEffect : Property
 
             if (t > interval)
             {
+                ResetChange();
                 ApplyChange();
 
                 t -= interval;

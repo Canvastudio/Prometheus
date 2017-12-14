@@ -511,6 +511,7 @@ public static class SA
     public const string DiscoverMonsterChange = "DMC";
 
     public const string DiscoverBrickChange = "DBC";
+    public const string OpenBrick = "OBK";
     public const string DarkBrickChange = "DKBC";
 
     public const string GameStart = "GST";
