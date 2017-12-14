@@ -128,15 +128,7 @@ public class StageCore : SingleGameObject<StageCore> {
         records.lastDeadMonster.pwr = monster.pwr;
         records.lastDeadMonster.uid = monster.cid;
 
-        if (monster.isDiscovered)
-        {
-            GContext.Instance.discover_monster -= 1;
-        }
 
-        if (!monster.enslave)
-        {
-            GContext.Instance.enslave_count -= 1;
-        }
     }
 
     public IEnumerator DoNearByBrickSpecialAction(Brick brick1)

@@ -248,16 +248,13 @@ public class Monster : LiveItem
     {
         base.OnExitFromArea();
 
-        if (isDiscovered && cur_hp > 0)
-        {
-            GContext.Instance.discover_monster -= 1;
-        }
-
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
     }
      
     public override IEnumerator OnDead(Damage damageInfo)
     {
+
+
         if (standBrick != null)
         {
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);
@@ -325,7 +322,15 @@ public class Monster : LiveItem
 
     public override void Recycle()
     {
+        if (isDiscovered)
+        {
+            GContext.Instance.discover_monster -= 1;
+        }
+
         base.Recycle();
+
+        enslave = false;
+        isAlive = false;
         fightComponet.Clean();
         block_other = false;
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
