@@ -158,9 +158,9 @@ public class Rpn {
 
         float time = CalculageRPN(rpn, StageCore.Instance.Player, null, out f);
 
-        float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
+        //float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
 
-        return time * rate;
+        return time;// * rate;
 
     }
 }

@@ -88,7 +88,7 @@ public class MoveComponet : MonoBehaviour {
 
         yield return BrickCore.Instance.OpenBrick(brick);
 
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate);
     }
 
     public IEnumerator MoveTo(Brick brick, float time)
@@ -105,8 +105,9 @@ public class MoveComponet : MonoBehaviour {
         }
 
         //yield return new WaitForSeconds(0.1f);
+        float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
 
-        LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), time)
+        LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), rate)
             .setOnComplete(OnMoveFinish);
 
         while (!move_Finish)
