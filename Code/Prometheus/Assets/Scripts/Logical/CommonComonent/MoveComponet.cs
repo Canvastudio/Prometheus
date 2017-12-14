@@ -28,40 +28,40 @@ public class MoveComponet : MonoBehaviour {
         return this;
     }
 
-    public IEnumerator Go(List<Pathfinding.Node> path)
-    {
-        _path = path;
+    //public IEnumerator Go(List<Pathfinding.Node> path)
+    //{
+    //    _path = path;
 
-        _pathIndex = 0;
+    //    _pathIndex = 0;
 
-        LTDescr descr;
+    //    LTDescr descr;
 
-        while (_pathIndex < _path.Count)
-        {
-            move_Finish = false;
+    //    while (_pathIndex < _path.Count)
+    //    {
+    //        move_Finish = false;
 
-            Brick brick = _path[_pathIndex].behavirour as Brick;
+    //        Brick brick = _path[_pathIndex].behavirour as Brick;
 
-            _brick = brick;
+    //        _brick = brick;
 
-            float cast_time = 1f;
+    //        float cast_time = 1f;
 
-            StageCore.Instance.TimeCast(cast_time);
+    //        StageCore.Instance.TimeCast(cast_time);
 
-            descr = LeanTween.moveLocal(
-                this.gameObject, 
-                transform.parent.InverseTransformPoint(brick.transform.position),
-                cast_time)
-                .setOnComplete(OnMoveFinish);
+    //        descr = LeanTween.moveLocal(
+    //            this.gameObject, 
+    //            transform.parent.InverseTransformPoint(brick.transform.position),
+    //            cast_time)
+    //            .setOnComplete(OnMoveFinish);
 
-            while (!move_Finish)
-            {
-                yield return 0;
-            }
-        }
+    //        while (!move_Finish)
+    //        {
+    //            yield return 0;
+    //        }
+    //    }
 
-        Debug.Log("Go 移动完成！");
-    }
+    //    Debug.Log("Go 移动完成！");
+    //}
 
     public IEnumerator MoveToNext()
     {

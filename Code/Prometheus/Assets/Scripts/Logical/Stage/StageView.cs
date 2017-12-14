@@ -125,11 +125,14 @@ public class StageView : MuiSingleBase<StageView>
 
     public void MoveDownMap(float distance)
     {
+        Debug.Log("move down: " + distance);
+
         if (!GameTestData.Instance.NoSroll)
         {
             if (StageCore.Instance.totalTime >= 4)
             {
                 GCamera.Instance.MoveDown(distance);
+                
             }
         }
     }

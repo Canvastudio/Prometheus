@@ -415,7 +415,7 @@ public abstract class LiveItem : GameItemBase
 
         standBrick.CleanItem();
 
-        ActiveReset();
+   
 
         yield return 0;
     }
@@ -531,7 +531,7 @@ public abstract class LiveItem : GameItemBase
     public override void Recycle()
     {
         base.Recycle();
-
+        ActiveReset();
         fightComponet.Clean();
         state.Clean();
 

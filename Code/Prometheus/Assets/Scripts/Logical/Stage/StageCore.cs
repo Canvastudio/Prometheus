@@ -452,8 +452,9 @@ public class StageCore : SingleGameObject<StageCore> {
     public void TimeCast(float time)
     {
         turnTime += time;
-
         totalTime += time;
+
+        StageView.Instance.MoveDownMap(time);
     }
 
     public IEnumerator CheckTurnTime()
@@ -463,7 +464,7 @@ public class StageCore : SingleGameObject<StageCore> {
             if (turnTime > 0)
             {
                 turnTime = Mathf.Max(0, turnTime - Time.deltaTime);
-                StageView.Instance.MoveDownMap(Time.deltaTime);
+                //StageView.Instance.MoveDownMap(Time.deltaTime);
                 Messenger<float>.Invoke(SA.StageTimeCast, Time.deltaTime);
             }
 
