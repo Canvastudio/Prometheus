@@ -48,6 +48,7 @@ public class StateIns
     public float exist_time;
     private bool _out_data = false;
     public float skillDamage = 0;
+    public LiveItem owner;
     public bool out_data
     {
         get { return _out_data; }
@@ -56,6 +57,7 @@ public class StateIns
 
     public StateIns(StateConfig stateConfig, LiveItem owner, PassiveSkillIns passive, LiveItem source = null, float _skillDamage = 0)
     {
+        this.owner = owner;
         int effect_count = stateConfig.stateEffects.Count();
         skillDamage = _skillDamage;
         this.stateConfig = stateConfig;
@@ -84,6 +86,8 @@ public class StateIns
             }
 
             Messenger<float>.AddListener(SA.StageTimeCast, OnTimeChange);
+
+            owner.AddStateUI(this);
         }
     }
 
@@ -109,6 +113,8 @@ public class StateIns
 
 
             Messenger<float>.RemoveListener(SA.StageTimeCast, OnTimeChange);
+
+            owner.RemoveStateUI(this);
         }
     }
     

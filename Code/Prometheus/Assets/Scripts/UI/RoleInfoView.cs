@@ -28,6 +28,7 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     Button backButton;
 
     [Space(5)]
+    [SerializeField]
     Transform stateRoot;
 
     [SerializeField]
@@ -73,9 +74,12 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
 
         foreach(var state in player.state.state_list)
         {
-            var item = ObjPool<StateItem>.Instance.GetObjFromPool(s2);
-            item.SetParentAndNormalize(stateRoot);
-            item.ShowStateInfo(state);
+            if (state.stateConfig.iShow && state.active)
+            {
+                var item = ObjPool<StateItem>.Instance.GetObjFromPool(s2);
+                item.SetParentAndNormalize(stateRoot);
+                item.ShowStateInfo(state);
+            }
         }
 
         gameObject.SetActive(true);

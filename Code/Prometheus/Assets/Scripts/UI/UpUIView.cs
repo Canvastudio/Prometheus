@@ -48,7 +48,14 @@ public class UpUIView : MonoBehaviour {
 
     public void OnStateRemove(StateIns state)
     {
-
+        for(int i = list.Count - 1; i >= 0; --i)
+        {
+            if (list[i].ins.id == state.id)
+            {
+                ObjPool<UpBuff>.Instance.RecycleObj(pname, list[i].id);
+                list.RemoveAt(i);
+            }
+        }
     }
 
     public void RefreshHpUI()

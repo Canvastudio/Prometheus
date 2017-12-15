@@ -3765,6 +3765,20 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 547.8969
       objectReference: {fileID: 0}
+    - target: {fileID: 114435860126949280, guid: 022221b5446f3c44c92e2835b71d08e0,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114435860126949280, guid: 022221b5446f3c44c92e2835b71d08e0,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219785239349664, guid: 022221b5446f3c44c92e2835b71d08e0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 022221b5446f3c44c92e2835b71d08e0, type: 2}
   m_IsPrefabParent: 0

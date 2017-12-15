@@ -70,8 +70,8 @@ public class StateComponent : MonoBehaviour {
             }
         }
 
-        if (owner != null)
-            owner.AddStateUI(ins);
+        //if (owner != null)
+        //    owner.AddStateUI(ins);
         
     }
 
@@ -89,9 +89,6 @@ public class StateComponent : MonoBehaviour {
                 state_list.RemoveAt(i);
             }
         }
-
-
-        
     }
 
     public void RemoveStateBuff(int count, bool helpful)
@@ -119,9 +116,9 @@ public class StateComponent : MonoBehaviour {
             {
                 if (state_list[i].passive.id == halo.passive.id)
                 {
-                    owner.RemoveStateUI(state_list[i]);
+                    //owner.RemoveStateUI(state_list[i]);
                     state_list[i].DeactiveIns();
-                    //state_list.RemoveAt(i);
+                    state_list.RemoveAt(i);
                 }
             }
         }

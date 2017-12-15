@@ -590,6 +590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224471501541462478}
   - component: {fileID: 114694732344229798}
+  - component: {fileID: 114447389944271424}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1317,6 +1318,19 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u901F       \u5EA6 \uFF1A"
+--- !u!114 &114447389944271424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1828992361023646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!114 &114454841009335044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1366,6 +1380,7 @@ MonoBehaviour:
   laser: {fileID: 114677922306485488}
   cartridge: {fileID: 114616071681725084}
   backButton: {fileID: 114605896607729328}
+  stateRoot: {fileID: 224471501541462478}
   item: {fileID: 114618629387852558, guid: 9029f2857ffd31447ae9da481780633b, type: 2}
 --- !u!114 &114513382436175214
 MonoBehaviour:
@@ -1740,7 +1755,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
 --- !u!114 &114722879256169640
 MonoBehaviour:
   m_ObjectHideFlags: 1
