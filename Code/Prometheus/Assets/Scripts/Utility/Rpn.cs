@@ -95,14 +95,16 @@ public class Rpn {
                 }
                 else if (property == GameProperty.monsterNum)
                 {
-                    if (rpn_source is Player)
-                    {
-                        stack.Push(GContext.Instance.discover_monster - GContext.Instance.enslave_count);
-                    }
-                    else
-                    {
-                        stack.Push(1 + GContext.Instance.enslave_count);
-                    }
+                    stack.Push(GContext.Instance.discover_monster);
+
+                    //if (rpn_source is Player)
+                    //{
+                    //    stack.Push(GContext.Instance.discover_monster - GContext.Instance.enslave_count);
+                    //}
+                    //else
+                    //{
+                    //    stack.Push(1 + GContext.Instance.enslave_count);
+                    //}
                 }
                 else if (property == GameProperty.openGridNum)
                 {

@@ -192,7 +192,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.pwr = pwr;
         item.cid = id;
         item.lv = lv;
-
+        item.isAlive = true;
         item.icon.SetStageItemIcon(config.icon);
 
         ulong AI_Id = config.ai[pwr];

@@ -539,6 +539,7 @@ public abstract class LiveItem : GameItemBase
         Freeze = false;
         Disarm = false;
         Silent = false;
+        Sleep = false;
     }
 }
 
