@@ -12,17 +12,28 @@ public class ArtFxDrop : ArtFxBase {
 
 	public ParticleSystem.Particle[] particlChilds;
 
-	public int parical_count = 0;
+	public bool ishit = false;
 
+	public ParticleSystem particleHit;
+
+	public int parical_count = 0;
+	
 	public Vector3 dropPos;
 
 	public float speed = 0.1f;
 
 	public int maxpar = 40;
 
+	public List<float> randomlist;
+
 	void Awake() {
 	
 		particlChilds = new ParticleSystem.Particle[maxpar];
+
+		randomlist = new List<float>(maxpar);
+
+		for(int i = 0; i < maxpar; i++)
+			randomlist.Add(speed + Random.Range(-3.5f, 3f));
 
 	}
 
@@ -30,16 +41,23 @@ public class ArtFxDrop : ArtFxBase {
 
 		base.Show(pos, count);
 
-		//ParticleSystem.MainModule main = particle.main;
+		ParticleSystem.MainModule main = particle.main;
 		
-		//main.maxParticles = Mathf.Min(count, maxpar);
+		Debug.Log("ParticleSystem count:" + count);
 
+		parical_count = count;
+
+		main.maxParticles = Mathf.Min(count, maxpar);
+
+		particle.Play();
 		particle.Emit(count);
-		//particle.Simulate(3f);
 
-		parical_count = particle.GetParticles(particlChilds); 
+		for(int i = 0; i < maxpar; i++)
+			randomlist[i] = speed + Random.Range(-.5f, .5f);	
 
 		cool_back_time = 0;
+
+		particleHit.transform.position = dropPos;
 
 	}
 
@@ -51,15 +69,29 @@ public class ArtFxDrop : ArtFxBase {
 			return;
 		}
 
-		Debug.Log(particlChilds.Length);
+		particle.GetParticles(particlChilds);
+
+		//ishit = false;
 
 		for(int i = 0; i < parical_count; i++) {
 
-			particlChilds[i].position = Vector3.Lerp(particlChilds[i].position, dropPos, Time.deltaTime * speed);
+			particlChilds[i].position = Vector3.Lerp(particlChilds[i].position, dropPos, Time.deltaTime * randomlist[i]);
 
-			Debug.Log(particlChilds[i].position);
+			//particlChilds[i].size = Vector3.Lerp(particlChilds[i].size, finalSize, Time.deltaTime * randomlist[i]);
+
+			if(Vector3.Distance(particlChilds[i].position, dropPos) < 0.1f) {
+				particlChilds[i].lifetime = 0;
+				ishit = true;
+				particleHit.Emit(1);
+			}	
 			
 		}
+
+		particle.SetParticles(particlChilds, parical_count);
+
+		//if(ishit)
+			//particleHit.Emit(2);
+
 	}
 
 }
