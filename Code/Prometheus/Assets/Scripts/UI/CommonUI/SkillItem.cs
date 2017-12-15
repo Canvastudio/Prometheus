@@ -53,8 +53,6 @@ public class SkillItem : MonoBehaviour
         skillName.text = ins.config.name;
         skillIcon.SetSkillIcon(ins.config.icon);
 
-
-
         gameObject.SetActive(true);
     }
 

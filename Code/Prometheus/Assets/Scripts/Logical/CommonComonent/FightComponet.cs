@@ -153,14 +153,34 @@ public class FightComponet : MonoBehaviour
                 summonSkillConfigs.Add(ConfigDataBase.GetConfigDataById<SummonSkillsConfig>(id));
                 break;
         }
-
     }
     
     protected virtual void AddActiveIns(ulong id, SkillPoint point)
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
-        activeInsList.Add(new ActiveSkillIns(aconfig, ownerObject, point));
-        StageUIView.Instance.AddSkillIntoSkillList(id);
+        var ins = new ActiveSkillIns(aconfig, ownerObject, point);
+        activeInsList.Add(ins);
+        StageUIView.Instance.AddChipSkillIntoSkillList(ins);
+    }
+
+    public virtual void AddOrganSkill(ActiveSkillIns ins)
+    {
+        activeInsList.Add(ins);
+    }
+
+    public virtual void RemoveOrganSkill(ulong id)
+    {
+        for (int i = 0; i < activeInsList.Count; ++i)
+        {
+            if (activeInsList[i].config.id == id && activeInsList[i].count == 0)
+            {
+                activeInsList[i].Deactive();
+                activeInsList.RemoveAt(i);
+                break;
+            }
+        }
+
+        Debug.LogError("无法移除指定的organ skill: " + id.ToString());
     }
 
     public virtual void RemoveSkill(ulong id)
@@ -513,8 +533,21 @@ public class FightComponet : MonoBehaviour
         Debug.Log("技能释放完毕: " + name);
     }
 
-    public IEnumerator DoActiveSkill(ActiveSkillsConfig config)
+    public IEnumerator DoActiveSkill(ActiveSkillIns ins, ActiveSkillsConfig _config = null, int c = -1)
     {
+        ActiveSkillsConfig config;
+        int _count;
+        if (ins != null)
+        {
+            config = ins.config;
+            _count = ins.count;
+        }
+        else
+        {
+            config = _config;
+            _count = c;
+        }
+
         if (gameObject == null )
         {
             Debug.Log("奇怪？？？gameObject 为空");
@@ -525,7 +558,7 @@ public class FightComponet : MonoBehaviour
             Debug.Log("奇怪？？？config 为空");
         }
 
-        if (ownerObject is Player)
+        if (ownerObject is Player && _count == -1)
         {
             var stuff = config.stuffCost.stuffs.ToArray();
             var count = config.stuffCost.values.ToArray();
@@ -552,7 +585,7 @@ public class FightComponet : MonoBehaviour
         }
 
         //扣除消耗
-        if (ownerObject is Player)
+        if (ownerObject is Player && _count == -1)
         {
             //使用技能之后就不符合just的状态了
             GContext.Instance.JustdiscoverMonster = false;
@@ -576,6 +609,11 @@ public class FightComponet : MonoBehaviour
             {
                 player.inventory.ChangeStuffCount(stuff[n], -count[n]);
             }
+        }
+
+        if (_count > 0)
+        {
+            StageUIView.Instance.AddOrganSkillCount(ins.config.id, -1);
         }
 
         StageUIView.Instance.IniMat();
@@ -1272,31 +1310,31 @@ public class FightComponet : MonoBehaviour
         }
     }
 
-    public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)
-    {
-        foreach (var config in configs)
-        {
-            yield return DoActiveSkill(config);
-        }
-    }
+    //public IEnumerator DoActiveSkill(List<ActiveSkillsConfig> configs)
+    //{
+    //    foreach (var config in configs)
+    //    {
+    //        yield return DoActiveSkill(config);
+    //    }
+    //}
 
-    public IEnumerator DoActiveSkill(List<ulong> ids)
-    {
-        foreach (var id in ids)
-        {
-            var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
-            yield return DoActiveSkill(config);
-        }
-    }
+    //public IEnumerator DoActiveSkill(List<ulong> ids)
+    //{
+    //    foreach (var id in ids)
+    //    {
+    //        var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+    //        yield return DoActiveSkill(config);
+    //    }
+    //}
 
-    public IEnumerator DoActiveSkill(ulong[] ids)
-    {
-        foreach (var id in ids)
-        {
-            var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
-            yield return DoActiveSkill(config);
-        }
-    }
+    //public IEnumerator DoActiveSkill(ulong[] ids)
+    //{
+    //    foreach (var id in ids)
+    //    {
+    //        var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+    //        yield return DoActiveSkill(config);
+    //    }
+    //}
 }
 
 

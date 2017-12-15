@@ -206,7 +206,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
                 Debug.Log("主循环等待中......");
                 //如果没有处于自动状态，则等待并处理玩家点击事件
-                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
+                yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<ActiveSkillIns>(SA.PlayerClickActiveSkill);
 
                 Debug.Log("主循执行.....: " + waitMsg.result.msg);
 
@@ -294,7 +294,7 @@ public class StageCore : SingleGameObject<StageCore> {
                                         else
                                         {
                                             //等待玩家点击确认
-                                            yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickSkill);
+                                            yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickActiveSkill);
 
                                             if (waitMsg.result.msg == SA.PlayerClickBrick)
                                             {
@@ -317,13 +317,13 @@ public class StageCore : SingleGameObject<StageCore> {
                                                     goto BrickLogical;
                                                 }
                                             }
-                                            else if (waitMsg.result.msg == SA.PlayerClickSkill)
+                                            else if (waitMsg.result.msg == SA.PlayerClickActiveSkill)
                                             {
                                                 StageView.Instance.CancelPahtNode();
 
-                                                ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
+                                                var ins = (waitMsg.result.para as ActiveSkillIns);
 
-                                                yield return DoPlayerSkill(skill_id);
+                                                yield return DoPlayerSkill(ins);
                                             }
                                         }
                                     }
@@ -337,12 +337,12 @@ public class StageCore : SingleGameObject<StageCore> {
                         }
                     }
                 }
-                else if (waitMsg.result.msg == SA.PlayerClickSkill)
+                else if (waitMsg.result.msg == SA.PlayerClickActiveSkill)
                 {
                     if (!StageCore.Instance.Player.Disarm)
                     {
-                        ulong skill_id = (waitMsg.result.para as ActiveSkillsConfig).id;
-                        yield return DoPlayerSkill(skill_id);
+                        var ins = (waitMsg.result.para as ActiveSkillIns);
+                        yield return DoPlayerSkill(ins);
                         Debug.Log("技能结束, 回到主循环..");
                     }
                 }
@@ -356,12 +356,9 @@ public class StageCore : SingleGameObject<StageCore> {
         }
     }
 
-    IEnumerator DoPlayerSkill(ulong skill_id)
+    IEnumerator DoPlayerSkill(ActiveSkillIns ins)
     {
-
-        Debug.Log("使用技能id: " + skill_id);
-
-        yield return Player.fightComponet.DoActiveSkill(ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_id));
+        yield return Player.fightComponet.DoActiveSkill(ins);
     }
 
     IEnumerator MovePlayer()
@@ -509,7 +506,7 @@ public class StageCore : SingleGameObject<StageCore> {
 public static class SA
 {
     public const string PlayerClickBrick = "PCB";
-    public const string PlayerClickSkill = "PCS";
+    public const string PlayerClickActiveSkill = "PCS";
     public const string RefreshGameItemPos = "RGIP";
     public const string StageTimeCast = "STC";
     public const string MapMoveDown = "MMD";

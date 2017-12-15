@@ -138,46 +138,97 @@ public class StageUIView : MuiSingleBase<StageUIView>
         StartCoroutine(MuiCore.Instance.AddOpen(UiName.strSkillInfoView));
     }
 
-    public void AddSkillIntoSkillList(ulong uid)
+    public void AddChipSkillIntoSkillList(ActiveSkillIns ins)
     {
-#if UNITY_EDITOR
         foreach (var item in skillItemList)
         {
-            if (item.skill_id == uid)
+            if (item.ins.config.id == ins.config.id)
             {
-                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + uid.ToString());
+                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + ins.config.id.ToString());
             }
         }
-#endif
 
-        if (uid > 0 && FightComponet.IdToSkillType(uid) == SkillType.Active)
+
+        if (ins.config.id > 0 && FightComponet.IdToSkillType(ins.config.id) == SkillType.Active)
         {
             ulong _id;
             var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
             list_item.id = _id;
-            list_item.SetInfo(uid);
+            list_item.SetInfo(ins);
             list_item.SetParentAndNormalize(skillListRoot);
             skillItemList.Add(list_item);
         }
     }
 
-    public void AddActiveSkillIntoSkillList(ulong uid, int count)
+    public void AddNewOrganSkillIntoSkillList(ActiveSkillIns ins)
     {
-        ulong _id;
-        var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
-        list_item.id = _id;
-        list_item.SetInfo(uid);
-        list_item.SetParentAndNormalize(skillListRoot);
-        skillItemList.Add(list_item);
+
+        foreach (var item in skillItemList)
+        {
+            if (item.ins.config.id == ins.config.id)
+            {
+                Debug.LogError("青鑫：尝试在技能列表里重复的添加技能: id: " + ins.config.id.ToString());
+            }
+        }
+
+        if (ins.config.id > 0 && FightComponet.IdToSkillType(ins.config.id) == SkillType.Active)
+        {
+            ulong _id;
+            var list_item = ObjPool<SkillListItem>.Instance.GetObjFromPoolWithID(out _id, skillListItemName);
+            list_item.id = _id;
+            list_item.SetInfo(ins);
+            list_item.SetParentAndNormalize(skillListRoot);
+            skillItemList.Add(list_item);
+        }
     }
 
-    public void RemoveSkillFromSkillList(ulong uid)
+    public void AddOrganSkillCount(ulong id, int count)
+    {
+        foreach (var item in skillItemList)
+        {
+            if (item.ins.count > 0)
+            {
+                item.ins.count += count;
+                if (item.ins.count == 0)
+                {
+                    RemoveOrganSkill(id);
+                    StageCore.Instance.Player.fightComponet.RemoveOrganSkill(id);
+                }
+                else
+                {
+                    item.RefreshCount();
+                }
+                return;
+            }
+        }
+
+        Debug.LogError("无法找到对应的organ skill");
+    }
+
+
+    public void RemoveChipSkill(ulong uid)
     {
         if (FightComponet.IdToSkillType(uid) == SkillType.Active)
         {
             for (int i = 0; i < skillItemList.Count; ++i)
             {
-                if (skillItemList[i].skill_id == uid)
+                if (skillItemList[i].ins.config.id == uid && skillItemList[i].ins.count == -1)
+                {
+                    ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
+                    skillItemList.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void RemoveOrganSkill(ulong uid)
+    {
+        if (FightComponet.IdToSkillType(uid) == SkillType.Active)
+        {
+            for (int i = 0; i < skillItemList.Count; ++i)
+            {
+                if (skillItemList[i].ins.config.id == uid && skillItemList[i].ins.count == 0)
                 {
                     ObjPool<SkillListItem>.Instance.RecycleObj(skillListItemName, skillItemList[i].id);
                     skillItemList.RemoveAt(i);

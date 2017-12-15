@@ -10,8 +10,11 @@ public class Inventory {
     [SerializeField]
     List<ChipInventory> chipList = new List<ChipInventory>();
 
+    /// <summary>
+    /// 机关送的技能 这个数组暂时没有 预先放这 可能以后会用
+    /// </summary>
     [SerializeField]
-    List<LimitedSkillIns> skillList = new List<LimitedSkillIns>();
+    List<ActiveSkillIns> skillList = new List<ActiveSkillIns>();
 
     ulong[] ids = new ulong[]{ 1001, 1002, 1003, 1004 };
 
@@ -132,25 +135,35 @@ public class Inventory {
 
     public void AddLimitedSkill(ulong id, int count)
     {
-        foreach(var limitedskill in skillList)
+        for (int i = 0; i < skillList.Count; ++i)
         {
-            if (limitedskill.skillId == id)
+            if (skillList[i].config.id == id)
             {
-                limitedskill.count += count;
-
-                //刷新UI
-                StageUIView.Instance.AddActiveSkillIntoSkillList(id, count);
+                StageUIView.Instance.AddOrganSkillCount(id, count);
                 return;
             }
         }
 
-        var skill = new LimitedSkillIns(id, count);
+
+        var config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+        var skill = new ActiveSkillIns(config, StageCore.Instance.Player, null, count);
+        skill.Active();
         skillList.Add(skill);
+        //刷新UI
+        StageUIView.Instance.AddNewOrganSkillIntoSkillList(skill);
+        //刷新逻辑
+        StageCore.Instance.Player.fightComponet.AddOrganSkill(skill);
     }
 
     public void RemoveLimitedSkil(ulong id)
     {
-
+        for (int i = 0; i < skillList.Count; ++i)
+        {
+            if (skillList[i].config.id == id)
+            {
+                skillList.RemoveAt(i);
+            }
+        }
     }
 }
 

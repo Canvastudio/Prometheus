@@ -13,8 +13,10 @@ public class SkillListItem : DragableScrollItem
     [SerializeField]
     Text skillName;
     public ulong id;
+    [SerializeField]
+    Text count;
 
-    public ulong skill_id;
+    public ActiveSkillIns ins;
 
     private void Awake()
     {
@@ -28,13 +30,14 @@ public class SkillListItem : DragableScrollItem
         HudEvent.Get(button.gameObject).onLongPressRelease = OnLongPressRelease;
     }
 
-    public void SetInfo(ulong id, int count = 0)
+    public void SetInfo(ActiveSkillIns ins)
     {
         gameObject.SetActive(true);
-        skill_id = id;
-        config = ActiveSkillsConfig.GetConfigDataById<ActiveSkillsConfig>(id);
+        this.ins = ins;
+        config = ins.config;
         icon.SetSkillIcon(config.icon);
         skillName.text = config.name;
+        RefreshCount();
     }
 
     public void OnLongPress()
@@ -49,6 +52,21 @@ public class SkillListItem : DragableScrollItem
 
     public void OnClick()
     {
-        Messenger<ActiveSkillsConfig>.Invoke(SA.PlayerClickSkill, config);
+        Messenger<ActiveSkillIns>.Invoke(SA.PlayerClickActiveSkill, ins);
+    }
+    
+    public void RefreshCount()
+    {
+        if (ins.count > 0)
+        {
+            count.text = ins.count.ToString();
+            count.gameObject.SetActive(true);
+        }
+        else
+        {
+            count.gameObject.SetActive(false);
+        }
     }
 }
+
+

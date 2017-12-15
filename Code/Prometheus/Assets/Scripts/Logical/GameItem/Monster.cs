@@ -232,7 +232,7 @@ public class Monster : LiveItem
             {
                 Debug.Log("被发现时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
                 ActiveSkillsConfig config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_list[0]);
-                StartCoroutine(fightComponet.DoActiveSkill(config));
+                StartCoroutine(fightComponet.DoActiveSkill(null, config));
             }
         }
     }
@@ -295,7 +295,7 @@ public class Monster : LiveItem
             {
                 Debug.Log("死亡时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
                 ActiveSkillsConfig config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_list[0]);
-                yield return (fightComponet.DoActiveSkill(config));
+                yield return (fightComponet.DoActiveSkill(null, config));
             }
         }
 

@@ -107,7 +107,7 @@ public class MonsterFightComponet : FightComponet {
         {
             if(!one_ready && ins.OnTimeCast(time))
             {
-                StartCoroutine(DoActiveSkill(ins.config));
+                StartCoroutine(DoActiveSkill(ins));
                 ins.time = StageCore.Instance.totalTime;
             }
         }

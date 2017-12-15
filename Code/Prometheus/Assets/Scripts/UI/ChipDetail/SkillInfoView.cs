@@ -55,7 +55,7 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
                 var item = ObjPool<SkillItem>.Instance.GetObjFromPool(pname);
                 item.SetParentAndNormalize(contentRoot);
                 item.gameObject.SetActive(true);
-                //item.ShowSkillInfo(ins);
+                item.ShowSkillInfo(ins);
             }
 
         }
@@ -83,7 +83,7 @@ public class SkillInfoView : MuiSingleBase<SkillInfoView> {
 
     public override IEnumerator Open(object param)
     {
-        ObjPool<SkillDetailItem>.Instance.RecyclePool(pname);
+        ObjPool<SkillItem>.Instance.RecyclePool(pname);
         gameObject.SetActive(true);
         ShowAcitveList();
         return null;
