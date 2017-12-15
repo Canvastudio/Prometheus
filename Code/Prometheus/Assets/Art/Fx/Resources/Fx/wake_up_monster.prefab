@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 199877279179910818}
   - component: {fileID: 114926149430606720}
   - component: {fileID: 114873313408082054}
+  - component: {fileID: 114251028345245884}
   m_Layer: 0
   m_Name: wake_up_monster
   m_TagString: Untagged
@@ -74,6 +75,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114251028345245884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1565163042256730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe311c4e5dc98459aad15b583cc72085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: event:/Skill/
+  event_name: event:/Skill/wake_up_monster
+  stop_parameter: 
 --- !u!114 &114873313408082054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,7 +188,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1608531804
+  randomSeed: 1066770034
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3538,7 +3553,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1966482267
+  randomSeed: 1140552448
   InitialModule:
     serializedVersion: 3
     enabled: 1
