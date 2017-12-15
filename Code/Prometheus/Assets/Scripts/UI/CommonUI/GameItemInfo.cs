@@ -36,4 +36,12 @@ public class GameItemInfo : MonoBehaviour {
         itemName.text = config.name;
         itemDescribe.text = config.describe;
     }
+
+    public void ShowOrganInfo(OrganBase organ)
+    {
+        var config = organ.baseConfig;
+        itemIcon.SetStageItemIcon(config.prefab);
+        itemName.text = config.name;
+        itemDescribe.text = config.describe;
+    }
 }

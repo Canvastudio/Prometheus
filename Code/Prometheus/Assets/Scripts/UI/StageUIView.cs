@@ -54,6 +54,11 @@ public class StageUIView : MuiSingleBase<StageUIView>
             itemInfo.ShowTreasureInfo(brick.item as Treasure);
             itemInfo.gameObject.SetActive(true);
         }
+        else if (brick.realBrickType == BrickType.Organ || brick.realBrickType == BrickType.OrganProperty)
+        {
+            itemInfo.ShowOrganInfo(brick.item as OrganBase);
+            itemInfo.gameObject.SetActive(true);
+        }
     }
 
     private void OnApplicationFocus(bool focus)

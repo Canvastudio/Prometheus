@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public abstract class OrganBase : GameItemBase {
 
+    public OperateConfig baseConfig;
+
     private void Awake()
     {
         brickBtn = transform.GetChild(0).GetComponent<Button>();

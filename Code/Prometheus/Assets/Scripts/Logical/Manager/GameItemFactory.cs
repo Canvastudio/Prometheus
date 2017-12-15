@@ -212,7 +212,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         item.standBrick.brickType = BrickType.MONSTER;
 
 #if UNITY_EDITOR
-        item.name += "_" + config.m_name;
+        item.name = config.m_name + "_" + tid;
 #endif
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {
@@ -512,6 +512,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 organ.standBrick = bornBrick;
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = organ;
+                organ.baseConfig = config;
                 break;
             case Operate.Radar:
                 var rader = go.AddComponent<RadarOrgan>();
@@ -521,6 +522,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 rader.standBrick = bornBrick;
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = rader;
+                rader.baseConfig = config;
                 break;
             case Operate.Property:
                 var property = go.AddComponent<PropertyOrgan>();
@@ -528,6 +530,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 property.standBrick = bornBrick;
                 bornBrick.brickType = BrickType.OrganProperty;
                 bornBrick.item = property;
+                property.baseConfig = config;
                 break;
             case Operate.AddSkill:
                 var add = go.AddComponent<AddSkillOrgan>();
@@ -538,6 +541,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 add.standBrick = bornBrick;
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = add;
+                add.baseConfig = config;
                 break;
             case Operate.SummonSkill:
                 var summon = go.AddComponent<SummonOrgan>();
@@ -545,6 +549,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 summon.standBrick = bornBrick;
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = summon;
+                summon.baseConfig = config;
                 break;
             case Operate.Kelid:
 
