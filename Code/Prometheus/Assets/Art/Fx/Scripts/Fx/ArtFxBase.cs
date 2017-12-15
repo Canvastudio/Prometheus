@@ -81,7 +81,12 @@ public class ArtFxBase : MonoBehaviour {
 			OnEnd();
 		else
 			UpdatePos();
+
+		UpLogic();
 	
+	}
+
+	public virtual void UpLogic() {
 	}
 
 	public virtual void UpdatePos() {
@@ -123,6 +128,16 @@ public class ArtFxBase : MonoBehaviour {
 
 		}
 
+	}
+
+	public virtual void SetPos(Vector3 pos) {
+	
+		transform.position = pos;
+
+	}
+
+	public virtual void Show(Vector3 pos, int count) {
+		transform.position = pos;
 	}
 
 	#endregion

@@ -38,8 +38,23 @@ public class ArtSkill {
 
 	public static IEnumerator DoSkillIE(string name, Transform tranStart, Transform tranEnd, Callback _callback = null) {
 
+		if(name.Trim().Length <= 0) {
+			
+			if(_callback != null) _callback();
+			yield return true;
+
+		}
+
 		GameObject objskill = FxPool.Get(FxEnum.Skill, name);
 		ArtEventFlow eventFlow = objskill.GetComponent<ArtEventFlow>();
+
+		if(eventFlow == null) {
+		
+			if(_callback != null) _callback();
+			yield return true;	
+
+		}
+
 		eventFlow.Init(tranStart, tranEnd, _callback);
 
 		while(true) {
@@ -54,13 +69,28 @@ public class ArtSkill {
 
 	}
 
+	public static ArtFxBase ShowDrop(string name, Vector3 pos, int count) {
+		
+		ArtFxBase fx =  Show(name, pos);
+
+		if (fx != null)
+			fx.Show(pos, count);
+
+		return fx;	
+
+	}
+
 	public static ArtFxBase Show(string name, Vector3 pos) {
 
 		GameObject objskill = FxPool.Get(FxEnum.Fx, name);
 
-		objskill.transform.position = pos;
+//		objskill.transform.position = pos;
 
-		return objskill.GetComponent<ArtFxBase>();
+		ArtFxBase artFxBase = objskill.GetComponent<ArtFxBase>();
+
+		artFxBase.SetPos(pos);
+
+		return artFxBase;
 
 	}
 

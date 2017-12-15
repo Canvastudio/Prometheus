@@ -59,6 +59,14 @@ public class ArtTestSkill : MonoBehaviour {
 //		
 //		}
 
+		if(Input.GetKeyDown(KeyCode.D)) {
+		
+			ArtSkill.ShowDrop("pick_money_0", tranlist[1].position, Random.Range(5, 40));
+
+			return;
+
+		}
+
 		if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
 		
 			int number = 0;
