@@ -38,10 +38,11 @@ public class ArtSkill {
 
 	public static IEnumerator DoSkillIE(string name, Transform tranStart, Transform tranEnd, Callback _callback = null) {
 
-		if (name == null) {
+		if (string.IsNullOrEmpty(name)) {
 		
 			if(_callback != null) _callback();
-			yield return true;	
+			yield return true;
+			yield break;
 
 		}
 
@@ -49,6 +50,7 @@ public class ArtSkill {
 			
 			if(_callback != null) _callback();
 			yield return true;
+			yield break;
 
 		}
 
@@ -58,7 +60,8 @@ public class ArtSkill {
 		if(eventFlow == null) {
 		
 			if(_callback != null) _callback();
-			yield return true;	
+			yield return true;
+			yield break;
 
 		}
 
