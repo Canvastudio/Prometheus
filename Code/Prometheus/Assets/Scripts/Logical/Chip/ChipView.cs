@@ -88,7 +88,18 @@ public class ChipView : MuiSingleBase<ChipView> {
     public Sprite negativeSprite;
 
     [Space(5)]
-    public ChipBoardInstance selectChip;
+    private ChipBoardInstance _selectChip;
+    public ChipBoardInstance selectChip
+    {
+        set
+        {
+            _selectChip = value;
+        }
+        get 
+        {
+            return _selectChip;
+        }
+    }
 
     int midRowNum;
     int midColNum;
