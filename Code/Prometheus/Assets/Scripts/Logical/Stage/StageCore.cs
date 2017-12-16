@@ -383,6 +383,7 @@ public class StageCore : SingleGameObject<StageCore> {
     }
 
     WaitForSeconds w02s = new WaitForSeconds(.2f);
+    WaitForSeconds w05s = new WaitForSeconds(.5f);
 
     IEnumerator PlayerMeleeAction(Brick brick1)
     {
@@ -451,6 +452,11 @@ public class StageCore : SingleGameObject<StageCore> {
         }
 
         GContext.Instance.JustdiscoverMonster = false;
+
+        if (!monster.isAlive)
+        {
+            yield return w05s;
+        }
     }
 
     public IEnumerator StopLoop()
