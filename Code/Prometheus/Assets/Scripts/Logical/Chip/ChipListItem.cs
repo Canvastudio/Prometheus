@@ -18,7 +18,6 @@ public class ChipListItem : DragableScrollItem {
     public ChipBoardInstance boardInstance;
     public ChipInventory chipInventory;
 
-
     private void Awake()
     {
         HudEvent.Get(button).onClick = OnClick;

@@ -191,7 +191,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     public void RefreshChipList()
     {
         ulong id;
-
+        chipListItems.Clear();
         ObjPool<ChipListItem>.Instance.RecyclePool(itemName);
 
         var chipList = StageCore.Instance.Player.inventory.GetUnusedChipList();
@@ -204,8 +204,11 @@ public class ChipView : MuiSingleBase<ChipView> {
             chip.gameObject.SetActive(true);
             chip.id = id;
             chip.ShowChip(chipList[i]);
+            chipListItems.Add(chip);
         }
     }
+
+    List<ChipListItem> chipListItems = new List<ChipListItem>();
 
     public void CloseChipBoard()
     {
@@ -232,13 +235,16 @@ public class ChipView : MuiSingleBase<ChipView> {
                 }
             }
 
-            for (int i = 0; i < listInstance.Count; ++i)
-            {
-                if (listInstance[i].uid == selectChip.uid)
-                {
-                    listInstance.RemoveAt(i);
-                }
-            }
+            ulong id;
+            var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
+            chip.transform.SetParent(chipListRoot);
+            chip.transform.localScale = Vector3.one;
+            chip.gameObject.SetActive(true);
+            chip.id = id;
+            chip.ShowChip(selectChip.chipInventory);
+            chipListItems.Add(chip);
+
+            selectChip = null;
         }
     }
 
