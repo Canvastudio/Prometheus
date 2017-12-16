@@ -441,6 +441,8 @@ public abstract class LiveItem : GameItemBase
                 }
             }
 
+            transform.SetAsLastSibling();
+
             yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
 
             if (this is Player)
