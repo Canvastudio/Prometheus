@@ -80,7 +80,7 @@ public class ArtFxDrop : ArtFxBase {
 			//particlChilds[i].size = Vector3.Lerp(particlChilds[i].size, finalSize, Time.deltaTime * randomlist[i]);
 
 			if(Vector3.Distance(particlChilds[i].position, dropPos) < 0.1f) {
-				particlChilds[i].lifetime = 0;
+				particlChilds[i].remainingLifetime = 0;
 				ishit = true;
 				particleHit.Emit(1);
 			}	
