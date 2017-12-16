@@ -12,4 +12,6 @@ public class ArtEvent  {
 
 	public bool ishitevent = false;
 
+	public bool isAttackAnim = false;
+
 }

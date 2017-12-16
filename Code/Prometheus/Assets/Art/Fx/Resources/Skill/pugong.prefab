@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4410692178409862}
   - component: {fileID: 114211259732506808}
+  - component: {fileID: 95627659110057276}
+  - component: {fileID: 114419300061048190}
   m_Layer: 0
   m_Name: pugong
   m_TagString: Untagged
@@ -40,6 +42,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95627659110057276
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1616469819961736}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 23b38eb35e1704054b88b60a9273503c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114211259732506808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,12 +71,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventlist:
-  - time: 0
+  - time: 0.25
     fxname: pugong_hit
     ishit: 1
     isendpos: 1
     ishitevent: 0
+    isAttackAnim: 0
   destroy_time: 2
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
   ishit: 0
+--- !u!114 &114419300061048190
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1616469819961736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796d9ddc1f4bb41e7a489c37514c9572, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 95627659110057276}
+  anim_name: anim_pugong
+  tranAnim: {fileID: 0}
+  driction: {x: 0, y: 0, z: 0}
+  orignalPos: {x: 0, y: 0, z: 0}
+  t_a: {fileID: 0}
+  t_b: {fileID: 0}

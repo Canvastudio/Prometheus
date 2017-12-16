@@ -115,6 +115,13 @@ public class ArtSkill {
 	
 	}
 
+	public static void DoNormalAtk(string name, Transform tranStart, Transform tranEnd) {
+
+		GameObject objskill = FxPool.Get(FxEnum.Skill, name);
+		ArtEventFlow eventFlow = objskill.GetComponent<ArtEventFlow>();
+		eventFlow.Init(tranStart, tranEnd, null);	
+
+	}
 
 
 }

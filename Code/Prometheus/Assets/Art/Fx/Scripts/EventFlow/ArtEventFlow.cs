@@ -91,6 +91,9 @@ public class ArtEventFlow : MonoBehaviour {
 
 		}
 
+		if(cur_event.isAttackAnim)
+			this.GetComponent<ArtNormalAttack>().DoAttack(tran_start, tran_end);
+
 
 		if (cur_event.ishitevent)
 			OnCall();
