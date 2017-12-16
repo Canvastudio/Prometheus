@@ -47,4 +47,8 @@ public class ArtNormalAttack : MonoBehaviour {
 
 	}
 
+	void OnDisable() {
+		tranAnim = null;
+	}
+
 }
