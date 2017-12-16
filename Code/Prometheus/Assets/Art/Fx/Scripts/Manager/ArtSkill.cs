@@ -38,6 +38,13 @@ public class ArtSkill {
 
 	public static IEnumerator DoSkillIE(string name, Transform tranStart, Transform tranEnd, Callback _callback = null) {
 
+		if (name == null) {
+		
+			if(_callback != null) _callback();
+			yield return true;	
+
+		}
+
 		if(name.Trim().Length <= 0) {
 			
 			if(_callback != null) _callback();
