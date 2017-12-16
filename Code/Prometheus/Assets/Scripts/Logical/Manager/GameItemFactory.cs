@@ -449,7 +449,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         item.transform.position = bornBrick.transform.position;
         item.itemId = tid;
-        item.transform.SetParentAndNormalize(StageView.Instance.uper);
+        item.transform.SetParentAndNormalize(StageView.Instance.cover);
         item.transform.SetAsFirstSibling();
         item.transform.position = bornBrick.transform.position;
         item.standBrick = bornBrick;
