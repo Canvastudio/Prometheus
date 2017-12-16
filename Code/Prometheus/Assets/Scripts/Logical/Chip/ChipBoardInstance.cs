@@ -85,6 +85,7 @@ public class ChipBoardInstance : BoardInstanceBase , IDragHandler, IBeginDragHan
 
     private void OnLongPress()
     {
+        Debug.Log("selectChip: " + gameObject.name);
         ChipView.Instance.selectChip = this;
     }
 

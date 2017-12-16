@@ -440,7 +440,9 @@ public abstract class LiveItem : GameItemBase
                     }
                 }
             }
-            
+
+            yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
+
             if (this is Player)
             {
                 ArtSkill.Show(StageView.Instance.strPugong1, target.transform.position);

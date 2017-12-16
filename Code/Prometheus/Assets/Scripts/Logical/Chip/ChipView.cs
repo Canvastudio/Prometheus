@@ -53,8 +53,6 @@ public class ChipView : MuiSingleBase<ChipView> {
     GameObject backgroud;
 
     [SerializeField]
-    public SpriteAtlas spriteAtlas;
-    [SerializeField]
     Button closeBtn;
     [SerializeField]
     Button deleteBtn;
@@ -62,6 +60,8 @@ public class ChipView : MuiSingleBase<ChipView> {
     Button detailButton;
     [SerializeField]
     Button bottomButton;
+    [SerializeField]
+    Image arrow;
 
     float itemWidth = 50f;
     int bottomState = 0;
@@ -690,7 +690,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     private bool ChipSquarePutable(int r, int c)
     {
         //保证目标sqaure的索引在正确的范围
-        if (r < r1 || r > r2 || c < 0 || c > r2) return false;
+        if (r < r1 || r > r2 || c < c1 || c > c2) return false;
 
         bool putable = chipSquareArray[r, c].state == ChipSquareState.Free
             && chipSquareArray[r, c].chipGrid != ChipGrid.None
@@ -1068,6 +1068,8 @@ public class ChipView : MuiSingleBase<ChipView> {
             bottomRect.anchoredPosition = new Vector2(0, -30);
             bottomState = 0;
         }
+
+        arrow.transform.localScale = new Vector3(1, arrow.transform.localScale.y * -1f, 1);
     }
 
     int radius = 0;

@@ -4660,11 +4660,11 @@ MonoBehaviour:
   chipInstanceRoot: {fileID: 224489089610712080}
   bottomRect: {fileID: 224446924024352738}
   backgroud: {fileID: 1026183545271730}
-  spriteAtlas: {fileID: 0}
   closeBtn: {fileID: 114765529605048170}
   deleteBtn: {fileID: 114002087949836742}
   detailButton: {fileID: 114290822583238794}
   bottomButton: {fileID: 114872812651049434}
+  arrow: {fileID: 114472104833043346}
   camera: {fileID: 0}
   powerGridArray:
   - {fileID: 0}
@@ -6857,7 +6857,7 @@ RectTransform:
   - {fileID: 224761400262422304}
   - {fileID: 224610960628310400}
   m_Father: {fileID: 224507471541501922}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6927,8 +6927,8 @@ RectTransform:
   - {fileID: 224547694649447068}
   - {fileID: 224799806866375642}
   - {fileID: 224104134840734684}
-  - {fileID: 224489089610712080}
   - {fileID: 224516564218932496}
+  - {fileID: 224489089610712080}
   - {fileID: 224799100626970984}
   - {fileID: 224446924024352738}
   - {fileID: 224380064902325520}
@@ -6990,7 +6990,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224507471541501922}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
