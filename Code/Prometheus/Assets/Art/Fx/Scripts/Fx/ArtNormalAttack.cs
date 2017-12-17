@@ -18,6 +18,8 @@ public class ArtNormalAttack : MonoBehaviour {
 	public Transform t_a;
 	public Transform t_b;
 
+	public float timer = 0;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -31,6 +33,8 @@ public class ArtNormalAttack : MonoBehaviour {
 		if(tranAnim != null) {
 			tranAnim.localPosition = orignalPos + driction * this.transform.position.x;
 			tranAnim.localScale = this.transform.localScale;
+
+			timer += Time.deltaTime;
 		}
 		
 	}
@@ -45,10 +49,17 @@ public class ArtNormalAttack : MonoBehaviour {
 
 		orignalPos = tranA.localPosition;
 
+		timer = 0;
+
 	}
 
 	void OnDisable() {
+		
+		tranAnim.localPosition = orignalPos;
+		tranAnim.localScale = Vector3.one;
 		tranAnim = null;
+
+		Debug.Log(message: "#########################total time:" + timer);
 	}
 
 }

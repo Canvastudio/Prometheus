@@ -24,6 +24,8 @@ public class ArtEventFlow : MonoBehaviour {
 
 	public bool ishit = false;
 
+	public bool isend = false;
+
 	public void Init(Vector3 _start_pos, Vector3 _end_pos, Callback _callback){
 
 		ishit = false;
@@ -53,6 +55,8 @@ public class ArtEventFlow : MonoBehaviour {
 		tran_start.SetPos(ref start_pos);
 		tran_end.SetPos(ref end_pos);
 		callback = _callback;
+
+		isend = false;
 	
 	}
 
@@ -94,6 +98,8 @@ public class ArtEventFlow : MonoBehaviour {
 		if(cur_event.isAttackAnim)
 			this.GetComponent<ArtNormalAttack>().DoAttack(tran_start, tran_end);
 
+		if(cur_event.isLogicEnd)
+			isend = true;
 
 		if (cur_event.ishitevent)
 			OnCall();
@@ -112,7 +118,7 @@ public class ArtEventFlow : MonoBehaviour {
 
 	void OnEnd() {
 	
-		ishit = true;
+		isend = true;
 		FxPool.Recover(this.gameObject);
 	
 	}
@@ -120,7 +126,14 @@ public class ArtEventFlow : MonoBehaviour {
 	public void CallHit() {
 
 		ishit = true;
+		
 	
+	}
+
+	public void OnLogicEnd() {
+	
+		isend = true;	
+
 	}
 
 }

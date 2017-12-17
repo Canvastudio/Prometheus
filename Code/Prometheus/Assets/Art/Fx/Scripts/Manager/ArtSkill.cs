@@ -26,7 +26,7 @@ public class ArtSkill {
 
 		while(true) {
 
-			if (eventFlow.ishit) {
+			if (eventFlow.isend) {
 				yield return true;
 				Debug.Log(objskill.name + "____finished");
 				break;
@@ -41,7 +41,6 @@ public class ArtSkill {
 		if (string.IsNullOrEmpty(name)) {
 		
 			if(_callback != null) _callback();
-			yield return true;
 			yield break;
 
 		}
@@ -49,7 +48,6 @@ public class ArtSkill {
 		if(name.Trim().Length <= 0) {
 			
 			if(_callback != null) _callback();
-			yield return true;
 			yield break;
 
 		}
@@ -60,7 +58,6 @@ public class ArtSkill {
 		if(eventFlow == null) {
 		
 			if(_callback != null) _callback();
-			yield return true;
 			yield break;
 
 		}
@@ -69,12 +66,11 @@ public class ArtSkill {
 
 		while(true) {
 
-			if (eventFlow.ishit) {
-				yield return true;
-				//Debug.Log(objskill.name + "____finished");
-				break;
+			if (eventFlow.isend) {
+				//Debug.Log("art logic end." + Time.time);
+				yield break;
 			} else
-				yield return null;
+				yield return true;
 		}
 
 	}

@@ -71,16 +71,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventlist:
-  - time: 0.25
+  - time: 0.15
     fxname: pugong_hit
     ishit: 1
     isendpos: 1
     ishitevent: 0
     isAttackAnim: 1
-  destroy_time: 2
+    isLogicEnd: 0
+  - time: 0.15
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 1
+  destroy_time: 0.5
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
   ishit: 0
+  isend: 0
 --- !u!114 &114419300061048190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,3 +108,4 @@ MonoBehaviour:
   orignalPos: {x: 0, y: 0, z: 0}
   t_a: {fileID: 0}
   t_b: {fileID: 0}
+  timer: 0

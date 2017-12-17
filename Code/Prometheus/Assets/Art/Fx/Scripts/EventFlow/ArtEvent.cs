@@ -14,4 +14,6 @@ public class ArtEvent  {
 
 	public bool isAttackAnim = false;
 
+	public bool isLogicEnd = false;
+
 }

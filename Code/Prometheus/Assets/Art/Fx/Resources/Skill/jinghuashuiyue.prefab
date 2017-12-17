@@ -56,5 +56,11 @@ MonoBehaviour:
     fxname: jinghuashuiyue_hit
     ishit: 1
     isendpos: 0
-  destroy_time: 10
+    ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 0
+  destroy_time: 5
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
   ishit: 0
+  isend: 0
