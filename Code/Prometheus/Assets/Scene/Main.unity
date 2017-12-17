@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3594,10 +3594,7 @@ MonoBehaviour:
   infoDetail: 1
   noMonster: 0
   ignoreChipColor: 0
-  AddChips:
-  - 100001
-  - 100001
-  - 100226
+  AddChips: []
   Add_4_Stuff: 32000000320000003200000032000000
   AddSkills: 
 --- !u!4 &13273353
@@ -3810,7 +3807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preloadAtlas:
-  - {fileID: 4343727234628468602, guid: 0ef5bed6d444cb04d8eb274fd0a8aa9c, type: 2}
+  - {fileID: 0}
   - {fileID: 4343727234628468602, guid: 6b664d09334c3486a8da8835171a01d5, type: 2}
   - {fileID: 4343727234628468602, guid: 7217c79fdbc3c4013ab9d93492900184, type: 2}
   - {fileID: 4343727234628468602, guid: 33a7d969eeb19f24ea1709079377d3a3, type: 2}
@@ -8319,7 +8316,7 @@ RectTransform:
   m_GameObject: {fileID: 1683894738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.010005001, y: 0.010005001, z: 0.010005001}
   m_Children:
   - {fileID: 217473892}
   m_Father: {fileID: 0}
