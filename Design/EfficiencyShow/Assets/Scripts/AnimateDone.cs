@@ -33,4 +33,9 @@ public class AnimateDone : MonoBehaviour
     {
         SendMessageUpwards("_VffaMin");
     }
+
+    public void DestroyFather()
+    {
+        GameObject.Destroy(transform.parent.gameObject);
+    }
 }

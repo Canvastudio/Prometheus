@@ -24,6 +24,7 @@ public class Main : SingleGameObject<Main>
         mb.AddListener("状态气泡", On_气泡);
         mb.AddListener("浮动文字", On_浮动文字);
         mb.AddListener("复活石碑", On_复活石碑);
+        mb.AddListener("近战演示", On_近战演示);
     }
 
     private IEnumerator Check()
@@ -98,6 +99,18 @@ public class Main : SingleGameObject<Main>
         });
 
     }
+
+
+    private void On_近战演示(object arg)
+    {
+        if (!ClickLimit.AlowClick) return;
+        var t = SuperResource.Instance.GetInstance("近战演示");
+        SuperTool.SetParentWithLocal(stage.transform, t.transform);
+
+    }
+    
+
+
 
     private void Resu(object arg)
     {
