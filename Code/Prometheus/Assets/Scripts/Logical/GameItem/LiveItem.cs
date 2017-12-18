@@ -494,7 +494,7 @@ public abstract class LiveItem : GameItemBase
             }
         }
 
-        if (cur_hp != 0)
+        if (cur_hp > 0)
         {
             cur_hp = cur_hp - damageInfo.damage;
 

@@ -10,6 +10,7 @@ public class GCamera : SingleGameObject<GCamera> {
     public bool sliding = false;
     public float rate;
     public float distance;
+    public float total = 0;
     public void InitData()
     {
         rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
@@ -29,6 +30,15 @@ public class GCamera : SingleGameObject<GCamera> {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + d, transform.localPosition.z);
             distance -= d;
             distance = Mathf.Max(0, distance);
+
+            total += d;
+
+            if (total > 1.2f)
+            {
+                Messenger.Invoke(SA.CamerMove);
+                total -= 1.2f;
+            }
+
         }
         else
         {
@@ -50,6 +60,12 @@ public class GCamera : SingleGameObject<GCamera> {
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), 0.07f);
                 distance -= d;
                 distance = Mathf.Max(0, distance);
+
+                if (total > 1.2f)
+                {
+                    Messenger.Invoke(SA.CamerMove);
+                    total -= 1.2f;
+                }
             }
         }
     }

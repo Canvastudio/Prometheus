@@ -20,4 +20,11 @@ public abstract class OrganBase : GameItemBase {
         standBrick.item = null;
         GameObject.Destroy(this.gameObject);
     }
+
+    protected override void OnExitFromArea()
+    {
+        base.OnExitFromArea();
+
+        Clean();
+    }
 }

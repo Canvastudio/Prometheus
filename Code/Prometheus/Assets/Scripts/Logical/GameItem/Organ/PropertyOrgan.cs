@@ -17,6 +17,7 @@ public class PropertyOrgan : OrganBase {
             GameProperty property = (GameProperty)(f[0]);
             StageCore.Instance.Player.Property.SetFloatProperty(property, value);
         }
+
         Clean();
     }               
 }

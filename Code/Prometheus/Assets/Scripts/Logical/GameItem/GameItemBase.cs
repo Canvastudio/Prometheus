@@ -199,13 +199,13 @@ public class GameItemBase : MonoBehaviour, ITagable {
     public virtual void ListenInit()
     {
         Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.AddListener(SA.PlayerMoveEnd, PlayerMoveEnd);
+        Messenger.AddListener(SA.CamerMove, PlayerMoveEnd);
     }
 
     private void RemoveLister()
     {
         Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.RemoveListener(SA.PlayerMoveEnd, PlayerMoveEnd);
+        Messenger.RemoveListener(SA.CamerMove, PlayerMoveEnd);
     }
 
     public void RefreshPosistion()

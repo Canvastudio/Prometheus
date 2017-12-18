@@ -601,6 +601,7 @@ public class FightComponet : MonoBehaviour
                 if (player.inventory.GetStuffCount(stuff[n]) < count[n])
                 {
                     PopTipView.Instance.Show("deficient_resources");
+                    ownerObject.OnActionEnd();
                     yield break;
                 }
             }
@@ -661,9 +662,12 @@ public class FightComponet : MonoBehaviour
         bool successEffect = true;
 
 
+ 
 
         for (int i = 0; i < apply_list.Count; ++i)
         {
+            Debug.Log("Skill Target: " + apply_list[i].name);
+
             if (config.successRate != null)
             {
                 float r = 0;
@@ -674,7 +678,13 @@ public class FightComponet : MonoBehaviour
                 }
                 else if (apply_list[i] is Monster)
                 {
+                    if ((apply_list[i] as Monster).isDiscovered == false)
+                    {
+                        Debug.LogError("技能对象是一个没有被发现的怪物??");
+                    }
+
                     r = successArray[(apply_list[i] as Monster).pwr];
+
                 }
                 else
                 {

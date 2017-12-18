@@ -533,6 +533,8 @@ public static class SA
 
     public const string GameStart = "GST";
     public const string GameEnd = "GSE";
+
+    public const string CamerMove = "CME";
 }
 
 public static class ST
