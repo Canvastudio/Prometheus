@@ -9,17 +9,17 @@ public class DragableScrollItem : MonoBehaviour , IBeginDragHandler, IEndDragHan
     [SerializeField]
     ScrollRect scroll;
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         scroll.OnBeginDrag(eventData);
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         scroll.OnDrag(eventData);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         scroll.OnEndDrag(eventData);
     }

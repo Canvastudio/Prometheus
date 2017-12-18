@@ -224,13 +224,16 @@ public class ChipView : MuiSingleBase<ChipView> {
             int row = selectChip.row;
             int col = selectChip.col;
 
-            for (int r = -1; r <= 1; ++r)
+            if (row != int.MinValue && col != int.MinValue)
             {
-                for (int c = -1; c <= 1; ++c)
+                for (int r = -1; r <= 1; ++r)
                 {
-                    if (selectChip.chipInventory.model[(r + 1) * 3 + c + 1] > 0)
+                    for (int c = -1; c <= 1; ++c)
                     {
-                        chipSquareArray[row + r, col + c].state = ChipSquareState.Free;
+                        if (selectChip.chipInventory.model[(r + 1) * 3 + c + 1] > 0)
+                        {
+                            chipSquareArray[row + r, col + c].state = ChipSquareState.Free;
+                        }
                     }
                 }
             }
@@ -323,6 +326,21 @@ public class ChipView : MuiSingleBase<ChipView> {
                 StageCore.Instance.Player.Property.AddFloatProperty(property, value * change_power);
             }
         }
+    }
+
+    public ChipBoardInstance CreateBoardInstanceDraging(ChipInventory item)
+    {
+        ulong id;
+
+        var instance = ObjPool<ChipBoardInstance>.Instance.GetObjFromPoolWithID(out id, instanceName);
+        instance.transform.SetParent(chipInstanceRoot);
+        instance.transform.localScale = Vector3.one;
+        instance.gameObject.SetActive(true);
+        instance.uid = id;
+
+        instance.Init(item);
+
+        return instance;
     }
 
     public ChipBoardInstance CreateBoardInstance(ChipInventory item)

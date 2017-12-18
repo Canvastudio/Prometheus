@@ -18,6 +18,8 @@ public class ChipListItem : DragableScrollItem {
     public ChipBoardInstance boardInstance;
     public ChipInventory chipInventory;
 
+    bool isChipDraging = false;
+    Vector2 dragPath;
     private void Awake()
     {
         HudEvent.Get(button).onClick = OnClick;
@@ -28,6 +30,7 @@ public class ChipListItem : DragableScrollItem {
     {
 
     }
+
 
     public void ShowChip(ChipInventory chip)
     {
@@ -52,6 +55,62 @@ public class ChipListItem : DragableScrollItem {
         if (boardInstance != null)
         {
             ObjPool<ChipListItem>.Instance.RecycleObj(ChipView.Instance.itemName, id);
+        }
+    }
+
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        base.OnBeginDrag(eventData);
+    }
+
+    public override void OnDrag(PointerEventData eventData)
+    {
+        if (!isChipDraging)
+        {
+            base.OnDrag(eventData);
+        }
+
+        dragPath += eventData.delta;
+
+        if (boardInstance == null)
+        {
+            if (dragPath.y > 100)
+            {
+                isChipDraging = true;
+
+                boardInstance = ChipView.Instance.CreateBoardInstanceDraging(chipInventory);
+                ChipView.Instance.selectChip = boardInstance;
+            }
+        }
+
+        if (boardInstance != null)
+        {
+            Vector2 lp;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle
+                                                    (boardInstance.transform.parent.Rt(),
+                                                    eventData.position,
+                                                    GameManager.Instance.GCamera, out lp);
+
+            boardInstance.transform.localPosition = lp;
+        }
+    }
+
+    public override void OnEndDrag(PointerEventData eventData)
+    {
+        base.OnEndDrag(eventData);
+
+        isChipDraging = false;
+
+        if (boardInstance != null)
+        {
+            if (!ChipView.Instance.MatrixDragPut(boardInstance))
+            {
+                boardInstance = null;
+            }
+            else
+            {
+                ObjPool<ChipListItem>.Instance.RecycleObj(ChipView.Instance.itemName, id);
+            }
         }
     }
 }
