@@ -12,16 +12,13 @@ public class Treasure : GameItemBase, IReactive {
 
     public void Reactive()
     {
-        Debug.Log("TODO: 开宝箱获得材料！");
+
 
         standBrick.brickType = BrickType.EMPTY;
-
-        var nums = drop_desc.ToArray(0);
-        int i = Random.Range(0, nums.Length);
-        int num = int.Parse(nums[i]);//次数
         int wi = SuperTool.CreateWeightSection(drop_desc.ToList(1)).RanPoint();
+        var nums = drop_desc.ToArray(0);
+        int num = int.Parse(nums[wi]);//次数
         ulong id = ulong.Parse(drop_desc.ToArray(2)[wi]);
-
         switch (drop_desc.ToArray(3)[wi])
         {
             case "Stuff":
@@ -32,7 +29,11 @@ public class Treasure : GameItemBase, IReactive {
                 break;
         }
 
+        Debug.Log("TODO: 开宝箱获得材料: " + drop_desc.ToArray(3)[wi] + "id: " + id + " num: " + num);
+
         StageUIView.Instance.IniMat();
+
+        //ArtSkill.ShowDrop(config.pickup, transform.position);
 
         Recycle();
     }
