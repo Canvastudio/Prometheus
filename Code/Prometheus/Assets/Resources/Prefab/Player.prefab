@@ -61,7 +61,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1714161537929942
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114070289563845902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,6 +228,7 @@ MonoBehaviour:
   playerId: 1
   inventory:
     chipList: []
+    skillList: []
   skillPointsComponet: {fileID: 0}
 --- !u!114 &114383987626850076
 MonoBehaviour:
@@ -328,7 +329,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 21399cadeaa7bc2459bfae7c9365c63e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5667f4132556d144e868858493506829, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -447,7 +448,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714161537929942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -309, y: -339.7, z: 0}
+  m_LocalPosition: {x: -216.1, y: -207.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224729871625371722}
@@ -457,6 +458,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -309, y: -339.7}
+  m_AnchoredPosition: {x: -216.1, y: -207.4}
   m_SizeDelta: {x: 120, y: 116}
   m_Pivot: {x: 0.5, y: 0.5}
