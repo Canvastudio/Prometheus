@@ -75,7 +75,7 @@ public class ArtSkill {
 
 	}
 
-	public static ArtFxBase ShowDrop(string name, Vector3 pos, int count) {
+	public static ArtFxBase ShowDrop(string name, Vector3 pos, int count = 1) {
 		
 		ArtFxBase fx =  Show(name, pos);
 
