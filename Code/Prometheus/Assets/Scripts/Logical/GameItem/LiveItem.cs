@@ -443,8 +443,8 @@ public abstract class LiveItem : GameItemBase
 
             transform.SetAsLastSibling();
 
-            yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
-
+            //yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
+            StartCoroutine(ArtSkill.DoSkillIE("pugong", this.transform, target.transform));
             //if (this is Player)
             //{
             //    ArtSkill.Show(StageView.Instance.strPugong1, target.transform.position);
