@@ -9,7 +9,8 @@ public class LiveBasePropertys : PropertyData {
         float speed,
         float melee,
         float laser,
-        float cartridge)
+        float cartridge,
+        float atk)
     {
         SetFloatProperty(GameProperty.mhp, hp);
         SetFloatProperty(GameProperty.speed, speed);
@@ -17,6 +18,7 @@ public class LiveBasePropertys : PropertyData {
         SetFloatProperty(GameProperty.laser, laser);
         SetFloatProperty(GameProperty.cartridge, cartridge);
         SetFloatProperty(GameProperty.nhp, hp);
+        SetFloatProperty(GameProperty.attack, atk);
 
         return this;
     }

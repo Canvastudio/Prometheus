@@ -147,7 +147,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             lv_Property.speed * propertys[pwr, 1],
             lv_Property.melee * propertys[pwr, 2],
             lv_Property.laser * propertys[pwr, 3],
-            lv_Property.cartridge * propertys[pwr, 4]
+            lv_Property.cartridge * propertys[pwr, 4],
+            lv_Property.attack * propertys[pwr, 5]
             );
 
         item.InitInfoUI();
@@ -260,7 +261,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 2,
                 999,
                 999,
-                999
+                999,
+               999
             );
         }
         else
@@ -270,7 +272,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 config.speed,
                 config.melee,
                 config.laser,
-                config.cartridge
+                config.cartridge,
+                config.attack
             );
         }
 
