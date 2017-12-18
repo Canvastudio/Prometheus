@@ -15,6 +15,8 @@ public class Supply : GameItemBase, IReactive {
 
         standBrick.brickType = BrickType.EMPTY;
 
+        ArtSkill.ShowDrop(config.pickup, StageCore.Instance.Player.transform.position);
+
         Recycle();
     }
 

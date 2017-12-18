@@ -15,6 +15,13 @@ public class SkillListItem : DragableScrollItem
     public ulong id;
     [SerializeField]
     Text count;
+    [SerializeField]
+    Image frame;
+
+    [SerializeField]
+    Sprite normalSkillFrame;
+    [SerializeField]
+    Sprite organSkillFrame;
 
     public ActiveSkillIns ins;
 
@@ -38,6 +45,15 @@ public class SkillListItem : DragableScrollItem
         icon.SetSkillIcon(config.icon);
         skillName.text = config.name;
         RefreshCount();
+
+        if (ins.count > 0)
+        {
+            frame.sprite = organSkillFrame;
+        }
+        else
+        {
+            frame.sprite = normalSkillFrame;
+        }
     }
 
     public void OnLongPress()
