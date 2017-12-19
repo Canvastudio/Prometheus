@@ -50,7 +50,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
     /// <returns></returns>
     protected int DataIndex(params int[] index)
     {
-        if (maxDepth != index.Length) throw new ArgumentOutOfRangeException("SuperArray搜索深度不合法");
+        if (maxDepth != index.Length) throw new ArgumentOutOfRangeException("SuperArray搜索深度不合法 → " + saveDataStr);
         string key = Union(index);
         if (indexDictionary.ContainsKey(key)) return indexDictionary[key];
         string tempStr = indexStr;
@@ -61,7 +61,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
         }
         catch (IndexOutOfRangeException)
         {
-            throw new IndexOutOfRangeException("SuperArray查询元素下标越界");
+            throw new IndexOutOfRangeException("SuperArray查询元素下标越界 → " + saveDataStr);
         }
         int reslut = int.Parse(tempStr);
         indexDictionary.Add(key, reslut);
@@ -76,7 +76,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
     /// </summary>
     public int Count(params int[] index)
     {
-        if (index.Length > maxDepth - 1) throw new ArgumentOutOfRangeException("SuperArray查询个数深度不合法");
+        if (index.Length > maxDepth - 1) throw new ArgumentOutOfRangeException("SuperArray查询个数深度不合法 → " + saveDataStr);
         string key = Union(index);
         if (countDictionary.ContainsKey(key)) return countDictionary[key];
         string tempStr = indexStr;
@@ -87,7 +87,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
         }
         catch (IndexOutOfRangeException)
         {
-            throw new IndexOutOfRangeException("SuperArray查询元素下标越界");
+            throw new IndexOutOfRangeException("SuperArray查询元素下标越界 → " + saveDataStr);
         }
         int reslut = tempStr.Split(splitCharArr[index.Length]).Length;
         countDictionary.Add(key, reslut);
@@ -98,7 +98,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
     {
         if (index.Length != maxDepth - 1)
         {
-            throw new ArgumentOutOfRangeException("SuperArray数组转换深度不合法");
+            throw new ArgumentOutOfRangeException("SuperArray数组转换深度不合法 → " + saveDataStr);
         }
         string tempStr = indexStr;
         try
@@ -108,7 +108,7 @@ public abstract class SuperArrayBase<T> : IEnumerable
         }
         catch (IndexOutOfRangeException)
         {
-            throw new IndexOutOfRangeException("SuperArray查询元素下标越界");
+            throw new IndexOutOfRangeException("SuperArray查询元素下标越界 → " + saveDataStr);
         }
 
         string[] temp = tempStr.Split(splitCharArr[index.Length]);
