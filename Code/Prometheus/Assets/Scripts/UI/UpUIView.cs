@@ -17,6 +17,8 @@ public class UpUIView : MonoBehaviour {
     [SerializeField]
     Button roleButton;
     StringBuilder sb = new StringBuilder(10);
+    [SerializeField]
+    public Text distance;
 
     List<UpBuff> list = new List<UpBuff>();
 

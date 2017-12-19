@@ -900,7 +900,7 @@ public class FightComponet : MonoBehaviour
 
         yield return ArtSkill.DoSkillIE(config.effect, ownerObject.transform, ShowTarget.transform, () =>
         {
-            if (config.damage != null)
+            if (config.damage != null && ownerObject.isAlive)
             {
                 foreach (var item in items)
                 {
@@ -936,9 +936,11 @@ public class FightComponet : MonoBehaviour
                     {
                         has_kill = true;
                     }
+
+                    ++i;
                 }
 
-                ++i;
+     
             }
         });
 

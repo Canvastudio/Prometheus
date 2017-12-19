@@ -73,6 +73,12 @@ public class Player : LiveItem {
         //{
         //    StartCoroutine(brick.OnDiscoverd());
         //}
+
+        if (brick.row > StageCore.Instance.playerDistance)
+        {
+            StageCore.Instance.playerDistance = brick.row;
+            StageUIView.Instance.upUIView.distance.text = brick.row.ToString();
+        }
     }
 
     public override void Recycle()

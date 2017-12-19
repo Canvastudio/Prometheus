@@ -23,6 +23,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
     public bool monsterwakeup = false;
 
+    public int playerDistance = 0;
+
     /// <summary>
     /// 第一次点击的方块
     /// </summary>
