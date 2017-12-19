@@ -165,6 +165,8 @@ public class GameItemBase : MonoBehaviour, ITagable {
         {
             if (inViewArea == false)
             {
+                inViewArea = true;
+
                 OnEnterIntoArea();
             }
         }
@@ -172,11 +174,11 @@ public class GameItemBase : MonoBehaviour, ITagable {
         {
             if (inViewArea == true)
             {
+                inViewArea = false;
+
                 OnExitFromArea();
             }
         }
-
-        inViewArea = in_area;
 
         return in_area;
     }
@@ -208,7 +210,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         Messenger.RemoveListener(SA.CamerMove, PlayerMoveEnd);
     }
 
-    public void RefreshPosistion()
+    public virtual void RefreshPosistion()
     {
         if (standBrick != null)
         {

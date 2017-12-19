@@ -276,15 +276,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         GContext.Instance.dark_brick -= 1;
     }
 
-    protected override void OnEnterIntoArea()
-    {
-        base.OnEnterIntoArea();
-
-        if (!isDiscovered)
-        {
-            GContext.Instance.dark_brick += 1;
-        }
-    }
 
     ulong bid;
 
@@ -351,7 +342,11 @@ public class Brick : GameItemBase, IEquatable<Brick> {
                 pathNode.isWalkable = false;
             }
         }
+
+        if (!inViewArea) pathNode.isWalkable = false;
     }
+
+    
 
     public void Init(int row, int column)
     {
@@ -549,13 +544,34 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
     }
 
+
+    protected override void OnEnterIntoArea()
+    {
+        base.OnEnterIntoArea();
+
+        if (!isDiscovered)
+        {
+            GContext.Instance.dark_brick += 1;
+        }
+
+        RefreshWalkableAndBlockState();
+    }
+
     protected override void OnExitFromArea()
     {
         base.OnExitFromArea();
 
         Recycle();
+
+        RefreshWalkableAndBlockState();
     }
 
+    public override void RefreshPosistion()
+    {
+        base.RefreshPosistion();
+
+        RefreshWalkableAndBlockState();
+    }
 
     /// <summary>
     /// 清除上面的item

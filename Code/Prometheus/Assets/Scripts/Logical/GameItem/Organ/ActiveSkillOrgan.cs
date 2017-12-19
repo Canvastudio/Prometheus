@@ -9,7 +9,7 @@ public class ActiveSkillOrgan : OrganBase {
     public override void Reactive()
     {
         var player = StageCore.Instance.Player;
-        player.StartCoroutine(player.fightComponet.DoActiveSkill(null, config));
+        player.StartCoroutine(player.fightComponet.DoActiveSkill(null, config, -2));
 
         Clean();
     }
