@@ -552,11 +552,12 @@ public abstract class LiveItem : GameItemBase
         fightComponet.Clean();
         state.Clean();
 
-
         Freeze = false;
         Disarm = false;
         Silent = false;
         Sleep = false;
+
+        StageCore.Instance.tagMgr.RemoveEntity(this);
     }
 }
 

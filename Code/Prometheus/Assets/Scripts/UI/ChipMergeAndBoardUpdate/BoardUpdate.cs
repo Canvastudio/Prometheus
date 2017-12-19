@@ -21,6 +21,8 @@ public class BoardUpdate : MonoBehaviour {
     [SerializeField]
     Image graphics;
 
+    GlobalParameterConfig gc;
+
     int[] cost;
     MaterialPropertyBlock prop;
     int Rid;
@@ -34,6 +36,7 @@ public class BoardUpdate : MonoBehaviour {
         HudEvent.Get(updateButton).onClick = OnUpdate;
         prop = new MaterialPropertyBlock();
         radius = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).initRadius;
+        gc = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1);
     }
 
     public void Show()
@@ -47,10 +50,10 @@ public class BoardUpdate : MonoBehaviour {
         curLv.text = t.ToString();
         nextLv.text = (t+1).ToString();
 
-        if (t <= GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).maxUpdateCount)
+        if (t <= gc.maxUpdateCount)
         {
 
-            var ts = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.Count(
+            var ts = gc.chipDiskExtensions.Count(
                 (int)StageCore.Instance.Player.playerId);
 
             if (t > ts)
@@ -58,13 +61,24 @@ public class BoardUpdate : MonoBehaviour {
                 t = ts;
             }
 
-            cost = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).chipDiskExtensions.ToArray(
+            cost = gc.chipDiskExtensions.ToArray(
                 (int)StageCore.Instance.Player.playerId, t - 1);
+
+            int cc = gc.costRatio.Count();
+
+            if (ChipUpdateView.Instance.upTime >= cc)
+            {
+                cc = cc - 1;
+            }
+            else
+            {
+                cc = ChipUpdateView.Instance.upTime;
+            }
 
             for (int i = 0; i < cost.Length; ++i)
             {
                 Stuff s = (Stuff)i;
-                int c = cost[i];
+                int c = Mathf.FloorToInt(cost[i] * gc.costRatio[cc]);
 
                 mat.SetCost(s, c);
             }
@@ -130,6 +144,7 @@ public class BoardUpdate : MonoBehaviour {
         }
 
         ChipCore.Instance.chipBoardUpdate += 1;
+        ChipUpdateView.Instance.upTime += 1;
 
         Show();
     }

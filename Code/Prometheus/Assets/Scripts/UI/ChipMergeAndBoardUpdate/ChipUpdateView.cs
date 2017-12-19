@@ -18,6 +18,8 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
     public ChipMerge chipMerge;
     public string optionName = "chipItem";
 
+    public int upTime;
+
     int state = 0;
 
     public override IEnumerator Close(object param)
@@ -71,6 +73,8 @@ public class ChipUpdateView : MuiSingleBase<ChipUpdateView> {
 
     public override IEnumerator Open(object param)
     {
+        Maintenance m = param as Maintenance;
+        upTime = m.upTime;
         gameObject.SetActive(true);
         chipMerge.gameObject.SetActive(true);
         chipMerge.ShowMergeBtns();
