@@ -15,11 +15,11 @@ public enum LiveItemSide
 public abstract class LiveItem : GameItemBase
 {
     [SerializeField]
-    private bool _silent = false;
+    private int _silent = 0;
     /// <summary>
     /// 沉默，所有被动技能无效，有些被动技能是给自己/队友施加状态，那么这些状态此时也应该消失。玩家也能被沉默。注意这并不是驱散，它只会使那些永久性质的状态消失（因为导致这些状态的被动技能失效了）
     /// </summary>
-    public bool Silent
+    public int Silent
     {
         get { return _silent; }
         set
@@ -43,11 +43,11 @@ public abstract class LiveItem : GameItemBase
     public int pwr = 0;
 
     [SerializeField]
-    private bool _freeze = false;
+    private int _freeze = 0;
     /// <summary>
     /// 冻结，冻结后不能反击，不能使用技能，技能CD暂停，暂时解除周围格子锁定。玩家不会中该状态。无参数
     /// </summary>
-    public bool Freeze
+    public int Freeze
     {
         get { return _freeze; }
         set
@@ -61,7 +61,7 @@ public abstract class LiveItem : GameItemBase
             {
                 if ((this as Monster).block_other)
                 {
-                    if (value)
+                    if (value > 0)
                     {
                         BrickCore.Instance.CancelBlockNearbyBrick(standBrick.row, standBrick.column);
                     }
@@ -79,7 +79,7 @@ public abstract class LiveItem : GameItemBase
     {
         if (fightComponet != null)
         {
-            bool b = (!Disarm && !Sleep && !Freeze && isDiscovered);
+            bool b = (Disarm == 0 && Sleep == 0 && Freeze == 0 && isDiscovered);
 
             if (activeSkillCanUsed != b)
             {
@@ -101,7 +101,7 @@ public abstract class LiveItem : GameItemBase
     {
         if (fightComponet != null)
         {
-            bool b = (!Silent && isDiscovered);
+            bool b = (Silent == 0 && isDiscovered);
 
             if (passiveSkillCanUsed != b)
             {
@@ -123,11 +123,11 @@ public abstract class LiveItem : GameItemBase
     public bool passiveSkillCanUsed = false;
 
     [SerializeField]
-    private bool _sleep = false;
+    private int _sleep = 0;
     /// <summary>
     /// 催眠，不能反击，不能使用技能,技能CD暂停，暂时解除周围格子锁定，受到任何伤害都会导致该状态失效，玩家不会中该状态。无参数
     /// </summary>
-    public bool Sleep
+    public int Sleep
     {
         get { return _sleep; }
         set
@@ -141,7 +141,7 @@ public abstract class LiveItem : GameItemBase
             {
                 if ((this as Monster).block_other)
                 {
-                    if (value)
+                    if (Sleep > 0)
                     {
                         BrickCore.Instance.CancelBlockNearbyBrick(standBrick.row, standBrick.column);
                     }
@@ -156,11 +156,11 @@ public abstract class LiveItem : GameItemBase
     }
 
     [SerializeField]
-    private bool _disarm = false;
+    private int _disarm = 0;
     /// <summary>
     /// 缴械。不能使用主动技能，怪物被缴械后，技能CD暂停。玩家也是可以被缴械的。无参数
     /// </summary>
-    public bool Disarm
+    public int Disarm
     {
         get { return _disarm; }
         set
@@ -483,8 +483,8 @@ public abstract class LiveItem : GameItemBase
     public virtual float TakeDamage(Damage damageInfo)
     {
         //Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
-
-        Sleep = false;
+        state.RemoveStateBuff(StateEffectType.Freeze);
+        Sleep = 0;
 
         foreach (var state in state.state_list)
         {
@@ -552,10 +552,10 @@ public abstract class LiveItem : GameItemBase
         fightComponet.Clean();
         state.Clean();
 
-        Freeze = false;
-        Disarm = false;
-        Silent = false;
-        Sleep = false;
+        Freeze = 0;
+        Disarm = 0;
+        Silent = 0;
+        Sleep = 0;
 
         StageCore.Instance.tagMgr.RemoveEntity(this);
     }

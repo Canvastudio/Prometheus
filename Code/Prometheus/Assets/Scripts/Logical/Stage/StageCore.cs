@@ -341,7 +341,7 @@ public class StageCore : SingleGameObject<StageCore> {
                 }
                 else if (waitMsg.result.msg == SA.PlayerClickActiveSkill)
                 {
-                    if (!StageCore.Instance.Player.Disarm)
+                    if (Instance.Player.Disarm == 0)
                     {
                         var ins = (waitMsg.result.para as ActiveSkillIns);
                         yield return DoPlayerSkill(ins);

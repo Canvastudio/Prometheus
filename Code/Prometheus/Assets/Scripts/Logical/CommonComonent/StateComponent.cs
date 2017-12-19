@@ -108,6 +108,21 @@ public class StateComponent : MonoBehaviour {
         }
     }
 
+    public void RemoveStateBuff(StateEffectType stateType)
+    {
+        for (int i = state_list.Count - 1; i >= 0; --i)
+        {
+            if (state_list[i].passive == null)
+            {
+                if (state_list[i].stateEffects[0].stateType == stateType)
+                {
+                    state_list[i].DeactiveIns();
+                    state_list.RemoveAt(i);
+                }
+            }
+        }
+    }
+
     public void RemoveHalo(HaloInfo halo)
     {
         for (int i = state_list.Count - 1; i >= 0; --i)

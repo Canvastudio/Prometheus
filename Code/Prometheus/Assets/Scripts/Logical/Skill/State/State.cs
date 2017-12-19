@@ -29,6 +29,10 @@ public enum StateEffectType
     /// 如果有非last状态的怪物存在，那么就不受伤害
     /// </summary>
     Last,
+    Freeze,
+    Disarm,
+    Silent,
+
 }
 
 [System.Serializable]

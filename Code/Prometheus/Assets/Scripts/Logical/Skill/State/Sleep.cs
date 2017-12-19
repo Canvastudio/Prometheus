@@ -13,21 +13,21 @@ public class Sleep : StateEffectIns
     {
         base.Active();
 
-        owner.Sleep = true;
+        owner.Sleep += 1;
     }
 
     public override void Deactive()
     {
         base.Deactive();
 
-        owner.Sleep = false;
+        owner.Sleep -= 1;
     }
 
     public override void Remove()
     {
         base.Remove();
 
-        owner.Sleep = false;
+        owner.Sleep -= 1;
     }
 
     protected override void Apply(object param)

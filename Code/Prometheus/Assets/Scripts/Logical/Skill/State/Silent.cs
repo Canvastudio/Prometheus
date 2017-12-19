@@ -12,14 +12,14 @@ public class Silent : StateEffectIns
     {
         base.Active();
 
-        owner.Silent = true;
+        owner.Silent += 1;
     }
 
     public override void Deactive()
     {
         base.Deactive();
 
-        owner.Silent = false;
+        owner.Silent -= 1;
     }
 
     protected override void Apply(object param)

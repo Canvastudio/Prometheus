@@ -691,7 +691,7 @@ public class FightComponet : MonoBehaviour
                     r = 100;
                 }
 
-                if (r <= Random.Range(0f, 1f))
+                if (r < Random.Range(0f, 1f))
                 {
                     successEffect = false;
                 }

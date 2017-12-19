@@ -7,6 +7,7 @@ public class Freeze : StateEffectIns
     public Freeze(LiveItem owner, StateConfig config, int index, PassiveSkillIns passive, LiveItem source) : base(owner, config, index, passive, source)
     {
         Debug.Log("Frezz");
+        stateType = StateEffectType.Freeze;
     }
 
     protected override void Apply(object param)
@@ -18,20 +19,20 @@ public class Freeze : StateEffectIns
     {
         base.Active();
 
-        owner.Freeze = true;
+        owner.Freeze += 1;
     }
 
     public override void Deactive()
     {
         base.Deactive();
 
-        owner.Freeze = false;
+        owner.Freeze -= 1;
     }
 
     public override void Remove()
     {
         base.Remove();
 
-        owner.Freeze = false;
+        owner.Freeze -= 1;
     }
 }

@@ -92,7 +92,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
 
     public void ApplyState(object param)
     {
-        if (!out_data && !owner.Silent || active == false)
+        if (!out_data && owner.Silent == 0 || active == false)
         {
             Apply(param);
         }

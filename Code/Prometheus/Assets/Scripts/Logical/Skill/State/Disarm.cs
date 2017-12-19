@@ -12,14 +12,14 @@ public class Disarm : StateEffectIns
     {
         base.Active();
 
-        owner.Disarm = true;
+        owner.Disarm += 1;
     }
 
     public override void Deactive()
     {
         base.Deactive();
 
-        owner.Disarm = false;
+        owner.Disarm -= 1;
     }
 
 
@@ -27,7 +27,7 @@ public class Disarm : StateEffectIns
     {
         base.Remove();
 
-        owner.Disarm = false;
+        owner.Disarm -= 1;
     }
 
     protected override void Apply(object param)
