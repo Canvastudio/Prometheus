@@ -417,6 +417,11 @@ public class StageCore : SingleGameObject<StageCore> {
 
         if (player_Speed >= monster_Speed || monster.enslave)
         {
+            var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
+            float[] f;
+            float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), Instance.Player, null, out f);
+
+            StageCore.Instance.TimeCast(timeSpend);
             yield return Player.MeleeAttackTarget(monster);
 
             if (monster != null && monster.cur_hp > 0 && !monster.enslave)
@@ -436,6 +441,12 @@ public class StageCore : SingleGameObject<StageCore> {
 
             if (Player != null && Player.cur_hp > 0)
             {
+                var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
+                float[] f;
+                float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), Instance.Player, null, out f);
+
+                StageCore.Instance.TimeCast(timeSpend);
+
                 yield return Player.MeleeAttackTarget(monster);
             }
 

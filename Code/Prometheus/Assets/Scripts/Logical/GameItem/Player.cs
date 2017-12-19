@@ -45,18 +45,14 @@ public class Player : LiveItem {
         return this;
     }
 
-    public override IEnumerator MeleeAttackTarget<T>(T target)
-    {
-        Debug.Log("玩家攻击：" + target.gameObject.name);
+    //public override IEnumerator MeleeAttackTarget<T>(T target)
+    //{
+    //    Debug.Log("玩家攻击：" + target.gameObject.name);
 
-        var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-        float[] f;
-        float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), this, null, out f);
-        
-        StageCore.Instance.TimeCast(timeSpend);
 
-        yield return base.MeleeAttackTarget(target);
-    }
+
+    //    yield return base.MeleeAttackTarget(target);
+    //}
 
     public override float TakeDamage(Damage damageInfo)
     {
