@@ -518,7 +518,7 @@ public abstract class LiveItem : GameItemBase
                 state.AddStateIns(ins);
             }
 
-            if (cur_hp == 0)
+            if (cur_hp == 0 && gameObject.activeInHierarchy)
             {
                 StartCoroutine(OnDead(damageInfo));
             }
