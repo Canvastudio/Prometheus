@@ -254,7 +254,13 @@ public abstract class LiveItem : GameItemBase
 
                 if (hp_value != null)
                 {
-                    hp_value.FloatText(_cur_hp.Value);
+                    //hp_value.FloatText(_cur_hp.Value);
+                    hp_value.SetIconHpText(this);
+
+                    if (this is Player)
+                    {
+                        StageUIView.Instance.upUIView.RefreshHpUI();
+                    }
                 }
             }
         }
@@ -324,11 +330,14 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
+    
+
     public virtual void InitInfoUI()
     {
         if (hp_value != null)
         {
-            hp_value.text = cur_hp.ToString();
+            //hp_value.text = cur_hp.ToString();
+            hp_value.SetIconHpText(this);
         }
 
         if (atk_value != null)
@@ -353,7 +362,8 @@ public abstract class LiveItem : GameItemBase
 
             if (hp_value != null)
             {
-                hp_value.FloatText(cur_hp);
+                //hp_value.FloatText(cur_hp);
+                hp_value.SetIconHpText(this);
             }
 
             if (this is Player)
@@ -420,13 +430,13 @@ public abstract class LiveItem : GameItemBase
         yield return 0;
     }
 
-    WaitForSeconds waitForSeconds = new WaitForSeconds(0.8f);
-
+    WaitForSeconds wait0_1Seconds = new WaitForSeconds(0.1f);
+    WaitForSeconds wait0_2Seconds = new WaitForSeconds(0.2f);
     public virtual IEnumerator MeleeAttackTarget<T>(T target) where T : LiveItem
     {
         if (target != null)
         {
-            var damage = melee;
+            var damage = melee * Property.GetFloatProperty(GameProperty.attack);
 
             Damage damageInfo = new Damage(damage, this, target, DamageType.Physical);
 
@@ -445,6 +455,9 @@ public abstract class LiveItem : GameItemBase
 
             //yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
             StartCoroutine(ArtSkill.DoSkillIE("pugong", this.transform, target.transform));
+
+            yield return wait0_2Seconds;
+
             //if (this is Player)
             //{
             //    ArtSkill.Show(StageView.Instance.strPugong1, target.transform.position);

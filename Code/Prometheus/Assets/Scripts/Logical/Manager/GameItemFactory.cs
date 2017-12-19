@@ -148,7 +148,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             lv_Property.melee * propertys[pwr, 2],
             lv_Property.laser * propertys[pwr, 3],
             lv_Property.cartridge * propertys[pwr, 4],
-            lv_Property.attack * propertys[pwr, 5]
+            //lv_Property.attack * propertys[pwr, 5]
+            20
             );
 
         item.InitInfoUI();
