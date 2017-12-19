@@ -7,14 +7,10 @@ using System.Text;
 public static class UIExtend {
 
     private static string hpft = "{0}/{1}";
-    private static string i30_hpft = "<color=gray>000</color>{0}";
-    private static string i20_hpft = "<color=gray>00</color>{0}";
-    private static string i10_hpft = "<color=gray>0</color>{0}";
-    private static string i00_hpft = "{1}";
 
     static string[] gray_hp = new string[]
         {
-            "<color=gray>000</color>{0}", "<color=gray>00</color>{0}", "<color=gray>0</color>{0}", "{0}",
+            "<color=grey>000</color>{0}", "<color=grey>00</color>{0}", "<color=grey>0</color>{0}", "{0}",
         };
 
 
@@ -61,6 +57,24 @@ public static class UIExtend {
             if (nhp / v == 0)
             {
                 t.text = string.Format(gray_hp[i], nhp.ToString());
+                return;
+            }
+
+            v *= 10;
+        }
+    }
+
+    public static void SetIconAtkText(this Text t, LiveItem item)
+    {
+        int nhp = item.Property.GetIntProperty(GameProperty.nhp);
+
+        int v = 10;
+        for (int i = 1; i < 4; ++i)
+        {
+            if (nhp / v == 0)
+            {
+                t.text = string.Format(gray_hp[i], nhp.ToString());
+                return;
             }
 
             v *= 10;

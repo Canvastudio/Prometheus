@@ -325,7 +325,7 @@ public abstract class LiveItem : GameItemBase
 
             if (atk_value != null)
             {
-                atk_value.text = value.ToString();
+                atk_value.SetIconAtkText(this);
             }
         }
     }
@@ -342,7 +342,7 @@ public abstract class LiveItem : GameItemBase
 
         if (atk_value != null)
         {
-            atk_value.text = melee.ToString();
+            atk_value.SetIconAtkText(this);
         }
     }
 
@@ -375,7 +375,7 @@ public abstract class LiveItem : GameItemBase
         {
             if (atk_value != null)
             {
-                atk_value.FloatText(melee);
+                atk_value.SetIconAtkText(this);
             }
         }
 
