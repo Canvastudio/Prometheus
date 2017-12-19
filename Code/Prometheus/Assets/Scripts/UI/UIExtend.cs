@@ -7,6 +7,17 @@ using System.Text;
 public static class UIExtend {
 
     private static string hpft = "{0}/{1}";
+    private static string i30_hpft = "<color=gray>000</color>{0}";
+    private static string i20_hpft = "<color=gray>00</color>{0}";
+    private static string i10_hpft = "<color=gray>0</color>{0}";
+    private static string i00_hpft = "{1}";
+
+    static string[] gray_hp = new string[]
+        {
+            "<color=gray>000</color>{0}", "<color=gray>00</color>{0}", "<color=gray>0</color>{0}", "{0}",
+        };
+
+
     private static StringBuilder stringBuilder = new StringBuilder(20);
 
     public static void SetSkillIcon(this Image image, string name)
@@ -32,11 +43,28 @@ public static class UIExtend {
     public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
     {
         t.text = item.Property.GetIntProperty(property).ToString();
+
     }
 
     public static void SetHpText(this Text t, LiveItem item)
     {
         t.text = string.Format(hpft, item.Property.GetIntProperty(GameProperty.nhp), item.Property.GetIntProperty(GameProperty.mhp));
+    }
+
+    public static void SetIconHpText(this Text t, LiveItem item)
+    {
+        int nhp = item.Property.GetIntProperty(GameProperty.nhp);
+
+        int v = 10;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (nhp / v == 0)
+            {
+                t.text = string.Format(gray_hp[i], nhp.ToString());
+            }
+
+            v *= 10;
+        }
     }
 
     public static void SetChipDescrible(this Text t, ChipConfig config)
@@ -75,4 +103,5 @@ public static class UIExtend {
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
         image.SetNativeSize();
     }
+
 }
