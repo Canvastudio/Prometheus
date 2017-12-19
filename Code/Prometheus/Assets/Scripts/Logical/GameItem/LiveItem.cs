@@ -371,7 +371,7 @@ public abstract class LiveItem : GameItemBase
                 Messenger.Invoke(SA.PlayHpChange);
             }
         }
-        else if (property == GameProperty.melee)
+        else if (property == GameProperty.attack)
         {
             if (atk_value != null)
             {

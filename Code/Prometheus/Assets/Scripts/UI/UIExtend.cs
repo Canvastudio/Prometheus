@@ -66,7 +66,7 @@ public static class UIExtend {
 
     public static void SetIconAtkText(this Text t, LiveItem item)
     {
-        int nhp = item.Property.GetIntProperty(GameProperty.nhp);
+        int nhp = item.Property.GetIntProperty(GameProperty.attack);
 
         int v = 10;
         for (int i = 1; i < 4; ++i)
