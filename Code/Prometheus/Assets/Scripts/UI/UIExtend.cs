@@ -39,7 +39,13 @@ public static class UIExtend {
     public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
     {
         t.text = item.Property.GetIntProperty(property).ToString();
+    }
 
+    public static void SetOneFloat(this Text t, float f)
+    {
+        float ff = f * 10f;
+        ff = ((float)Mathf.CeilToInt(ff)) / 10f;
+        t.text = ff.ToString();
     }
 
     public static void SetHpText(this Text t, LiveItem item)

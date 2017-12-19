@@ -31,7 +31,9 @@ public class StateItem : MonoBehaviour {
         }
         else
         {
-            stateDuration.text = ins.stateConfig.time.ToString();
+            //stateDuration.text = ins.stateConfig.time.ToString();
+            stateDuration.SetOneFloat(ins.stateConfig.time - ins.exist_time);
+            
         }
 
         if (ins.stateConfig.isBuff)
