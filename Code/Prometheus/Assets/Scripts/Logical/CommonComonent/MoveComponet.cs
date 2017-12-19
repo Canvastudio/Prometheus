@@ -84,7 +84,7 @@ public class MoveComponet : MonoBehaviour {
 
     public IEnumerator Open(Brick brick, float time)
     {
-        StageCore.Instance.TimeCast(time);
+        //StageCore.Instance.TimeCast(time);
 
         yield return BrickCore.Instance.OpenBrick(brick);
 

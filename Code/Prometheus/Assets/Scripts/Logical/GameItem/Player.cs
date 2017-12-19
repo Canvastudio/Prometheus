@@ -50,8 +50,8 @@ public class Player : LiveItem {
         Debug.Log("玩家攻击：" + target.gameObject.name);
 
         var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-        var atk_Speed = Property.GetFloatProperty(GameProperty.atkSpeed);
-        var timeSpend = (1 - ((atk_Speed + 100) / (atk_Speed + 101))) * 15; 
+        float[] f;
+        float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), this, null, out f);
         
         StageCore.Instance.TimeCast(timeSpend);
 
