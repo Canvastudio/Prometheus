@@ -8,11 +8,15 @@ public class SkillPoint {
     public ulong[] skillIds;
     public int[] updateLimit;
 
+    SkillPointsConfig config;
+
     public ulong skillId;
     private int _count;
     public int last_count;
 
     public int activeIndex = -1;
+
+
 
     public int count
     {
@@ -22,7 +26,7 @@ public class SkillPoint {
     public SkillPoint(ulong _id)
     {
         id = _id;
-        SkillPointsConfig config = ConfigDataBase.GetConfigDataById<SkillPointsConfig>(id);
+        config = ConfigDataBase.GetConfigDataById<SkillPointsConfig>(id);
         skillIds = config.skillIds.ToArray();
         updateLimit = config.characterActivate.ToArray((int)(StageCore.Instance.Player.playerId));
     }
@@ -30,10 +34,6 @@ public class SkillPoint {
     public void ChangeSkillPoint(int change_count)
     { 
         this._count = _count + change_count;
-
-#if UNITY_EDITOR
-        if (_count < 0) Debug.Log("skill point 数量小于了0.");
-#endif
     }
 
     public ulong GetNewSkillId()
@@ -50,6 +50,7 @@ public class SkillPoint {
             }
         }
 
+        skillId = 0;
         return 0;
     }
 

@@ -75,7 +75,7 @@ public class ChipView : MuiSingleBase<ChipView> {
     private List<BoardPowerGrid> powerGridSearchList = new List<BoardPowerGrid>(4);
 
     public string itemName = "CI";
-    string instanceName = "BI";
+    public string instanceName = "BI";
 
     /// <summary>
     /// 加一个简单的变量来区分是哪个电网
@@ -703,29 +703,39 @@ public class ChipView : MuiSingleBase<ChipView> {
             instance.row = r + 1;
             instance.col = c + 1;
 
+            RefreshChipConnectChip(instance);
 
-            for (int i = 0; i < instance.positiveConnectInstance.Count; ++i)
-            {
-                var ins = instance.positiveConnectInstance[i];
-
-                ins.negativeConnectInstance.Remove(instance);
-            }
-
-            for (int i = 0; i < instance.negativeConnectInstance.Count; ++i)
-            {
-                var ins = instance.negativeConnectInstance[i];
-
-                ins.positiveConnectInstance.Remove(instance);
-            }
-
-            RefreshChipInstanceConnectInfo(instance);
-
-            ConstructPowerGrid();
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    public void RefreshChipConnectChip(ChipBoardInstance instance)
+    {
+        RemoveChipConnect(instance);
+
+        RefreshChipInstanceConnectInfo(instance);
+
+        ConstructPowerGrid();
+    }
+
+    public void RemoveChipConnect(ChipBoardInstance instance)
+    {
+        for (int i = 0; i < instance.positiveConnectInstance.Count; ++i)
+        {
+            var ins = instance.positiveConnectInstance[i];
+
+            ins.negativeConnectInstance.Remove(instance);
+        }
+
+        for (int i = 0; i < instance.negativeConnectInstance.Count; ++i)
+        {
+            var ins = instance.negativeConnectInstance[i];
+
+            ins.positiveConnectInstance.Remove(instance);
         }
     }
 

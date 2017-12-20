@@ -39,27 +39,37 @@ public class ChipDetailView : MuiSingleBase<ChipDetailView> {
     {
         ObjPool<SkillPointInfo>.Instance.RecyclePool(pname);
         ObjPool<ChipItem>.Instance.RecyclePool(cname);
-
-        var ai = StageCore.Instance.Player.fightComponet.activeInsList;
-        var pi = StageCore.Instance.Player.fightComponet.passiveInsList;
-
         ulong id;
 
-        for (int i = 0;  i < ai.Count; ++i)
-        {
-            var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
-            info.uid = id;
-            info.SetParentAndNormalize(pointRoot);
-            info.Set(ai[i]);
-            info.gameObject.SetActive(true);
-        }
+        //var ai = StageCore.Instance.Player.fightComponet.activeInsList;
+        //var pi = StageCore.Instance.Player.fightComponet.passiveInsList;
 
-        for (int i = 0; i < pi.Count; ++i)
+        //for (int i = 0;  i < ai.Count; ++i)
+        //{
+        //    var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
+        //    info.uid = id;
+        //    info.SetParentAndNormalize(pointRoot);
+        //    info.Set(ai[i]);
+        //    info.gameObject.SetActive(true);
+        //}
+
+        //for (int i = 0; i < pi.Count; ++i)
+        //{
+        //    var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
+        //    info.uid = id;
+        //    info.SetParentAndNormalize(pointRoot);
+        //    info.Set(pi[i]);
+        //    info.gameObject.SetActive(true);
+        //}
+
+        var sps = StageCore.Instance.Player.skillPointsComponet.pointList;
+
+        for (int i = 0; i < sps.Count; ++i)
         {
             var info = ObjPool<SkillPointInfo>.Instance.GetObjFromPoolWithID(out id, pname);
             info.uid = id;
             info.SetParentAndNormalize(pointRoot);
-            info.Set(pi[i]);
+            info.Set(sps[i]);
             info.gameObject.SetActive(true);
         }
 

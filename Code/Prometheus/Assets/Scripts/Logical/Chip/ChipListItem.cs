@@ -105,10 +105,13 @@ public class ChipListItem : DragableScrollItem {
         {
             if (!ChipView.Instance.MatrixDragPut(boardInstance))
             {
+                ObjPool<ChipBoardInstance>.Instance.RecycleObj(ChipView.Instance.instanceName, boardInstance.uid);
                 boardInstance = null;
+
             }
             else
             {
+                ChipView.Instance.listInstance.Add(boardInstance);
                 ObjPool<ChipListItem>.Instance.RecycleObj(ChipView.Instance.itemName, id);
             }
         }
