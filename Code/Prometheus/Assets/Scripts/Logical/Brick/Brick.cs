@@ -14,6 +14,8 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     [SerializeField]
     public Cover cover;
 
+    public int rowInModuel;
+
     public bool last_row;
     public Transform blockMask;
     public int uid;

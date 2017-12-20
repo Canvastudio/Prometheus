@@ -138,7 +138,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
             Brick _brick = null;
 
             _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, total_row, col);
-
+            _brick.rowInModuel = curRowInModule;
             if (string.IsNullOrEmpty(brick_Desc))
             {
                 _brick = _brick.CreateCover();
