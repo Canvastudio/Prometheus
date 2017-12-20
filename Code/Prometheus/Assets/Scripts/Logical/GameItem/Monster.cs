@@ -95,7 +95,7 @@ public class Monster : LiveItem
 
         if (ins.stateConfig.iShow)
         {
-            artPop.Add(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
+            artPop.Add(ins);
         }
     }
 
@@ -105,7 +105,7 @@ public class Monster : LiveItem
 
         if (ins.stateConfig.iShow)
         {
-            artPop.Remove(StageView.Instance.stateAtlas.GetSprite(ins.stateConfig.icon));
+            artPop.Remove(ins);
         }
     }
 
@@ -331,7 +331,6 @@ public class Monster : LiveItem
 
         enslave = false;
         isAlive = false;
-        fightComponet.Clean();
         block_other = false;
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);

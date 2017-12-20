@@ -9,6 +9,8 @@ using System;
 [System.Serializable]
 public class StateEffectIns : IEquatable<StateEffectIns>
 {
+    static ulong _id = 0;
+    public ulong uid = 0;
     public StateEffectType stateType = StateEffectType.Invalid;
     public StateConfig stateConfig;
 
@@ -46,7 +48,9 @@ public class StateEffectIns : IEquatable<StateEffectIns>
         #if UNITY_EDITOR
         effectName = config.name;
         #endif
-}
+
+        uid = _id++;
+    }
 
     /// <summary>
     /// 状态被生成的时候不是激活状态，所以需要等到激活才能生效

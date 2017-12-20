@@ -5,78 +5,77 @@ using UnityEngine.UI;
 
 public class ArtPop : MonoBehaviour {
 
-	public List<Sprite> spriteList;
+	public List<StateIns> StateList;
 	public Image Image_state;
 	public int index = -1;
 	public Animator anim;
-    private Sprite cur_sprite;
+    private StateIns cur_ins;
 	// Use this for initialization
 	void Awake () {
-		anim.SetBool("isloop", spriteList.Count > 1);
+		anim.SetBool("isloop", StateList.Count > 1);
         gameObject.SetActive(false);
 	}
 
 	public void OnNext() {
 	
 		//check end
-		if (spriteList.Count <= 0) {
+		if (StateList.Count <= 0) {
 		
 			OnEnd();
 			return;
 		}
 
-        if (spriteList.Count == 0)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            index++;
-            index = index >= spriteList.Count ? 0 : index;
-            Image_state.sprite = spriteList[index];
-            cur_sprite = spriteList[index];
-        }
+        gameObject.SetActive(true);
+        index++;
+        index = index >= StateList.Count ? 0 : index;
+        Image_state.SetStateIcon(StateList[index].stateConfig.icon);
+        cur_ins = StateList[index];
+        
 	}
 
-	public void Add(List<Sprite> slist) {
+	//public void Add(List<Sprite> slist) {
 	
-		for (int i = 0; i < slist.Count; i++)
-			Add(slist[i]);
+	//	for (int i = 0; i < slist.Count; i++)
+	//		Add(slist[i]);
 	
-	}
+	//}
 
-	public void Add(Sprite sprite) {
+	public void Add(StateIns ins) {
 
-        if (!spriteList.Contains(sprite))
-        {
-            spriteList.Add(sprite);
+        StateList.Add(ins);
 
-            anim.SetBool("isloop", spriteList.Count > 1);
-        }
+        anim.SetBool("isloop", StateList.Count > 1);
 
         gameObject.SetActive(true);
     }
 
-	public void Remove(Sprite sprite) {
+	public void Remove(StateIns ins) {
 	
-		if (spriteList.Contains(sprite)) {
-		
-			spriteList.Remove(sprite);
-			anim.SetBool("isloop", spriteList.Count > 1);
-
-            if (cur_sprite == sprite)
+        for (int i = StateList.Count - 1; i >= 0; ++i)
+        {
+            if (ins.id == StateList[i].id)
             {
-                OnNext();
-            }
+                StateList.RemoveAt(i);
 
+                anim.SetBool("isloop", StateList.Count > 1);
+
+                if (cur_ins.id == ins.id)
+                {
+                    OnNext();
+                }
+
+                break;
+            }
         }
+
+
 	
 	}
 
 	public void OnEnd() {
 
-		index = -1;
+        gameObject.SetActive(false);
+        index = -1;
 
 	}
 
