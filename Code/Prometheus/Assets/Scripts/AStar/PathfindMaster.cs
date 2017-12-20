@@ -96,7 +96,7 @@ namespace Pathfinding
             {
                 var path = finder.FindPath(startNode, nb);
 
-                if (shortestPath == null || path.Count < shortestPath.Count)
+                if (path.Count  > 0  &&( shortestPath == null || path.Count < shortestPath.Count))
                 {
                     shortestPath = path;
                 }
