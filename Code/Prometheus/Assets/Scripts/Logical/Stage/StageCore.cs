@@ -272,7 +272,7 @@ public class StageCore : SingleGameObject<StageCore> {
                                         list = Pathfinding.PathfindMaster.Instance.RequestPathfind(Player.standBrick.pathNode, brick1.pathNode, BrickCore.Instance);
                                     }
 
-                                    if (list.Count > 0)
+                                    if (list != null && list.Count > 0)
                                     {
 
                                         list1.Clear();
