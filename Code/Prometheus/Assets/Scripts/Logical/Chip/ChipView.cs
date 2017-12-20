@@ -115,10 +115,17 @@ public class ChipView : MuiSingleBase<ChipView> {
     public List<ChipBoardInstance> listInstance = new List<ChipBoardInstance>();
     private Dictionary<int, ChipTempData> _temp_listInstance = new Dictionary<int, ChipTempData>();
 
+    bool refreshSkill = false;
+
     private void ShowDetail()
     {
         CheckSkillPointAndProperty();
         StageCore.Instance.Player.RefreshSkillPointStateToSkill();
+
+        foreach (var ins in listInstance)
+        {
+            _temp_listInstance.Add(ins.chipInventory.uid, new ChipTempData(ins.Power, ins.chipInventory.config));
+        }
 
         StartCoroutine(MuiCore.Instance.AddOpen(UiName.strChipDetailVew));
     }
