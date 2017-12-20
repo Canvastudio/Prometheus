@@ -137,7 +137,7 @@ public class StageCore : SingleGameObject<StageCore> {
     {
         var type = brick1.brickType;
 
-        if (type == BrickType.MONSTER)
+        if (type == BrickType.MONSTER && Instance.Player.standBrick.pathNode.Distance(brick1.pathNode) == 1)
         {
             yield return PlayerMeleeAction(brick1);
         }
