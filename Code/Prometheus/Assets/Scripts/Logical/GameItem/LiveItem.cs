@@ -486,9 +486,11 @@ public abstract class LiveItem : GameItemBase
         state.RemoveStateBuff(StateEffectType.Freeze);
         Sleep = 0;
 
-        foreach (var state in state.state_list)
+        for(int i = state.state_list.Count -1; i >= 0; --i)
         {
-            foreach (var ins in state.stateEffects)
+            var _state = state.state_list[i];
+
+            foreach (var ins in _state.stateEffects)
             {
                 if (ins.stateType == StateEffectType.OnTakenDamage)
                 {
