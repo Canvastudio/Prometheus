@@ -346,6 +346,7 @@ public class Monster : LiveItem
         isAlive = false;
         block_other = false;
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
+        alpm = false;
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
     }
 }

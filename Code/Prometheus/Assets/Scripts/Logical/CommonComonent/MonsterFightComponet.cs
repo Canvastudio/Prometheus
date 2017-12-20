@@ -40,6 +40,11 @@ public class MonsterFightComponet : FightComponet {
     protected override void AddActiveIns(ulong id, SkillPoint point)
     {
         ActiveSkillsConfig aconfig = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(id);
+        if (aconfig == null)
+        {
+            Debug.LogError("给怪物添加了一个不存在的技能, id: " + id);
+            return;
+        }
         monsterActiveInsList.Add(new MonsterActiveSkillIns(aconfig, ownerObject, point));
     }
 
