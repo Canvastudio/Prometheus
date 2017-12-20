@@ -107,6 +107,7 @@ public static class UIExtend {
     {
         string name = RuleBox.GetBox(row, col);
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.color = RuleBox.GetBoxColor();
         image.SetNativeSize();
     }
 
@@ -114,6 +115,7 @@ public static class UIExtend {
     {
         string name = RuleBox.GetBlock(row, col);
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.color = RuleBox.GetBlockColor();
         image.SetNativeSize();
     }
 
@@ -121,6 +123,7 @@ public static class UIExtend {
     {
         string name = RuleBox.GetUnExplored(row, col);
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        image.color = RuleBox.GetUnExploredColor();
         image.SetNativeSize();
     }
 

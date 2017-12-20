@@ -79,4 +79,18 @@ public class RuleBox {
 	
 	}
 
+	public static Color GetBoxColor() {
+		float random_color = Random.Range(0.7f, 0.8f);
+        return new Color(random_color,random_color,random_color,1);
+	}
+
+	public static Color GetBlockColor() {
+		float random_color = Random.Range(0.7f, 1);
+        return new Color(random_color,random_color,random_color,1);
+	}
+	public static Color GetUnExploredColor() {
+		float random_color = Random.Range(0.7f, 0.8f);
+        return new Color(random_color,random_color,random_color,1);
+	}
+
 }

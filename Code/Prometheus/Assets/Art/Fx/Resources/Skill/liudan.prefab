@@ -55,7 +55,26 @@ MonoBehaviour:
   - time: 0
     fxname: liudan_ready
     ishit: 0
+    isendpos: 0
+    ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 0
   - time: 0.2
     fxname: liudan_fly
     ishit: 1
-  destroy_time: 2
+    isendpos: 0
+    ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 0
+  - time: 0.5
+    fxname: 
+    ishit: 0
+    isendpos: 0
+    ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 1
+  destroy_time: 1
+  tran_start: {fileID: 0}
+  tran_end: {fileID: 0}
+  ishit: 0
+  isend: 0
