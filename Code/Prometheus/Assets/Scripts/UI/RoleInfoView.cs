@@ -22,6 +22,8 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     Text laser;
     [SerializeField]
     Text cartridge;
+    [SerializeField]
+    Text atk;
 
     [Space(5)]
     [SerializeField]
@@ -71,6 +73,7 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
         melee.SetPropertyText(player, GameProperty.melee);
         laser.SetPropertyText(player, GameProperty.laser);
         cartridge.SetPropertyText(player, GameProperty.cartridge);
+        atk.SetPropertyText(player, GameProperty.attack);
 
         foreach(var state in player.state.state_list)
         {

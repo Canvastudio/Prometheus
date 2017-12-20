@@ -110,7 +110,8 @@ public class MonstersInfoView : MuiSingleBase<MonstersInfoView>
 
         hp.SetHpText(mon);
         moto.SetPropertyText(mon, GameProperty.speed);
-        melee.SetPropertyText(mon, GameProperty.melee);
+        //melee.SetPropertyText(mon, GameProperty.melee);
+        melee.SetPropertyText(mon, GameProperty.attack);
         laser.SetPropertyText(mon, GameProperty.laser);
         cartridge.SetPropertyText(mon, GameProperty.cartridge);
         monDescr.text = mon.config.describe;
