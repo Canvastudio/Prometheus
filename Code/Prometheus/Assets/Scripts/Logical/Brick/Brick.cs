@@ -545,9 +545,14 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
 
 
-    protected override void OnEnterIntoArea()
+    public override void OnEnterIntoArea()
     {
         base.OnEnterIntoArea();
+
+        if (item != null)
+        {
+            item.OnEnterIntoArea();
+        }
 
         if (!isDiscovered)
         {
@@ -557,9 +562,14 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         RefreshWalkableAndBlockState();
     }
 
-    protected override void OnExitFromArea()
+    public override void OnExitFromArea()
     {
         base.OnExitFromArea();
+
+        if (item != null)
+        {
+            item.OnExitFromArea();
+        }
 
         Recycle();
 

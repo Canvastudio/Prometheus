@@ -183,13 +183,14 @@ public class GameItemBase : MonoBehaviour, ITagable {
         return in_area;
     }
 
-    protected virtual void OnEnterIntoArea()
+    public virtual void OnEnterIntoArea()
     {
         StageCore.Instance.RegisterItem(this);
     }
 
-    protected virtual void OnExitFromArea()
+    public virtual void OnExitFromArea()
     {
+        RemoveLister();
         StageCore.Instance.UnRegisterItem(this);
     }
 
@@ -200,14 +201,20 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual void ListenInit()
     {
-        Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.AddListener(SA.CamerMove, PlayerMoveEnd);
+        if (this is Brick)
+        {
+            Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
+            Messenger.AddListener(SA.CamerMove, PlayerMoveEnd);
+        }
     }
 
-    private void RemoveLister()
+    protected void RemoveLister()
     {
-        Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-        Messenger.RemoveListener(SA.CamerMove, PlayerMoveEnd);
+        if (this is Brick)
+        {
+            Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
+            Messenger.RemoveListener(SA.CamerMove, PlayerMoveEnd);
+        }
     }
 
     public virtual void RefreshPosistion()

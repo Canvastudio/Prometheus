@@ -11,6 +11,6 @@ public class ActiveSkillOrgan : OrganBase {
         var player = StageCore.Instance.Player;
         player.StartCoroutine(player.fightComponet.DoActiveSkill(null, config, -2));
 
-        Clean();
+        Recycle();
     }
 }

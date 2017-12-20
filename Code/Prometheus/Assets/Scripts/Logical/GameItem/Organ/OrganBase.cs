@@ -14,17 +14,13 @@ public abstract class OrganBase : GameItemBase {
 
     public abstract void Reactive();
 
-    public void Clean()
+    public override void Recycle()
     {
+        base.Recycle();
+
+        ResetValues();
         standBrick.brickType = BrickType.EMPTY;
         standBrick.item = null;
         GameObject.Destroy(this.gameObject);
-    }
-
-    protected override void OnExitFromArea()
-    {
-        base.OnExitFromArea();
-
-        Clean();
     }
 }

@@ -226,6 +226,8 @@ public class ChipView : MuiSingleBase<ChipView> {
     {
         if (selectChip != null)
         {
+            selectChip.chipInventory.boardInstance = null;
+
             ObjPool<ChipBoardInstance>.Instance.RecycleObj(instanceName, selectChip.uid);
 
             int row = selectChip.row;

@@ -516,6 +516,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = organ;
                 organ.baseConfig = config;
+                organ.ListenInit();
                 break;
             case Operate.Radar:
                 var rader = go.AddComponent<RadarOrgan>();
@@ -526,6 +527,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = rader;
                 rader.baseConfig = config;
+                rader.ListenInit();
                 break;
             case Operate.Property:
                 var property = go.AddComponent<PropertyOrgan>();
@@ -534,6 +536,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.OrganProperty;
                 bornBrick.item = property;
                 property.baseConfig = config;
+                property.ListenInit();
                 break;
             case Operate.AddSkill:
                 var add = go.AddComponent<AddSkillOrgan>();
@@ -545,6 +548,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = add;
                 add.baseConfig = config;
+                add.ListenInit();
                 break;
             case Operate.SummonSkill:
                 var summon = go.AddComponent<SummonOrgan>();
@@ -553,6 +557,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = summon;
                 summon.baseConfig = config;
+                summon.ListenInit();
                 break;
             case Operate.Kelid:
 

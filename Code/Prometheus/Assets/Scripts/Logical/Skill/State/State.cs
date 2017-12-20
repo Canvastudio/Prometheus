@@ -72,6 +72,7 @@ public class StateIns
         {
             stateEffects[i] = StateEffectIns.GenerateStateEffects(stateConfig, i, owner, passive, source);
             stateEffects[i].skillDamage = _skillDamage;
+            stateEffects[i].stateIns = this;
         }
 
         id = ++_id;
@@ -130,6 +131,13 @@ public class StateIns
         }
 
         DeactiveIns();
+    }
+
+    public void OnEffectEnd()
+    {
+        DeactiveIns();
+
+        owner.state.RemoveStateIns(this);
     }
 
     protected virtual void OnTimeChange(float time)

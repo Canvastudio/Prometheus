@@ -18,6 +18,6 @@ public class PropertyOrgan : OrganBase {
             StageCore.Instance.Player.Property.SetFloatProperty(property, value);
         }
 
-        Clean();
+        Recycle();
     }               
 }

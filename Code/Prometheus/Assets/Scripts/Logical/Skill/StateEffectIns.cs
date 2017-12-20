@@ -13,7 +13,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
     public ulong uid = 0;
     public StateEffectType stateType = StateEffectType.Invalid;
     public StateConfig stateConfig;
-
+    public StateIns stateIns;
     public LiveItem source;
     public int index;
     public PassiveSkillIns passive;
@@ -82,10 +82,7 @@ public class StateEffectIns : IEquatable<StateEffectIns>
 
     public virtual void OnOutData()
     {
-        if (active)
-        {
-            Deactive();
-        }
+        stateIns.OnEffectEnd();
     }
 
     public bool Equals(StateEffectIns other)

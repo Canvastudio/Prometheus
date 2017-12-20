@@ -239,14 +239,14 @@ public class Monster : LiveItem
         }
     }
 
-    protected override void OnEnterIntoArea()
+    public override void OnEnterIntoArea()
     {
         base.OnEnterIntoArea();
 
         Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
     }
 
-    protected override void OnExitFromArea()
+    public override void OnExitFromArea()
     {
         base.OnExitFromArea();
 
