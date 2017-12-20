@@ -11,7 +11,17 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public bool isDiscovered = false;
 
-    public bool inViewArea = false;
+    [SerializeField]
+    private bool _inView = false;
+
+    public bool inViewArea
+    {
+        get { return _inView; }
+        set
+        {
+            _inView = value;
+        }
+    }
 
     private int action = 0;
 
@@ -165,8 +175,6 @@ public class GameItemBase : MonoBehaviour, ITagable {
         {
             if (inViewArea == false)
             {
-                inViewArea = true;
-
                 OnEnterIntoArea();
             }
         }
@@ -174,8 +182,6 @@ public class GameItemBase : MonoBehaviour, ITagable {
         {
             if (inViewArea == true)
             {
-                inViewArea = false;
-
                 OnExitFromArea();
             }
         }
@@ -185,11 +191,13 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public virtual void OnEnterIntoArea()
     {
+        inViewArea = true;
         StageCore.Instance.RegisterItem(this);
     }
 
     public virtual void OnExitFromArea()
     {
+        inViewArea = false;
         RemoveLister();
         StageCore.Instance.UnRegisterItem(this);
     }

@@ -239,11 +239,22 @@ public class Monster : LiveItem
         }
     }
 
+    bool alpm = false;
+
     public override void OnEnterIntoArea()
     {
         base.OnEnterIntoArea();
 
+        if (alpm)
+        {
+            Debug.LogError("重复添加？: " + gameObject.name);
+
+            return;
+        }
+
         Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
+
+        alpm = true;
     }
 
     public override void OnExitFromArea()
@@ -251,12 +262,12 @@ public class Monster : LiveItem
         base.OnExitFromArea();
 
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
+
+        alpm = false;
     }
      
     public override IEnumerator OnDead(Damage damageInfo)
     {
-
-
         if (standBrick != null)
         {
             BrickCore.Instance.CancelBlockNearbyBrick(standBrick.pathNode.x, standBrick.pathNode.z);

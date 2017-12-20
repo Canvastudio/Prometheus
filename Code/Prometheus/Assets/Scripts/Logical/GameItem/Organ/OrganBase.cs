@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class OrganBase : GameItemBase {
+public class OrganBase : GameItemBase {
 
     public OperateConfig baseConfig;
 
@@ -12,7 +12,10 @@ public abstract class OrganBase : GameItemBase {
         brickBtn = transform.GetChild(0).GetComponent<Button>();
     }
 
-    public abstract void Reactive();
+    public virtual void Reactive()
+    {
+        Debug.Log("激活机关: " + baseConfig.name);
+    }
 
     public override void Recycle()
     {

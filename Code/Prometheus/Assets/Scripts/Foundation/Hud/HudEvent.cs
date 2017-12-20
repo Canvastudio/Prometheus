@@ -21,7 +21,7 @@ public class HudEvent : EventTrigger {
     public Callback onLongPressRelease = null;
 
 
-    public float pressTriggerTime = 0.4f;
+    private float pressTriggerTime = 0.8f;
         
     public Vector3 scaleVec = Vector3.one * 1.2f;
     public Vector3 orignalVec;
@@ -103,7 +103,7 @@ public class HudEvent : EventTrigger {
                 }
 
                 isLongPressTriggerd = true;
-                Debug.Log("HueEvent: LongPress: " + gameObject.name);
+                Debug.Log("HueEvent: LongPress: " + gameObject.transform.name);
             }
         }
     }
@@ -128,6 +128,8 @@ public class HudEvent : EventTrigger {
 	}
 	public override void OnPointerExit (PointerEventData eventData){
 
+        isDown = false;
+
         pointDownTime = float.MaxValue;
 
         CommonEvent();
@@ -136,6 +138,7 @@ public class HudEvent : EventTrigger {
 	public override void OnPointerUp (PointerEventData eventData){
 
         isDown = false;
+        pointDownTime = float.MaxValue;
 
         CommonEvent();
 		if(onUp != null) onUp(gameObject);
@@ -156,6 +159,12 @@ public class HudEvent : EventTrigger {
     public void CommonEvent() {
     
     
+    }
+
+    private void OnDisable()
+    {
+        isDown = false;
+        pointDownTime = float.MaxValue;
     }
 
 }

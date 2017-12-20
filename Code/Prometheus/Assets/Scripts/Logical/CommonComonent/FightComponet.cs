@@ -180,7 +180,7 @@ public class FightComponet : MonoBehaviour
             }
         }
 
-        Debug.LogError("无法移除指定的organ skill: " + id.ToString());
+        //Debug.LogError("无法移除指定的organ skill: " + id.ToString());
     }
 
     public virtual void RemoveSkill(ulong id)
