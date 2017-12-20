@@ -94,12 +94,18 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
             for (int i = 0; i < map_Data.Count; ++i)
             {
-                if (map_Data[i].distance > distance)
+                if (map_Data[i].distance > total_row)
                 {
                     level_Id = map_Data[i].id;
                     curMapData = map_Data[i];
                     break;
                 }
+            }
+
+            if (level_Id == 0)
+            {
+                level_Id = map_Data[map_Data.Count - 1].id;
+                curMapData = map_Data[map_Data.Count - 1];
             }
 
             var moduels = curMapData.map_models.ToList();
@@ -457,6 +463,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         }
 
         total_row += moduel_RowCount;
+    
 
         return moduel_RowCount;
     }
