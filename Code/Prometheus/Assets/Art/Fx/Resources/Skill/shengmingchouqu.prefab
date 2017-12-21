@@ -57,22 +57,17 @@ MonoBehaviour:
     ishit: 0
     isendpos: 0
     ishitevent: 0
+    isAttackAnim: 0
+    isLogicEnd: 0
   - time: 0.2
     fxname: 
     ishit: 0
     isendpos: 0
     ishitevent: 1
-  - time: 0.3
-    fxname: 
-    ishit: 0
-    isendpos: 0
-    ishitevent: 1
-  - time: 0.7
-    fxname: 
-    ishit: 0
-    isendpos: 0
-    ishitevent: 1
-  destroy_time: 5
+    isAttackAnim: 0
+    isLogicEnd: 0
+  destroy_time: 1
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
   ishit: 0
+  isend: 0
