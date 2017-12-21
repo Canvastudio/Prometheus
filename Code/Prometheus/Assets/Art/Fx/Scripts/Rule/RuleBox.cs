@@ -74,7 +74,7 @@ public class RuleBox {
 
 	public static void GetGnat(Vector3 pos) {
 	
-		if(Random.value > 0.95f)
+		if(Random.value > 0.9f)
 			ArtSkill.Show(Gnat_list[Random.Range(0, Gnat_list.Count - 1)], pos);
 	
 	}
@@ -95,6 +95,10 @@ public class RuleBox {
 		if(Random.value > 0.3f) random_color = Random.Range(0.87f, 0.92f);
 
         return new Color(random_color,random_color,random_color,1);
+	}
+
+    public static void OpenBoxTrigger(Vector3 pos) {
+		GetGnat(pos);
 	}
 
 }

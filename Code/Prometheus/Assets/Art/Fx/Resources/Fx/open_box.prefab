@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114926149430606720}
   - component: {fileID: 199304487410382536}
   - component: {fileID: 114611083856117062}
+  - component: {fileID: 114852609379074250}
   m_Layer: 0
   m_Name: open_box
   m_TagString: Untagged
@@ -82,6 +83,17 @@ MonoBehaviour:
   particls:
   - {fileID: 198145611512139872}
   layername: StageView
+--- !u!114 &114852609379074250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1701279918516874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e19e611398f544d6bdf5096589a7187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114926149430606720
 MonoBehaviour:
   m_ObjectHideFlags: 1

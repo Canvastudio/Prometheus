@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: event:/Skill/
   event_name: event:/Skill/jinghuashuiyue_hit
-  parameter: 
+  stop_parameter: 
 --- !u!114 &114315127757283592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +138,7 @@ MonoBehaviour:
   iscenter: 1
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
+  particls: []
   layername: StageView
 --- !u!198 &198249657397227962
 ParticleSystem:
@@ -199,14 +200,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1789993283
+  randomSeed: 2118304369
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3444,14 +3445,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 799734524
+  randomSeed: 1920528979
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
