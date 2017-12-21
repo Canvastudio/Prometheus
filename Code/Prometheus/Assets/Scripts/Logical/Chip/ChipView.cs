@@ -1186,7 +1186,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
                 if (chip_grid == ChipGrid.Power)
                 {
-                    power = powerList[power_id];
+                    power = powerList[power_id++];
                     var supply = GameObject.Instantiate(supplyInstance, chipInstanceRoot);
                     supply.Init(power);
                     supply.row = i;
