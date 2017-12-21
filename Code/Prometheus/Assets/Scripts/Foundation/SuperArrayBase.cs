@@ -57,7 +57,10 @@ public abstract class SuperArrayBase<T> : IEnumerable
         try
         {
             for (int i = 0; i < index.Length; i++)
-                tempStr = tempStr.Split(splitCharArr[i])[index[i]];
+            {
+                var t = tempStr.Split(splitCharArr[i]);
+                tempStr = t[index[i]];
+            }
         }
         catch (IndexOutOfRangeException)
         {

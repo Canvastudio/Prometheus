@@ -131,7 +131,9 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
             moduelRowCount = curModule.contents.Count();
         }
 
-        for (int col = 0; col < 6; ++col)
+        int w = curModule.contents.Count(curRowInModule);
+
+        for (int col = 0; col < w; ++col)
         {
             var brick_Desc = curModule.GetBrickInfo(curRowInModule, col);
 
@@ -280,193 +282,193 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         }
     }
 
-    public int CreateBrickModuel()
-    {
-        int distance = total_row;
+    //public int CreateBrickModuel()
+    //{
+    //    int distance = total_row;
 
-        MapConfig next_Map = null;
+    //    MapConfig next_Map = null;
 
-        ulong level_Id = 0;
+    //    ulong level_Id = 0;
 
-        for (int i = 0; i < map_Data.Count; ++i)
-        {
-            if (map_Data[i].distance > distance)
-            {
-                level_Id = map_Data[i].id;
-                next_Map = map_Data[i];
-                break;
-            }
-        }
+    //    for (int i = 0; i < map_Data.Count; ++i)
+    //    {
+    //        if (map_Data[i].distance > distance)
+    //        {
+    //            level_Id = map_Data[i].id;
+    //            next_Map = map_Data[i];
+    //            break;
+    //        }
+    //    }
 
-        if (next_Map == null)
-        {
-            next_Map = map_Data[map_Data.Count - 1];
-            level_Id = next_Map.id;
-        }
+    //    if (next_Map == null)
+    //    {
+    //        next_Map = map_Data[map_Data.Count - 1];
+    //        level_Id = next_Map.id;
+    //    }
 
-        var moduels = next_Map.map_models.ToList();
+    //    var moduels = next_Map.map_models.ToList();
 
-        //新的level 重置概率
-        if (curLevelId != level_Id)
-        {
-            _weightSection = WeightSection.CreatePrimitive(moduels.Count);
-            curLevelId = level_Id;
-        }
+    //    //新的level 重置概率
+    //    if (curLevelId != level_Id)
+    //    {
+    //        _weightSection = WeightSection.CreatePrimitive(moduels.Count);
+    //        curLevelId = level_Id;
+    //    }
 
-        //随机到了模块ID
-        int select_Moduel = _weightSection.RanPoint();
+    //    //随机到了模块ID
+    //    int select_Moduel = _weightSection.RanPoint();
 
-        //调整和检查权重
-        _weightSection.ScaleWeightExOne(select_Moduel).CheckBound();
+    //    //调整和检查权重
+    //    _weightSection.ScaleWeightExOne(select_Moduel).CheckBound();
 
-        ulong moduel_id = moduels[select_Moduel];
+    //    ulong moduel_id = moduels[select_Moduel];
 
-        var moduel = ModuleConfig.GetConfigDataById<ModuleConfig>(moduel_id);
+    //    var moduel = ModuleConfig.GetConfigDataById<ModuleConfig>(moduel_id);
 
-        var moduel_RowCount = moduel.contents.Count();
+    //    var moduel_RowCount = moduel.contents.Count();
 
-        int real_Row;
+    //    int real_Row;
 
-        for (int row = 0; row < moduel_RowCount; ++row)
-        {
-            for (int col = 0; col < 6; ++col)
-            {
-                var brick_Desc = moduel.GetBrickInfo(row, col);
+    //    for (int row = 0; row < moduel_RowCount; ++row)
+    //    {
+    //        for (int col = 0; col < Predefine.BRICK_VIEW_WIDTH; ++col)
+    //        {
+    //            var brick_Desc = moduel.GetBrickInfo(row, col);
 
-                Brick _brick = null;
+    //            Brick _brick = null;
 
-                real_Row = row + distance;
+    //            real_Row = row + distance;
 
-                _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateCover();
+    //            _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateCover();
 
-                if (string.IsNullOrEmpty(brick_Desc))
-                {
+    //            if (string.IsNullOrEmpty(brick_Desc))
+    //            {
 
-                }
-                else
-                {
-                    string[] infos = brick_Desc.Split('_');
+    //            }
+    //            else
+    //            {
+    //                string[] infos = brick_Desc.Split('_');
 
-                    string prefix = infos[0];
+    //                string prefix = infos[0];
 
-                    if ("o" == prefix)
-                    {
-                        _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateObstacle();
-                    }
-                    else
-                    {
-                        _brick = StageView.Instance.CreateBrick(moduel_id, level_Id);
+    //                if ("o" == prefix)
+    //                {
+    //                    _brick = StageView.Instance.CreateBrick(moduel_id, level_Id).CreateObstacle();
+    //                }
+    //                else
+    //                {
+    //                    _brick = StageView.Instance.CreateBrick(moduel_id, level_Id);
 
-                        if ("x" == prefix)
-                        {
-                            _brick = _brick.CreateMaintence();
-                        }
-                        else if ("y" == prefix)
-                        {
-                            float prob = float.Parse(infos[2]);
+    //                    if ("x" == prefix)
+    //                    {
+    //                        _brick = _brick.CreateMaintence();
+    //                    }
+    //                    else if ("y" == prefix)
+    //                    {
+    //                        float prob = float.Parse(infos[2]);
 
-                            if (prob > Random.Range(0f, 1f))
-                            {
-                                _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
-                            }
+    //                        if (prob > Random.Range(0f, 1f))
+    //                        {
+    //                            _brick = _brick.CreateTalbet(ulong.Parse(infos[1]));
+    //                        }
 
-                            float tip = float.Parse(infos[3]);
+    //                        float tip = float.Parse(infos[3]);
 
-                            if (Random.Range(0f, 1f) <= tip)
-                            {
-                                _brick.ShowTipRich();
-                            }
-                        }
-                        else if ("b" == prefix)
-                        {
-                            float prob = float.Parse(infos[2]);
+    //                        if (Random.Range(0f, 1f) <= tip)
+    //                        {
+    //                            _brick.ShowTipRich();
+    //                        }
+    //                    }
+    //                    else if ("b" == prefix)
+    //                    {
+    //                        float prob = float.Parse(infos[2]);
 
-                            if (prob > Random.Range(0f, 1f))
-                            {
-                                _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), real_Row);
-                            }
+    //                        if (prob > Random.Range(0f, 1f))
+    //                        {
+    //                            _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), real_Row);
+    //                        }
 
-                            float tip = float.Parse(infos[3]);
+    //                        float tip = float.Parse(infos[3]);
 
-                            if (Random.Range(0f, 1f) <= tip)
-                            {
-                                _brick.ShowTipRich();
-                            }
+    //                        if (Random.Range(0f, 1f) <= tip)
+    //                        {
+    //                            _brick.ShowTipRich();
+    //                        }
 
-                        }
-                        else if ("g" == prefix)
-                        {
-                            float prob = float.Parse(infos[2]);
+    //                    }
+    //                    else if ("g" == prefix)
+    //                    {
+    //                        float prob = float.Parse(infos[2]);
 
-                            if (prob > Random.Range(0f, 1f))
-                            {
-                                _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
-                            }
+    //                        if (prob > Random.Range(0f, 1f))
+    //                        {
+    //                            _brick = _brick.CreateSupply(ulong.Parse(infos[1]));
+    //                        }
 
-                            float tip = float.Parse(infos[3]);
+    //                        float tip = float.Parse(infos[3]);
 
-                            if (Random.Range(0f, 1f) <= tip)
-                            {
-                                _brick.ShowTipRich();
-                            }
-                        }
-                        else if ("r" == prefix)
-                        {
-                            var monster_Desc = brick_Desc.Split('_');
+    //                        if (Random.Range(0f, 1f) <= tip)
+    //                        {
+    //                            _brick.ShowTipRich();
+    //                        }
+    //                    }
+    //                    else if ("r" == prefix)
+    //                    {
+    //                        var monster_Desc = brick_Desc.Split('_');
 
-                            var probility = float.Parse(monster_Desc[2]);
+    //                        var probility = float.Parse(monster_Desc[2]);
 
-                            if (Random.Range(0f, 1f) <= probility)
-                            {
-                                var enemys = next_Map.enemys.ToArray();
-                                var enemy_Index = Random.Range(0, enemys.Length);
-                                var enemy_Id = enemys[enemy_Index];
+    //                        if (Random.Range(0f, 1f) <= probility)
+    //                        {
+    //                            var enemys = next_Map.enemys.ToArray();
+    //                            var enemy_Index = Random.Range(0, enemys.Length);
+    //                            var enemy_Id = enemys[enemy_Index];
 
-                                int lv_min = next_Map.enemy_level[0];
-                                int lv_max = next_Map.enemy_level[1];
-                                int lv = Random.Range(lv_min, lv_max + 1);
+    //                            int lv_min = next_Map.enemy_level[0];
+    //                            int lv_max = next_Map.enemy_level[1];
+    //                            int lv = Random.Range(lv_min, lv_max + 1);
 
-                                if (!GameTestData.Instance.noMonster)
-                                {
-                                    _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
+    //                            if (!GameTestData.Instance.noMonster)
+    //                            {
+    //                                _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
 
-                                    float tip = float.Parse(monster_Desc[3]);
+    //                                float tip = float.Parse(monster_Desc[3]);
 
-                                    if (Random.Range(0f, 1f) <= tip)
-                                    {
-                                        _brick.ShowTipDanger();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
-                            }
+    //                                if (Random.Range(0f, 1f) <= tip)
+    //                                {
+    //                                    _brick.ShowTipDanger();
+    //                                }
+    //                            }
+    //                        }
+    //                        else
+    //                        {
+    //                            Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
+    //                        }
 
 
-                        }
-                    }
+    //                    }
+    //                }
 
-                    if (row == moduel_RowCount - 1)
-                    {
-                        _brick.last_row = true;
-                    }
-                    else
-                    {
-                        _brick.last_row = false;
-                    }
+    //                if (row == moduel_RowCount - 1)
+    //                {
+    //                    _brick.last_row = true;
+    //                }
+    //                else
+    //                {
+    //                    _brick.last_row = false;
+    //                }
 
-                    data.PushBrick(real_Row, col, _brick);
-                }
+    //                data.PushBrick(real_Row, col, _brick);
+    //            }
 
-            }
-        }
+    //        }
+    //    }
 
-        total_row += moduel_RowCount;
+    //    total_row += moduel_RowCount;
     
 
-        return moduel_RowCount;
-    }
+    //    return moduel_RowCount;
+    //}
     
     public void OpenNearbyBrick(int row, int column, bool explored_self = true)
     {
