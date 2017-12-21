@@ -32,6 +32,7 @@ public class RuleBox {
 		"box_d_2",
 		"box_d_3",
 		"box_d_4",
+		"box_d_5",
 	
 	};
 
@@ -71,10 +72,15 @@ public class RuleBox {
 
 	public static string GetUnExplored(int row, int clumn) {
 
-		if(Random.value < 0.95f)
+		float r_value = Random.value;
+
+		if(r_value < 0.93f)
 			return box_d_list[Random.Range(0, 2)];
 
-		return box_d_list[Random.Range(2, 5)];
+		if(r_value < 0.99)
+			return box_d_list[Random.Range(2, 5)];
+
+		return box_d_list[Random.Range(5, 6)];
 
 	}
 
