@@ -15,18 +15,19 @@ public class BrickData {
 
 	public Brick GetBrick(int row ,int column)
 	{
+        if (row < 0) return null;
+
         if (row < _lowestRow) return null; // throw new System.ArgumentException("row 不能低于最低的row: " + _lowestRow);	
-        if (column < 0 || column > 5) return null;
-        if (row > _lowestRow + bricks.Count - 1)
-        {
-            //throw new System.ArgumentOutOfRangeException(
-            //    string.Format("row 超出的限制: row: {0}, _lowRow: {1}, row_count: {2}",
-            //    row, _lowestRow, bricks.Count));
 
-            return null;
-        }
+        //if (row > _lowestRow + bricks.Count - 1)
+        //{
+        //    throw new System.ArgumentOutOfRangeException(
+        //        string.Format("row 超出的限制: row: {0}, _lowRow: {1}, row_count: {2}",
+        //        row, _lowestRow, bricks.Count));
+        //}
 
-		return bricks[row - _lowestRow][column];
+        if (column < 0 || column > bricks[row - _lowestRow].Length - 1) return null;
+        return bricks[row - _lowestRow][column];
 	}
 
     public List<Brick> GetRow(int row)
@@ -101,13 +102,14 @@ public class BrickData {
     /// <returns></returns>
     public Brick GetFirstRowEmpty()
     {
-        int[] emptyIndex = new int[6];
+        int w = BrickCore.Instance.data.GetRow(0).Count;
+        int[] emptyIndex = new int[w];
 
         var row_Bricks = bricks[0];
 
         int m = 0;
 
-        for (int i = 0; i< 6; ++i)
+        for (int i = 0; i< w; ++i)
         {
             if (row_Bricks[i].realBrickType == BrickType.EMPTY && row_Bricks[i].brickBlock == 0)
             {

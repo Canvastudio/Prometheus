@@ -573,9 +573,19 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             item.OnExitFromArea();
         }
 
-        Recycle();
+        //Recycle();
 
         RefreshWalkableAndBlockState();
+    }
+
+    public override void ViewArea()
+    {
+        base.ViewArea();
+
+        if (GCamera.Instance.transform.position.y / 1.2f -1 > row)
+        {
+            Recycle();
+        }
     }
 
     public override void RefreshPosistion()

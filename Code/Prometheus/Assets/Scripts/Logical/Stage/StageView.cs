@@ -176,7 +176,7 @@ public class StageView : MuiSingleBase<StageView>
         yield return 0;
 
         //刷新下位置
-        Messenger.Invoke(SA.RefreshGameItemPos);
+        //Messenger.Invoke(SA.RefreshGameItemPos);
 
     }
 

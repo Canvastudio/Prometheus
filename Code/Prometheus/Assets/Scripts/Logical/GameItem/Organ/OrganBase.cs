@@ -9,7 +9,7 @@ public class OrganBase : GameItemBase {
 
     private void Awake()
     {
-        brickBtn = transform.GetChild(0).GetComponent<Button>();
+        brickBtn = transform.GetChild(0).GetOrAddComponet<Button>();
     }
 
     public virtual void Reactive()

@@ -23,7 +23,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     /// 保存了砖块数据
     /// </summary>
     [SerializeField]
-    BrickData data = new BrickData();
+    public BrickData data = new BrickData();
 
     public void RemoveRowIndata(Brick brick)
     {
@@ -534,7 +534,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         {
             for (int m = -1; m <= 1; ++m)
             {
-                if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
+                //if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
 
                 var _brick = data.GetBrick(row + n, column + m);
 

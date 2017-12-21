@@ -3590,7 +3590,7 @@ MonoBehaviour:
   NoSroll: 0
   SuperMonster: 0
   SuperPlayer: 0
-  alwaysShow: 1
+  alwaysShow: 0
   infoDetail: 0
   noMonster: 0
   ignoreChipColor: 0
@@ -8689,7 +8689,8 @@ MonoBehaviour:
   sliding: 0
   rate: 0
   distance: 0
-  total: 0
+  total1: 0
+  total2: 0
 --- !u!124 &2105311305
 Behaviour:
   m_ObjectHideFlags: 0
