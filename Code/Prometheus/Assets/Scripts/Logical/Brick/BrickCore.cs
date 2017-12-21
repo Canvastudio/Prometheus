@@ -510,7 +510,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         {
             for (int m = -1; m <= 1; ++m)
             {
-                if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
+                //if (Mathf.Abs(n) == Mathf.Abs(m)) continue;
 
                 var _brick = data.GetBrick(row + n, column + m);
 
