@@ -29,6 +29,9 @@ public class RuleBox {
 	
 		"box_d_0",
 		"box_d_1",
+		"box_d_2",
+		"box_d_3",
+		"box_d_4",
 	
 	};
 
@@ -53,29 +56,32 @@ public class RuleBox {
 	public static string GetBox(int row, int column) {
 	
 		if ((column == 0 || column == 5) && Random.value > 0.95f)
-			return box_s_list[Random.Range(0, box_s_list.Count - 1)];
+			return box_s_list[Random.Range(0, box_s_list.Count)];
 
 
-		return box_l_list[Random.Range(0, box_l_list.Count - 1)];
+		return box_l_list[Random.Range(0, box_l_list.Count)];
 	
 	}
 
 	public static string GetBlock(int row, int column) {
 	
-		return box_b_list[Random.Range(0, box_b_list.Count - 1)];
+		return box_b_list[Random.Range(0, box_b_list.Count)];
 	
 	}
 
 	public static string GetUnExplored(int row, int clumn) {
 
-		return box_d_list[Random.Range(0, box_d_list.Count - 1)];
+		if(Random.value < 0.95f)
+			return box_d_list[Random.Range(0, 2)];
+
+		return box_d_list[Random.Range(2, 5)];
 
 	}
 
 	public static void GetGnat(Vector3 pos) {
 	
 		if(Random.value > 0.9f)
-			ArtSkill.Show(Gnat_list[Random.Range(0, Gnat_list.Count - 1)], pos);
+			ArtSkill.Show(Gnat_list[Random.Range(0, Gnat_list.Count)], pos);
 	
 	}
 
