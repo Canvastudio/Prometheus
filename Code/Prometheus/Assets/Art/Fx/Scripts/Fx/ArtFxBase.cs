@@ -130,6 +130,22 @@ public class ArtFxBase : MonoBehaviour {
 
 	}
 
+
+	// test data : 1, 2.2f, 3.6f, 5.1f, 6.5f, 7.9f, 
+	// function 2.2 + (number - 1) * 1.4
+	public void SeAtkRange(int size) {
+	
+		float range = 2.2f + (size - 1) * 1.4f;
+
+		for (int i = 0; i < particls.Length; i++) {
+
+			ParticleSystem.MainModule main = particls[i].main;
+			main.startSizeMultiplier = range;
+
+		}
+
+	}	
+
 	public virtual void SetPos(Vector3 pos) {
 	
 		transform.position = pos;
