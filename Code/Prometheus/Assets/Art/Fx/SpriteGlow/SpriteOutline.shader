@@ -1,4 +1,7 @@
-﻿// Draws an HDR outline over the sprite borders. 
+﻿// Upgrade NOTE: upgraded instancing buffer 'PerDrawSprite' to new syntax.
+// Upgrade NOTE: upgraded instancing buffer 'SpriteOutline' to new syntax.
+
+// Draws an HDR outline over the sprite borders. 
 // Based on Sprites/Default shader from Unity 2017.2.
 
 Shader "Sprites/Outline"
@@ -54,20 +57,24 @@ Shader "Sprites/Outline"
             #endif
 
             #ifdef UNITY_INSTANCING_ENABLED
-            UNITY_INSTANCING_CBUFFER_START(PerDrawSprite)
+            UNITY_INSTANCING_BUFFER_START(PerDrawSprite)
             fixed4 unity_SpriteRendererColorArray[UNITY_INSTANCED_ARRAY_SIZE];
             float4 unity_SpriteFlipArray[UNITY_INSTANCED_ARRAY_SIZE];
-            UNITY_INSTANCING_CBUFFER_END
+            UNITY_INSTANCING_BUFFER_END(PerDrawSprite)
             #define _RendererColor unity_SpriteRendererColorArray[unity_InstanceID]
             #define _Flip unity_SpriteFlipArray[unity_InstanceID]
             #endif 
 
-            UNITY_INSTANCING_CBUFFER_START(SpriteOutline)
+            UNITY_INSTANCING_BUFFER_START(SpriteOutline)
             UNITY_DEFINE_INSTANCED_PROP(float, _IsOutlineEnabled)
+#define _IsOutlineEnabled_arr SpriteOutline
             UNITY_DEFINE_INSTANCED_PROP(fixed4, _OutlineColor)
+#define _OutlineColor_arr SpriteOutline
             UNITY_DEFINE_INSTANCED_PROP(float, _OutlineSize)
+#define _OutlineSize_arr SpriteOutline
             UNITY_DEFINE_INSTANCED_PROP(float, _AlphaThreshold)
-            UNITY_INSTANCING_CBUFFER_END
+#define _AlphaThreshold_arr SpriteOutline
+            UNITY_INSTANCING_BUFFER_END(SpriteOutline)
 
             CBUFFER_START(UnityPerDrawSprite)
             #ifndef UNITY_INSTANCING_ENABLED
@@ -206,10 +213,10 @@ Shader "Sprites/Outline"
                 fixed4 color = SampleSpriteTexture(vertexOutput.TexCoord) * vertexOutput.Color;
                 color.rgb *= color.a;
 
-                int isOutlineEnabled = UNITY_ACCESS_INSTANCED_PROP(_IsOutlineEnabled);
-                fixed4 outlineColor = UNITY_ACCESS_INSTANCED_PROP(_OutlineColor);
-                int outlineSize = UNITY_ACCESS_INSTANCED_PROP(_OutlineSize);
-                float alphaThreshold = UNITY_ACCESS_INSTANCED_PROP(_AlphaThreshold);
+                int isOutlineEnabled = UNITY_ACCESS_INSTANCED_PROP(_IsOutlineEnabled_arr, _IsOutlineEnabled);
+                fixed4 outlineColor = UNITY_ACCESS_INSTANCED_PROP(_OutlineColor_arr, _OutlineColor);
+                int outlineSize = UNITY_ACCESS_INSTANCED_PROP(_OutlineSize_arr, _OutlineSize);
+                float alphaThreshold = UNITY_ACCESS_INSTANCED_PROP(_AlphaThreshold_arr, _AlphaThreshold);
 
                 #ifdef SPRITE_OUTLINE_OUTSIDE
                 int shouldDrawOutline = ShouldDrawOutlineOutside(color, vertexOutput.TexCoord, isOutlineEnabled, outlineSize, alphaThreshold);

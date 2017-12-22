@@ -48,10 +48,41 @@ MonoBehaviour:
   - {fileID: 114428743244130562}
   - {fileID: 114728248406819318}
   - {fileID: 114950865652732134}
+  - {fileID: 114532217005105998}
   MasterBankRef: {fileID: 114625188787129548}
   StringsBankRef: {fileID: 114398328650651688}
-  stringsBankWriteTime: 636485118773079777
+  stringsBankWriteTime: 636489391101478600
   cacheVersion: 2
+--- !u!114 &114022799408895210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
+--- !u!114 &114023614818136260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Parameter 2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114054205564511966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,11 +334,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: F:\Jim\Document\Prometheus\Sound\game_sound\Build\Desktop\Skill.bank
-  lastModified: 636485118773175021
+  lastModified: 636489391101738931
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 682944
+    Value: 688864
   Exists: 1
 --- !u!114 &114255680593345224
 MonoBehaviour:
@@ -439,6 +470,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 1
+--- !u!114 &114394468559520212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
 --- !u!114 &114398328650651688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,11 +497,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: F:\Jim\Document\Prometheus\Sound\game_sound\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636485118773079777
+  lastModified: 636489391101478600
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 2268
+    Value: 2314
   Exists: 1
 --- !u!114 &114412659526494556
 MonoBehaviour:
@@ -495,7 +541,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114921815369044644}
+  - {fileID: 114023614818136260}
   MinDistance: 0
   MaxDistance: 0
   Length: 900
@@ -607,7 +653,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114181744659731508}
+  - {fileID: 114394468559520212}
   MinDistance: 0
   MaxDistance: 0
   Length: 4654
@@ -688,10 +734,25 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114849493973467452}
+  - {fileID: 114022799408895210}
   MinDistance: 0
   MaxDistance: 0
   Length: 1383
+--- !u!114 &114481069031078236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Parameter 2
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114503032586022962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,6 +816,43 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 5088
+--- !u!114 &114529392951431946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
+--- !u!114 &114532217005105998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Skill/wake_up_monster
+  guid: 01d363bdf7f882499958dfff96d99cc3
+  Banks:
+  - {fileID: 114247190248411498}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 809
 --- !u!114 &114535685729218274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,7 +1083,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114628819832031582}
+  - {fileID: 114481069031078236}
   MinDistance: 0
   MaxDistance: 0
   Length: 3631
@@ -1349,6 +1447,21 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 2546
+--- !u!114 &114878027733704410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stop
+  Min: 0
+  Max: 1
+  Default: 1
 --- !u!114 &114903683308708014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,7 +1533,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114359262010195998}
+  - {fileID: 114878027733704410}
   MinDistance: 0
   MaxDistance: 0
   Length: 4600
@@ -1579,7 +1692,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 114255680593345224}
+  - {fileID: 114529392951431946}
   MinDistance: 0
   MaxDistance: 0
   Length: 2546
