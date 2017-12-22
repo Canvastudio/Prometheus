@@ -454,7 +454,7 @@ public abstract class LiveItem : GameItemBase
             transform.SetAsLastSibling();
 
             //yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
-            StartCoroutine(ArtSkill.DoSkillIE("pugong", this.transform, target.transform));
+            StartCoroutine(ArtSkill.DoSkillIE("pugong", transform.GetChild(0), target.transform));
 
             yield return wait0_2Seconds;
 

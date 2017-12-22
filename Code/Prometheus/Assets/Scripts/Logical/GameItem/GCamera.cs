@@ -12,6 +12,7 @@ public class GCamera : SingleGameObject<GCamera> {
     public float distance;
     public float total1 = 0;
     public float total2 = 0;
+    public float speed = 0.10f;
     public void InitData()
     {
         rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
@@ -89,44 +90,64 @@ public class GCamera : SingleGameObject<GCamera> {
 
             if (y2 > y1)
             {
-                float d = (y2 - y1) * 0.07f;
+                float d = (y2 - y1) * speed;
                 //transform.position = new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), 0.07f);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), speed);
                 distance -= d;
                 distance = Mathf.Max(0, distance);
                 total1 += d;
             }
 
             float x = Player.transform.Rt().anchoredPosition.x;
-            
+            float lx = transform.position.x;
+            float offset;
             if (x >= 0 && x < 1095)
             {
-                float offset = Mathf.Abs(transform.position.x - Player.transform.position.x);
+                offset = transform.position.x - Player.transform.position.x;
 
-                if (offset > 0.01)
+                if (Mathf.Abs(offset) > 0.01)
                 {
-                    total2 += offset;
-
                     target = new Vector3(Player.transform.position.x, transform.position.y, transform.position.z);
-
-                    //transform.position = Vector3.MoveTowards(transform.position, target, 0.07f);
-                    transform.position = target;
+                    transform.position = Vector3.MoveTowards(transform.position, target, speed);
                 }
             }
             else if (x < 0)
             {
-                transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                offset = -transform.position.x;
+                if (Mathf.Abs(offset) > 0.01)
+                {
+                    target = new Vector3(0, transform.position.y, transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, target, speed);
+                }
             }
             else
             {
-                transform.position = new Vector3(10.8f, transform.position.y, transform.position.z);
+                offset = 10.8f - transform.position.x;
+
+                if (Mathf.Abs(offset) > 0.01)
+                {
+                    target = new Vector3(10.8f, transform.position.y, transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, target, speed);
+                }
             }
 
-            if (total1 >= 1.2f || total2 >= 1.2f)
+            total2 += transform.position.x - lx;
+
+            //同一次肯定不需要检查2次得
+            bool view = false;
+
+
+            if (total1 >= 1.2f) 
             {
-                StartCoroutine(InvokeViewArea());
+                view = true;
+
                 total1 = 0;
+            }
+
+            if (Mathf.Abs(total2) >= 1.2f && !view)
+            {
                 total2 = 0;
+                StartCoroutine(InvokeViewArea());
             }
         }
     }
