@@ -715,8 +715,7 @@ retry:
             }
             catch (EventNotFoundException)
             {
-                // Switch from exception with GUID to exception with path
-                throw new EventNotFoundException(path);
+                Debug.LogWarning("FMOD Event not found: " + path);
             }
         }
 
@@ -736,8 +735,7 @@ retry:
             }
             catch (EventNotFoundException)
             {
-                // Switch from exception with GUID to exception with path
-                throw new EventNotFoundException(path);
+                Debug.LogWarning("FMOD Event not found: " + path);
             }
         }
 
