@@ -10,9 +10,15 @@ public class Player : LiveItem {
     public Inventory inventory = new Inventory();
     public SkillPointsComponet skillPointsComponet;
 
-    public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
+    public Player InitPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
         Property.
+            SetFloatProperty(GameProperty.motorized, motorized)
+            .SetFloatProperty(GameProperty.capacity, capacity)
+            .SetFloatProperty(GameProperty.atkSpeed, atkSpeed)
+            .SetFloatProperty(GameProperty.reloadSpeed, reloadSpeed);
+
+        OriginProperty.
             SetFloatProperty(GameProperty.motorized, motorized)
             .SetFloatProperty(GameProperty.capacity, capacity)
             .SetFloatProperty(GameProperty.atkSpeed, atkSpeed)

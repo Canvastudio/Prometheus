@@ -151,6 +151,15 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             lv_Property.attack * propertys[pwr, 5]
             );
 
+        item.OriginProperty.InitBaseProperty(
+            lv_Property.mhp * propertys[pwr, 0],
+            lv_Property.speed * propertys[pwr, 1],
+            lv_Property.melee * propertys[pwr, 2],
+            lv_Property.laser * propertys[pwr, 3],
+            lv_Property.cartridge * propertys[pwr, 4],
+            lv_Property.attack * propertys[pwr, 5]
+            );
+
         item.InitInfoUI();
 
 
@@ -264,6 +273,15 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 999,
                999
             );
+
+            player.OriginProperty.InitBaseProperty(
+                9999,
+                2,
+                999,
+                999,
+                999,
+               999
+            );
         }
         else
         {
@@ -275,9 +293,18 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 config.cartridge,
                 config.attack
             );
+
+            player.OriginProperty.InitBaseProperty(
+                config.mhp,
+                config.speed,
+                config.melee,
+                config.laser,
+                config.cartridge,
+                config.attack
+);
         }
 
-        player.SetPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
+        player.InitPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
 
         FightComponet fightComponet = player.GetOrAddComponet<FightComponet>();
         player.fightComponet = fightComponet;

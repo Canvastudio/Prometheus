@@ -20,6 +20,10 @@ public class LiveBasePropertys : PropertyData {
         SetFloatProperty(GameProperty.nhp, hp);
         SetFloatProperty(GameProperty.attack, atk);
 
+        ohp = hp; ospeed = speed; omelee = melee; olaser = laser; ocartridge = cartridge; oatk = atk;
+
         return this;
     }
+
+    public float ohp, ospeed, omelee, olaser, ocartridge, oatk, omoto, ocapacity, oatkspeed, oreloadspeed;
 }

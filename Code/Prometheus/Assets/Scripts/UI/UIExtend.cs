@@ -13,6 +13,9 @@ public static class UIExtend {
             "<color=grey>000</color>{0}", "<color=grey>00</color>{0}", "<color=grey>0</color>{0}", "{0}",
         };
 
+    static string NormalFormat = "<color=white>{0}</color>";
+    static string UpFormat = "<color=green>{0}</color>";
+    static string downFormat = "<color=white>{0}</color>";
 
     private static StringBuilder stringBuilder = new StringBuilder(20);
 
@@ -38,7 +41,23 @@ public static class UIExtend {
 
     public static void SetPropertyText(this Text t, LiveItem item, GameProperty property)
     {
-        t.text = item.Property.GetIntProperty(property).ToString();
+        float p1 = item.Property.GetIntProperty(property);
+        float p2 = item.OriginProperty.GetIntProperty(property);
+
+        t.text = p1.ToString();
+
+        if (p1 < p2)
+        {
+            t.color = Color.red;
+        }
+        else if (p1 > p2)
+        {
+            t.color = Color.green;
+        }
+        else
+        {
+            t.color = Color.white;
+        }
     }
 
     public static void SetOneFloat(this Text t, float f)
@@ -56,7 +75,7 @@ public static class UIExtend {
     public static void SetIconHpText(this Text t, LiveItem item)
     {
         int nhp = item.Property.GetIntProperty(GameProperty.nhp);
-
+        
         int v = 10;
         for (int i = 0; i < 4; ++i)
         {
@@ -72,14 +91,27 @@ public static class UIExtend {
 
     public static void SetIconAtkText(this Text t, LiveItem item)
     {
-        int nhp = item.Property.GetIntProperty(GameProperty.attack);
-
+        int atk = item.Property.GetIntProperty(GameProperty.attack);
+        int oatk = item.OriginProperty.GetIntProperty(GameProperty.attack);
+        string satk;
+        if (atk < oatk)
+        {
+            satk = string.Format(downFormat, atk);
+        }
+        else if (atk > oatk)
+        {
+            satk = string.Format(UpFormat, atk);
+        }
+        else
+        {
+            satk = atk.ToString();
+        }
         int v = 10;
         for (int i = 1; i < 4; ++i)
         {
-            if (nhp / v == 0)
+            if (atk / v == 0)
             {
-                t.text = string.Format(gray_hp[i], nhp.ToString());
+                t.text = string.Format(gray_hp[i], satk);
                 return;
             }
 

@@ -175,6 +175,7 @@ public abstract class LiveItem : GameItemBase
     public void Awake()
     {
         Property = new LiveBasePropertys();
+        OriginProperty = new LiveBasePropertys();
         Property.changeCallback = OnPropertyChange;
     }
 
@@ -389,6 +390,11 @@ public abstract class LiveItem : GameItemBase
     /// 基础属性，血量，速度等
     /// </summary>
     public LiveBasePropertys Property;
+
+    /// <summary>
+    /// 原始数据用作对比，因为RPN公式 我无法知晓每一次操作数据得情况
+    /// </summary>
+    public LiveBasePropertys OriginProperty;
 
     public void AddHpPercent(float percent)
     {
