@@ -102,7 +102,7 @@ public class BrickData {
     /// <returns></returns>
     public Brick GetFirstRowEmpty()
     {
-        int w = BrickCore.Instance.data.GetRow(0).Count;
+        int w = bricks[0].Length;
         int[] emptyIndex = new int[w];
 
         var row_Bricks = bricks[0];
