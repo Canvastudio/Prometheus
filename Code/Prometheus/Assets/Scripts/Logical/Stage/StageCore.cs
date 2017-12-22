@@ -188,6 +188,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
         StageUIView.Instance.upUIView.RefreshHpUI();
         StageUIView.Instance.IniMat();
+        GCamera.Instance.InitPosition();
         List<Pathfinding.Node> list1 = new List<Pathfinding.Node>();
         yield return Player.standBrick.OnDiscoverd();
 
@@ -549,7 +550,7 @@ public static class SA
     public const string GameStart = "GST";
     public const string GameEnd = "GSE";
 
-    public const string CamerMove = "CME";
+    public const string ViewArea = "CME";
 }
 
 public static class ST

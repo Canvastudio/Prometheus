@@ -3854,7 +3854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb53868be56854fab830b712f599f206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteList: []
+  StateList: []
   Image_state: {fileID: 952377797}
   index: -1
   anim: {fileID: 173642628}
@@ -18397,7 +18397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb53868be56854fab830b712f599f206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteList: []
+  StateList: []
   Image_state: {fileID: 117114734}
   index: -1
   anim: {fileID: 739732517}
@@ -29886,7 +29886,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -542740425
+  randomSeed: 2009571133
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -33580,7 +33580,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1517223092}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1110259f3942f49138281bf24fa31d5c, type: 3}
   m_Name: 

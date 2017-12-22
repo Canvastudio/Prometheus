@@ -19,6 +19,7 @@ public class SkillPointInfo : MonoBehaviour
 
     string strPointCount = "({0})";
     string green = "<color=#00ff00>{0}</color>";
+    string grey = "<color=grey>{0}</color>";
 
     static StringBuilder sb = new StringBuilder(12);
 
@@ -145,15 +146,25 @@ public class SkillPointInfo : MonoBehaviour
             }
             else
             {
-                sb.Append(limit[i].ToString());
+                sb.Append(string.Format(grey, limit[i].ToString()));
             }
 
             if (i != limit.Length - 1)
             {
-                sb.Append("/");
+                sb.Append(string.Format(grey,"/"));
             }
         }
 
         skillActive.text = sb.ToString();
+
+        if (sp.activeIndex >= 0)
+        {
+            skillName.color = Color.green;
+        }
+        else
+        {
+            skillName.color = new Color(0.5f, 0.5f, 0.5f, .5f);
+        }
+
     }
 }

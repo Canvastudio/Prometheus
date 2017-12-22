@@ -12,7 +12,9 @@ public class Player : LiveItem {
 
     public Player SetPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
-        Property.SetFloatProperty(GameProperty.motorized, motorized)
+        Property.
+            SetFloatProperty(GameProperty.motorized, motorized)
+            .SetFloatProperty(GameProperty.capacity, capacity)
             .SetFloatProperty(GameProperty.atkSpeed, atkSpeed)
             .SetFloatProperty(GameProperty.reloadSpeed, reloadSpeed);
 

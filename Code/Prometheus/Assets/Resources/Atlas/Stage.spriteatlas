@@ -37,19 +37,23 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: ee50b2774f5620a238f674d048af9d8d
+      Hash: 83d91ebb5d28537d81dadf3d1ec9da86
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 47
-    hashString: ee50b2774f5620a238f674d048af9d8d
-    totalSpriteSurfaceArea: 872162
+    hashString: 83d91ebb5d28537d81dadf3d1ec9da86
+    totalSpriteSurfaceArea: 946562
     packables:
     - {fileID: 102900000, guid: fb5c7c1b603c941ebacf39a5be336d0b, type: 3}
     - {fileID: 102900000, guid: b4d8ebb997dad4a1e892e564a75ab7db, type: 3}
     packedSpriteRenderDataKeys:
     - f7b663e23b5544f5dbcd1dde21d3d257: 21300000
+    - 9446d667f87e04080bf2f5cf7f2fecd6: 21300000
+    - b75e60561ca6d47718a1370e4c80cac2: 21300000
     - a98788d3857504a769d1d09563e28277: 21300000
     - 1456afc5f00314253bfd1e930e817f17: 21300000
+    - a5643de671b2444e8a4a6cf75e2ad251: 21300000
+    - 98cad7ade656f4e3d881110a35800870: 21300000
     - 8a83447bd876548d1a49a854641100ab: 21300000
     - dca02f501dfbb4005a8e9973df008b50: 21300000
     - 343a492f2b5364c1a9af785813df6898: 21300000
@@ -121,8 +125,12 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: f7b663e23b5544f5dbcd1dde21d3d257, type: 3}
+  - {fileID: 21300000, guid: 9446d667f87e04080bf2f5cf7f2fecd6, type: 3}
+  - {fileID: 21300000, guid: b75e60561ca6d47718a1370e4c80cac2, type: 3}
   - {fileID: 21300000, guid: a98788d3857504a769d1d09563e28277, type: 3}
   - {fileID: 21300000, guid: 1456afc5f00314253bfd1e930e817f17, type: 3}
+  - {fileID: 21300000, guid: a5643de671b2444e8a4a6cf75e2ad251, type: 3}
+  - {fileID: 21300000, guid: 98cad7ade656f4e3d881110a35800870, type: 3}
   - {fileID: 21300000, guid: 8a83447bd876548d1a49a854641100ab, type: 3}
   - {fileID: 21300000, guid: dca02f501dfbb4005a8e9973df008b50, type: 3}
   - {fileID: 21300000, guid: 343a492f2b5364c1a9af785813df6898, type: 3}
@@ -193,8 +201,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: be99aef6ebec74b448f69cf069c6c471, type: 3}
   m_PackedSpriteNamesToIndex:
   - box_b_0
+  - box_d_2
+  - box_d_3
   - box_d_0
   - box_d_1
+  - box_d_4
+  - box_d_5
   - box_p_305
   - box_u_0
   - box_l_2

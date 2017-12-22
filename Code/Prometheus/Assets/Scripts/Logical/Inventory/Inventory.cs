@@ -209,6 +209,7 @@ public class ChipInventory
 
         model = config.model.ToArray(Random.Range(0, model_count - 1));
 
-        uid = _uid++;
+        uid = _uid;
+        _uid += 1;
     }
 }

@@ -198,7 +198,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
     public virtual void OnExitFromArea()
     {
         inViewArea = false;
-        RemoveLister();
+        //RemoveLister();
         StageCore.Instance.UnRegisterItem(this);
     }
 
@@ -212,7 +212,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         if (this is Brick)
         {
             Messenger.AddListener(SA.RefreshGameItemPos, RefreshPosistion);
-            Messenger.AddListener(SA.CamerMove, PlayerMoveEnd);
+            Messenger.AddListener(SA.ViewArea, ViewArea);
         }
     }
 
@@ -221,7 +221,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         if (this is Brick)
         {
             Messenger.RemoveListener(SA.RefreshGameItemPos, RefreshPosistion);
-            Messenger.RemoveListener(SA.CamerMove, PlayerMoveEnd);
+            Messenger.RemoveListener(SA.ViewArea, ViewArea);
         }
     }
 
@@ -235,12 +235,10 @@ public class GameItemBase : MonoBehaviour, ITagable {
         CheckViewArea();
     }
 
-    public void PlayerMoveEnd()
+    public virtual void ViewArea()
     {
         CheckViewArea();
     }
-
-
 
     public void ResetValues()
     {

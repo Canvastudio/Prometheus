@@ -83,7 +83,7 @@ public abstract class LiveItem : GameItemBase
 
             if (activeSkillCanUsed != b)
             {
-                if (activeSkillCanUsed)
+                if (b)
                 {
                     fightComponet.ActiveSkill();
                 }

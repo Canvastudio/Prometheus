@@ -3596,8 +3596,10 @@ MonoBehaviour:
   ignoreChipColor: 0
   AddChips:
   - 100011
-  Add_4_Stuff: 
-  AddSkills: 
+  - 100021
+  - 100031
+  Add_4_Stuff: 320000003200000032000000
+  AddSkills: 62900f0000000000
 --- !u!4 &13273353
 Transform:
   m_ObjectHideFlags: 0
@@ -8689,7 +8691,8 @@ MonoBehaviour:
   sliding: 0
   rate: 0
   distance: 0
-  total: 0
+  total1: 0
+  total2: 0
 --- !u!124 &2105311305
 Behaviour:
   m_ObjectHideFlags: 0
