@@ -160,10 +160,12 @@ public class SkillPointInfo : MonoBehaviour
         if (sp.activeIndex >= 0)
         {
             skillName.color = Color.green;
+            transform.SetAsFirstSibling();
         }
         else
         {
             skillName.color = new Color(0.5f, 0.5f, 0.5f, .5f);
+            pointCount.color = new Color(0.5f, 0.5f, 0.5f, .5f);
         }
 
     }

@@ -206,8 +206,7 @@ public class ChipView : MuiSingleBase<ChipView> {
         for (int i = 0; i < chipList.Count; ++i)
         {
             var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
-            chip.transform.SetParent(chipListRoot);
-            chip.transform.localScale = Vector3.one;
+            chip.transform.SetParentAndNormalize(chipListRoot);
             chip.gameObject.SetActive(true);
             chip.id = id;
             chip.ShowChip(chipList[i]);
@@ -249,8 +248,7 @@ public class ChipView : MuiSingleBase<ChipView> {
 
             ulong id;
             var chip = ObjPool<ChipListItem>.Instance.GetObjFromPoolWithID(out id, itemName);
-            chip.transform.SetParent(chipListRoot);
-            chip.transform.localScale = Vector3.one;
+            chip.transform.SetParentAndNormalize(chipListRoot);
             chip.gameObject.SetActive(true);
             chip.id = id;
             chip.ShowChip(selectChip.chipInventory);
