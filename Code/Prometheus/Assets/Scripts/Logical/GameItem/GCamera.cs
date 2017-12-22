@@ -85,6 +85,7 @@ public class GCamera : SingleGameObject<GCamera> {
         var Player = StageCore.Instance.Player;
         if (Player != null && StageCore.Instance.isLooping)
         {
+            float ly = transform.position.y;
             float y1 = StageUIView.Instance.playerCeiling.position.y;
             float y2 = StageCore.Instance.Player.transform.position.y;
 
@@ -95,7 +96,6 @@ public class GCamera : SingleGameObject<GCamera> {
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), speed);
                 distance -= d;
                 distance = Mathf.Max(0, distance);
-                total1 += d;
             }
 
             float x = Player.transform.Rt().anchoredPosition.x;
@@ -132,7 +132,7 @@ public class GCamera : SingleGameObject<GCamera> {
             }
 
             total2 += transform.position.x - lx;
-
+            total1 += transform.position.y - ly;
             //同一次肯定不需要检查2次得
             bool view = false;
 
@@ -140,7 +140,7 @@ public class GCamera : SingleGameObject<GCamera> {
             if (total1 >= 1.2f) 
             {
                 view = true;
-
+                StartCoroutine(InvokeViewArea());
                 total1 = 0;
             }
 
