@@ -207,7 +207,7 @@ public class StageCore : SingleGameObject<StageCore> {
             {
                 StageView.Instance.CancelPahtNode();
 
-                //Debug.Log("主循环等待中......");
+                Debug.Log("主循环等待中......");
                 //如果没有处于自动状态，则等待并处理玩家点击事件
                 yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick).BeginWaiting<ActiveSkillIns>(SA.PlayerClickActiveSkill);
 
@@ -297,7 +297,7 @@ public class StageCore : SingleGameObject<StageCore> {
                                         else
                                         {
                                             //等待玩家点击确认
-                                            yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillsConfig>(SA.PlayerClickActiveSkill);
+                                            yield return waitMsg.BeginWaiting<Brick>(SA.PlayerClickBrick.ToString()).BeginWaiting<ActiveSkillIns>(SA.PlayerClickActiveSkill);
 
                                             if (waitMsg.result.msg == SA.PlayerClickBrick)
                                             {

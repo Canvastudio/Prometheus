@@ -15,7 +15,7 @@ public class BrickData {
 
 	public Brick GetBrick(int row ,int column)
 	{
-        Debug.Log("getbrick: " + row + " , " + column + " , " + _lowestRow);
+        //Debug.Log("getbrick: " + row + " , " + column + " , " + _lowestRow);
 
         if (row < 0 || row - _lowestRow > bricks.Count - 1) return null;
 
