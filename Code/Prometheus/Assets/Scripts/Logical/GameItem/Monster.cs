@@ -116,7 +116,7 @@ public class Monster : LiveItem
             Debug.Log("没有激活的物体参与了checkDistance? : " + gameObject.name);
         }
 
-        if (!isAlive || inViewArea) return;
+        if (!isAlive || !inViewArea) return;
 
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 
