@@ -53,20 +53,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventlist:
   - time: 0
-    fxname: liudan_ready
+    fxname: 
     ishit: 0
     isendpos: 0
     ishitevent: 0
     isAttackAnim: 0
     isLogicEnd: 0
-  - time: 0.2
+  - time: 0
     fxname: liudan_fly
     ishit: 1
     isendpos: 0
     ishitevent: 0
     isAttackAnim: 0
     isLogicEnd: 0
-  - time: 0.5
+  - time: 0.1
     fxname: 
     ishit: 0
     isendpos: 0
