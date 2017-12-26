@@ -17,6 +17,8 @@ public static class UIExtend {
     static string UpFormat = "<color=green>{0}</color>";
     static string downFormat = "<color=white>{0}</color>";
 
+    public static string richColor = "<color=#$>{0}</color>";
+
     private static StringBuilder stringBuilder = new StringBuilder(20);
 
     public static void SetSkillIcon(this Image image, string name)
@@ -157,6 +159,45 @@ public static class UIExtend {
         image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
         image.color = RuleBox.GetUnExploredColor();
         image.SetNativeSize();
+    }
+
+    static public string ToX6(this Color c)
+    {
+        int i = 0xFFFFFF & (ColorToInt(c) >> 8);
+        return DecimalToHex(i);
+    }
+
+    /// <summary>
+    /// Convert the specified color to RGBA32 integer format.
+    /// </summary>
+
+    static public int ColorToInt(Color c)
+    {
+        int retVal = 0;
+        retVal |= Mathf.RoundToInt(c.r * 255f) << 24;
+        retVal |= Mathf.RoundToInt(c.g * 255f) << 16;
+        retVal |= Mathf.RoundToInt(c.b * 255f) << 8;
+        retVal |= Mathf.RoundToInt(c.a * 255f);
+        return retVal;
+    }
+
+
+
+    static public string DecimalToHex(int num)
+    {
+        num &= 0xFFFFFF;
+#if UNITY_FLASH
+  StringBuilder sb = new StringBuilder();
+  sb.Append(DecimalToHexChar((num >> 20) & 0xF));
+  sb.Append(DecimalToHexChar((num >> 16) & 0xF));
+  sb.Append(DecimalToHexChar((num >> 12) & 0xF));
+  sb.Append(DecimalToHexChar((num >> 8) & 0xF));
+  sb.Append(DecimalToHexChar((num >> 4) & 0xF));
+  sb.Append(DecimalToHexChar(num & 0xF));
+  return sb.ToString();
+#else
+        return num.ToString("X6");
+#endif
     }
 
 }

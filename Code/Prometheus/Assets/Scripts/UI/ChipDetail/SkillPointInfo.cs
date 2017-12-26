@@ -18,14 +18,22 @@ public class SkillPointInfo : MonoBehaviour
     Text describe;
 
     string strPointCount = "({0})";
-    string green = "<color=#00ff00>{0}</color>";
-    string grey = "<color=grey>{0}</color>";
+    static string unlockPoint;
+    static string grey;
 
     static StringBuilder sb = new StringBuilder(12);
 
     private void Awake()
     {
-        //gameObject.SetActive(false);
+        if (unlockPoint == null)
+        {
+            unlockPoint = UIExtend.richColor.Replace("$", ArtColor.Instance.unlock_lv.ToX6());
+        }
+
+        if (grey == null)
+        {
+            grey = UIExtend.richColor.Replace("$", ArtColor.Instance.lock_lv.ToX6());
+        }
     }
 
     public void Set(ActiveSkillIns ins)
@@ -39,7 +47,7 @@ public class SkillPointInfo : MonoBehaviour
         {
             if (i == ins.point.activeIndex)
             {
-                sb.Append(string.Format(green, limit[i].ToString()));
+                sb.Append(string.Format(unlockPoint, limit[i].ToString()));
             }
             else
             {
@@ -70,7 +78,7 @@ public class SkillPointInfo : MonoBehaviour
         {
             if (i == ins.point.activeIndex)
             {
-                sb.Append(string.Format(green, limit[i].ToString()));
+                sb.Append(string.Format(unlockPoint, limit[i].ToString()));
             }
             else
             {
@@ -142,7 +150,7 @@ public class SkillPointInfo : MonoBehaviour
         {
             if (i == sp.activeIndex)
             {
-                sb.Append(string.Format(green, limit[i].ToString()));
+                sb.Append(string.Format(unlockPoint, limit[i].ToString()));
             }
             else
             {
@@ -164,8 +172,8 @@ public class SkillPointInfo : MonoBehaviour
         }
         else
         {
-            skillName.color = new Color(0.5f, 0.5f, 0.5f, .5f);
-            pointCount.color = new Color(0.5f, 0.5f, 0.5f, .5f);
+            skillName.color = ArtColor.Instance.lock_lv;
+            pointCount.color = ArtColor.Instance.lock_lv;
         }
 
     }
