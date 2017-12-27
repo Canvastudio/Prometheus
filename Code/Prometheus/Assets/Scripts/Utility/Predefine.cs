@@ -10,7 +10,7 @@ public static class Predefine {
 
     public const string STAGE_INIT = "Stage_Init";
 
-    public const int BRICK_VIEW_WIDTH = 15;
+    public static int BRICK_VIEW_WIDTH = 15;
 
     public const string BRICK_OBSTACLE_UNREACHABLE = "stone_0_dark";
 
