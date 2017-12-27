@@ -67,7 +67,7 @@ public class ArtTestSkill : MonoBehaviour {
 
 		}
 
-		if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
+		if (Input.GetKeyDown(KeyCode.Return)) {
 		
 			int number = 0;
 

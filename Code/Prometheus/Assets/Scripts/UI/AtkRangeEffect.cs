@@ -140,12 +140,13 @@ public class AtkRangeEffect : MonoBehaviour {
 
             if (br > 1.2f)
             {
-                spread *= -1;
+                //spread *= -1;
+                br = 0;
             }
-            else if (br < 0.3)
-            {
-                spread *= -1;
-            }
+            //else if (br < 0.3)
+            //{
+                //spread *= -1;
+            //}
         }
     }
 
