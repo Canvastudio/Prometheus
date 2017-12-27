@@ -35,7 +35,6 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         base.Init();
 
         map_Data = MapConfig.GetConfigDataList<MapConfig>();
-        Predefine.BRICK_VIEW_WIDTH = map_Data
     }
 
     int max_Distance = 0;
