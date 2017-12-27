@@ -350,6 +350,10 @@ public class StageCore : SingleGameObject<StageCore> {
                         yield return DoPlayerSkill(ins);
                         Debug.Log("技能结束, 回到主循环..");
                     }
+                    else
+                    {
+                        PopTipView.Instance.Show("disarm");
+                    }
                 }
 
             }
