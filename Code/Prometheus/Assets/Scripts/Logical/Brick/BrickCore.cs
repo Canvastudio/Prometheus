@@ -35,6 +35,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         base.Init();
 
         map_Data = MapConfig.GetConfigDataList<MapConfig>();
+        Predefine.BRICK_VIEW_WIDTH = map_Data
     }
 
     int max_Distance = 0;
@@ -132,7 +133,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         }
 
         int w = curModule.contents.Count(curRowInModule);
-
+        Predefine.BRICK_VIEW_WIDTH = w;
         for (int col = 0; col < w; ++col)
         {
             var brick_Desc = curModule.GetBrickInfo(curRowInModule, col);
