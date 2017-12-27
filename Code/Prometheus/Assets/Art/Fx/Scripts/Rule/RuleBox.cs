@@ -55,6 +55,8 @@ public class RuleBox {
 	};
 
 	public static string GetBox(int row, int column) {
+
+		return box_l_list[0];
 	
 		if ((column == 0 || column == 5) && Random.value > 0.95f)
 			return box_s_list[Random.Range(0, box_s_list.Count)];
@@ -71,6 +73,8 @@ public class RuleBox {
 	}
 
 	public static string GetUnExplored(int row, int clumn) {
+
+		return box_d_list[0];
 
 		float r_value = Random.value;
 
@@ -97,14 +101,14 @@ public class RuleBox {
 	}
 
 	public static Color GetBlockColor() {
-		float random_color = Random.Range(0.3f, .4f);
+		float random_color = 1;//Random.Range(0.3f, .4f);
         return new Color(random_color,random_color,random_color,1);
 	}
 	public static Color GetUnExploredColor() {
 
-		float random_color = Random.Range(0.7f, 1);
+		float random_color = Random.Range(0.3f, 0.4f);
 
-		if(Random.value > 0.3f) random_color = Random.Range(0.87f, 0.92f);
+		//if(Random.value > 0.3f) random_color = Random.Range(0.87f, 0.92f);
 
         return new Color(random_color,random_color,random_color,1);
 	}
