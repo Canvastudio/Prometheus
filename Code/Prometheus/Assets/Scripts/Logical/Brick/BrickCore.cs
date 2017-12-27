@@ -654,6 +654,27 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         return result;
     }
 
+    public List<Brick> GetBrickInDistance(int r, int c, int distance)
+    {
+        List<Brick> result = new List<Brick>(distance * 4);
+
+        for (int i = -distance; i <= distance; ++i)
+        {
+            for (int m = -distance; m <= distance; ++m)
+            {
+                if (Mathf.Abs(i) + Mathf.Abs(m) == distance)
+                {
+                    if (GetNode(r + i, c + m) != null)
+                    {
+                        result.Add(GetNode(r + i, c + m).behavirour as Brick);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     public List<LiveItem> GetNearbyLiveItem(int r, int c, int distance, bool diagonal = false)
     {
         var bricks = GetNearbyBrick(r, c, distance, diagonal);

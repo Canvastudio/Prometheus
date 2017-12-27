@@ -196,6 +196,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
         gaming = true;
 
+        //AtkRange.Instance.ShowAtkRangeEffect(1, BrickCore.Instance.data.GetBrick(5, 5));
+
         while (isLooping)
         {
             //如果执行队列还有东西，那么自动执行

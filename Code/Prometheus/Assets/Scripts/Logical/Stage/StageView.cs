@@ -24,6 +24,8 @@ public class StageView : MuiSingleBase<StageView>
     public Transform uper;
     [SerializeField]
     public Transform cover;
+    [SerializeField]
+    public Transform range;
 
     [Space(5)]
     public Transform liveItemRoot;

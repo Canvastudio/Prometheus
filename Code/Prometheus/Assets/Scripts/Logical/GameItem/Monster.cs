@@ -237,8 +237,16 @@ public class Monster : LiveItem
                 StartCoroutine(fightComponet.DoActiveSkill(null, config));
             }
         }
+
+        var mf = fightComponet as MonsterFightComponet;
+        if (mf.monsterActiveInsList.Count > 0)
+        {
+            var ins = mf.monsterActiveInsList[0];
+            rangeEffect = AtkRange.Instance.ShowAtkRangeEffect(ins.config.carry[1], standBrick);
+        }
     }
 
+    public AtkRangeEffect rangeEffect;
     bool alpm = false;
 
     public override void OnEnterIntoArea()
@@ -348,5 +356,11 @@ public class Monster : LiveItem
         Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
         alpm = false;
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
+
+        if (rangeEffect != null)
+        {
+            AtkRange.Instance.RecycEffect(rangeEffect.id);
+            rangeEffect = null;
+        }
     }
 }
