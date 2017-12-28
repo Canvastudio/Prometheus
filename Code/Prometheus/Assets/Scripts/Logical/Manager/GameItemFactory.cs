@@ -142,23 +142,23 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        item.Property.InitBaseProperty(
-            lv_Property.mhp * propertys[pwr, 0],
-            lv_Property.speed * propertys[pwr, 1],
-            lv_Property.melee * propertys[pwr, 2],
-            lv_Property.laser * propertys[pwr, 3],
-            lv_Property.cartridge * propertys[pwr, 4],
-            lv_Property.attack * propertys[pwr, 5]
-            );
+        //item.Property.InitBaseProperty(
+        //    lv_Property.mhp * propertys[pwr, 0],
+        //    //lv_Property.speed * propertys[pwr, 1],
+        //    //lv_Property.melee * propertys[pwr, 2],
+        //    //lv_Property.laser * propertys[pwr, 3],
+        //    //lv_Property.cartridge * propertys[pwr, 4],
+        //    //lv_Property.attack * propertys[pwr, 5]
+        //    );
 
-        item.OriginProperty.InitBaseProperty(
-            lv_Property.mhp * propertys[pwr, 0],
-            lv_Property.speed * propertys[pwr, 1],
-            lv_Property.melee * propertys[pwr, 2],
-            lv_Property.laser * propertys[pwr, 3],
-            lv_Property.cartridge * propertys[pwr, 4],
-            lv_Property.attack * propertys[pwr, 5]
-            );
+        //item.OriginProperty.InitBaseProperty(
+        //    lv_Property.mhp * propertys[pwr, 0],
+        //    lv_Property.speed * propertys[pwr, 1],
+        //    lv_Property.melee * propertys[pwr, 2],
+        //    lv_Property.laser * propertys[pwr, 3],
+        //    lv_Property.cartridge * propertys[pwr, 4],
+        //    lv_Property.attack * propertys[pwr, 5]
+        //    );
 
         item.InitInfoUI();
 
