@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224567638001471612}
   - component: {fileID: 114044022360738468}
   m_Layer: 8
-  m_Name: AtkRangeEffect
+  m_Name: AtkRangeEffect 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,6 @@ MonoBehaviour:
   id: 0
   br: 1.2
   spread: 0.01
-  wait_time: 1
 --- !u!114 &114245945009590256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,53 +93,83 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: -0.005039215
-      value: 0.7559204
+      time: 0
+      value: 0
       inSlope: 2
       outSlope: 2
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.048667055
-      value: 0.9894144
-      inSlope: 0.014722704
-      outSlope: 0.014722704
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.17982394
-      value: 0.988614
+      time: 0.043628074
+      value: 0.8995717
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.25163966
-      value: 0.32716745
+      time: 0.11939749
+      value: 0.90186924
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.20126185
+      value: 0.19395238
       inSlope: 0.060718644
       outSlope: 0.060718644
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.3636618
-      value: 0.9911434
+      time: 0.2830715
+      value: 0.95404613
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.49403998
-      value: 0.9918335
-      inSlope: -0.06390668
-      outSlope: -0.06390668
+      time: 0.4285389
+      value: 0.95469767
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.99552435
-      value: 0.006699443
-      inSlope: -7.769018
-      outSlope: -7.769018
+      time: 0.5008716
+      value: 0.3386008
+      inSlope: 0.015497208
+      outSlope: 0.015497208
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5909329
+      value: 0.97791797
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7317616
+      value: 0.98099333
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.8040876
+      value: 0.47140586
+      inSlope: 0.01579523
+      outSlope: 0.01579523
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.90257806
+      value: 1.0006621
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   color_alpha: {r: 1, g: 1, b: 1, a: 1}
   m_time: 0
-  width_rate: 4.7
+  width_rate: 3
 --- !u!120 &120987011052471060
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -178,7 +207,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.01
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
