@@ -142,22 +142,18 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         MonsterLevelDataConfig lv_Property = ConfigDataBase.GetConfigDataById<MonsterLevelDataConfig>((ulong)lv);
 
-        item.Property.InitBaseProperty(
+        item.Property.InitMonsterProperty(
             lv_Property.mhp * propertys[pwr, 0],
-            lv_Property.speed * propertys[pwr, 1],
-            lv_Property.melee * propertys[pwr, 2],
-            lv_Property.laser * propertys[pwr, 3],
-            lv_Property.cartridge * propertys[pwr, 4],
-            lv_Property.attack * propertys[pwr, 5]
+            lv_Property.attack * propertys[pwr, 1],
+            lv_Property.shield * propertys[pwr, 2],
+            lv_Property.guard * propertys[pwr, 3]
             );
 
-        item.OriginProperty.InitBaseProperty(
+        item.OriginProperty.InitMonsterProperty(
             lv_Property.mhp * propertys[pwr, 0],
-            lv_Property.speed * propertys[pwr, 1],
-            lv_Property.melee * propertys[pwr, 2],
-            lv_Property.laser * propertys[pwr, 3],
-            lv_Property.cartridge * propertys[pwr, 4],
-            lv_Property.attack * propertys[pwr, 5]
+            lv_Property.attack * propertys[pwr, 1],
+            lv_Property.shield * propertys[pwr, 2],
+            lv_Property.guard * propertys[pwr, 3]
             );
 
         item.InitInfoUI();
@@ -265,43 +261,43 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         if (GameTestData.Instance.SuperPlayer)
         {
-            player.Property.InitBaseProperty(
-                9999 ,
-                2,
-                999,
-                999,
-                999,
-               999
-            );
-
-            player.OriginProperty.InitBaseProperty(
+            player.Property.InitPlayerProperty(
                 9999,
                 2,
-                999,
-                999,
-                999,
-               999
+                20,
+                100,
+                200,
+                10
+            );
+
+            player.OriginProperty.InitPlayerProperty(
+                9999,
+                2,
+                20,
+                100,
+                200,
+                10
             );
         }
         else
         {
-            player.Property.InitBaseProperty(
-                config.mhp,
-                config.speed,
-                config.melee,
-                config.laser,
-                config.cartridge,
-                config.attack
-            );
+            //player.Property.InitBaseProperty(
+            //    config.mhp,
+            //    config.speed,
+            //    config.melee,
+            //    config.laser,
+            //    config.cartridge,
+            //    config.attack
+            //);
 
-            player.OriginProperty.InitBaseProperty(
-                config.mhp,
-                config.speed,
-                config.melee,
-                config.laser,
-                config.cartridge,
-                config.attack
-);
+            //player.OriginProperty.InitBaseProperty(
+            //    config.mhp,
+            //    config.speed,
+            //    config.melee,
+            //    config.laser,
+            //    config.cartridge,
+            //    config.attack
+            //);
         }
 
         player.InitPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
