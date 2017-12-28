@@ -244,6 +244,15 @@ public class Monster : LiveItem
             var ins = mf.monsterActiveInsList[0];
             rangeEffect = AtkRange.Instance.ShowAtkRangeEffect(ins.config.carry[1], standBrick);
         }
+
+        if (standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode) <= 3)
+        {
+            Damage damage = new Damage(
+                StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
+                StageCore.Instance.Player, this, DamageType.Physical);
+
+            TakeDamage(damage);
+        }
     }
 
     public AtkRangeEffect rangeEffect;

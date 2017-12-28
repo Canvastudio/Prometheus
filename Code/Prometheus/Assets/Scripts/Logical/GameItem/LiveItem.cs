@@ -175,7 +175,11 @@ public abstract class LiveItem : GameItemBase
     public void Awake()
     {
         Property = new LiveBasePropertys();
+        Property.owner = this;
+
         OriginProperty = new LiveBasePropertys();
+        OriginProperty.owner = this;
+
         Property.changeCallback = OnPropertyChange;
     }
 
@@ -308,31 +312,6 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    [SerializeField]
-    private float? _melee;
-    public float melee
-    {
-        get
-        {
-            _melee = Property.GetFloatProperty(GameProperty.melee);
-
-            return _melee.Value;
-        }
-        set
-        {
-            Property.SetFloatProperty(GameProperty.melee, value);
-
-            _melee = value;
-
-            if (atk_value != null)
-            {
-                atk_value.SetIconAtkText(this);
-            }
-        }
-    }
-
-    
-
     public virtual void InitInfoUI()
     {
         if (hp_value != null)
@@ -438,11 +417,14 @@ public abstract class LiveItem : GameItemBase
 
     WaitForSeconds wait0_1Seconds = new WaitForSeconds(0.1f);
     WaitForSeconds wait0_2Seconds = new WaitForSeconds(0.2f);
+
     public virtual IEnumerator MeleeAttackTarget<T>(T target) where T : LiveItem
     {
         if (target != null)
         {
-            var damage = melee * Property.GetFloatProperty(GameProperty.attack);
+            float damage = 0;
+
+            damage = Property.GetFloatProperty(GameProperty.attack);
 
             Damage damageInfo = new Damage(damage, this, target, DamageType.Physical);
 
@@ -459,19 +441,9 @@ public abstract class LiveItem : GameItemBase
 
             transform.SetAsLastSibling();
 
-            //yield return ArtSkill.DoSkillIE("pugong", this.transform, target.transform);
             StartCoroutine(ArtSkill.DoSkillIE("pugong", transform.GetChild(0), target.transform));
 
             yield return wait0_2Seconds;
-
-            //if (this is Player)
-            //{
-            //    ArtSkill.Show(StageView.Instance.strPugong1, target.transform.position);
-            //}
-            //else
-            //{
-            //    ArtSkill.Show(StageView.Instance.strPugong2, target.transform.position);
-            //}
 
             yield return target.MeleeAttackByOther(this, damageInfo);
         }
@@ -490,6 +462,7 @@ public abstract class LiveItem : GameItemBase
     {
         //Debug.Log("对象：" + gameObject.name + " 收到伤害: 来源: " + damageInfo.damageSource);
         state.RemoveStateBuff(StateEffectType.Freeze);
+
         Sleep = 0;
 
         for(int i = state.state_list.Count -1; i >= 0; --i)
@@ -512,6 +485,44 @@ public abstract class LiveItem : GameItemBase
                         damageInfo.damage = 0;
                     }
                 }
+            }
+        }
+
+        float s = Property.GetFloatProperty(GameProperty.nshield);
+
+        if (damageInfo.damageType == DamageType.Physical)
+        {
+            if (s > 0)
+            {
+                float v = s - damageInfo.damage / 2;
+
+                if (v > 0)
+                {
+                    damageInfo.damage *= 0.5f;
+                    Property.SetFloatProperty(GameProperty.nshield, v);
+                }
+                else if (v <= 0)
+                {
+                    damageInfo.damage -= s;
+                    Property.SetFloatProperty(GameProperty.nshield, 0);
+                }
+            }
+           
+            damageInfo.damage -= Property.GetFloatProperty(GameProperty.guard);
+        }
+        else if (s > 0 && damageInfo.damageType == DamageType.Laser)
+        {
+            float v = s - damageInfo.damage;
+
+            if (v > 0)
+            {
+                damageInfo.damage = 0;
+                Property.SetFloatProperty(GameProperty.nshield, v);
+            }
+            else
+            {
+                damageInfo.damage -= s;
+                Property.SetFloatProperty(GameProperty.nshield, 0);
             }
         }
 
