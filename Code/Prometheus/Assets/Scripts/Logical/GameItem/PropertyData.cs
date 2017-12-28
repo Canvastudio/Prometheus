@@ -8,6 +8,9 @@ public class PropertyData
 
     public Callback<GameProperty> changeCallback;
 
+    public LiveItem owner;
+
+
     public float this[GameProperty gameProperty]
     {
         get
@@ -64,7 +67,7 @@ public class PropertyData
 
     public PropertyData SetFloatProperty(GameProperty id, float value, bool callback = true)
     {
-        if (id == GameProperty.nhp)
+        if (id == GameProperty.nhp && owner is Monster)
         {
             value = Mathf.Min(data[GameProperty.mhp], value);
         }

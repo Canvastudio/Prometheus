@@ -419,49 +419,17 @@ public class StageCore : SingleGameObject<StageCore> {
             }
         }
 
-        var player_Speed = Player.Property.GetFloatProperty(GameProperty.speed);
-        var monster_Speed = monster.Property.GetFloatProperty(GameProperty.speed);
+        var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
+        float[] f;
+        float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), Instance.Player, null, out f);
 
-        if (player_Speed >= monster_Speed || monster.enslave)
-        {
-            var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-            float[] f;
-            float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), Instance.Player, null, out f);
+        StageCore.Instance.TimeCast(timeSpend);
 
-            StageCore.Instance.TimeCast(timeSpend);
-            yield return Player.MeleeAttackTarget(monster);
+        yield return Player.MeleeAttackTarget(monster);
 
-            if (monster != null && monster.cur_hp > 0 && !monster.enslave)
-            {
-                yield return monster.MeleeAttackTarget(Player);
-            }
-
-            if (Player != null && Player.cur_hp > 0  && monster.cur_hp > 0&& player_Speed >= monster_Speed * 1.5f)
-            {
-                yield return w05s;
-                yield return Player.MeleeAttackTarget(monster);
-            }
-        }
-        else
+        if (monster != null && monster.cur_hp > 0 && !monster.enslave)
         {
             yield return monster.MeleeAttackTarget(Player);
-
-            if (Player != null && Player.cur_hp > 0)
-            {
-                var config = ConfigDataBase.GetConfigDataById<GlobalParameterConfig>(1);
-                float[] f;
-                float timeSpend = Rpn.CalculageRPN(config.atkSpeedFormula.ToArray(), Instance.Player, null, out f);
-
-                StageCore.Instance.TimeCast(timeSpend);
-
-                yield return Player.MeleeAttackTarget(monster);
-            }
-
-            if (monster != null && monster.cur_hp > 0  && Player.cur_hp > 0&& monster_Speed >= player_Speed * 1.5f)
-            {
-                yield return w05s;
-                yield return monster.MeleeAttackTarget(Player);
-            }
         }
 
         if (just && ins != null)
