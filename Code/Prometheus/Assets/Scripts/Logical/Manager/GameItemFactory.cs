@@ -284,7 +284,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             player.Property.InitPlayerProperty(
                 config.mhp,
                 config.firstAtt,
-                config.melee,
+                config.attack,
                 config.laser,
                 config.shield,
                 config.guard
@@ -293,7 +293,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             player.OriginProperty.InitPlayerProperty(
                 config.mhp,
                 config.firstAtt,
-                config.melee,
+                config.attack,
                 config.laser,
                 config.shield,
                 config.guard

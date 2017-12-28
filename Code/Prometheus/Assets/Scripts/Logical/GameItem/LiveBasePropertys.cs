@@ -22,14 +22,14 @@ public class LiveBasePropertys : PropertyData {
     public LiveBasePropertys InitPlayerProperty(
         float hp,
         float fatk,
-        float melee,
+        float atk,
         float laser,
         float shield,
         float armor)
     {
         SetFloatProperty(GameProperty.mhp, hp);
         SetFloatProperty(GameProperty.firstAtt, fatk);
-        SetFloatProperty(GameProperty.melee, melee);
+        SetFloatProperty(GameProperty.attack, atk);
         SetFloatProperty(GameProperty.shield, shield);
         SetFloatProperty(GameProperty.guard, armor);
         SetFloatProperty(GameProperty.nhp, hp);
