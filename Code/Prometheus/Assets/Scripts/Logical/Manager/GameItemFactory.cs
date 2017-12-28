@@ -281,26 +281,26 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         }
         else
         {
-            //player.Property.InitBaseProperty(
-            //    config.mhp,
-            //    config.speed,
-            //    config.melee,
-            //    config.laser,
-            //    config.cartridge,
-            //    config.attack
-            //);
+            player.Property.InitPlayerProperty(
+                config.mhp,
+                config.firstAtt,
+                config.melee,
+                config.laser,
+                config.shield,
+                config.guard
+            );
 
-            //player.OriginProperty.InitBaseProperty(
-            //    config.mhp,
-            //    config.speed,
-            //    config.melee,
-            //    config.laser,
-            //    config.cartridge,
-            //    config.attack
-            //);
+            player.OriginProperty.InitPlayerProperty(
+                config.mhp,
+                config.firstAtt,
+                config.melee,
+                config.laser,
+                config.shield,
+                config.guard
+            );
         }
 
-        player.InitPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
+        //player.InitPlayerProperty(config.pmotorized, config.capacity, config.atkSpeed, config.reloadSpeed);
 
         FightComponet fightComponet = player.GetOrAddComponet<FightComponet>();
         player.fightComponet = fightComponet;

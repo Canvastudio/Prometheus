@@ -44,7 +44,7 @@ public class LiveBasePropertys : PropertyData {
         SetFloatProperty(GameProperty.attack, atk);
         SetFloatProperty(GameProperty.shield, shield);
         SetFloatProperty(GameProperty.guard, armor);
-  
+        SetFloatProperty(GameProperty.nhp, hp);
         return this;
     }
 
@@ -61,7 +61,7 @@ public class LiveBasePropertys : PropertyData {
         SetFloatProperty(GameProperty.melee, melee);
         SetFloatProperty(GameProperty.shield, shield);
         SetFloatProperty(GameProperty.guard, armor);
-
+        SetFloatProperty(GameProperty.nhp, hp);
         return this;
     }
 
