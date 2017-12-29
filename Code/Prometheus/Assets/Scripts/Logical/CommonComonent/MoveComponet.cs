@@ -169,7 +169,7 @@ public class MoveComponet : MonoBehaviour {
             {
                 var monster = (owner as Monster);
                 monster.block_other = false;
-                monster.CheckDistance();
+                monster.OnPlayerMoveEnd();
                 owner.standBrick.brickType = BrickType.MONSTER;
             }
             else if (owner is Player)

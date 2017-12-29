@@ -109,7 +109,7 @@ public class Monster : LiveItem
         }
     }
 
-    public void CheckDistance()
+    public void OnPlayerMoveEnd()
     {
         if (!gameObject.activeInHierarchy)
         {
@@ -117,6 +117,17 @@ public class Monster : LiveItem
         }
 
         if (!isAlive || !inViewArea) return;
+
+        if (isDiscovered)
+        {
+            float nshield = Property.GetFloatProperty(GameProperty.nshield);
+            float mshield = Property.GetFloatProperty(GameProperty.shield);
+            float shield = Math.Min(mshield, nshield + 1);
+            if (shield != nshield)
+            {
+                Property.SetFloatProperty(GameProperty.nshield, shield);
+            }
+        }
 
         player_distance = standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode);
 
@@ -269,7 +280,7 @@ public class Monster : LiveItem
             return;
         }
 
-        Messenger.AddListener(SA.PlayerMoveEnd, CheckDistance);
+        Messenger.AddListener(SA.PlayerMoveEnd, OnPlayerMoveEnd);
 
         alpm = true;
     }
@@ -278,7 +289,7 @@ public class Monster : LiveItem
     {
         base.OnExitFromArea();
 
-        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
+        Messenger.RemoveListener(SA.PlayerMoveEnd, OnPlayerMoveEnd);
 
         alpm = false;
     }
@@ -362,7 +373,7 @@ public class Monster : LiveItem
         enslave = false;
         isAlive = false;
         block_other = false;
-        Messenger.RemoveListener(SA.PlayerMoveEnd, CheckDistance);
+        Messenger.RemoveListener(SA.PlayerMoveEnd, OnPlayerMoveEnd);
         alpm = false;
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
 
