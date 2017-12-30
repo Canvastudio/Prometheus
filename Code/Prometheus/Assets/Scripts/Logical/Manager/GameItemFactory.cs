@@ -225,6 +225,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
             CoroCore.Instance.StartCoroutine(item.OnDiscoverd());
         }
 
+
         return item;
     }
 

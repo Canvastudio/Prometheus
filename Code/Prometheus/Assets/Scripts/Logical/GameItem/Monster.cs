@@ -44,7 +44,13 @@ public class Monster : LiveItem
     private int player_distance = 0;
 
     [SerializeField]
+    public GameObject glow;
+
+    [SerializeField]
     public Image pwrFrame;
+
+    [SerializeField]
+    Animator animator;
 
     /// <summary>
     /// 是否被玩家奴役
@@ -173,13 +179,6 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
-        ////StartCoroutine(StageView.Instance.ShowFx(standBrick, "怪物翻开"));
-        //string name = SpecialEffectConfig.GetConfigDataByKey<SpecialEffectConfig>("怪物翻开").effectName;
-        //ArtSkill.Show(name, transform.position);
-
-        //yield return wait05s;
-
-        //icon.gameObject.SetActive(true);
         transform.SetParent(StageView.Instance.top, true);
 
         base.OnDiscoverd();
@@ -254,6 +253,15 @@ public class Monster : LiveItem
         {
             var ins = mf.monsterActiveInsList[0];
             rangeEffect = AtkRange.Instance.ShowAtkRangeEffect(ins.config.carry[1], standBrick);
+        }
+
+        if (Property.GetFloatProperty(GameProperty.nshield) > 0)
+        {
+            glow.SetActive(true);
+        }
+        else
+        {
+            glow.SetActive(false);
         }
 
         if (standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode) <= 3)
@@ -358,7 +366,33 @@ public class Monster : LiveItem
     {
         fightComponet.ActiveSkill();
 
-        return base.TakeDamage(damageInfo);
+        float s = Property.GetFloatProperty(GameProperty.nshield);
+        float a = Property.GetFloatProperty(GameProperty.guard);
+
+        if (s > 0)
+        {
+            animator.Play("anim_hudun");
+        }
+
+        if (a > 0)
+        {
+            animator.Play("anim_hujia");
+        }
+
+        float d = base.TakeDamage(damageInfo);
+
+        float s1 = Property.GetFloatProperty(GameProperty.nshield);
+
+        if (s1 > 0)
+        {
+            glow.SetActive(true);
+        }
+        else
+        {
+            glow.SetActive(false);
+        }
+
+        return d;
     }
 
     public override void Recycle()
@@ -369,7 +403,7 @@ public class Monster : LiveItem
         }
 
         base.Recycle();
-
+        glow.SetActive(false);
         enslave = false;
         isAlive = false;
         block_other = false;

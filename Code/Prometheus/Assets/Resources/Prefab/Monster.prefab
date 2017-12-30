@@ -855,13 +855,18 @@ MonoBehaviour:
   _moveComponet: {fileID: 0}
   hp_value: {fileID: 114615181243584750}
   atk_value: {fileID: 114022638677778802}
+  shield_value: {fileID: 114434993825592658}
+  shield_bg: {fileID: 1692714928100622}
+  armor_value: {fileID: 114716370433583476}
   lv: 0
   monsterName: {fileID: 114445705660817682}
   cid: 0
   block_other: 0
   discover_howl: 0
   dead_howl: 0
+  glow: {fileID: 1359821312320772}
   pwrFrame: {fileID: 114289752902982006}
+  animator: {fileID: 95485779139288268}
   _enslave: 0
   dangerousLevels: 0
   artPop: {fileID: 114961371275016346}
@@ -924,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.93306285, b: 0.029411793, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:

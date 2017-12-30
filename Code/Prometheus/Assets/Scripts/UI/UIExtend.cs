@@ -77,48 +77,56 @@ public static class UIExtend {
     public static void SetIconHpText(this Text t, LiveItem item)
     {
         int nhp = item.Property.GetIntProperty(GameProperty.nhp);
-        
-        int v = 10;
-        for (int i = 0; i < 4; ++i)
-        {
-            if (nhp / v == 0)
-            {
-                t.text = string.Format(gray_hp[i], nhp.ToString());
-                return;
-            }
+        t.text = nhp.ToString();
+        //int v = 10;
+        //for (int i = 0; i < 4; ++i)
+        //{
+        //    if (nhp / v == 0)
+        //    {
+        //        t.text = string.Format(gray_hp[i], nhp.ToString());
+        //        return;
+        //    }
 
-            v *= 10;
-        }
+        //    v *= 10;
+        //}
     }
 
-    public static void SetIconAtkText(this Text t, LiveItem item)
+    public static void SetIconColorText(this Text t, LiveItem item, GameProperty property)
     {
-        int atk = item.Property.GetIntProperty(GameProperty.attack);
-        int oatk = item.OriginProperty.GetIntProperty(GameProperty.attack);
-        string satk;
-        if (atk < oatk)
+        int p1 = item.Property.GetIntProperty(property);
+        int p2 = item.OriginProperty.GetIntProperty(property);
+
+        //string sp;
+        t.text = p1.ToString();
+
+        if (p1 < p2)
         {
-            satk = string.Format(downFormat, atk);
+            //sp = string.Format(downFormat, p1);
+            t.color = Color.red;
         }
-        else if (atk > oatk)
+        else if (p1 > p2)
         {
-            satk = string.Format(UpFormat, atk);
+            //sp = string.Format(UpFormat, p1);
+            t.color = Color.green;
         }
         else
         {
-            satk = atk.ToString();
+            // sp = p1.ToString();
+            t.color = Color.yellow;
         }
-        int v = 10;
-        for (int i = 1; i < 4; ++i)
-        {
-            if (atk / v == 0)
-            {
-                t.text = string.Format(gray_hp[i], satk);
-                return;
-            }
 
-            v *= 10;
-        }
+        //int v = 10;
+        //for (int i = 1; i < 4; ++i)
+        //{
+        //    if (p1 / v == 0)
+        //    {
+        //        t.text = string.Format(gray_hp[i], sp);
+        //        return;
+        //    }
+
+        //    v *= 10;
+        //}
+
     }
 
     public static void SetChipDescrible(this Text t, ChipConfig config)

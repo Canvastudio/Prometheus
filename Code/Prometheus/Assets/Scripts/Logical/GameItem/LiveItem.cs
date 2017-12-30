@@ -227,11 +227,18 @@ public abstract class LiveItem : GameItemBase
         }
     }
 
-    [Space(10f)]
     [SerializeField]
     Text hp_value;
     [SerializeField]
     Text atk_value;
+
+    [SerializeField]
+    Text shield_value;
+    [SerializeField]
+    GameObject shield_bg;
+    [SerializeField]
+    Text armor_value;
+
 
     [Space(10f)]
     [SerializeField]
@@ -322,7 +329,17 @@ public abstract class LiveItem : GameItemBase
 
         if (atk_value != null)
         {
-            atk_value.SetIconAtkText(this);
+            atk_value.SetIconColorText(this, GameProperty.attack);
+        }
+
+        if (shield_value != null)
+        {
+            shield_value.SetIconColorText(this, GameProperty.nshield);
+        }
+
+        if (armor_value != null)
+        {
+            armor_value.SetIconColorText(this, GameProperty.guard);
         }
     }
 
@@ -355,7 +372,42 @@ public abstract class LiveItem : GameItemBase
         {
             if (atk_value != null)
             {
-                atk_value.SetIconAtkText(this);
+                atk_value.SetIconColorText(this, GameProperty.attack);
+            }
+        }
+        else if (property == GameProperty.nshield)
+        {
+            if (shield_value != null)
+            {
+                float s = Property.GetFloatProperty(GameProperty.nshield);
+
+                if (s == 0)
+                {
+                    shield_value.gameObject.SetActive(false);
+
+                    if (shield_bg != null)
+                    {
+                        shield_bg.SetActive(false);
+                    }
+                }
+                else
+                {
+                    shield_value.gameObject.SetActive(true);
+
+                    if (shield_bg != null)
+                    {
+                        shield_bg.SetActive(true);
+                    }
+
+                    shield_value.SetIconColorText(this, GameProperty.nshield);
+                }
+            }
+        }
+        else if (property == GameProperty.guard)
+        {
+            if (armor_value != null)
+            {
+                armor_value.SetIconColorText(this, GameProperty.guard);
             }
         }
 
