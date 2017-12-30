@@ -85,7 +85,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     int distance = 0;
     int curRowInModule = 0;
     int moduelRowCount = 0;
-
+    List<ulong> enemys;
     public void CreateBrickRow()
     {
         ///如果
@@ -99,6 +99,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                 {
                     level_Id = map_Data[i].id;
                     curMapData = map_Data[i];
+                    enemys = null;
                     break;
                 }
             }
@@ -107,6 +108,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
             {
                 level_Id = map_Data[map_Data.Count - 1].id;
                 curMapData = map_Data[map_Data.Count - 1];
+                enemys = null;
             }
 
             var moduels = curMapData.map_models.ToList();
@@ -222,9 +224,14 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                         if (Random.Range(0f, 1f) <= probility)
                         {
-                            var enemys = curMapData.enemys.ToArray();
-                            var enemy_Index = Random.Range(0, enemys.Length);
+                            if (enemys == null || enemys.Count == 0)
+                            {
+                                enemys = curMapData.enemys.ToList();
+                            }
+
+                            var enemy_Index = Random.Range(0, enemys.Count);
                             var enemy_Id = enemys[enemy_Index];
+                            enemys.RemoveAt(enemy_Index);
 
                             int lv_min = curMapData.enemy_level[0];
                             int lv_max = curMapData.enemy_level[1];
@@ -233,7 +240,6 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                             if (!GameTestData.Instance.noMonster)
                             {
                                 _brick.CreateMonster(int.Parse(monster_Desc[1]), enemy_Id, lv);
-
 
                                 float tip = float.Parse(monster_Desc[3]);
 
