@@ -107,6 +107,11 @@ public class MoveComponet : MonoBehaviour {
         //yield return new WaitForSeconds(0.1f);
         float rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).timeRate;
 
+        if (owner is Player)
+        {
+            BrickCore.Instance.SetNearbyCoverDark(StageCore.Instance.Player.standBrick);
+        }
+
         LeanTween.moveLocal(this.gameObject, transform.parent.InverseTransformPoint(brick.transform.position), rate)
             .setOnComplete(OnMoveFinish);
 
@@ -116,6 +121,11 @@ public class MoveComponet : MonoBehaviour {
         }
 
         Messenger<Brick>.Invoke(SA.PlayerMoveStep, brick);
+
+        if (owner is Player)
+        {
+            BrickCore.Instance.SetNearbyCoverLight(StageCore.Instance.Player.standBrick);
+        }
     }
 
 
@@ -161,6 +171,11 @@ public class MoveComponet : MonoBehaviour {
                 BrickCore.Instance.CancelBlockNearbyBrick(owner.standBrick.pathNode.x, owner.standBrick.pathNode.z);
             }
 
+            if (owner is Player)
+            {
+                BrickCore.Instance.SetNearbyCoverDark(StageCore.Instance.Player.standBrick);
+            }
+
             owner.standBrick.CleanItem();
             owner.standBrick = brick;
             owner.transform.position = brick.transform.position;
@@ -175,6 +190,7 @@ public class MoveComponet : MonoBehaviour {
             else if (owner is Player)
             {
                 owner.standBrick.brickType = BrickType.PLAYER;
+                BrickCore.Instance.SetNearbyCoverLight(StageCore.Instance.Player.standBrick);
             }
             else
             {

@@ -9,6 +9,7 @@ public class Player : LiveItem {
     public PlayerInitConfig config;
     public Inventory inventory = new Inventory();
     public SkillPointsComponet skillPointsComponet;
+    public GameObject shield;
 
     public Player InitPlayerProperty(float motorized, float capacity, float atkSpeed, float reloadSpeed)
     {
@@ -64,6 +65,13 @@ public class Player : LiveItem {
 
     public override float TakeDamage(Damage damageInfo)
     {
+        float s = Property.GetFloatProperty(GameProperty.nshield);
+
+        if (s > 0)
+        {
+            shield.gameObject.SetActive(true);
+        }
+
         return base.TakeDamage(damageInfo);
     }
 

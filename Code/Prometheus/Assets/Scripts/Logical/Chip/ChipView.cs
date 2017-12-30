@@ -1160,7 +1160,7 @@ public class ChipView : MuiSingleBase<ChipView> {
         ObjPool<ChipListItem>.Instance.InitOrRecyclePool(itemName, listItem);
         ObjPool<ChipBoardInstance>.Instance.InitOrRecyclePool(instanceName, boardInstance);
 
-        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(StageCore.Instance.Player.playerId);
+        config = ConfigDataBase.GetConfigDataById<ChipDiskConfig>(GameManager.Instance.playerId);
 
         var powerList = config.power.ToArray();
         powerSupplyList = new List<BoardSupplyInstance>(powerList.Length);

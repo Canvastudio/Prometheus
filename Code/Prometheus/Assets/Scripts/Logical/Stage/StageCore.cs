@@ -186,6 +186,7 @@ public class StageCore : SingleGameObject<StageCore> {
     {
         Messenger.Invoke(SA.GameStart);
 
+        BrickCore.Instance.SetNearbyCoverLight(Player.standBrick);
         StageUIView.Instance.upUIView.RefreshHpUI();
         StageUIView.Instance.IniMat();
         GCamera.Instance.InitPosition();
