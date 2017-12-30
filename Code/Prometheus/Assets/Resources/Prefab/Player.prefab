@@ -148,7 +148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4298926416872860
 Transform:
   m_ObjectHideFlags: 1
@@ -329,11 +329,15 @@ MonoBehaviour:
   _moveComponet: {fileID: 114383987626850076}
   hp_value: {fileID: 114175957358966530}
   atk_value: {fileID: 114070289563845902}
+  shield_value: {fileID: 0}
+  shield_bg: {fileID: 0}
+  armor_value: {fileID: 0}
   playerId: 1
   inventory:
     chipList: []
     skillList: []
   skillPointsComponet: {fileID: 0}
+  shield: {fileID: 1754367223537572}
 --- !u!114 &114383987626850076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -474,7 +478,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -551072479
+  randomSeed: 1170429429
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3838,7 +3842,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1829521155
+  randomSeed: -1225754805
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -51,6 +51,8 @@ public class Monster : LiveItem
 
     [SerializeField]
     Animator animator;
+    [SerializeField]
+    public GameObject root;
 
     /// <summary>
     /// 是否被玩家奴役
@@ -180,7 +182,7 @@ public class Monster : LiveItem
     public override IEnumerator OnDiscoverd()
     {
         transform.SetParent(StageView.Instance.top, true);
-
+        root.SetActive(true);
         base.OnDiscoverd();
 
         RefreshActiveSKillState();
@@ -399,6 +401,7 @@ public class Monster : LiveItem
     {
         if (isDiscovered)
         {
+            root.SetActive(false);
             GContext.Instance.discover_monster -= 1;
         }
 
