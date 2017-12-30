@@ -44,6 +44,7 @@ public class Cover : GameItemBase {
 
     void Update()
     {
+
         if (Mathf.Abs(image.color.r - color.r) < 0.05)
         {
             image.color = color;
@@ -52,5 +53,11 @@ public class Cover : GameItemBase {
         {
             image.color = Color.Lerp(image.color, color, Time.deltaTime * 5);
         }
+
+        if (GameTestData.Instance.alwaysShow)
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.3f);
+        }
+
     }
 }

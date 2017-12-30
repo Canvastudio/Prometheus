@@ -220,7 +220,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 #if UNITY_EDITOR
         item.name = config.m_name + "_" + tid;
 #endif
-        item.root.SetActive(false);
+        if (!GameTestData.Instance.alwaysShow)
+        {
+            item.root.SetActive(false);
+        }
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)
         {

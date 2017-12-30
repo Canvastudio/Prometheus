@@ -268,12 +268,17 @@ public class Monster : LiveItem
 
         if (standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode) <= 3)
         {
-            Damage damage = new Damage(
-                StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
-                StageCore.Instance.Player, this, DamageType.Physical);
-
-            TakeDamage(damage);
+            yield return ArtSkill.DoSkillIE("pugong_first", StageCore.Instance.Player.transform, transform, FirstDamage);
         }
+    }
+
+    private void FirstDamage()
+    {
+        Damage damage = new Damage(
+            StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
+            StageCore.Instance.Player, this, DamageType.Physical);
+
+        TakeDamage(damage);
     }
 
     public AtkRangeEffect rangeEffect;
@@ -401,7 +406,10 @@ public class Monster : LiveItem
     {
         if (isDiscovered)
         {
-            root.SetActive(false);
+            if (!GameTestData.Instance.alwaysShow)
+            {
+                root.SetActive(false);
+            }
             GContext.Instance.discover_monster -= 1;
         }
 
