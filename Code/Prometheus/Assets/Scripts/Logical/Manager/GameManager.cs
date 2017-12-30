@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : SingleGameObject<GameManager> {
 
     public Camera GCamera;
+    public ulong playerId = 1;
 
     protected override void Init()
     {

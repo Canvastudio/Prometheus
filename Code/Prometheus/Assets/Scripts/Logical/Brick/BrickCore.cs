@@ -712,4 +712,30 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     {
         return GetNearbyBrick(brick.row, brick.column, distance);
     }
+
+    public void SetNearbyCoverLight(Brick brick)
+    {
+        var bricks = GetNearbyBrick(brick, 1);
+        foreach(var b in bricks)
+        {
+
+            if (b.cover != null)
+            {
+                b.cover.SetLight();
+            }
+        }
+    }
+
+    public void SetNearbyCoverDark(Brick brick)
+    {
+        var bricks = GetNearbyBrick(brick, 1);
+        foreach (var b in bricks)
+        {
+
+            if (b.cover != null)
+            {
+                b.cover.SetDark();
+            }
+        }
+    }
 }

@@ -3825,7 +3825,7 @@ Prefab:
     - target: {fileID: 224444497606354628, guid: 022221b5446f3c44c92e2835b71d08e0,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -62.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224653711761454034, guid: 022221b5446f3c44c92e2835b71d08e0,
         type: 2}
@@ -9019,6 +9019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GCamera: {fileID: 2105311307}
+  playerId: 1
 --- !u!114 &1779828384
 MonoBehaviour:
   m_ObjectHideFlags: 0

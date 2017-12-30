@@ -171,9 +171,7 @@ public class StageView : MuiSingleBase<StageView>
 
         //生成地图，怪物
         BrickCore.Instance.CreatePrimitiveStage();
-
-        //生成玩家
-        BrickCore.Instance.CreatePlayer(1);
+        BrickCore.Instance.CreatePlayer(GameManager.Instance.playerId);
 
         yield return 0;
 
