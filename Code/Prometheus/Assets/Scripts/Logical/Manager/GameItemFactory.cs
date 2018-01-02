@@ -120,7 +120,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var go = item.gameObject;
 
-        //go.SetActive(true);
+        go.SetActive(true);
 
         go.transform.SetParent(StageView.Instance.uper);
         go.transform.SetAsFirstSibling();
@@ -223,6 +223,10 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         if (!GameTestData.Instance.alwaysShow)
         {
             item.root.SetActive(false);
+        }
+        else
+        {
+            item.root.SetActive(true);
         }
 
         if (bornBrick.brickExplored == BrickExplored.EXPLORED)

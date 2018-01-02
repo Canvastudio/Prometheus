@@ -283,7 +283,8 @@ public class Monster : LiveItem
     private void FirstDamage()
     {
         Damage damage = new Damage(
-            StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
+            //StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
+            100f,
             StageCore.Instance.Player, this, DamageType.Physical);
 
         TakeDamage(damage);
@@ -412,6 +413,8 @@ public class Monster : LiveItem
 
     public override void Recycle()
     {
+        Debug.Log("Recycle Monster");
+
         if (isDiscovered)
         {
             if (!GameTestData.Instance.alwaysShow)
