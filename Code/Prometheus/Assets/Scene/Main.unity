@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731316, g: 0.38074902, b: 0.3587254, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -5109,46 +5109,6 @@ Prefab:
     - target: {fileID: 4680650785892656, guid: 5c83c7d7f86894faa937278bc2025f59, type: 2}
       propertyPath: m_RootOrder
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverLight.r
-      value: 0.85294116
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverLight.g
-      value: 0.85294116
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverLight.b
-      value: 0.85294116
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverLight.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverNormal.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverNormal.r
-      value: 0.37254903
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverNormal.g
-      value: 0.37254903
-      objectReference: {fileID: 0}
-    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
-        type: 2}
-      propertyPath: coverNormal.b
-      value: 0.37254903
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c83c7d7f86894faa937278bc2025f59, type: 2}
