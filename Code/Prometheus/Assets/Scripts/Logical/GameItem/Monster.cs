@@ -429,6 +429,7 @@ public class Monster : LiveItem
 
         if (rangeEffect != null)
         {
+            rangeEffect.Clean();
             AtkRange.Instance.RecycEffect(rangeEffect.id);
             rangeEffect = null;
         }

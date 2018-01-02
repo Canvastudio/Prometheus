@@ -161,51 +161,14 @@ public class AtkRangeEffect : MonoBehaviour {
     {
         temp_wait_time = 0;
         currenDistance = 1;
+
+        foreach (var i in imageIds)
+        {
+            ObjPool<Image>.Instance.RecycleObj(AtkRange.Instance.strRangeMask, id);
+        }
+
         StopAllCoroutines();
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Vector3 sp = brick.transform.position;
-
-    //    Vector3 pp = sp + new Vector3(-(radius + 0.5f) * br, 0.5f * br, 0);
-
-    //    Gizmos.DrawCube(pp, Vector3.one * 0.3f);
-
-    //    int i = 0;
-    //    int p = 1 + 2 * radius;
-    //    while (i < 4 * p)
-    //    {
-    //        Vector2 d = points[i / p];
-    //        if (i % 2 == 0)
-    //        {
-    //            if (d.x > 0)
-    //            {
-    //                pp = GetRight(pp);
-    //            }
-    //            else
-    //            {
-    //                pp = GetLeft(pp);
-    //            }
-
-    //            Gizmos.DrawCube(pp, Vector3.one * 0.3f);
-    //            ++i;
-    //        }
-    //        else
-    //        {
-    //            if (d.y > 0)
-    //            {
-    //                pp = GetUp(pp);
-    //            }
-    //            else
-    //            {
-    //                pp = GetDown(pp);
-    //            }
-    //            Gizmos.DrawCube(pp, Vector3.one * 0.3f);
-    //            ++i;
-    //        }
-    //    }
-    //}
 
     private Vector3 GetLeft(Vector3 p)
     {
