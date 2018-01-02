@@ -251,10 +251,12 @@ public class Monster : LiveItem
         }
 
         var mf = fightComponet as MonsterFightComponet;
+
         if (mf.monsterActiveInsList.Count > 0)
         {
             var ins = mf.monsterActiveInsList[0];
             rangeEffect = AtkRange.Instance.ShowAtkRangeEffect(ins.config.carry[1], standBrick);
+
         }
 
         if (Property.GetFloatProperty(GameProperty.nshield) > 0)
@@ -268,7 +270,10 @@ public class Monster : LiveItem
 
         if (standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode) <= 3)
         {
+            StageCore.Instance.action_item += 1;
             yield return ArtSkill.DoSkillIE("pugong_first", StageCore.Instance.Player.transform, transform, FirstDamage);
+            yield return new WaitForSeconds(1f);
+            StageCore.Instance.action_item -= 1;
         }
     }
 

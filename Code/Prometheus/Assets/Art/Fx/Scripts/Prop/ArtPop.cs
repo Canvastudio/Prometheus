@@ -59,7 +59,7 @@ public class ArtPop : MonoBehaviour {
 
                 anim.SetBool("isloop", StateList.Count > 1);
 
-                if (cur_ins.id == ins.id)
+                if (cur_ins != null && cur_ins.id == ins.id)
                 {
                     OnNext();
                 }

@@ -143,8 +143,6 @@ public class AtkRangeEffect : MonoBehaviour {
 
             if (br > 1.2f)
             {
-                //spread *= -1;
-
                 br = 1.21f;
                 
                 temp_wait_time += Time.deltaTime;
@@ -153,20 +151,16 @@ public class AtkRangeEffect : MonoBehaviour {
 
                     br = 0;
                     temp_wait_time = 0;
-
                 }
 
             }
-            //else if (br < 0.3)
-            //{
-                //spread *= -1;
-            //}
         }
     }
 
     public void Clean()
     {
         temp_wait_time = 0;
+        currenDistance = 1;
         StopAllCoroutines();
     }
 

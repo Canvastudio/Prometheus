@@ -3632,10 +3632,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d101a35ba268944594040b57c5f0829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoSroll: 0
+  NoSroll: 1
   SuperMonster: 0
   SuperPlayer: 0
-  alwaysShow: 1
+  alwaysShow: 0
   infoDetail: 0
   noMonster: 0
   ignoreChipColor: 0
@@ -3825,7 +3825,7 @@ Prefab:
     - target: {fileID: 224444497606354628, guid: 022221b5446f3c44c92e2835b71d08e0,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -62.2
       objectReference: {fileID: 0}
     - target: {fileID: 224653711761454034, guid: 022221b5446f3c44c92e2835b71d08e0,
         type: 2}
@@ -5202,7 +5202,7 @@ MonoBehaviour:
     type: 2}
   strRangeMask: RangeMask
   strRangeEffect: RangeEffect
-  gradualTime: 0.5
+  gradualTime: 2
   maskAlpha: 0.3
 --- !u!4 &1143187086
 Transform:
@@ -9139,6 +9139,8 @@ MonoBehaviour:
   total1: 0
   total2: 0
   speed: 0.1
+  max: 0
+  r: 0
 --- !u!124 &2105311305
 Behaviour:
   m_ObjectHideFlags: 0

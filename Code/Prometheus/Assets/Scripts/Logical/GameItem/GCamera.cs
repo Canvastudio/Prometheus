@@ -13,9 +13,24 @@ public class GCamera : SingleGameObject<GCamera> {
     public float total1 = 0;
     public float total2 = 0;
     public float speed = 0.10f;
+    public float max;
+    public float r;
     public void InitData()
     {
         rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
+
+        int w = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapWidth;
+
+        if (w % 2 == 0)
+        {
+            max = w / 2 * 120 + 60;
+        }
+        else
+        {
+            max = w - (w / 2) * 120;
+        }
+
+        r = (w - 6) * 1.2f;
     }
 
     public void InitPosition()
@@ -24,7 +39,7 @@ public class GCamera : SingleGameObject<GCamera> {
 
         float x = Player.transform.Rt().anchoredPosition.x;
 
-        if (x >= 0 && x < 1095)
+        if (x >= 0 && x < max)
         {
             if (Mathf.Abs(transform.position.x - Player.transform.position.x) > 0.01)
             {
@@ -42,7 +57,7 @@ public class GCamera : SingleGameObject<GCamera> {
         }
         else
         {
-            transform.position = new Vector3(10.8f, 0, 0);
+            transform.position = new Vector3(r, 0, 0);
         }
 
 
@@ -55,6 +70,7 @@ public class GCamera : SingleGameObject<GCamera> {
         Debug.Log("Invoke ViewArea");
         Messenger.Invoke(SA.ViewArea);
     }
+
     public void MoveDown(float _distance)
     {
         distance += _distance * 1.2f;
@@ -92,7 +108,6 @@ public class GCamera : SingleGameObject<GCamera> {
             if (y2 > y1)
             {
                 float d = (y2 - y1) * speed;
-                //transform.position = new Vector3(transform.position.x, transform.position.y + (y2 - y1), transform.position.z);
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), speed);
                 distance -= d;
                 distance = Mathf.Max(0, distance);
@@ -101,7 +116,7 @@ public class GCamera : SingleGameObject<GCamera> {
             float x = Player.transform.Rt().anchoredPosition.x;
             float lx = transform.position.x;
             float offset;
-            if (x >= 0 && x < 1095)
+            if (x >= 0 && x < max)
             {
                 offset = transform.position.x - Player.transform.position.x;
 
@@ -122,11 +137,11 @@ public class GCamera : SingleGameObject<GCamera> {
             }
             else
             {
-                offset = 10.8f - transform.position.x;
+                offset = r - transform.position.x;
 
                 if (Mathf.Abs(offset) > 0.01)
                 {
-                    target = new Vector3(10.8f, transform.position.y, transform.position.z);
+                    target = new Vector3(r, transform.position.y, transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, target, speed);
                 }
             }
