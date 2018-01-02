@@ -129,11 +129,17 @@ public class Monster : LiveItem
         if (isDiscovered)
         {
             float nshield = Property.GetFloatProperty(GameProperty.nshield);
-            float mshield = Property.GetFloatProperty(GameProperty.shield);
-            float shield = Math.Min(mshield, nshield + 1);
-            if (shield != nshield)
+
+            if (nshield != 0)
             {
-                Property.SetFloatProperty(GameProperty.nshield, shield);
+                float mshield = Property.GetFloatProperty(GameProperty.shield);
+
+                float shield = Math.Min(mshield, nshield + 1);
+
+                if (shield != nshield)
+                {
+                    Property.SetFloatProperty(GameProperty.nshield, shield);
+                }
             }
         }
 
