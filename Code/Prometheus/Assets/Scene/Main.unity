@@ -5110,6 +5110,46 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverLight.r
+      value: 0.85294116
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverLight.g
+      value: 0.85294116
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverLight.b
+      value: 0.85294116
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverLight.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverNormal.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverNormal.r
+      value: 0.37254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverNormal.g
+      value: 0.37254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396368390291346, guid: 5c83c7d7f86894faa937278bc2025f59,
+        type: 2}
+      propertyPath: coverNormal.b
+      value: 0.37254903
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c83c7d7f86894faa937278bc2025f59, type: 2}
   m_IsPrefabParent: 0

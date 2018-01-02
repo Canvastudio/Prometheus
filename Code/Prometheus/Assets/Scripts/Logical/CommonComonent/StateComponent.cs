@@ -69,9 +69,6 @@ public class StateComponent : MonoBehaviour {
                 }
             }
         }
-
-        //if (owner != null)
-        //    owner.AddStateUI(ins);
     }
 
     public virtual void RemoveStateIns(StateIns ins)

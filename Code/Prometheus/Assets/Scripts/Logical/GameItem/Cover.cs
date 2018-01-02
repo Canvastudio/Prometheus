@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class Cover : GameItemBase {
 
-    static Color dark = new Color32(95, 95, 95, 255);
-    static Color light = Color.white;
-
     [SerializeField]
     Image image;
 
@@ -27,19 +24,20 @@ public class Cover : GameItemBase {
         base.Recycle();
         standBrick.cover = null;
         standBrick = null;
-        image.color = dark;
-        color = dark;
+        image.color = ArtColor.Instance.coverNormal;
+        color = ArtColor.Instance.coverNormal;
+
         ObjPool<Cover>.Instance.RecycleObj(GameItemFactory.Instance.cover_pool, itemId);
     }
 
     public void SetLight()
     {
-        color = light;
+        color = ArtColor.Instance.coverLight;
     }
 
     public void SetDark()
     {
-        color = dark;
+        color = ArtColor.Instance.coverNormal;
     }
 
     void Update()
