@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4410692178409862}
   - component: {fileID: 114211259732506808}
   - component: {fileID: 95627659110057276}
-  - component: {fileID: 114419300061048190}
   m_Layer: 0
   m_Name: pugong_first
   m_TagString: Untagged
@@ -85,27 +84,8 @@ MonoBehaviour:
     ishitevent: 0
     isAttackAnim: 0
     isLogicEnd: 1
-  destroy_time: 0.8
+  destroy_time: 0.5
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
   ishit: 0
   isend: 0
---- !u!114 &114419300061048190
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1616469819961736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796d9ddc1f4bb41e7a489c37514c9572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 95627659110057276}
-  anim_name: anim_pugong
-  tranAnim: {fileID: 0}
-  driction: {x: 0, y: 0, z: 0}
-  orignalPos: {x: 0, y: 0, z: 0}
-  t_a: {fileID: 0}
-  t_b: {fileID: 0}
-  timer: 0
