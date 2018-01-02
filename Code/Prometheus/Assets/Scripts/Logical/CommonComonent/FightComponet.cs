@@ -568,7 +568,7 @@ public class FightComponet : MonoBehaviour
             }
         }
 
-        Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
+        //Debug.Log(gameObject.name + " 释放技能: id: " + config.id);
         //Debug.Log("伤害公式: " + config.damage);
 
         ownerObject.OnActionBegin();
@@ -666,7 +666,7 @@ public class FightComponet : MonoBehaviour
 
         for (int i = 0; i < apply_list.Count; ++i)
         {
-            Debug.Log("Skill Target: " + apply_list[i].name);
+            //Debug.Log("Skill Target: " + apply_list[i].name);
 
             if (config.successRate != null)
             {
@@ -704,7 +704,7 @@ public class FightComponet : MonoBehaviour
 
         ownerObject.OnActionEnd();
 
-        Debug.Log("技能释放完毕: " + name);
+        Debug.Log("技能释放完毕: " + name + " ,action: " + ownerObject.action);
     }
 
     static WaitUntil wuf;

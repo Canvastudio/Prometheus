@@ -13,9 +13,8 @@ public class StageCore : SingleGameObject<StageCore> {
 
     Queue<LoopAction> activeQueue = new Queue<LoopAction>();
 
-    public Player Player;
-
-    public int action_item = 0;
+    public Player Player;   
+    public List<GameItemBase> action_item = new List<GameItemBase>();
 
     WaitUntil AllActionFinish;
 
@@ -76,7 +75,7 @@ public class StageCore : SingleGameObject<StageCore> {
     
     public bool CanGoing()
     {
-        return action_item == 0 && GCamera.Instance.sliding == false;
+        return action_item.Count == 0 && GCamera.Instance.sliding == false;
     }
 
     public void RegisterItem(GameItemBase gameItemBase)
@@ -463,6 +462,7 @@ public class StageCore : SingleGameObject<StageCore> {
         totalTime += time;
 
         StageView.Instance.MoveDownMap(time);
+        //Messenger<float>.Invoke(SA.StageTimeCast, time);
     }
 
     public IEnumerator CheckTurnTime()
@@ -471,9 +471,18 @@ public class StageCore : SingleGameObject<StageCore> {
         {
             if (turnTime > 0)
             {
-                turnTime = Mathf.Max(0, turnTime - Time.deltaTime);
+                float v = turnTime - Time.deltaTime;
                 //StageView.Instance.MoveDownMap(Time.deltaTime);
-                Messenger<float>.Invoke(SA.StageTimeCast, Time.deltaTime);
+                if (v > 0)
+                {
+                    Messenger<float>.Invoke(SA.StageTimeCast, Time.deltaTime);
+                    turnTime = v;
+                }
+                else
+                {
+                    Messenger<float>.Invoke(SA.StageTimeCast, turnTime);
+                    turnTime = 0;
+                }
             }
 
             yield return 0;

@@ -184,6 +184,8 @@ public class Monster : LiveItem
 
     public override IEnumerator OnDiscoverd()
     {
+        Debug.Log("发现怪物： " + gameObject.name);
+
         transform.SetParent(StageView.Instance.top, true);
         root.SetActive(true);
         base.OnDiscoverd();
@@ -379,6 +381,11 @@ public class Monster : LiveItem
 
     public override float TakeDamage(Damage damageInfo)
     {
+        if (!isDiscovered)
+        {
+            Debug.Log("没有被发现的怪物受到了伤害： " + gameObject.name);
+        }
+
         fightComponet.ActiveSkill();
 
         float s = Property.GetFloatProperty(GameProperty.nshield);
@@ -424,12 +431,17 @@ public class Monster : LiveItem
         }
 
         base.Recycle();
+
         glow.SetActive(false);
+
         enslave = false;
         isAlive = false;
         block_other = false;
+
         Messenger.RemoveListener(SA.PlayerMoveEnd, OnPlayerMoveEnd);
+
         alpm = false;
+
         ObjPool<Monster>.Instance.RecycleObj(GameItemFactory.Instance.monster_pool, itemId);
 
         if (rangeEffect != null)

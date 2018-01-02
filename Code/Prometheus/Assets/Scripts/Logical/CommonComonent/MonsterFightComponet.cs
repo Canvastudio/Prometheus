@@ -30,11 +30,10 @@ public class MonsterFightComponet : FightComponet {
 
     public override void Clean()
     {
-        base.Clean();
-
         DeactiveSkill();
         monsterActiveInsList.Clear();
 
+        base.Clean();
     }
 
     protected override void AddActiveIns(ulong id, SkillPoint point)

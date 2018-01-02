@@ -61,7 +61,7 @@ public class GCamera : SingleGameObject<GCamera> {
     IEnumerator InvokeViewArea()
     {
         yield return 0;
-        Debug.Log("Invoke ViewArea");
+        //Debug.Log("Invoke ViewArea");
         Messenger.Invoke(SA.ViewArea);
     }
 

@@ -34,7 +34,7 @@ public class SkillItem : MonoBehaviour
         {
             var mins = ins as MonsterActiveSkillIns;
             cd.gameObject.SetActive(true);
-            var cdv = (float)(Mathf.FloorToInt(mins.cooldown * 10f)) / 10f;
+            var cdv = ((float)(Mathf.FloorToInt(Mathf.Max(0, mins.cooldown * 10f)))) / 10f;
             skillCooldown.text = cdv.ToString();
             cost.SetActive(false);
         }

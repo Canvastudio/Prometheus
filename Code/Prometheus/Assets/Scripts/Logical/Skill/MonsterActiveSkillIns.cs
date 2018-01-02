@@ -26,13 +26,14 @@ public class MonsterActiveSkillIns : ActiveSkillIns
     /// <returns></returns>
     public bool OnTimeCast(float time)
     {
+
         if (active)
         {
             cooldown -= time;
 
             if (cooldown <= 0)
             {
-                cooldown = config.coolDown;
+                cooldown += config.coolDown;
                 return true;
             }
             else

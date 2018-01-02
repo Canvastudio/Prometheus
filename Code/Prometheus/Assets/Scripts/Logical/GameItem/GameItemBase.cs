@@ -23,7 +23,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         }
     }
 
-    private int action = 0;
+    public int action = 0;
 
     public Image icon;
 
@@ -33,7 +33,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
     {
         if (action == 0)
         {
-            StageCore.Instance.action_item += 1;
+            StageCore.Instance.action_item.Add(this);
         }
 
         action += 1;
@@ -41,14 +41,11 @@ public class GameItemBase : MonoBehaviour, ITagable {
 
     public void OnActionEnd()
     {
-        if (action > 0)
-        {
-            action -= 1;
-        }
-            
+        action -= 1;
+
         if (action == 0)
         {
-            StageCore.Instance.action_item -= 1;
+            StageCore.Instance.action_item.Remove(this);
         }
     }
 
@@ -57,7 +54,7 @@ public class GameItemBase : MonoBehaviour, ITagable {
         if (action != 0)
         {
             action = 0;
-            StageCore.Instance.action_item -= 1;
+            StageCore.Instance.action_item.Remove(this);
         }
     }
 

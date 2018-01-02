@@ -43,7 +43,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     public void CreatePrimitiveStage()
     {
         //初始生成的行数
-        max_Distance = Mathf.FloorToInt(StageView.Instance.transform.Rt().sizeDelta.y / StageView.Instance.brickWidth) + 2;
+        max_Distance = Mathf.FloorToInt(StageView.Instance.transform.Rt().sizeDelta.y / StageView.Instance.brickWidth) + 4;
 
         total_row = 0;
 
