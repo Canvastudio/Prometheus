@@ -663,7 +663,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
     public List<Brick> GetBrickInDistance(int r, int c, int distance)
     {
-        List<Brick> result = new List<Brick>(distance * 4);
+        List<Brick> result = new List<Brick>(24);
 
         for (int i = -distance; i <= distance; ++i)
         {

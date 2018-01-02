@@ -283,8 +283,7 @@ public class Monster : LiveItem
     private void FirstDamage()
     {
         Damage damage = new Damage(
-            //StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
-            100f,
+            StageCore.Instance.Player.Property.GetFloatProperty(GameProperty.firstAtt),
             StageCore.Instance.Player, this, DamageType.Physical);
 
         TakeDamage(damage);

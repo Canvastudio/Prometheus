@@ -19,6 +19,7 @@ public class AtkRangeEffect : MonoBehaviour {
     public ulong id;
     public float br = 0f;
 
+    [SerializeField]
     List<ulong> imageIds = new List<ulong>(12);
 
     static Vector2[] points = new Vector2[] 
@@ -44,6 +45,7 @@ public class AtkRangeEffect : MonoBehaviour {
 
     public IEnumerator ShowEffect()
     {
+        Debug.Log("show effect:  raiuds: " + radius);
         float maxAlpha = AtkRange.Instance.maskAlpha;
         float gradualTime = AtkRange.Instance.gradualTime;
 
@@ -164,9 +166,10 @@ public class AtkRangeEffect : MonoBehaviour {
 
         foreach (var i in imageIds)
         {
-            ObjPool<Image>.Instance.RecycleObj(AtkRange.Instance.strRangeMask, id);
+            ObjPool<Image>.Instance.RecycleObj(AtkRange.Instance.strRangeMask, i);
         }
 
+        imageIds.Clear();
         StopAllCoroutines();
     }
 
