@@ -274,10 +274,9 @@ public class Monster : LiveItem
 
         if (standBrick.pathNode.Distance(StageCore.Instance.Player.standBrick.pathNode) <= 3)
         {
-            StageCore.Instance.action_item += 1;
+            //StageCore.Instance.action_item += 1;
             yield return ArtSkill.DoSkillIE("pugong_first", StageCore.Instance.Player.transform, transform, FirstDamage);
-            yield return new WaitForSeconds(1f);
-            StageCore.Instance.action_item -= 1;
+            //StageCore.Instance.action_item -= 1;
         }
     }
 
