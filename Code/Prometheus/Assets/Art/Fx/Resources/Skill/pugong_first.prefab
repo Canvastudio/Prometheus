@@ -70,14 +70,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventlist:
-  - time: 0.15
+  - time: 0
     fxname: attack_first
     ishit: 1
     isendpos: 1
     ishitevent: 0
     isAttackAnim: 0
     isLogicEnd: 0
-  destroy_time: 0.5
+  - time: 0.2
+    fxname: attack_first
+    ishit: 0
+    isendpos: 0
+    ishitevent: 1
+    isAttackAnim: 0
+    isLogicEnd: 1
+  destroy_time: 0.1
   tran_start: {fileID: 0}
   tran_end: {fileID: 0}
   ishit: 0
