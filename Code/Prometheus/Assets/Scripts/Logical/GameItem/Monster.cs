@@ -119,11 +119,6 @@ public class Monster : LiveItem
 
     public void OnPlayerMoveEnd()
     {
-        if (!gameObject.activeInHierarchy)
-        {
-            Debug.Log("没有激活的物体参与了checkDistance? : " + gameObject.name);
-        }
-
         if (!isAlive || !inViewArea) return;
 
         if (isDiscovered)
@@ -148,6 +143,8 @@ public class Monster : LiveItem
         if (!isDiscovered && player_distance <= AIConfig.warning)
         {
             StageCore.Instance.monsterwakeup = true;
+
+            gameObject.SetActive(true);
             ///因为警戒而翻开
             StartCoroutine(standBrick.OnDiscoverd());
         }
@@ -252,6 +249,7 @@ public class Monster : LiveItem
             {
                 Debug.Log("被发现时怪物： " + gameObject.name + " 释放技能: " + skill_list[0]);
                 ActiveSkillsConfig config = ConfigDataBase.GetConfigDataById<ActiveSkillsConfig>(skill_list[0]);
+                gameObject.SetActive(true);
                 StartCoroutine(fightComponet.DoActiveSkill(null, config));
             }
         }

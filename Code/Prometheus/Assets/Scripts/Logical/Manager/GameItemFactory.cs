@@ -120,7 +120,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var go = item.gameObject;
 
-        go.SetActive(true);
+        //go.SetActive(true);
 
         go.transform.SetParent(StageView.Instance.uper);
         go.transform.SetAsFirstSibling();
