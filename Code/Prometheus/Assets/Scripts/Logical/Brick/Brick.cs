@@ -299,7 +299,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
     }
 
-    private void RecycBlock()
+    public void RecycBlock()
     {
         if (blockMask != null)
         {
@@ -536,15 +536,14 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             GContext.Instance.dark_brick -= 1;
         }
 
-        RecycBlock();
+        //RecycBlock();
 
-        if (column == 0)
-        {
-            BrickCore.Instance.RemoveRowIndata(this);
-            BrickCore.Instance.CreateBrickRow();
+        //if (column == 0)
+        //{
+        //    BrickCore.Instance.CreateBrickRow();
 
-            Debug.Log("回收砖块行: row: " + row);
-        }
+        //    Debug.Log("回收砖块行: row: " + row);
+        //}
     }
 
 
@@ -583,10 +582,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         base.ViewArea();
 
-        if (GCamera.Instance.transform.position.y / 1.2f -1 > row)
-        {
-            Recycle();
-        }
+        //if (GCamera.Instance.transform.position.y / 1.2f -1 > row)
+        //{
+        //    Recycle();
+        //}
     }
 
     public override void RefreshPosistion()

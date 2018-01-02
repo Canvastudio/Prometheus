@@ -36,8 +36,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: dedbf25aba37445148d21fcc0b894f35, type: 3}
   - {fileID: 21300000, guid: 3487cc2f2e6374e6fbc8e2c765a606df, type: 3}
   - {fileID: 21300000, guid: f6c81e816e4b1458fa5091fc3a08db82, type: 3}
-  - {fileID: 21300000, guid: 324fb3c0a27d6477b842bfaeeef69532, type: 3}
   - {fileID: 21300000, guid: df6c4d65a8e2f43e3bb1fe8f5f4c741d, type: 3}
+  - {fileID: 21300000, guid: 324fb3c0a27d6477b842bfaeeef69532, type: 3}
   - {fileID: 21300000, guid: 66fb7730f5f4f453fb21a16c5e86a6b8, type: 3}
   - {fileID: 21300000, guid: 2a4825799f6084425ab0b5b4eb25bfbe, type: 3}
   - {fileID: 21300000, guid: 0e384c7a3e644494794909fb80218807, type: 3}
@@ -46,7 +46,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 79fca2ab903ca448b963e9a9f8139c0b, type: 3}
   - {fileID: 21300000, guid: 926ea9a6821ae4abbb83708e7b0bb109, type: 3}
   - {fileID: 21300000, guid: 5352f255cf834436abf72a95d36ba0f5, type: 3}
-  - {fileID: 21300000, guid: 3a4aa6aa2f0fd48a3b202126dd224221, type: 3}
+  - {fileID: 21300000, guid: f0d822825b679408f97b3629ec962406, type: 3}
   - {fileID: 21300000, guid: 23b2aec8fa84148928d1ea6169bf48b5, type: 3}
   - {fileID: 21300000, guid: 2edbd197958524f1085e03cb0b65b1ad, type: 3}
   - {fileID: 21300000, guid: 205273e16b74649878a776bd3b9a7b22, type: 3}
@@ -55,6 +55,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 026b5f6678d8b435e8430dbc57e4b5fa, type: 3}
   - {fileID: 21300000, guid: 3bbd1b3f572ae4e538c122176c9e9a11, type: 3}
   - {fileID: 21300000, guid: a866ffb095fb74d3ba7cfcad18e772c4, type: 3}
+  - {fileID: 21300000, guid: 3a4aa6aa2f0fd48a3b202126dd224221, type: 3}
   - {fileID: 21300000, guid: 4fbf0b5df4fa74b0fa990c0eca8d01a9, type: 3}
   - {fileID: 21300000, guid: 689505bd0363c41ac8082fe60bce5415, type: 3}
   - {fileID: 21300000, guid: b1f263ec88c524a53995cc014e84c552, type: 3}
@@ -79,6 +80,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e16c07bdcb7c74f5da2fb498697ac1c4, type: 3}
   - {fileID: 21300000, guid: d0997860a614b46af8fb8c6c69a13fb5, type: 3}
   - {fileID: 21300000, guid: b862edf22377a45369ce53f42e226187, type: 3}
+  - {fileID: 21300000, guid: e9e7923bb225a4ddda15a3e0681ad1ba, type: 3}
+  - {fileID: 21300000, guid: 419b021b6d9a4452292f948371bb00a6, type: 3}
+  - {fileID: 21300000, guid: 80e5eb9e4571b4014854bdc629a76a43, type: 3}
   - {fileID: 21300000, guid: d94f5d1c35e034d4097dade259ccf8ea, type: 3}
   - {fileID: 21300000, guid: 21a5b56b677cf4b47ad78d633b962aeb, type: 3}
   - {fileID: 21300000, guid: 87e126021e94a444a996086681c7395e, type: 3}
@@ -94,18 +98,19 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 70c53553953c04f9c8bd080ef38911cd, type: 3}
   - {fileID: 21300000, guid: 27cd581ecf5aa4075b4cb9641834d019, type: 3}
   - {fileID: 21300000, guid: ebd2c293bf151415faa6ba250afc7e87, type: 3}
-  - {fileID: 21300000, guid: 419b021b6d9a4452292f948371bb00a6, type: 3}
-  - {fileID: 21300000, guid: 80e5eb9e4571b4014854bdc629a76a43, type: 3}
-  - {fileID: 21300000, guid: e9e7923bb225a4ddda15a3e0681ad1ba, type: 3}
   - {fileID: 21300000, guid: 28f2a856214534521b585ce10de963b1, type: 3}
   - {fileID: 21300000, guid: 556b9cf925f864482933407887af7f14, type: 3}
+  - {fileID: 21300000, guid: f849a34ec883648f18354b98161249b7, type: 3}
+  - {fileID: 21300000, guid: 6d33ab476ef2e48c7b5f719d4a4e0594, type: 3}
+  - {fileID: 21300000, guid: 6d7120d26cb8e484196f48fa9c31d57f, type: 3}
+  - {fileID: 21300000, guid: 80635abf98dd94000ad2386c2efd10d9, type: 3}
   - {fileID: 21300000, guid: ed1b9810363fe42d4ba68730368c6b12, type: 3}
   m_PackedSpriteNamesToIndex:
   - detail_chip_bg
   - detail_role_bg
   - detail_t_bg
-  - bottom_mid_bg
   - top_m_bg_0
+  - bottom_mid_bg
   - item_prop_bg
   - item_skill_bg
   - item_buff_bg
@@ -114,7 +119,7 @@ SpriteAtlas:
   - Layer_127
   - top_mid_bg
   - top_t_bg_0
-  - cut_battle_side
+  - top_bg
   - bottom_m_bg_0
   - Layer_2
   - top_battle_info_bg_0
@@ -123,6 +128,7 @@ SpriteAtlas:
   - bottom_b_bg_0
   - btn_back_bg
   - title_bg
+  - cut_battle_side
   - role_t_engine_boder
   - role_t_fresh_boder
   - side_line
@@ -147,6 +153,9 @@ SpriteAtlas:
   - btn_normal
   - image_head_border
   - image_head
+  - money_2
+  - money_0
+  - money_1
   - role_t_fresh
   - role_t_engine
   - buff_44
@@ -162,11 +171,12 @@ SpriteAtlas:
   - buff_33
   - Layer_12
   - btn_settings
-  - money_0
-  - money_1
-  - money_2
   - Text_role_type_fresh
   - Text_role_type_engine
+  - bottom_glow
+  - side_dark
+  - distance_bg
+  - far_line
   - 358H1px
   m_Tag: MainUI
   m_IsVariant: 0

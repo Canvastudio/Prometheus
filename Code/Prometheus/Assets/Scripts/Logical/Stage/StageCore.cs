@@ -24,6 +24,9 @@ public class StageCore : SingleGameObject<StageCore> {
 
     public int playerDistance = 0;
 
+    [SerializeField]
+    float destoryRowTurn = 0;
+
     /// <summary>
     /// 第一次点击的方块
     /// </summary>
@@ -190,6 +193,9 @@ public class StageCore : SingleGameObject<StageCore> {
         StageUIView.Instance.IniMat();
         GCamera.Instance.InitPosition();
         List<Pathfinding.Node> list1 = new List<Pathfinding.Node>();
+
+        destoryRowTurn += GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapDestroyTrun;
+
         yield return Player.standBrick.OnDiscoverd();
 
         isLooping = true;
@@ -461,7 +467,13 @@ public class StageCore : SingleGameObject<StageCore> {
         turnTime += time;
         totalTime += time;
 
-        StageView.Instance.MoveDownMap(time);
+        if (totalTime >= destoryRowTurn)
+        {
+            destoryRowTurn += GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapDestroyTrun;
+            BrickCore.Instance.RemoveLowestRow();
+        }
+
+        //StageView.Instance.MoveDownMap(time);
         //Messenger<float>.Invoke(SA.StageTimeCast, time);
     }
 

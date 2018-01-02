@@ -56,7 +56,7 @@ public class BrickData {
     }
 
 
-    public void Remove(Brick brick)
+    public void Remove()
     {
         bricks.RemoveAt(0);
         _lowestRow++;

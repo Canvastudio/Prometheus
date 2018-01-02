@@ -13,11 +13,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
     WeightSection _weightSection;
 
+    public int maxRowCount;
+
     /// <summary>
     /// 当前一共创建到多少row了
     /// </summary>
     [SerializeField]
-    int total_row = 0;
+    int topRow = 0;
+    [SerializeField]
+    int totalRow = 0;
 
     /// <summary>
     /// 保存了砖块数据
@@ -25,9 +29,24 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     [SerializeField]
     public BrickData data = new BrickData();
 
-    public void RemoveRowIndata(Brick brick)
+    public void RemoveLowestRowIndata()
     {
-        data.Remove(brick);
+        data.Remove();
+    }
+
+    public void RemoveLowestRow()
+    {
+        var bricks = data.GetRow(lowestRow);
+
+        RemoveLowestRowIndata();
+
+        for (int i = 0; i < bricks.Count; ++i)
+        {
+            bricks[i].Recycle();
+        }
+
+        lowestRow++;
+        totalRow--;
     }
 
     protected override void Init()
@@ -35,7 +54,9 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         base.Init();
 
         map_Data = MapConfig.GetConfigDataList<MapConfig>();
-        Predefine.BRICK_VIEW_WIDTH = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapWidth;
+        var gc = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1);
+        Predefine.BRICK_VIEW_WIDTH =gc.MapWidth;
+        maxRowCount = gc.MaxRow;
     }
 
     int max_Distance = 0;
@@ -45,9 +66,9 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         //初始生成的行数
         max_Distance = Mathf.FloorToInt(StageView.Instance.transform.Rt().sizeDelta.y / StageView.Instance.brickWidth) + 4;
 
-        total_row = 0;
+        topRow = 0;
 
-        while (total_row < max_Distance)
+        while (topRow < max_Distance)
         {
             CreateBrickRow();
         }
@@ -85,9 +106,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     int distance = 0;
     int curRowInModule = 0;
     int moduelRowCount = 0;
+    public int lowestRow = 0;
     List<ulong> enemys;
+
     public void CreateBrickRow()
     {
+        if (totalRow == maxRowCount)
+        {
+            RemoveLowestRow();
+        }
         ///如果
         if (curModule == null)
         {
@@ -95,7 +122,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
             for (int i = 0; i < map_Data.Count; ++i)
             {
-                if (map_Data[i].distance > total_row)
+                if (map_Data[i].distance > topRow)
                 {
                     level_Id = map_Data[i].id;
                     curMapData = map_Data[i];
@@ -142,7 +169,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
             Brick _brick = null;
 
-            _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, total_row, col);
+            _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, topRow, col);
             _brick.rowInModuel = curRowInModule;
             if (string.IsNullOrEmpty(brick_Desc))
             {
@@ -189,7 +216,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
                         if (prob > Random.Range(0f, 1f))
                         {
-                            _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), total_row);
+                            _brick = _brick.CreateTreasure(ulong.Parse(infos[1]), topRow);
 
                             float tip = float.Parse(infos[3]);
 
@@ -276,12 +303,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                 }
             }
 
-            data.PushBrick(total_row, col, _brick);
+            data.PushBrick(topRow, col, _brick);
         }
 
         //下一行
         curRowInModule += 1;
-        total_row += 1;
+        topRow += 1;
+        totalRow++;
 
         if (curRowInModule == moduelRowCount)
         {

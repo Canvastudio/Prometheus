@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731316, g: 0.38074902, b: 0.3587254, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872698, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3632,9 +3632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d101a35ba268944594040b57c5f0829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoSroll: 1
+  NoSroll: 0
   SuperMonster: 0
-  SuperPlayer: 0
+  SuperPlayer: 1
   alwaysShow: 0
   infoDetail: 0
   noMonster: 0
@@ -3886,6 +3886,11 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.x
       value: 12.081055
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186288115879666, guid: 022221b5446f3c44c92e2835b71d08e0,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 022221b5446f3c44c92e2835b71d08e0, type: 2}
