@@ -21,14 +21,8 @@ public class GCamera : SingleGameObject<GCamera> {
 
         int w = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapWidth;
 
-        if (w % 2 == 0)
-        {
-            max = w / 2 * 120 + 60;
-        }
-        else
-        {
-            max = w - (w / 2) * 120;
-        }
+
+        max = (w - 6) * 120f;
 
         r = (w - 6) * 1.2f;
     }
