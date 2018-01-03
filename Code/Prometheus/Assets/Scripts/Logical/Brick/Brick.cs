@@ -470,7 +470,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
     public Brick CreateCover()
     {
-        this.cover = GameItemFactory.Instance.CreateCover(this);
+        cover = GameItemFactory.Instance.CreateCover(this);
         return this;
     }
     #endregion
@@ -529,6 +529,9 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickBlock = 0;
         brickType = BrickType.EMPTY;
         brickExplored = BrickExplored.UNEXPLORED;
+
+        SetAsNormal();
+
         ObjPool<Brick>.Instance.RecycleObj(StageView.Instance.brickName, itemId);
 
         haloComponent.clean();
@@ -612,9 +615,27 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     }
 
     Fire fire;
+    Sprite oldSprite;
 
     public void SetAsFire()
     {
+        if (standBrick.row >= BrickCore.Instance.topFireRow)
+        {
+            if (realBrickType == BrickType.OBSTACLE)
+            {
+                (item as Obstacle).SetAsFire();
+            }
+            else
+            {
+                cover.SetAsFire();
+            }
+        }
+        else
+        {
+            fire = GameItemFactory.Instance.CreateFire(this);
+        }
+        
+
         fire = GameItemFactory.Instance.CreateFire(this);
         isFire = true;
         RefreshWalkableAndBlockState();
@@ -622,9 +643,23 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
     public void SetAsNormal()
     {
-        if (fire != null)
+        if (standBrick.row >= BrickCore.Instance.topFireRow)
         {
-            ObjPool<Fire>.Instance.RecycleObj(GameItemFactory.Instance.fire_pool, fire.id);
+            if (realBrickType == BrickType.OBSTACLE)
+            {
+                (item as Obstacle).SetAsNormal();
+            }
+            else
+            {
+                cover.SetAsNormal();
+            }
+        }
+        else
+        {
+            if (fire != null)
+            {
+                ObjPool<Fire>.Instance.RecycleObj(GameItemFactory.Instance.fire_pool, fire.id);
+            }
         }
 
         isFire = false;

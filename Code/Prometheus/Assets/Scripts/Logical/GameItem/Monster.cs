@@ -119,7 +119,7 @@ public class Monster : LiveItem
 
     public void OnPlayerMoveEnd()
     {
-        if (!isAlive || !inViewArea) return;
+        if (!isAlive || !inViewArea || standBrick.isFire) return;
 
         if (isDiscovered)
         {

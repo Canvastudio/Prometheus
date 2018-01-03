@@ -9,11 +9,32 @@ public class Obstacle : GameItemBase {
     /// </summary>
     public bool occupy = false;
 
+    
+
     public override void Recycle()
     {
         base.Recycle();
 
         ObjPool<Obstacle>.Instance.RecycleObj(GameItemFactory.Instance.obstacle_pool, itemId);
     }
- 
+
+    Sprite oldSprite;
+
+    public void SetAsFire()
+    {
+        string name = RuleBox.GetBlockLock(standBrick.row, standBrick.column);
+
+        oldSprite = icon.sprite;
+
+        icon.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+    }
+
+    public void SetAsNormal()
+    {
+        if (oldSprite != null)
+        {
+            icon.sprite = oldSprite;
+        }
+    }
+
 }

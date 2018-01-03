@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Cover : GameItemBase {
+public class Cover : GameItemBase
+{
 
     [SerializeField]
     Image image;
@@ -57,5 +58,25 @@ public class Cover : GameItemBase {
             image.color = new Color(image.color.r, image.color.g, image.color.b, 0.3f);
         }
 
+    }
+    Sprite oldSprite;
+
+    public void SetAsFire()
+    {
+
+        string name = RuleBox.GetLock(standBrick.row, standBrick.column);
+
+        oldSprite = image.sprite;
+
+        image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        
+    }
+
+    public void SetAsNormal()
+    {
+        if (oldSprite != null)
+        {
+            image.sprite = oldSprite;
+        }
     }
 }

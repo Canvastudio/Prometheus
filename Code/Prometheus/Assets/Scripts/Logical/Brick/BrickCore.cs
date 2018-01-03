@@ -56,6 +56,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         lowestRow++;
         totalRow--;
+        --bottomFireRowCount;
     }
 
     public void SetLowestRowFire()
@@ -220,20 +221,22 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
             _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, topRow, col);
 
-            if (_brick.row >= topFireRow)
-            {
-                _brick.SetAsFire();
-            }
-            else
-            {
-                _brick.SetAsNormal();
-            }
+
 
             _brick.rowInModuel = curRowInModule;
 
             if (string.IsNullOrEmpty(brick_Desc))
             {
                 _brick = _brick.CreateCover();
+
+                if (_brick.row >= topFireRow)
+                {
+                    _brick.SetAsFire();
+                }
+                else
+                {
+                    _brick.SetAsNormal();
+                }
             }
             else
             {
@@ -359,7 +362,14 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
                         Debug.LogError("出现了配置表中没有出现的brick前缀: " + brick_Desc);
                     }
 
-
+                    if (_brick.row >= topFireRow)
+                    {
+                        _brick.SetAsFire();
+                    }
+                    else
+                    {
+                        _brick.SetAsNormal();
+                    }
                 }
             }
 
