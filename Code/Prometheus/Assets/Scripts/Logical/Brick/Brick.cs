@@ -646,6 +646,7 @@ public enum BrickType
     PLAYER,
     Organ,
     OrganProperty,
+    Key,
 }
 
 public enum BrickExplored
