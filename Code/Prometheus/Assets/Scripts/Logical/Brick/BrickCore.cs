@@ -31,6 +31,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     /// </summary>
     public int topFireRow = 0;
 
+    int unlock;
     /// <summary>
     /// 保存了砖块数据
     /// </summary>
@@ -93,6 +94,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         Predefine.BRICK_VIEW_WIDTH =gc.MapWidth;
         maxRowCount = gc.MaxRow;
         topFireRow = gc.InitRow;
+        unlock = gc.keyCount;
     }
 
     int max_Distance = 0;
@@ -372,6 +374,23 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         if (curRowInModule == moduelRowCount)
         {
             curModule = null;
+        }
+    }
+
+
+
+    public void UnLockFire()
+    {
+        int n = unlock;
+
+        while (n > 0)
+        {
+            var bricks = data.GetRow(topFireRow++);
+
+            for (int i = 0; i < bricks.Count; ++i)
+            {
+                bricks[i].SetAsNormal();
+            }
         }
     }
 
