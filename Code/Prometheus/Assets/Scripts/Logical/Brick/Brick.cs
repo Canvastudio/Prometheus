@@ -22,7 +22,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public ulong moduel_id = 0;
     public ulong level_id = 0;
 
-    public GameObject fire;
     public bool isFire;
 
     public BrickType brickType
@@ -614,14 +613,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
 
     public void SetAsFire()
     {
-        fire.SetActive(true);
         isFire = true;
         RefreshWalkableAndBlockState();
     }
 
     public void SetAsNormal()
     {
-        fire.SetActive(false);
         isFire = false;
         RefreshWalkableAndBlockState();
     }

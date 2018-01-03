@@ -21,9 +21,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     [SerializeField]
     int totalRow = 0;
     [SerializeField]
-    int topFireRow = 0;
+    ///下方的火焰到了哪一行了
+    int lowFireRow = 0;
     [SerializeField]
+    ///下方一共多少火焰
     int bottomFireRowCount = 0;
+    /// <summary>
+    /// 上面到哪一行开始就时火焰
+    /// </summary>
+    public int topFireRow = 0;
 
     /// <summary>
     /// 保存了砖块数据
@@ -53,7 +59,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
     public void SetLowestRowFire()
     {
-        var bricks = data.GetRow(topFireRow++);
+        var bricks = data.GetRow(lowFireRow++);
 
         for (int i = 0; i < bricks.Count; ++i)
         {
@@ -86,6 +92,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         var gc = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1);
         Predefine.BRICK_VIEW_WIDTH =gc.MapWidth;
         maxRowCount = gc.MaxRow;
+        topFireRow = gc.InitRow;
     }
 
     int max_Distance = 0;
@@ -218,7 +225,18 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
             Brick _brick = null;
 
             _brick = StageView.Instance.CreateBrick(moduel_id, curLevelId, topRow, col);
+
+            if (_brick.row >= topFireRow)
+            {
+                _brick.SetAsFire();
+            }
+            else
+            {
+                _brick.SetAsNormal();
+            }
+
             _brick.rowInModuel = curRowInModule;
+
             if (string.IsNullOrEmpty(brick_Desc))
             {
                 _brick = _brick.CreateCover();
