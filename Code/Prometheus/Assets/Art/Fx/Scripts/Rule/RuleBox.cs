@@ -55,7 +55,12 @@ public class RuleBox {
 	};
 
 	private static List<string> box_k_list = new List<string>() {
-		"box_k_0",
+		"box_d_0_lock",
+	};
+
+
+	private static List<string> box_b_lock_list = new List<string>() {
+		"box_b_lock_0",
 	};
 
 	public static string GetBox(int row, int column) {
@@ -78,6 +83,10 @@ public class RuleBox {
 
 	public static string GetLock(int row, int column) {
 		return box_k_list[Random.Range(0, box_k_list.Count)];
+	}
+
+	public static string GetBlockLock(int row, int colum) {
+		return box_b_lock_list[Random.Range(0, box_b_lock_list.Count)];
 	}
 
 	public static string GetUnExplored(int row, int clumn) {
