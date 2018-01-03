@@ -610,7 +610,14 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 summon.ListenInit();
                 break;
             case Operate.Kelid:
-
+                
+                break;
+            case Operate.WorldPiece:
+                var piece = go.GetOrAddComponet<WorldPiece>();
+                bornBrick.brickType = BrickType.Organ;
+                bornBrick.item = piece;
+                piece.baseConfig = config;
+                piece.ListenInit();
                 break;
         }
 
