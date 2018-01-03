@@ -110,7 +110,9 @@ public class GCamera : SingleGameObject<GCamera> {
             if (vFollow)
             {
                 float d = (y2 - y1) * speed;
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), speed);
+                float t = transform.position.y + d;
+                t = Mathf.Max(0, t);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, t, transform.position.z), speed);
                 //distance -= d;
                 //distance = Mathf.Max(0, distance);
             }

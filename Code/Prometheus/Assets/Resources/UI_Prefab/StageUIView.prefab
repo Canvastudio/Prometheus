@@ -4711,7 +4711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 114455714343925490}
   hpText: {fileID: 114054227493699392}
-  hpSlider: {fileID: 0}
+  hpSlider: {fileID: 114873947004656074}
   buff: {fileID: 114156063184579558}
   roleButton: {fileID: 114552930303134242}
   distance: {fileID: 114959898292321114}
@@ -5824,7 +5824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000013658229, y: 62.08211}
+  m_AnchoredPosition: {x: 0.0000037783975, y: 62.08211}
   m_SizeDelta: {x: 0, y: 124.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224266330847485890
@@ -6051,8 +6051,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -273.5}
-  m_SizeDelta: {x: 747, y: 685.5}
+  m_AnchoredPosition: {x: 0, y: -535.96}
+  m_SizeDelta: {x: 747, y: 160.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224390269390681770
 RectTransform:
@@ -6496,8 +6496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -320.01227}
-  m_SizeDelta: {x: 747, y: 637.4}
+  m_AnchoredPosition: {x: 0, y: -65.8}
+  m_SizeDelta: {x: 747, y: 128.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224659310930598774
 RectTransform:
