@@ -182,7 +182,7 @@ public class StageCore : SingleGameObject<StageCore> {
 
     private void OnPlayerMoveStep(Brick brick)
     {
-        if (BrickCore.Instance.topRow -  Player.standBrick.row < 6)
+        if (BrickCore.Instance.topRow -  Player.standBrick.row < 10)
         {
             BrickCore.Instance.CreateBrickRow();
         }

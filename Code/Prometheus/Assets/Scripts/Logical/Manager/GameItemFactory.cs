@@ -96,6 +96,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
         ulong _id;
         string name = RuleBox.GetLock(brick.row, brick.column);
         var fire = ObjPool<Fire>.Instance.GetObjFromPoolWithID(out _id, fire_pool);
+        fire.id = _id;
         fire.image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
         fire.SetParentAndNormalize(StageView.Instance.top);
         fire.gameObject.SetActive(true);

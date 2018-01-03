@@ -153,7 +153,7 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         {
             if (totalRow == maxRowCount)
             {
-                if (StageCore.Instance.Player.standBrick.row > 0.5f * (maxRowCount + lowestRow))
+                if (StageCore.Instance.Player.standBrick.row > 0.5f * (maxRowCount + lowFireRow))
                 {
                     RemoveLowestRow();
                 }
