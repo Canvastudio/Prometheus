@@ -617,6 +617,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = piece;
                 piece.baseConfig = config;
+                piece.standBrick = bornBrick;
                 piece.ListenInit();
                 break;
         }

@@ -387,10 +387,15 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
         {
             var bricks = data.GetRow(topFireRow++);
 
-            for (int i = 0; i < bricks.Count; ++i)
+            if (bricks != null)
             {
-                bricks[i].SetAsNormal();
+                for (int i = 0; i < bricks.Count; ++i)
+                {
+                    bricks[i].SetAsNormal();
+                }
             }
+
+            --n;
         }
     }
 
