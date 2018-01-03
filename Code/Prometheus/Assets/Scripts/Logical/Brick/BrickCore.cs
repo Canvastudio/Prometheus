@@ -145,14 +145,6 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     public int lowestRow = 0;
     List<ulong> enemys;
 
-    /// <summary>
-    /// 创造一行无法通过的行
-    /// </summary>
-    public void CreateFireRow()
-    {
-
-    }
-
     public void CreateBrickRow()
     {
         if (StageCore.Instance.Player != null)

@@ -23,6 +23,8 @@ public class GameItemFactory : SingleObject<GameItemFactory>
     public string supply2_pool = "SUY2";
     public string supply3_pool = "SUY3";
 
+    public string fire_pool = "FIRE";
+
     public string cover_pool = "CER";
 
     protected override void Init()
@@ -82,8 +84,24 @@ public class GameItemFactory : SingleObject<GameItemFactory>
 
         var cover_go = Resources.Load("Prefab/BrickCover") as GameObject;
         var cover = cover_go.GetComponent<Cover>();
-
         ObjPool<Cover>.Instance.InitOrRecyclePool(cover_pool, cover, 50);
+
+        var fire_go = (Resources.Load("Prefab/Fire") as GameObject).transform;
+        var fire = fire_go.GetComponent<Fire>();
+        ObjPool<Fire>.Instance.InitOrRecyclePool(fire_pool, fire, 50);
+    }
+
+    public Fire CreateFire(Brick brick)
+    {
+        ulong _id;
+        string name = RuleBox.GetLock(brick.row, brick.column);
+        var fire = ObjPool<Fire>.Instance.GetObjFromPoolWithID(out _id, fire_pool);
+        fire.image.sprite = AtlasCore.Instance.GetSpriteFormAtlas("Stage", name);
+        fire.SetParentAndNormalize(StageView.Instance.top);
+        fire.gameObject.SetActive(true);
+        fire.transform.position = brick.transform.position;
+        return fire;
+
     }
 
     private void AddSkillToFightComponet(FightComponet fightComponet, SuperArrayValue<ulong> skill)

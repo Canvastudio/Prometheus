@@ -611,14 +611,22 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         brickType = BrickType.EMPTY;
     }
 
+    Fire fire;
+
     public void SetAsFire()
     {
+        fire = GameItemFactory.Instance.CreateFire(this);
         isFire = true;
         RefreshWalkableAndBlockState();
     }
 
     public void SetAsNormal()
     {
+        if (fire != null)
+        {
+            ObjPool<Fire>.Instance.RecycleObj(GameItemFactory.Instance.fire_pool, fire.id);
+        }
+
         isFire = false;
         RefreshWalkableAndBlockState();
     }

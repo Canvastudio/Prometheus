@@ -59,7 +59,7 @@ class UNode<T>
     public List<Obj<T>> uu = new List<Obj<T>>();
     public int capacity;
 }
-public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
+public class ObjPool<T> : SingleObject<ObjPool<T>> where T : UnityEngine.Component {
 
     public Transform transform;
 
@@ -119,7 +119,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
 
                 o.name = o.name + i.ToString();
 
-                (o.gameObject).SetActive(false);
+                (o as Component).gameObject.SetActive(false);
             }
             else
             {
@@ -284,6 +284,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : Component {
                     {
                         //((GameObject)d.obj).SetActive(false);
                         if (d.obj != null)
+
 						    d.obj.gameObject.SetActive(false);
                     }
 
