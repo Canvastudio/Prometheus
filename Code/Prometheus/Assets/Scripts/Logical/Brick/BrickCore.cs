@@ -9,8 +9,6 @@ using System.Linq;
 /// </summary>
 public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
-
-
     WeightSection _weightSection;
 
     public int maxRowCount;
@@ -19,9 +17,13 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     /// 当前一共创建到多少row了
     /// </summary>
     [SerializeField]
-    int topRow = 0;
+    public int topRow = 0;
     [SerializeField]
     int totalRow = 0;
+    [SerializeField]
+    int topFireRow = 0;
+    [SerializeField]
+    int bottomFireRowCount = 0;
 
     /// <summary>
     /// 保存了砖块数据
@@ -47,6 +49,33 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
         lowestRow++;
         totalRow--;
+    }
+
+    public void SetLowestRowFire()
+    {
+        var bricks = data.GetRow(topFireRow++);
+
+        for (int i = 0; i < bricks.Count; ++i)
+        {
+            if (bricks[i].item != null)
+            {
+                bricks[i].item.Recycle();
+            }
+
+            if (bricks[i].cover != null)
+            {
+                bricks[i].cover.Recycle();
+            }
+
+            bricks[i].SetAsFire();
+        }
+
+        ++bottomFireRowCount;
+
+        if (bottomFireRowCount > 8)
+        {
+            RemoveLowestRow();
+        }
     }
 
     protected override void Init()
@@ -109,12 +138,31 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     public int lowestRow = 0;
     List<ulong> enemys;
 
+    /// <summary>
+    /// 创造一行无法通过的行
+    /// </summary>
+    public void CreateFireRow()
+    {
+
+    }
+
     public void CreateBrickRow()
     {
-        if (totalRow == maxRowCount)
+        if (StageCore.Instance.Player != null)
         {
-            RemoveLowestRow();
+            if (totalRow == maxRowCount)
+            {
+                if (StageCore.Instance.Player.standBrick.row > 0.5f * (maxRowCount + lowestRow))
+                {
+                    RemoveLowestRow();
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
+
         ///如果
         if (curModule == null)
         {

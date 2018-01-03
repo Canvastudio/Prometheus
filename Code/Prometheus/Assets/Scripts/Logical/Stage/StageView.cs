@@ -104,6 +104,8 @@ public class StageView : MuiSingleBase<StageView>
 
         _brick.icon.SetBrickIcon(row, col);
 
+        _brick.SetAsNormal();
+
         return _brick;
     }
 

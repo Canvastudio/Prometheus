@@ -180,6 +180,14 @@ public class StageCore : SingleGameObject<StageCore> {
 
     }
 
+    private void OnPlayerMoveStep(Brick brick)
+    {
+        if (BrickCore.Instance.topRow -  Player.standBrick.row < 6)
+        {
+            BrickCore.Instance.CreateBrickRow();
+        }
+    }
+
     /// <summary>
     /// 关卡内部逻辑循环
     /// </summary>
@@ -193,6 +201,7 @@ public class StageCore : SingleGameObject<StageCore> {
         StageUIView.Instance.IniMat();
         GCamera.Instance.InitPosition();
         List<Pathfinding.Node> list1 = new List<Pathfinding.Node>();
+        Messenger<Brick>.AddListener(SA.PlayerMoveStep, OnPlayerMoveStep);
 
         destoryRowTurn += GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapDestroyTrun;
 
@@ -458,6 +467,8 @@ public class StageCore : SingleGameObject<StageCore> {
         //重置标志
         isLooping = false;
 
+        Messenger<Brick>.RemoveListener(SA.PlayerMoveStep, OnPlayerMoveStep);
+
         yield return 0;
     }
 
@@ -470,7 +481,7 @@ public class StageCore : SingleGameObject<StageCore> {
         if (totalTime >= destoryRowTurn)
         {
             destoryRowTurn += GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).MapDestroyTrun;
-            BrickCore.Instance.RemoveLowestRow();
+            BrickCore.Instance.SetLowestRowFire();
         }
 
         //StageView.Instance.MoveDownMap(time);

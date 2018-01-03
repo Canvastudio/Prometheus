@@ -22,6 +22,9 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     public ulong moduel_id = 0;
     public ulong level_id = 0;
 
+    public GameObject fire;
+    public bool isFire;
+
     public BrickType brickType
     {
         get
@@ -346,7 +349,12 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             }
         }
 
-        if (!inViewArea) pathNode.isWalkable = false;
+        if (isFire)
+        {
+            pathNode.isWalkable = false;
+        }
+
+        //if (!inViewArea) pathNode.isWalkable = false;
     }
 
     
@@ -602,6 +610,20 @@ public class Brick : GameItemBase, IEquatable<Brick> {
     {
         item = null;
         brickType = BrickType.EMPTY;
+    }
+
+    public void SetAsFire()
+    {
+        fire.SetActive(true);
+        isFire = true;
+        RefreshWalkableAndBlockState();
+    }
+
+    public void SetAsNormal()
+    {
+        fire.SetActive(false);
+        isFire = false;
+        RefreshWalkableAndBlockState();
     }
 }
 

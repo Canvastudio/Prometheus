@@ -15,6 +15,9 @@ public class GCamera : SingleGameObject<GCamera> {
     public float speed = 0.10f;
     public float max;
     public float r;
+
+    public bool vFollow = false;
+
     public void InitData()
     {
         rate = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1).roundRate;
@@ -72,7 +75,7 @@ public class GCamera : SingleGameObject<GCamera> {
 
     public void Update()
     {
-        if (!GameTestData.Instance.NoSroll && distance > 0)
+        if (distance > 0)
         {
             sliding = true;
             float d = rate * Time.deltaTime;
@@ -101,10 +104,15 @@ public class GCamera : SingleGameObject<GCamera> {
 
             if (y2 > y1)
             {
+                vFollow = true;
+            }
+
+            if (vFollow)
+            {
                 float d = (y2 - y1) * speed;
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + d, transform.position.z), speed);
-                distance -= d;
-                distance = Mathf.Max(0, distance);
+                //distance -= d;
+                //distance = Mathf.Max(0, distance);
             }
 
             float x = Player.transform.Rt().anchoredPosition.x;
