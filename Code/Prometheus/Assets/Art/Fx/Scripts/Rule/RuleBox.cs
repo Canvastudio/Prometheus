@@ -51,16 +51,16 @@ public class RuleBox {
 	private static List<string> Gnat_list = new List<string>() {
 	
 		"open_bug",
-	
+	　
 	};
 
 	private static List<string> box_k_list = new List<string>() {
-		"box_d_0_lock",
+		"box_k_0_lock",
 	};
 
 
 	private static List<string> box_b_lock_list = new List<string>() {
-		"box_b_lock_0",
+		"box_b_0_lock",
 	};
 
 	public static string GetBox(int row, int column) {
