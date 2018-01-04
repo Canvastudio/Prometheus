@@ -89,7 +89,7 @@ public class Player : LiveItem {
         if (brick.row > StageCore.Instance.playerDistance)
         {
             StageCore.Instance.playerDistance = brick.row;
-            StageUIView.Instance.upUIView.distance.text = brick.row.ToString();
+            StageUIView.Instance.curDistance.text = brick.row.ToString();
         }
     }
 

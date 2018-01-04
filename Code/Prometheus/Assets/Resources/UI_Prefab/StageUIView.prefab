@@ -3955,6 +3955,9 @@ MonoBehaviour:
   topInfoPos: {fileID: 224737388917728862}
   skillItem: {fileID: 114716241827005624}
   mat: {fileID: 114906904733297156}
+  lowFire: {fileID: 114343963139819908}
+  curDistance: {fileID: 114769031495993138}
+  upFire: {fileID: 114302441428614142}
   viewArea: {fileID: 224563819734010178}
   skillListItemName: SLIN
   skillListRoot: {fileID: 224239415311747416}
@@ -5825,7 +5828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -87.55005, y: -7.550001}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224320654830822056

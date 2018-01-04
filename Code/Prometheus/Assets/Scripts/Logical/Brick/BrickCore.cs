@@ -21,15 +21,34 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     [SerializeField]
     int totalRow = 0;
     [SerializeField]
+    int _lowFireRow = 0;
     ///下方的火焰到了哪一行了
-    int lowFireRow = 0;
+    public int lowFireRow
+    {
+        get { return _lowFireRow; }
+        set
+        {
+            _lowFireRow = value;
+            StageUIView.Instance.lowFire.text = value.ToString();
+        }
+    }
     [SerializeField]
     ///下方一共多少火焰
     int bottomFireRowCount = 0;
+
+    private int _topFireRow = 0;
     /// <summary>
     /// 上面到哪一行开始就时火焰
     /// </summary>
-    public int topFireRow = 0;
+    public int topFireRow
+    {
+        get { return _topFireRow; }
+
+        set {
+            _topFireRow = value;
+            StageUIView.Instance.upFire.text = value.ToString();
+        }
+    }
 
     int unlock;
     /// <summary>

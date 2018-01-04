@@ -26,6 +26,13 @@ public class StageUIView : MuiSingleBase<StageUIView>
     [SerializeField]
     public MaterialsInfo mat;
 
+    [SerializeField]
+    public Text lowFire;
+    [SerializeField]
+    public Text curDistance;
+    [SerializeField]
+    public Text upFire;
+
     public RectTransform viewArea;
 
     public void ShowItemInfo(Brick brick)
