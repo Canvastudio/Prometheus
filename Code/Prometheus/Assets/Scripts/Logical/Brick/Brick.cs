@@ -632,7 +632,7 @@ public class Brick : GameItemBase, IEquatable<Brick> {
         }
         else
         {
-            fire = GameItemFactory.Instance.CreateFire(this);
+            //fire = GameItemFactory.Instance.CreateFire(this);
         }
         
         isFire = true;

@@ -36,6 +36,9 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     ///下方一共多少火焰
     int bottomFireRowCount = 0;
 
+    [SerializeField]
+    GameObject firePos;
+
     private int _topFireRow = 0;
     /// <summary>
     /// 上面到哪一行开始就时火焰
@@ -82,20 +85,24 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     {
         var bricks = data.GetRow(lowFireRow++);
 
-        for (int i = 0; i < bricks.Count; ++i)
-        {
-            if (bricks[i].item != null)
-            {
-                bricks[i].item.Recycle();
-            }
+        //for (int i = 0; i < bricks.Count; ++i)
+        //{
+        //    if (bricks[i].item != null)
+        //    {
+        //        bricks[i].item.Recycle();
+        //    }
 
-            if (bricks[i].cover != null)
-            {
-                bricks[i].cover.Recycle();
-            }
+        //    if (bricks[i].cover != null)
+        //    {
+        //        bricks[i].cover.Recycle();
+        //    }
 
-            bricks[i].SetAsFire();
-        }
+        //    bricks[i].SetAsFire();
+        //}
+
+        firePos.gameObject.SetActive(true);
+        firePos.transform.position = bricks[(bricks.Count / 2)].transform.position;
+        
 
         ++bottomFireRowCount;
 
