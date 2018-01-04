@@ -302,7 +302,7 @@ public class StageCore : SingleGameObject<StageCore> {
                                         StageView.Instance.SetNodeAsPath(list1);
 
                                         //如果路径长度小于3，不需要确认直接移动
-                                        if (list.Count < 3)
+                                        if (list.Count < 8)
                                         {
                                             Player.moveComponent.SetPaht(list);
 
@@ -385,25 +385,37 @@ public class StageCore : SingleGameObject<StageCore> {
         yield return Player.fightComponet.DoActiveSkill(ins);
     }
 
+    private void ClickBrickWhileMoving(Brick b)
+    {
+        stopMove = true;
+    }
+
+    bool stopMove = false;
+
     IEnumerator MovePlayer()
     {
         StageView.Instance.CancelPahtNode();
+
+        Messenger<Brick>.AddListener(SA.PlayerClickBrick, ClickBrickWhileMoving);
 
         GContext.Instance.JustdiscoverMonster = false;
 
         while (!Instance.Player.moveComponent.MoveEnd() && ! monsterwakeup)
         {
-            yield return StageCore.Instance.Player.moveComponent.MoveToNext();
-
-            Messenger.Invoke(SA.PlayerMoveEnd);
+            if (stopMove)
+            {
+                stopMove = false;
+                break;
+            }
+            else
+            {
+                yield return StageCore.Instance.Player.moveComponent.MoveToNext();
+                Messenger.Invoke(SA.PlayerMoveEnd);
+            }
         }
 
-        //TODO: 触发非空砖块
-
-        //autoMove = false;
+        Messenger<Brick>.RemoveListener(SA.PlayerClickBrick, ClickBrickWhileMoving);
         StageView.Instance.CancelPahtNode();
-
-
     }
 
     WaitForSeconds w02s = new WaitForSeconds(.2f);
