@@ -8,7 +8,7 @@ Font:
   m_Name: battle_font
   serializedVersion: 5
   m_LineSpacing: 20
-  m_DefaultMaterial: {fileID: 21294650347678834}
+  m_DefaultMaterial: {fileID: 21297745233356144}
   m_FontSize: 20
   m_Texture: {fileID: 0}
   m_AsciiStartOffset: 0
@@ -18,13 +18,29 @@ Font:
   m_ConvertCase: 0
   m_CharacterRects:
   - serializedVersion: 2
+    index: 47
+    uv:
+      serializedVersion: 2
+      x: 0.028571429
+      y: 0.2588235
+      width: 0.15714286
+      height: 0.2235294
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 20
+      width: 11
+      height: -19
+    advance: 7
+    flipped: 0
+  - serializedVersion: 2
     index: 48
     uv:
       serializedVersion: 2
-      x: 0.27058825
-      y: 0.7525773
-      width: 0.14117649
-      height: 0.1958763
+      x: 0.24285714
+      y: 0.7529412
+      width: 0.17142858
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -37,10 +53,10 @@ Font:
     index: 49
     uv:
       serializedVersion: 2
-      x: 0.24705882
-      y: 0.25773197
-      width: 0.10588236
-      height: 0.1958763
+      x: 0.4
+      y: 0.2588235
+      width: 0.12857142
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -53,10 +69,10 @@ Font:
     index: 50
     uv:
       serializedVersion: 2
-      x: 0.47058824
-      y: 0.7525773
-      width: 0.14117649
-      height: 0.1958763
+      x: 0.44285715
+      y: 0.7529412
+      width: 0.17142856
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -69,10 +85,10 @@ Font:
     index: 51
     uv:
       serializedVersion: 2
-      x: 0.05882353
-      y: 0.25773197
-      width: 0.12941177
-      height: 0.1958763
+      x: 0.21428572
+      y: 0.2588235
+      width: 0.15714286
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -85,10 +101,10 @@ Font:
     index: 52
     uv:
       serializedVersion: 2
-      x: 0.05882353
-      y: 0.7525773
-      width: 0.15294118
-      height: 0.1958763
+      x: 0.028571429
+      y: 0.7529412
+      width: 0.18571429
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -101,10 +117,10 @@ Font:
     index: 53
     uv:
       serializedVersion: 2
-      x: 0.67058825
-      y: 0.7525773
-      width: 0.14117646
-      height: 0.1958763
+      x: 0.64285713
+      y: 0.7529412
+      width: 0.17142856
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -117,10 +133,10 @@ Font:
     index: 54
     uv:
       serializedVersion: 2
-      x: 0.05882353
-      y: 0.50515467
-      width: 0.14117648
-      height: 0.1958763
+      x: 0.028571429
+      y: 0.5058823
+      width: 0.17142858
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -133,10 +149,10 @@ Font:
     index: 55
     uv:
       serializedVersion: 2
-      x: 0.25882354
-      y: 0.50515467
-      width: 0.14117649
-      height: 0.1958763
+      x: 0.22857143
+      y: 0.5058823
+      width: 0.17142858
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -149,10 +165,10 @@ Font:
     index: 56
     uv:
       serializedVersion: 2
-      x: 0.45882353
-      y: 0.50515467
-      width: 0.14117649
-      height: 0.1958763
+      x: 0.42857143
+      y: 0.5058823
+      width: 0.17142859
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -165,10 +181,10 @@ Font:
     index: 57
     uv:
       serializedVersion: 2
-      x: 0.65882355
-      y: 0.50515467
-      width: 0.14117646
-      height: 0.1958763
+      x: 0.62857145
+      y: 0.5058823
+      width: 0.17142856
+      height: 0.2235294
     vert:
       serializedVersion: 2
       x: 0
@@ -187,7 +203,7 @@ Font:
   m_FallbackFonts: []
   m_FontRenderingMode: 0
   m_UseLegacyBoundsCalculation: 0
---- !u!21 &21294650347678834
+--- !u!21 &21297745233356144
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
