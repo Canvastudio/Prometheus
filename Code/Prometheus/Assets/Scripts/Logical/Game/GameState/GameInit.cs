@@ -17,6 +17,8 @@ public class GameInit : IState
     {
         yield return CoroCore.Instance.ExStartCoroutine(SuperConfig.Instance.LoadAsync());
 
+        BrickCore.Instance.InitBrickCoreData();
+
         GCamera.Instance.InitData();
 
         BrickNameCore.Instance.SetCurrentScene(0);

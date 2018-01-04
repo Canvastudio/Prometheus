@@ -115,7 +115,10 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     protected override void Init()
     {
         base.Init();
+    }
 
+    public void InitBrickCoreData()
+    {
         map_Data = MapConfig.GetConfigDataList<MapConfig>();
         var gc = GlobalParameterConfig.GetConfigDataById<GlobalParameterConfig>(1);
         Predefine.BRICK_VIEW_WIDTH =gc.MapWidth;
