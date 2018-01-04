@@ -69,7 +69,7 @@ public class ObjPool<T> : SingleObject<ObjPool<T>> where T : UnityEngine.Compone
 
         transform = new GameObject("ObjPoolRoot: type: " + typeof(T).Name).transform;
 
-        //transform.gameObject.hideFlags = HideFlags.HideAndDontSave;
+        transform.gameObject.hideFlags = HideFlags.HideAndDontSave;
     }
 
     private Dictionary<string, UNode<T>> Data = new Dictionary<string, UNode<T>>();

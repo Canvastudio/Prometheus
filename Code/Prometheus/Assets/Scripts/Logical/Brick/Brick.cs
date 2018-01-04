@@ -635,15 +635,17 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             fire = GameItemFactory.Instance.CreateFire(this);
         }
         
-
-        fire = GameItemFactory.Instance.CreateFire(this);
         isFire = true;
         RefreshWalkableAndBlockState();
     }
 
     public void SetAsNormal()
     {
-        if (standBrick.row >= BrickCore.Instance.topFireRow)
+        if (fire != null)
+        {
+            ObjPool<Fire>.Instance.RecycleObj(GameItemFactory.Instance.fire_pool, fire.id);
+        }
+        else
         {
             if (realBrickType == BrickType.OBSTACLE)
             {
@@ -652,13 +654,6 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             else
             {
                 cover.SetAsNormal();
-            }
-        }
-        else
-        {
-            if (fire != null)
-            {
-                ObjPool<Fire>.Instance.RecycleObj(GameItemFactory.Instance.fire_pool, fire.id);
             }
         }
 
