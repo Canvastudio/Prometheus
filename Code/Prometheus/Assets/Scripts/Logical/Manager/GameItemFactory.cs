@@ -615,6 +615,7 @@ public class GameItemFactory : SingleObject<GameItemFactory>
                 break;
             case Operate.WorldPiece:
                 var piece = go.GetOrAddComponet<WorldPiece>();
+                piece.c = config.arg6;
                 bornBrick.brickType = BrickType.Organ;
                 bornBrick.item = piece;
                 piece.baseConfig = config;

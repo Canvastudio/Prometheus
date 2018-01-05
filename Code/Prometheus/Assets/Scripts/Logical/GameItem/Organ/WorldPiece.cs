@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class WorldPiece : OrganBase
 {
+    public int c;
+
     public override void Reactive()
     {
-        BrickCore.Instance.UnLockFire();
+        BrickCore.Instance.UnLockFire(c);
 
         Recycle();
     }

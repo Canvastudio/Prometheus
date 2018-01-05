@@ -418,9 +418,9 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
 
 
 
-    public void UnLockFire()
+    public void UnLockFire(int count)
     {
-        int n = unlock;
+        int n = count;
 
         while (n > 0)
         {
