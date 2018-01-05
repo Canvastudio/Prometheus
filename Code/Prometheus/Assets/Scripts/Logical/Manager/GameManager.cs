@@ -6,6 +6,7 @@ public class GameManager : SingleGameObject<GameManager> {
 
     public Camera GCamera;
     public ulong playerId = 1;
+    public LanguageType languageType;
 
     protected override void Init()
     {
@@ -31,4 +32,10 @@ public class GameManager : SingleGameObject<GameManager> {
 
         StartCoroutine(GameStateMachine.Instance.Begin(Predefine.GAME_INIT));
     }
+}
+
+public enum LanguageType
+{
+    Chinese,
+    English,
 }
