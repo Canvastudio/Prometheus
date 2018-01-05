@@ -85,20 +85,20 @@ public class BrickCore : SingleGameObject<BrickCore> , IGetNode {
     {
         var bricks = data.GetRow(lowFireRow++);
 
-        //for (int i = 0; i < bricks.Count; ++i)
-        //{
-        //    if (bricks[i].item != null)
-        //    {
-        //        bricks[i].item.Recycle();
-        //    }
+        for (int i = 0; i < bricks.Count; ++i)
+        {
+            //if (bricks[i].item != null)
+            //{
+            //    bricks[i].item.Recycle();
+            //}
 
-        //    if (bricks[i].cover != null)
-        //    {
-        //        bricks[i].cover.Recycle();
-        //    }
+            //if (bricks[i].cover != null)
+            //{
+            //    bricks[i].cover.Recycle();
+            //}
 
-        //    bricks[i].SetAsFire();
-        //}
+            bricks[i].SetAsFire();
+        }
 
         firePos.gameObject.SetActive(true);
         firePos.transform.position = bricks[(bricks.Count / 2)].transform.position;

@@ -653,7 +653,10 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             }
             else
             {
-                cover.SetAsNormal();
+                if (cover != null)
+                {
+                    cover.SetAsNormal();
+                }
             }
         }
 
