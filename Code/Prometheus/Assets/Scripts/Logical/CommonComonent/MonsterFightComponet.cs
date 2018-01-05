@@ -103,6 +103,8 @@ public class MonsterFightComponet : FightComponet {
         base.DeactiveSkill();
     }
 
+    bool releaseSkill = false;
+
     private void OnTimeCast(float time)
     {
         bool one_ready = false;
@@ -111,8 +113,7 @@ public class MonsterFightComponet : FightComponet {
         {
             if(!one_ready && ins.OnTimeCast(time))
             {
-                StartCoroutine(DoActiveSkill(ins));
-                ins.time = StageCore.Instance.totalTime;
+                StartCoroutine(DoSkill(ins));
             }
         }
 
@@ -120,5 +121,24 @@ public class MonsterFightComponet : FightComponet {
         {
             ReorderSkill();
         }
+    }
+
+    private IEnumerator DoSkill(MonsterActiveSkillIns ins)
+    {
+        if (!releaseSkill)
+        {
+            releaseSkill = true;
+            yield return DoActiveSkill(ins);
+            releaseSkill = false;
+
+            if (activeSkillSuccess)
+            {
+                activeSkillSuccess = false;
+                ins.time = StageCore.Instance.totalTime;
+                ins.cooldown = ins.config.coolDown;
+            }
+        }
+
+
     }
 }

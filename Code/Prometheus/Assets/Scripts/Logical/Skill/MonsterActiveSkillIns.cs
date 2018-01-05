@@ -29,11 +29,13 @@ public class MonsterActiveSkillIns : ActiveSkillIns
 
         if (active)
         {
-            cooldown -= time;
+            if (cooldown >= 0)
+            {
+                cooldown -= time;
+            }
 
             if (cooldown <= 0)
             {
-                cooldown += config.coolDown;
                 return true;
             }
             else

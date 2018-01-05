@@ -15,7 +15,7 @@ public enum SkillType
 public class FightComponet : MonoBehaviour
 {
     public float time = 0;
-
+    public bool activeSkillSuccess = false;
     public bool hitTarget = false;
 
     /// <summary>
@@ -703,6 +703,8 @@ public class FightComponet : MonoBehaviour
         yield return new WaitUntil(CheckFinish);
 
         ownerObject.OnActionEnd();
+
+        activeSkillSuccess = true;
 
         Debug.Log("技能释放完毕: " + name + " ,action: " + ownerObject.action);
     }
