@@ -40,7 +40,7 @@ public class EquipmentIns {
             int index = draft.Ran();
             GameProperty p = config.optionalPro[index];
             min = config.optionalProValue[index, 0];
-            max = config.mainProValue[index, 1];
+            max = config.optionalProValue[index, 1];
             value = Random.Range(min, max + 1);
             optionalPropertys.Add(p);
             optionalPropertyValues.Add(value);
