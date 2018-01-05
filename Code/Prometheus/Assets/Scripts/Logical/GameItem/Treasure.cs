@@ -12,24 +12,29 @@ public class Treasure : GameItemBase, IReactive {
 
     public void Reactive()
     {
-
-
         standBrick.brickType = BrickType.EMPTY;
         int wi = SuperTool.CreateWeightSection(drop_desc.ToList(1)).RanPoint();
         var nums = drop_desc.ToArray(0);
         int num = int.Parse(nums[wi]);//次数
-        ulong id = ulong.Parse(drop_desc.ToArray(2)[wi]);
+        ulong id;
         switch (drop_desc.ToArray(3)[wi])
         {
             case "Stuff":
+                id = ulong.Parse(drop_desc.ToArray(2)[wi]);
                 StageCore.Instance.Player.inventory.ChangeStuffCount(id, num);
                 break;
             case "Chip":
+                id = ulong.Parse(drop_desc.ToArray(2)[wi]);
                 StageCore.Instance.Player.inventory.AddChip(id);
+                break;
+            case "Equip":
+                string key = drop_desc.ToArray(2)[wi];
+                EquipConfig econfig = EquipConfig.GetConfigDataByKey<EquipConfig>(key);
+                StageCore.Instance.Player.inventory.AddEquipment(econfig, config.level);
                 break;
         }
 
-        Debug.Log("TODO: 开宝箱获得材料: " + drop_desc.ToArray(3)[wi] + "id: " + id + " num: " + num);
+        Debug.Log("TODO: 开宝箱获得材料: " + drop_desc.ToArray(3)[wi] + "id: " + drop_desc.ToArray(2)[wi] + " num: " + num);
 
         StageUIView.Instance.IniMat();
 
