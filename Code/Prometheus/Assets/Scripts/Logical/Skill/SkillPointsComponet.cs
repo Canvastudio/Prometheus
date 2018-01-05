@@ -23,4 +23,22 @@ public class SkillPointsComponet : MonoBehaviour {
         skillPoint.ChangeSkillPoint(count);
         pointList.Add(skillPoint);
     }
+
+    public void ChangeSkillPointCount(SkillPointsConfig config, int count)
+    {
+        for (int i = 0; i < pointList.Count; ++i)
+        {
+            if (pointList[i].id == config.id)
+            {
+                pointList[i].ChangeSkillPoint(count);
+                return;
+            }
+        }
+
+        //如果没有找到，新建
+        SkillPoint skillPoint;
+        skillPoint = new SkillPoint(config);
+        skillPoint.ChangeSkillPoint(count);
+        pointList.Add(skillPoint);
+    }
 }

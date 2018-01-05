@@ -127,3 +127,27 @@ public class GameGlobalVariable
     public static WaitForSeconds wait0_3s = new WaitForSeconds(0.3f);
 }
 
+public class Draft
+{
+    List<int> v;
+
+    public Draft(int count)
+    {
+        v = new List<int>(count);
+
+        for (int i = 0; i < count; ++i)
+        {
+            v.Add(i);
+        }
+    }
+
+    public int Ran()
+    {
+        int index = Random.Range(0, v.Count);
+        int res = v[index];
+        v.RemoveAt(index);
+        return res;
+    }
+}
+
+

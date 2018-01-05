@@ -11,6 +11,11 @@ public class Inventory {
     List<ChipInventory> chipList = new List<ChipInventory>();
 
     /// <summary>
+    /// 装备
+    /// </summary>
+    public List<EquipmentIns> equipmentList = new List<EquipmentIns>();
+
+    /// <summary>
     /// 机关送的技能 这个数组暂时没有 预先放这 可能以后会用
     /// </summary>
     [SerializeField]
@@ -164,6 +169,12 @@ public class Inventory {
                 skillList.RemoveAt(i);
             }
         }
+    }
+
+    public void AddEquipment(EquipConfig config, int quality)
+    {
+        EquipmentIns equipment = new EquipmentIns(config, quality);
+        equipmentList.Add(equipment);
     }
 }
 

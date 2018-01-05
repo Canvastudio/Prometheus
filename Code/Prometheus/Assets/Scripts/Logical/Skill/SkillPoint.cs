@@ -31,6 +31,13 @@ public class SkillPoint {
         updateLimit = config.characterActivate.ToArray((int)(StageCore.Instance.Player.playerId));
     }
 
+    public SkillPoint(SkillPointsConfig config)
+    {
+        id = config.id;
+        skillIds = config.skillIds.ToArray();
+        updateLimit = config.characterActivate.ToArray((int)(StageCore.Instance.Player.playerId));
+    }
+
     public void ChangeSkillPoint(int change_count)
     { 
         this._count = _count + change_count;
