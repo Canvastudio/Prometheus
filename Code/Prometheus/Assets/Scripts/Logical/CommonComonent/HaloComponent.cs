@@ -81,6 +81,6 @@ public class HaloComponent : MonoBehaviour {
 
         halo_list.Add(halo);
 
-        owner.icon.color = Color.red;
+        //owner.icon.color = Color.red;
     }
 }
