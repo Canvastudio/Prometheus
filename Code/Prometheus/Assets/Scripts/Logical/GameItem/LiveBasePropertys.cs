@@ -16,6 +16,7 @@ public class LiveBasePropertys : PropertyData {
         SetFloatProperty(GameProperty.guard, armor);
         SetFloatProperty(GameProperty.nhp, hp);
         SetFloatProperty(GameProperty.nshield, shield);
+
         return this;
     }
 

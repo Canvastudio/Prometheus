@@ -129,7 +129,8 @@ public class StageUIView : MuiSingleBase<StageUIView>
 
     private void OnChipButton()
     {
-        MuiCore.Instance.Open(UiName.strChipView);
+        //MuiCore.Instance.Open(UiName.strChipView);
+        MuiCore.Instance.Open(UiName.strRoleInfoView);
     }
 
     public override IEnumerator Open(object param = null)
