@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class RoleInfoView : MuiSingleBase<RoleInfoView>
 {
     [SerializeField]
-    Text hp;
+    Text chp;
+    [SerializeField]
+    Text mhp;
 
     [SerializeField]
     Text laser;
@@ -200,6 +202,8 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
         shield.SetPropertyText(player, GameProperty.nshield);
         armor.SetPropertyText(player, GameProperty.guard);
         first.SetPropertyText(player, GameProperty.firstAtt);
+        chp.SetPropertyText(player, GameProperty.nhp);
+        mhp.SetPropertyText(player, GameProperty.mhp);
     }
 
     public void Back()
