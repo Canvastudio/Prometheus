@@ -175,6 +175,11 @@ public static class UIExtend {
         return DecimalToHex(i);
     }
 
+    public static string GetLocalStr(this string str)
+    {
+        return LanguageConfig.GetContent(str);
+    }
+
     /// <summary>
     /// Convert the specified color to RGBA32 integer format.
     /// </summary>

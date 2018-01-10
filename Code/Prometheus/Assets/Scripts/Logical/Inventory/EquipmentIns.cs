@@ -7,17 +7,17 @@ public class EquipmentIns {
     bool equip = false;
     bool identify = false;
 
-    EquipConfig config;
+    public EquipConfig config;
     int quality;
 
-    GameProperty mainProperty;
-    float mainPropertyValue;
+    public GameProperty mainProperty;
+    public float mainPropertyValue;
 
-    List<GameProperty> optionalPropertys;
-    List<float> optionalPropertyValues;
+    public List<GameProperty> optionalPropertys;
+    public List<float> optionalPropertyValues;
 
-    List<SkillPointsConfig> skillPoints;
-    List<int> skillPointsCount;
+    public List<SkillPointsConfig> skillPoints;
+    public List<int> skillPointsCount;
 
     public EquipmentIns(EquipConfig e, int q)
     {

@@ -50,7 +50,11 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     GameObject roleInfo;
 
     [SerializeField]
-    StateItem item;
+    StateItem stateItem;
+    [SerializeField]
+    SkillItem skillItem;
+    [SerializeField]
+    WeaponItem weaponItem;
 
     bool initState = false;
     bool initSkill = false;
@@ -58,6 +62,7 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     List<StateItem> stateList = new List<StateItem>();
     List<SkillItem> skillList = new List<SkillItem>();
 
+    private string s3 = "weaponItem";
     private string s2 = "stateItem";
     private string s1 = "skillItem";
 
@@ -77,8 +82,15 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     public override IEnumerator Init(object param = null)
     {
   
-        ObjPool<StateItem>.Instance.InitOrRecyclePool(s2, item, 4);
+        ObjPool<StateItem>.Instance.InitOrRecyclePool(s2, stateItem, 4);
+        ObjPool<SkillItem>.Instance.InitOrRecyclePool(s2, skillItem, 4);
+
         HudEvent.Get(backButton).onClick = Back;
+        HudEvent.Get(cloth_add).onClick = OnClothAdd;
+        HudEvent.Get(weapon_add).onClick = OnWeaponAdd;
+        HudEvent.Get(other_add1).onClick = OnOtherAdd1;
+        HudEvent.Get(other_add2).onClick = OnOtherAdd2;
+        HudEvent.Get(other_add3).onClick = OnOtherAdd3;
 
         stateToggle.onValueChanged.AddListener(SetStateToggle);
         skillToggle.onValueChanged.AddListener(SetSkillToggle);
@@ -92,6 +104,52 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
         stateToggle.onValueChanged.AddListener(SetStateToggle);
         skillToggle.onValueChanged.AddListener(SetSkillToggle);
         weaponToggle.onValueChanged.AddListener(SetWeaponToggle);
+    }
+
+    private void OnClothAdd()
+    {
+        
+    }
+
+    private void OnWeaponAdd()
+    {
+
+    }
+
+    private void OnOtherAdd1()
+    {
+
+    }
+
+    private void OnOtherAdd2()
+    {
+
+    }
+
+    private void OnOtherAdd3()
+    {
+
+    }
+
+    private void ShowWeaponList(EqpType type)
+    {
+        roleInfo.SetActive(false);
+
+        weapon_add.gameObject.SetActive(false);
+        cloth_add.gameObject.SetActive(false);
+        other_add1.gameObject.SetActive(false);
+        other_add2.gameObject.SetActive(false);
+        other_add3.gameObject.SetActive(false);
+
+
+        var player = StageCore.Instance.Player;
+        foreach(var eqp in player.inventory.equipmentList)
+        {
+            if (eqp.config.eqpType == type)
+            {
+
+            }
+        }
     }
 
     private void SetStateToggle(bool t)
