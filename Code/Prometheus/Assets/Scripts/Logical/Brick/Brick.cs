@@ -348,6 +348,16 @@ public class Brick : GameItemBase, IEquatable<Brick> {
             }
         }
 
+        if (brickBlock > 0)
+        {
+            ShowBlock();
+            pathNode.isWalkable = false;
+        }
+        else
+        {
+            HideBlock();
+        }
+
         if (isFire)
         {
             pathNode.isWalkable = false;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EquipmentIns {
 
-    bool equip = false;
-    bool identify = false;
+    public bool equip = false;
+    public bool identify = false;
 
     public EquipConfig config;
     int quality;

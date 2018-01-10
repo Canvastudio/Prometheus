@@ -56,6 +56,8 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     [SerializeField]
     WeaponItem weaponItem;
 
+
+
     bool initState = false;
     bool initSkill = false;
 
@@ -74,16 +76,20 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
     public override void Hide(object param = null)
     {
         gameObject.SetActive(false);
+        initState = false;
+        initSkill = false;
         ObjPool<StateItem>.Instance.RecyclePool(s2);
+        ObjPool<StateItem>.Instance.RecyclePool(s3);
+        ObjPool<StateItem>.Instance.RecyclePool(s1);
     }
 
     Player player;
 
     public override IEnumerator Init(object param = null)
     {
-  
         ObjPool<StateItem>.Instance.InitOrRecyclePool(s2, stateItem, 4);
-        ObjPool<SkillItem>.Instance.InitOrRecyclePool(s2, skillItem, 4);
+        ObjPool<SkillItem>.Instance.InitOrRecyclePool(s1, skillItem, 4);
+        ObjPool<WeaponItem>.Instance.InitOrRecyclePool(s3, weaponItem, 4);
 
         HudEvent.Get(backButton).onClick = Back;
         HudEvent.Get(cloth_add).onClick = OnClothAdd;
@@ -108,46 +114,57 @@ public class RoleInfoView : MuiSingleBase<RoleInfoView>
 
     private void OnClothAdd()
     {
-        
+        ShowWeaponList(EqpType.Armour);
     }
 
     private void OnWeaponAdd()
     {
-
+        ShowWeaponList(EqpType.Weapon);
     }
 
     private void OnOtherAdd1()
     {
-
+        ShowWeaponList(EqpType.Helmet);
     }
 
     private void OnOtherAdd2()
     {
-
+        ShowWeaponList(EqpType.Helmet);
     }
 
     private void OnOtherAdd3()
     {
-
+        ShowWeaponList(EqpType.Helmet);
     }
 
     private void ShowWeaponList(EqpType type)
     {
         roleInfo.SetActive(false);
 
+        ObjPool<StateItem>.Instance.RecyclePool(s3);
         weapon_add.gameObject.SetActive(false);
         cloth_add.gameObject.SetActive(false);
         other_add1.gameObject.SetActive(false);
         other_add2.gameObject.SetActive(false);
         other_add3.gameObject.SetActive(false);
 
-
         var player = StageCore.Instance.Player;
         foreach(var eqp in player.inventory.equipmentList)
         {
-            if (eqp.config.eqpType == type)
+            if (type == EqpType.Weapon || type == EqpType.Armour)
             {
-
+                if (eqp.config.eqpType == type && !eqp.equip)
+                {
+                    var item = ObjPool<WeaponItem>.Instance.GetObjFromPool(s3);
+                    item.SetParentAndNormalize(root);
+                    item.ShowWeaponInfo(eqp);
+                }
+            }
+            else if ((int)eqp.config.eqpType > 2 && !eqp.equip)
+            {
+                var item = ObjPool<WeaponItem>.Instance.GetObjFromPool(s3);
+                item.SetParentAndNormalize(root);
+                item.ShowWeaponInfo(eqp);
             }
         }
     }

@@ -69,7 +69,7 @@ public class GameInit : IState
                 StageCore.Instance.Player.fightComponet.AddSkill(value);
             }
 
-            StageCore.Instance.Player.inventory.AddEquipment(EquipConfig.GetConfigDataByKey<EquipConfig>("测试武器"), 1);
+            StageCore.Instance.Player.inventory.AddEquipment(EquipConfig.GetConfigDataByKey<EquipConfig>("测试武器"), 3);
         }
     }
 

@@ -22,6 +22,17 @@ public class WeaponItem : MonoBehaviour
     Button equipBtn;
     [SerializeField]
     Button identifyBtn;
+    [SerializeField]
+    Button decomposeBtn;
+
+    [Space(10)]
+    [SerializeField]
+    GameObject idenitfyGo;
+
+    [SerializeField]
+    Text[] skillText;
+    [SerializeField]
+    GameObject[] skillGo;
 
     EquipmentIns equipment;
 
@@ -29,6 +40,12 @@ public class WeaponItem : MonoBehaviour
     {
         HudEvent.Get(equipBtn).onClick = OnEquip;
         HudEvent.Get(identifyBtn).onClick = OnIdentify;
+        HudEvent.Get(decomposeBtn).onClick = OnDecompose;
+    }
+
+    private void OnDecompose()
+    {
+
     }
 
     private void OnEquip()
@@ -39,11 +56,12 @@ public class WeaponItem : MonoBehaviour
     private void OnIdentify()
     {
         equipment.Identify();
+        idenitfyGo.SetActive(false);
     }
 
     public void ShowWeaponInfo(EquipmentIns ins)
     {
-  
+        equipment = ins;
         //weapicon
         weaponName.text = ins.config.eqpName.ToString();
 
@@ -61,10 +79,26 @@ public class WeaponItem : MonoBehaviour
             sb.Append(propertyName);
             sb.Append(" +");
             sb.Append(ins.optionalPropertyValues[i].ToString());
-            mainProperty.text = sb.ToString();
             sb.Append(",");
         }
         sb.Remove(sb.Length - 1, 1);
         secondProperty.text = sb.ToString();
+
+        if (ins.skillPoints.Count > 0)
+        {
+            for (int i = 0; i < ins.skillPoints.Count; ++i)
+            {
+                skillText[i].text = ins.skillPoints[i].name.ToString();
+            }
+        }
+
+        if (ins.identify)
+        {
+            idenitfyGo.SetActive(false);
+        }
+        else
+        {
+            idenitfyGo.SetActive(true);
+        }
     }
 }
